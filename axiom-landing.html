@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axiom Intelligence Group — Strategic Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:           #04040A;
+  --bg-card:      #08081
+
+2;
+  --bg-elevated:  #0E0E1C;
+  --bg-glass:     rgba(6,6,14,0.85);
+  --blue:         #1660FF;
+  --blue-bright:  #5590FF;
+  --blue-dim:     rgba(22,96,255,0.10);
+  --blue-glow:    rgba(22,96,255,0.18);
+  --blue-border:  rgba(22,96,255,0.28);
+  --text:         #EEEEF6;
+  --text-dim:     #8080A0;
+  --text-muted:   #404060;
+  --border:       rgba(255,255,255,0.055);
+  --serif:        'Cormorant Garamond', Georgia, serif;
+  --sans:         'Instrument Sans', system-ui, sans-serif;
+  --mono:         'DM Mono', monospace;
+  --ease:         cubic-bezier(0.4,0,0.2,1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── GRAIN ─────────────────────────────── */
+body::after {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:0.028;
+  pointer-events:none;
+  z-index:9999;
+}
+
+/* ─── TYPE ───────────────────────────────── */
+h1,h2,h3,h4 { font-family:var(--serif); font-weight:400; line-height:1.1; }
+.label {
+  font-family:var(--mono);
+  font-size:0.62rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+}
+.accent-label {
+  font-family:var(--mono);
+  font-size:0.62rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--blue-bright);
+}
+
+/* ─── LAYOUT ─────────────────────────────── */
+.wrap { max-width:1180px; margin:0 auto; padding:0 2.5rem; }
+
+/* ─── NAV ────────────────────────────────── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  padding:1.6rem 2.5rem;
+  display:flex; align-items:center; justify-content:space-between;
+  transition:background 0.4s var(--ease), border-color 0.4s var(--ease);
+  border-bottom:1px solid transparent;
+}
+nav.scrolled {
+  background:var(--bg-glass);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border-bottom-color:var(--border);
+}
+.nav-brand {
+  font-family:var(--serif);
+  font-size:1.05rem;
+  font-weight:600;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--text);
+  text-decoration:none;
+  display:flex; align-items:center; gap:0.2rem;
+}
+.nav-brand .dot { color:var(--blue-bright); }
+.nav-links { display:flex; align-items:center; gap:2.5rem; list-style:none; }
+.nav-links a {
+  font-size:0.75rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  text-decoration:none;
+  transition:color 0.25s;
+}
+.nav-links a:hover { color:var(--text); }
+.btn-nav {
+  font-family:var(--mono);
+  font-size:0.65rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--blue-bright) !important;
+  border:1px solid var(--blue-border);
+  padding:0.55rem 1.3rem;
+  text-decoration:none;
+  transition:all 0.25s var(--ease) !important;
+}
+.btn-nav:hover { background:var(--blue-dim); color:var(--text) !important; }
+
+/* ─── HERO ───────────────────────────────── */
+#hero {
+  min-height:100vh;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:9rem 0 6rem;
+  position:relative;
+  overflow:hidden;
+}
+/* Grid lines */
+#hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(22,96,255,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22,96,255,0.045) 1px, transparent 1px);
+  background-size:70px 70px;
+  mask-image:radial-gradient(ellipse 90% 70% at 50% 0%, black 20%, transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%, black 20%, transparent 100%);
+}
+/* Top glow */
+#hero::after {
+  content:'';
+  position:absolute;
+  top:-10%; left:50%; transform:translateX(-50%);
+  width:900px; height:600px;
+  background:radial-gradient(ellipse at 50% 20%, rgba(22,96,255,0.13) 0%, transparent 65%);
+  pointer-events:none;
+}
+.hero-inner { position:relative; z-index:2; }
+.hero-tag {
+  display:flex; align-items:center; gap:0.8rem;
+  margin-bottom:2.8rem;
+  opacity:0; animation:fadeUp 0.8s 0.15s forwards;
+}
+.hero-tag::before { content:''; width:32px; height:1px; background:var(--blue); flex-shrink:0; }
+.hero-headline {
+  font-family:var(--serif);
+  font-size:clamp(3.4rem,7.5vw,7.8rem);
+  font-weight:300;
+  line-height:1.01;
+  letter-spacing:-0.025em;
+  max-width:13ch;
+  opacity:0; animation:fadeUp 0.9s 0.3s forwards;
+}
+.hero-headline em {
+  font-style:italic;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(85,144,255,0.5);
+}
+.hero-sub {
+  margin-top:2rem;
+  font-size:1rem;
+  color:var(--text-dim);
+  max-width:46ch;
+  line-height:1.75;
+  opacity:0; animation:fadeUp 0.9s 0.48s forwards;
+}
+.hero-actions {
+  margin-top:3.2rem;
+  display:flex; align-items:center; gap:2.2rem;
+  flex-wrap:wrap;
+  opacity:0; animation:fadeUp 0.9s 0.64s forwards;
+}
+.btn-primary {
+  font-family:var(--mono);
+  font-size:0.72rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:#04040A;
+  background:var(--blue);
+  padding:1rem 2.2rem;
+  text-decoration:none;
+  display:inline-flex; align-items:center; gap:0.6rem;
+  position:relative; overflow:hidden;
+  transition:box-shadow 0.3s;
+}
+.btn-primary::before {
+  content:''; position:absolute; inset:0;
+  background:var(--blue-bright);
+  transform:translateX(-101%);
+  transition:transform 0.4s cubic-bezier(0.77,0,0.175,1);
+}
+.btn-primary:hover::before { transform:translateX(0); }
+.btn-primary:hover { box-shadow:0 0 40px var(--blue-glow); }
+.btn-primary span { position:relative; z-index:1; }
+.hero-note {
+  font-family:var(--mono);
+  font-size:0.62rem;
+  letter-spacing:0.12em;
+  color:var(--text-muted);
+  text-transform:uppercase;
+}
+.hero-scroll {
+  position:absolute; bottom:3rem; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:0.6rem;
+  opacity:0; animation:fadeIn 1s 1.3s forwards;
+}
+.scroll-label { font-family:var(--mono); font-size:0.55rem; letter-spacing:0.25em; color:var(--text-muted); text-transform:uppercase; }
+.scroll-line { width:1px; height:44px; background:linear-gradient(to bottom, var(--blue), transparent); animation:pulseY 2.2s ease-in-out infinite; }
+
+/* ─── MARQUEE STRIP ──────────────────────── */
+.marquee-strip {
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  overflow:hidden;
+  padding:0.9rem 0;
+  background:var(--bg-card);
+}
+.marquee-track {
+  display:flex; gap:4rem;
+  animation:marquee 30s linear infinite;
+  white-space:nowrap;
+}
+.marquee-track span {
+  font-family:var(--mono);
+  font-size:0.6rem;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  flex-shrink:0;
+}
+.marquee-track .sep { color:var(--blue-bright); }
+
+/* ─── STATS ──────────────────────────────── */
+#stats {
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background:var(--bg-card);
+  padding:0;
+}
+.stats-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+.stat-item {
+  padding:3rem 2.5rem;
+  border-right:1px solid var(--border);
+  opacity:0; transform:translateY(12px);
+  transition:opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.stat-item:last-child { border-right:none; }
+.stat-item.visible { opacity:1; transform:translateY(0); }
+.stat-number {
+  font-family:var(--serif);
+  font-size:3rem;
+  font-weight:300;
+  letter-spacing:-0.03em;
+  line-height:1;
+  color:var(--text);
+}
+.stat-number .hi { color:var(--blue-bright); }
+.stat-label {
+  margin-top:0.6rem;
+  font-family:var(--mono);
+  font-size:0.6rem;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  line-height:1.6;
+}
+
+/* ─── PROBLEM ────────────────────────────── */
+#problem { padding:11rem 0; }
+.problem-grid { display:grid; grid-template-columns:1fr 1fr; gap:8rem; align-items:center; }
+.problem-hl {
+  font-family:var(--serif);
+  font-size:clamp(2rem,3.8vw,3.5rem);
+  font-weight:400;
+  line-height:1.12;
+}
+.problem-hl em { font-style:italic; color:var(--blue-bright); }
+.problem-body { color:var(--text-dim); font-size:0.93rem; line-height:1.85; }
+.problem-body p+p { margin-top:1.25rem; }
+.pull-quote {
+  margin-top:2.2rem;
+  padding:1.6rem 1.8rem;
+  border-left:2px solid var(--blue);
+  background:var(--blue-dim);
+}
+.pull-quote p {
+  font-family:var(--serif);
+  font-size:1.15rem;
+  font-style:italic;
+  line-height:1.5;
+  color:var(--text);
+}
+
+/* ─── METHOD ─────────────────────────────── */
+#method { padding:9rem 0; border-top:1px solid var(--border); }
+.section-header {
+  display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:end;
+  margin-bottom:5rem;
+}
+.section-title {
+  font-family:var(--serif);
+  font-size:clamp(2.2rem,3.5vw,3.6rem);
+  font-weight:400;
+  line-height:1.08;
+}
+.section-desc { color:var(--text-dim); font-size:0.92rem; line-height:1.8; }
+
+.pillars { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border:1px solid var(--border); }
+.pillar {
+  background:var(--bg);
+  padding:2.8rem 2rem;
+  position:relative; overflow:hidden;
+  opacity:0; transform:translateY(18px);
+  transition:opacity 0.5s var(--ease), transform 0.5s var(--ease), background 0.3s;
+}
+.pillar.visible { opacity:1; transform:translateY(0); }
+.pillar:hover { background:var(--bg-elevated); }
+.pillar-top-line {
+  position:absolute; top:0; left:0; right:0; height:2px;
+  background:transparent;
+  transition:background 0.3s;
+}
+.pillar:hover .pillar-top-line { background:linear-gradient(90deg,transparent,var(--blue),transparent); }
+.pillar-num { font-family:var(--mono); font-size:0.55rem; color:var(--text-muted); letter-spacing:0.2em; margin-bottom:2rem; }
+.pillar-code { font-family:var(--mono); font-size:0.7rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--blue-bright); margin-bottom:0.9rem; }
+.pillar-title { font-family:var(--serif); font-size:1.35rem; font-weight:400; line-height:1.2; margin-bottom:0.9rem; }
+.pillar-desc { font-size:0.83rem; color:var(--text-dim); line-height:1.75; }
+
+/* ─── SERVICES ───────────────────────────── */
+#services { padding:9rem 0; border-top:1px solid var(--border); }
+.services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+.svc {
+  border:1px solid var(--border);
+  padding:2.8rem;
+  display:flex; flex-direction:column;
+  position:relative; overflow:hidden;
+  transition:border-color 0.3s, background 0.3s;
+  opacity:0; transform:translateY(18px);
+  transition:opacity 0.5s var(--ease), transform 0.5s var(--ease), border-color 0.3s, background 0.3s;
+}
+.svc.visible { opacity:1; transform:translateY(0); }
+.svc:hover { border-color:var(--blue-border); background:var(--bg-card); }
+.svc.is-featured { border-color:var(--blue-border); background:var(--bg-card); }
+.svc.is-featured::before {
+  content:'Most Requested';
+  position:absolute; top:1.4rem; right:1.4rem;
+  font-family:var(--mono); font-size:0.52rem; letter-spacing:0.15em; text-transform:uppercase;
+  color:var(--blue-bright);
+}
+.svc-tier { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-muted); margin-bottom:1.5rem; }
+.svc-name { font-family:var(--serif); font-size:1.8rem; font-weight:400; line-height:1.1; margin-bottom:0.6rem; }
+.svc-price { font-family:var(--mono); font-size:0.82rem; color:var(--blue-bright); margin-bottom:1.6rem; }
+.svc-desc { font-size:0.87rem; color:var(--text-dim); line-height:1.8; flex-grow:1; margin-bottom:2rem; }
+.svc-list { list-style:none; margin-bottom:2.2rem; }
+.svc-list li {
+  font-size:0.8rem; color:var(--text-dim);
+  padding:0.55rem 0; border-bottom:1px solid var(--border);
+  display:flex; align-items:flex-start; gap:0.7rem;
+}
+.svc-list li::before { content:'→'; color:var(--blue-bright); font-family:var(--mono); flex-shrink:0; font-size:0.8rem; }
+.btn-svc {
+  font-family:var(--mono);
+  font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--text-dim); border:1px solid var(--border);
+  padding:0.8rem; text-align:center; text-decoration:none;
+  display:block; margin-top:auto;
+  transition:all 0.25s var(--ease);
+}
+.btn-svc:hover, .is-featured .btn-svc { color:var(--blue-bright); border-color:var(--blue-border); background:var(--blue-dim); }
+
+/* ─── PROOF ──────────────────────────────── */
+#proof { padding:9rem 0; border-top:1px solid var(--border); background:var(--bg-card); }
+.proof-grid { display:grid; grid-template-columns:5fr 7fr; gap:7rem; align-items:start; }
+.proof-left { position:sticky; top:8rem; }
+.proof-hl { font-family:var(--serif); font-size:clamp(2rem,3.2vw,3rem); font-weight:400; line-height:1.12; margin-bottom:1.4rem; }
+.proof-body { font-size:0.9rem; color:var(--text-dim); line-height:1.82; }
+.metrics-block {
+  margin-top:3rem;
+  display:grid; grid-template-columns:1fr 1fr; gap:1px;
+  background:var(--border); border:1px solid var(--border);
+}
+.metric { background:var(--bg); padding:1.6rem 1.5rem; }
+.metric-val {
+  font-family:var(--serif);
+  font-size:2.2rem; font-weight:300; letter-spacing:-0.02em;
+  color:var(--text); line-height:1;
+}
+.metric-val .hi { color:var(--blue-bright); }
+.metric-lbl { font-family:var(--mono); font-size:0.56rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); margin-top:0.3rem; }
+
+.agents { display:flex; flex-direction:column; gap:1.5rem; }
+.agent-card {
+  border:1px solid var(--border);
+  padding:2rem;
+  background:var(--bg);
+  transition:border-color 0.3s, background 0.3s;
+}
+.agent-card:hover { border-color:var(--blue-border); background:var(--bg-elevated); }
+.agent-head { display:flex; align-items:center; gap:1rem; margin-bottom:0.9rem; }
+.agent-badge {
+  font-family:var(--mono); font-size:0.56rem; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--blue-bright);
+  background:var(--blue-dim); border:1px solid var(--blue-border);
+  padding:0.25rem 0.65rem;
+}
+.agent-name { font-family:var(--serif); font-size:1.15rem; font-weight:400; }
+.agent-desc { font-size:0.83rem; color:var(--text-dim); line-height:1.75; }
+
+/* ─── BUILD ──────────────────────────────── */
+#build { padding:9rem 0; border-top:1px solid var(--border); }
+.build-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:auto auto;
+  gap:1.5rem;
+  margin-top:4.5rem;
+}
+.build-card {
+  border:1px solid var(--border);
+  padding:2.2rem;
+  transition:border-color 0.3s, background 0.3s;
+  opacity:0; transform:translateY(14px);
+  transition:opacity 0.5s var(--ease), transform 0.5s var(--ease), border-color 0.3s, background 0.3s;
+}
+.build-card.visible { opacity:1; transform:translateY(0); }
+.build-card:hover { border-color:var(--blue-border); background:var(--bg-card); }
+.build-card.full { grid-column:1/-1; display:grid; grid-template-columns:1fr 2fr; gap:3rem; align-items:start; }
+.build-code { font-family:var(--mono); font-size:0.6rem; color:var(--blue-bright); letter-spacing:0.14em; margin-bottom:1.2rem; }
+.build-name { font-family:var(--serif); font-size:1.3rem; font-weight:400; margin-bottom:0.7rem; }
+.build-desc { font-size:0.83rem; color:var(--text-dim); line-height:1.75; }
+.build-eg { margin-top:0.9rem; font-family:var(--mono); font-size:0.58rem; color:var(--text-muted); letter-spacing:0.12em; text-transform:uppercase; }
+
+/* ─── CTA ────────────────────────────────── */
+#cta {
+  padding:11rem 0;
+  border-top:1px solid var(--border);
+  text-align:center;
+  position:relative; overflow:hidden;
+}
+#cta::before {
+  content:'';
+  position:absolute; bottom:-20%; left:50%; transform:translateX(-50%);
+  width:700px; height:500px;
+  background:radial-gradient(ellipse at center, rgba(22,96,255,0.09) 0%, transparent 70%);
+  pointer-events:none;
+}
+.cta-headline {
+  font-family:var(--serif);
+  font-size:clamp(3.2rem,6.5vw,6rem);
+  font-weight:300;
+  line-height:1.04;
+  max-width:14ch;
+  margin:1.5rem auto 1.5rem;
+  letter-spacing:-0.02em;
+}
+.cta-sub { font-size:0.95rem; color:var(--text-dim); max-width:42ch; margin:0 auto 3rem; line-height:1.75; }
+.cta-contact {
+  margin-top:1.6rem;
+  font-family:var(--mono); font-size:0.65rem;
+  letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--text-muted);
+}
+
+/* ─── FOOTER ─────────────────────────────── */
+footer {
+  border-top:1px solid var(--border);
+  padding:2.2rem 2.5rem;
+  display:grid; grid-template-columns:1fr auto 1fr;
+  align-items:center;
+}
+.footer-brand { font-family:var(--serif); font-size:0.88rem; letter-spacing:0.08em; color:var(--text-dim); }
+.footer-center { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-muted); text-align:center; }
+.footer-right { font-family:var(--mono); font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-muted); text-align:right; }
+
+/* ─── DIVIDER ────────────────────────────── */
+.h-line { height:1px; background:var(--border); }
+
+/* ─── REVEAL ─────────────────────────────── */
+.reveal { opacity:0; transform:translateY(18px); transition:opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ─── ANIMATIONS ─────────────────────────── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes pulseY { 0%,100%{opacity:0.3;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(0.85)} }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ─── RESPONSIVE ─────────────────────────── */
+@media(max-width:960px){
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .stat-item{border-bottom:1px solid var(--border);}
+  .problem-grid{grid-template-columns:1fr;gap:3.5rem;}
+  .section-header{grid-template-columns:1fr;gap:2rem;}
+  .pillars{grid-template-columns:repeat(2,1fr);}
+  .services-grid{grid-template-columns:1fr;}
+  .proof-grid{grid-template-columns:1fr;}
+  .proof-left{position:static;}
+  .build-card.full{grid-column:span 1;grid-template-columns:1fr;}
+  .build-grid{grid-template-columns:1fr 1fr;}
+  .nav-links{display:none;}
+  footer{grid-template-columns:1fr;gap:0.8rem;text-align:center;}
+  .footer-right{text-align:center;}
+}
+@media(max-width:600px){
+  .pillars{grid-template-columns:1fr;}
+  .build-grid{grid-template-columns:1fr;}
+  .metrics-block{grid-template-columns:1fr 1fr;}
+  .hero-headline{font-size:3rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ NAV ════════════════════════ -->
+<nav id="nav">
+  <a href="#" class="nav-brand">Axiom<span class="dot">.</span></a>
+  <ul class="nav-links">
+    <li><a href="#method">Method</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#proof">Case Studies</a></li>
+    <li><a href="#cta" class="btn-nav">Begin Audit</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════ HERO ════════════════════════ -->
+<section id="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-tag">
+      <span class="label">Axiom Intelligence Group — Strategic Intelligence</span>
+    </div>
+    <h1 class="hero-headline">We see what's forming <em>before</em> it forms.</h1>
+    <p class="hero-sub">Strategic intelligence for operators who cannot afford to be second. We diagnose the problem beneath the problem — then build the infrastructure to solve it permanently.</p>
+    <div class="hero-actions">
+      <a href="#cta" class="btn-primary">
+        <span>Begin Intelligence Audit</span>
+        <span>→</span>
+      </a>
+      <span class="hero-note">Cipher Session · 60 Minutes</span>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span class="scroll-label">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ MARQUEE ════════════════════ -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Strategic Intelligence</span><span class="sep">◆</span>
+    <span>AI Infrastructure</span><span class="sep">◆</span>
+    <span>Operational Transformation</span><span class="sep">◆</span>
+    <span>Cipher · Substrate · Strata · Luminos</span><span class="sep">◆</span>
+    <span>Embedded Intelligence</span><span class="sep">◆</span>
+    <span>Baton Rouge · Louisiana</span><span class="sep">◆</span>
+    <span>Founded April 2026</span><span class="sep">◆</span>
+    <span>Strategic Intelligence</span><span class="sep">◆</span>
+    <span>AI Infrastructure</span><span class="sep">◆</span>
+    <span>Operational Transformation</span><span class="sep">◆</span>
+    <span>Cipher · Substrate · Strata · Luminos</span><span class="sep">◆</span>
+    <span>Embedded Intelligence</span><span class="sep">◆</span>
+    <span>Baton Rouge · Louisiana</span><span class="sep">◆</span>
+    <span>Founded April 2026</span><span class="sep">◆</span>
+  </div>
+</div>
+
+<!-- ═══════════════════ STATS ════════════════════════ -->
+<section id="stats">
+  <div class="stats-grid" style="max-width:1180px;margin:0 auto;padding:0 2.5rem;">
+    <div class="stat-item">
+      <div class="stat-number"><span class="hi">88</span>%</div>
+      <div class="stat-label">Organizations using AI<br>in at least one function</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number"><span class="hi">1</span>%</div>
+      <div class="stat-label">Describe their AI deployment<br>as mature · McKinsey 2026</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">$<span class="hi">690</span>B</div>
+      <div class="stat-label">AI infrastructure spend<br>in 2026 — top 5 US tech firms</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number"><span class="hi">18</span>–36<span style="font-size:1.4rem;letter-spacing:0">mo</span></div>
+      <div class="stat-label">Window remaining.<br>Act before it closes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PROBLEM ═══════════════════════ -->
+<section id="problem">
+  <div class="wrap">
+    <div class="problem-grid">
+      <div class="reveal">
+        <p class="label" style="margin-bottom:1.5rem;">// The gap</p>
+        <h2 class="problem-hl">Most consultants solve the problem you <em>describe.</em><br>We solve the problem you <em>have.</em></h2>
+      </div>
+      <div class="reveal" style="transition-delay:0.15s;">
+        <div class="problem-body">
+          <p>The fear of AI among business owners is not a barrier to Axiom. It is the barrier Axiom removes.</p>
+          <p>Eighty-eight percent of organizations use AI. One percent describe their deployments as mature. The gap between those two numbers is where every competitor is operating. It is also where your organization is bleeding time, revenue, and competitive ground.</p>
+          <p>We never lead with AI. We lead with the problem you already feel — and the outcome you cannot currently reach. The mechanism beneath it all is invisible by design.</p>
+          <div class="pull-quote">
+            <p>"Axiom does not hand clients reports. It installs systems that run without them."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ METHOD ════════════════════════ -->
+<section id="method">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div>
+        <p class="label" style="margin-bottom:1.2rem;">// The methodology</p>
+        <h2 class="section-title">Four modes of intelligence.<br>One outcome.</h2>
+      </div>
+      <p class="section-desc">Every Axiom engagement runs through the same architecture. It is not a framework. It is a sequence — and the sequence is non-negotiable. Cipher before Substrate. Strata before Luminos.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-top-line"></div>
+        <div class="pillar-num">01 / 04</div>
+        <div class="pillar-code">Cipher</div>
+        <h3 class="pillar-title">Reading what your data cannot say out loud.</h3>
+        <p class="pillar-desc">Every engagement begins here. We read the organization's behavioral data, identify the actual problem beneath the stated problem, and decode the pattern producing current results. Diagnosis before prescription. Always.</p>
+      </div>
+      <div class="pillar" style="transition-delay:0.1s;">
+        <div class="pillar-top-line"></div>
+        <div class="pillar-num">02 / 04</div>
+        <div class="pillar-code">Substrate</div>
+        <h3 class="pillar-title">Infrastructure that runs without you in the room.</h3>
+        <p class="pillar-desc">We do not hand clients reports. We build automated workflows, AI diagnostic cycles, content engines, and client communication systems. Operational infrastructure, not advice. The deliverable runs after we leave.</p>
+      </div>
+      <div class="pillar" style="transition-delay:0.2s;">
+        <div class="pillar-top-line"></div>
+        <div class="pillar-num">03 / 04</div>
+        <div class="pillar-code">Strata</div>
+        <h3 class="pillar-title">Three layers deep where others stop at one.</h3>
+        <p class="pillar-desc">Surface. Behavioral. Identity. Most interventions fail because they operate at layer one — surface change without structural change. Axiom reads all three simultaneously and only intervenes where permanent change is possible.</p>
+      </div>
+      <div class="pillar" style="transition-delay:0.3s;">
+        <div class="pillar-top-line"></div>
+        <div class="pillar-num">04 / 04</div>
+        <div class="pillar-code">Luminos</div>
+        <h3 class="pillar-title">Light that reaches you before your competition sees it.</h3>
+        <p class="pillar-desc">The Axiom deliverable is not a solved problem. It is a client operating ahead of the moment they arrived in. You leave knowing what is forming next — before it forms. That is the standard. Every engagement closes here.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SERVICES ════════════════════════ -->
+<section id="services">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div>
+        <p class="label" style="margin-bottom:1.2rem;">// Service architecture</p>
+        <h2 class="section-title">Three engagements.<br>Each one permanent.</h2>
+      </div>
+      <p class="section-desc">Every tier begins with Cipher. Every tier closes with Luminos. The difference is depth of build, duration of engagement, and scope of Substrate deployed inside your operation.</p>
+    </div>
+    <div class="services-grid">
+      <div class="svc">
+        <div class="svc-tier">Tier I — Entry Point</div>
+        <h3 class="svc-name">Intelligence Audit</h3>
+        <div class="svc-price">$2,500 – $5,000</div>
+        <p class="svc-desc">The diagnostic before the prescription. Cipher applied to your full operation. Gaps identified at all three Strata. A prioritized Substrate roadmap delivered — and you leave with a precise answer to the question you've been circling.</p>
+        <ul class="svc-list">
+          <li>Full operational Cipher diagnosis</li>
+          <li>Three-layer Strata analysis</li>
+          <li>Substrate build roadmap — priority sequenced</li>
+          <li>Competitive positioning audit</li>
+          <li>60-minute Luminos delivery session</li>
+        </ul>
+        <a href="#cta" class="btn-svc">Schedule Cipher Audit →</a>
+      </div>
+
+      <div class="svc is-featured">
+        <div class="svc-tier">Tier II — Embedded Operations</div>
+        <h3 class="svc-name">Embedded Consultant</h3>
+        <div class="svc-price">$3,500 – $8,000 / month</div>
+        <p class="svc-desc">Axiom agents operating inside your workflows — on retainer. Ongoing AI infrastructure deployment, weekly diagnostic cycles, content automation, client intelligence, and revenue monitoring. Running every day, without daily direction from you.</p>
+        <ul class="svc-list">
+          <li>AI agents embedded in client operations</li>
+          <li>Weekly diagnostic cycles + flag protocol</li>
+          <li>Content and communication automation</li>
+          <li>Revenue monitoring and risk intelligence</li>
+          <li>Monthly Luminos strategic review</li>
+        </ul>
+        <a href="#cta" class="btn-svc">Begin Embedded Engagement →</a>
+      </div>
+
+      <div class="svc">
+        <div class="svc-tier">Tier III — Full Transformation</div>
+        <h3 class="svc-name">Transformation Retainer</h3>
+        <div class="svc-price">$10,000 – $25,000 / month</div>
+        <p class="svc-desc">Full Substrate build. Strata diagnostics across the entire organization. Multi-agent AI deployment at every operational layer. For operators who understand that the cost of waiting exceeds the cost of building — and are ready to move.</p>
+        <ul class="svc-list">
+          <li>Complete operational infrastructure rebuild</li>
+          <li>Multi-agent AI across all departments</li>
+          <li>Custom AI systems scoped to brand voice</li>
+          <li>Direct access — Percy Keith + Axiom intelligence</li>
+          <li>Priority Luminos delivery and ongoing iteration</li>
+        </ul>
+        <a href="#cta" class="btn-svc">Apply for Retainer →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PROOF ════════════════════════ -->
+<section id="proof">
+  <div class="wrap">
+    <div class="proof-grid">
+      <div class="proof-left">
+        <p class="label reveal" style="margin-bottom:1.2rem;">// Proof of concept</p>
+        <h2 class="proof-hl reveal">Built in 2 days.<br>Running on autopilot.</h2>
+        <p class="proof-body reveal">PKFIT — a coaching brand for men built around the Default Paralysis Loop framework — is the operational prototype for everything Axiom sells. Full AI integration of a 40-client coaching business, executed in 48 hours. The agents that run it now were not there three days before they were built.</p>
+        <div class="metrics-block reveal">
+          <div class="metric">
+            <div class="metric-val">40<span class="hi">+</span></div>
+            <div class="metric-lbl">Active clients<br>automated</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val">2</div>
+            <div class="metric-lbl">Days to full<br>AI integration</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val">255<span class="hi">K</span></div>
+            <div class="metric-lbl">Combined<br>audience reach</div>
+          </div>
+          <div class="metric">
+            <div class="metric-val">1.2<span class="hi">M</span></div>
+            <div class="metric-lbl">Content views<br>in 30 days</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="agents reveal">
+        <p class="label" style="margin-bottom:1.5rem;">// Systems deployed</p>
+        <div class="agent-card">
+          <div class="agent-head">
+            <div class="agent-badge">Intelligence Agent</div>
+            <h4 class="agent-name">SENTINEL — Client Intelligence</h4>
+          </div>
+          <p class="agent-desc">Reads all client data weekly. Runs full diagnostic across 40+ active clients. Identifies who needs intervention. Drafts responses in the coach's voice — calibrated to the brand's mechanism-based language rules. Queues everything for review before a single message sends. Operates daily without supervision.</p>
+        </div>
+        <div class="agent-card">
+          <div class="agent-head">
+            <div class="agent-badge">Revenue Agent</div>
+            <h4 class="agent-name">SIGNAL — Revenue & Risk</h4>
+          </div>
+          <p class="agent-desc">Owns dispute tracking, payment monitoring, revenue health scoring, and financial flag protocol. Surfaces problems before they become revenue events. Runs on live Supabase data — no spreadsheets, no manual checks, no missed signals.</p>
+        </div>
+        <div class="agent-card">
+          <div class="agent-head">
+            <div class="agent-badge">Content Agent</div>
+            <h4 class="agent-name">BROADCAST — Content & Distribution</h4>
+          </div>
+          <p class="agent-desc">Owns the content calendar, caption writing, deploy scheduling, and brand compliance enforcement. Voice rules are non-negotiable — no hype language, no exclamation points, every piece traces to a mechanism. The coach records. BROADCAST deploys.</p>
+        </div>
+        <div class="agent-card">
+          <div class="agent-head">
+            <div class="agent-badge">Full-Stack Application</div>
+            <h4 class="agent-name">PKFIT App — AI Coaching Platform</h4>
+          </div>
+          <p class="agent-desc">React frontend. Supabase database. Anthropic API powering AI workout generation, meal planning, and a client-side assistant scoped to brand voice. Stripe billing integration. Netlify auto-deployment. Built and running in parallel with the agent layer — same 48-hour window.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ WHAT WE BUILD ════════════════════ -->
+<section id="build">
+  <div class="wrap">
+    <div class="section-header reveal">
+      <div>
+        <p class="label" style="margin-bottom:1.2rem;">// Deliverables</p>
+        <h2 class="section-title">What Axiom<br>actually builds.</h2>
+      </div>
+      <p class="section-desc">Not tools. Not templates. Not slide decks with recommendations. Operating infrastructure — built to run without a human in the loop, scoped to your voice, deployed to your domain.</p>
+    </div>
+    <div class="build-grid">
+      <div class="build-card full">
+        <div>
+          <div class="build-code">[ Substrate.01 ]</div>
+          <h3 class="build-name">AI-Powered Operating Platforms</h3>
+          <p class="build-eg">Example: PKFIT — full coaching application</p>
+        </div>
+        <div>
+          <p class="build-desc">Custom-built applications with AI at the core. Client dashboards, coach admin panels, AI workout generators, meal planners, habit trackers, payment flows, community systems. Built in React. Deployed to Netlify. Powered by Anthropic. Scoped to your brand voice — clients experience your AI, not generic output.</p>
+        </div>
+      </div>
+      <div class="build-card">
+        <div class="build-code">[ Substrate.02 ]</div>
+        <h3 class="build-name">Client Intelligence Agents</h3>
+        <p class="build-desc">Autonomous agents that monitor your clients, flag problems before they become crises, draft interventions in your voice, and queue communications for your review. Without you watching every move.</p>
+        <p class="build-eg">Example: SENTINEL — 40-client daily diagnostic</p>
+      </div>
+      <div class="build-card">
+        <div class="build-code">[ Substrate.03 ]</div>
+        <h3 class="build-name">Revenue Monitoring Systems</h3>
+        <p class="build-desc">Real-time financial intelligence. Dispute tracking, payment monitoring, churn signals, revenue health scoring. Built on live data — not spreadsheets you update manually at the end of the week.</p>
+        <p class="build-eg">Example: SIGNAL — live revenue & risk layer</p>
+      </div>
+      <div class="build-card">
+        <div class="build-code">[ Substrate.04 ]</div>
+        <h3 class="build-name">Content Automation Engines</h3>
+        <p class="build-desc">Voice-scoped content systems that draft in your tone, follow your rules, and deploy on your schedule. Brand compliance enforced by protocol — not by reminder. You record. The system deploys.</p>
+        <p class="build-eg">Example: BROADCAST — PKFIT content layer</p>
+      </div>
+      <div class="build-card">
+        <div class="build-code">[ Substrate.05 ]</div>
+        <h3 class="build-name">Custom AI Assistants</h3>
+        <p class="build-desc">Scoped to your voice, your framework, your clients. Not a generic chatbot with a prompt on top. A brand-specific AI agent built from your rules, trained on your language, sounding like you because it was built like you.</p>
+        <p class="build-eg">Example: PKFIT client-side assistant</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CTA ════════════════════════ -->
+<section id="cta">
+  <div class="wrap">
+    <p class="label" style="opacity:0;animation:fadeUp 0.8s 0.1s forwards;">// The first move</p>
+    <h2 class="cta-headline reveal">The first move<br>is Cipher.</h2>
+    <p class="cta-sub reveal">Begin with a diagnosis. Leave with a roadmap. One session — 60 minutes — and you will know exactly what you have, what you are missing, and what to build first. The window is 18 to 36 months. The operators moving now are the ones who will be ahead when it closes.</p>
+    <div style="opacity:0;animation:fadeUp 0.8s 0.35s forwards;">
+      <a href="mailto:axiom@deployaxiom.com" class="btn-primary">
+        <span>Schedule Intelligence Audit</span>
+        <span>→</span>
+      </a>
+    </div>
+    <p class="cta-contact">axiom@deployaxiom.com</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ════════════════════════ -->
+<footer>
+  <div class="footer-brand">Axiom Intelligence Group</div>
+  <div class="footer-center">Strategic Intelligence · Baton Rouge, Louisiana</div>
+  <div class="footer-right">© 2026 Axiom Intelligence Group</div>
+</footer>
+
+<script>
+// ─── Nav scroll ───────────────────────────
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+}, { passive: true });
+
+// ─── Intersection Observer ────────────────
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal,.stat-item,.pillar,.svc,.build-card').forEach(el => io.observe(el));
+
+// ─── Stagger delays ───────────────────────
+document.querySelectorAll('.pillar').forEach((el, i) => el.style.transitionDelay = `${i * 0.12}s`);
+document.querySelectorAll('.svc').forEach((el, i) => el.style.transitionDelay = `${i * 0.14}s`);
+document.querySelectorAll('.build-card:not(.full)').forEach((el, i) => el.style.transitionDelay = `${i * 0.1}s`);
+document.querySelectorAll('.stat-item').forEach((el, i) => el.style.transitionDelay = `${i * 0.1}s`);
+
+// ─── Smooth anchor scroll ─────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>
