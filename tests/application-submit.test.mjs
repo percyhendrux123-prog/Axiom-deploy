@@ -42,6 +42,16 @@ test('rejects malformed email and missing authority',async()=>{
   assert.equal((await handler(request({...valid,'decision-authority':''}))).status,400);
 });
 
+test('rejects natural-language and authorization-header credential patterns',async()=>{
+  for(const leak of ['password is sample-private-value','Authorization: Bearer sample-private-bearer-token']){
+    let calls=0;
+    const handler=createApplicationHandler({now:()=>Date.parse('2026-09-14T12:00:00Z'),forward:async()=>{calls++;return new Response('',{status:200})}});
+    const response=await handler(request({...valid,'repeated-leak':leak}));
+    assert.equal(response.status,400);
+    assert.equal(calls,0);
+  }
+});
+
 test('rejects JWT-like credentials in free-text fields',async()=>{
   let calls=0;
   const jwt='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.c2lnbmF0dXJlcGF5bG9hZA';
