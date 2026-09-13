@@ -30,6 +30,14 @@ test('pilot page presents the bounded offer and exact schedule', () => {
   }
 });
 
+test('autoplay motion has a keyboard control and the application has a skip target', () => {
+  assert.ok(page.includes('class="skip-link" href="#application"'));
+  assert.ok(page.includes('id="application"'));
+  assert.ok(page.includes('id="motion-toggle"'));
+  assert.ok(page.includes('video.pause()'));
+  assert.ok(page.includes("addEventListener('click'"));
+});
+
 test('application collects business-fit evidence but no credentials', () => {
   for (const field of [
     'owner-name', 'business-name', 'email', 'business-location', 'decision-authority',

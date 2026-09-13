@@ -7,7 +7,7 @@ const REQUIRED = [
 ];
 const ALLOWED = new Set(['form-name','bot-field','case-study-consent',...REQUIRED]);
 const MAX_BODY = 64 * 1024;
-const SECRET_PATTERN = /(?:api[_ -]?key|password|secret|bearer)\s*[:=]\s*\S+|\bsk-[A-Za-z0-9_-]{16,}/i;
+const SECRET_PATTERN = /(?:api[_ -]?key|password|secret|bearer)\s*[:=]\s*\S+|\bsk-[A-Za-z0-9_-]{16,}|\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\b/i;
 
 const reply=(status,text,headers={})=>new Response(text,{status,headers:{'content-type':'text/plain; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff',...headers}});
 

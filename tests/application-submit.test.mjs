@@ -42,6 +42,15 @@ test('rejects malformed email and missing authority',async()=>{
   assert.equal((await handler(request({...valid,'decision-authority':''}))).status,400);
 });
 
+test('rejects JWT-like credentials in free-text fields',async()=>{
+  let calls=0;
+  const jwt='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.c2lnbmF0dXJlcGF5bG9hZA';
+  const handler=createApplicationHandler({now:()=>Date.parse('2026-09-14T12:00:00Z'),forward:async()=>{calls++;return new Response('',{status:200})}});
+  const response=await handler(request({...valid,'current-process':`Current process token ${jwt}`}));
+  assert.equal(response.status,400);
+  assert.equal(calls,0);
+});
+
 test('silently accepts honeypot traffic without forwarding',async()=>{
   let calls=0;
   const handler=createApplicationHandler({now:()=>Date.parse('2026-09-14T12:00:00Z'),forward:async()=>{calls++;return new Response('',{status:200})}});
