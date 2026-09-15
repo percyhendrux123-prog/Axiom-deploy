@@ -6,63 +6,48 @@ import { join } from 'node:path';
 const root = new URL('..', import.meta.url).pathname;
 const page = readFileSync(join(root, 'index.html'), 'utf8');
 const visibleText = page.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-const visibleTextLower = visibleText.toLowerCase();
 
-const required = [
-  'Two businesses. One operating lane each.',
-  'evaluation fee is sponsored in full',
-  'Monday, September 14, 2026 at 8:00 p.m. CDT',
-  'ten business days',
-  'one measurable outcome',
-  'No automatic charge, continuation, or deployment',
-  'Production deployment, live writes, outbound messages',
-  'data-netlify="true"',
-  'netlify-honeypot="bot-field"',
-  'name="form-name" value="axiom-two-business-evaluation"',
-  'action="/api/two-business-evaluation/apply"',
-];
-
-test('pilot page presents the bounded offer and exact schedule', () => {
-  for (const text of required) {
-    const source = text.includes('="') ? page : visibleTextLower;
-    const needle = text.includes('="') ? text : text.toLowerCase();
-    assert.ok(source.includes(needle), `missing: ${text}`);
-  }
-});
-
-test('autoplay motion has a keyboard control and the application has a skip target', () => {
-  assert.ok(page.includes('class="skip-link" href="#application"'));
-  assert.ok(page.includes('id="application"'));
-  assert.ok(page.includes('id="motion-toggle"'));
-  assert.ok(page.includes('video.pause()'));
-  assert.ok(page.includes("addEventListener('click'"));
-});
-
-test('application collects business-fit evidence but no credentials', () => {
-  for (const field of [
-    'owner-name', 'business-name', 'email', 'business-location', 'decision-authority',
-    'lane-name', 'lane-trigger', 'lane-frequency', 'current-process', 'repeated-leak',
-    'current-owner', 'measurable-outcome', 'evidence-available', 'systems-involved',
-    'ten-day-availability', 'terms-agreement'
-  ]) assert.ok(page.includes(`name="${field}"`), `missing field: ${field}`);
-  for (const forbidden of ['password', 'api-key', 'access-token', 'payment-card']) {
-    assert.ok(!page.includes(`name="${forbidden}"`), `forbidden field: ${forbidden}`);
-  }
-});
-
-test('claims and commercial boundaries are explicit', () => {
+test('permanent homepage replaces the expired campaign with a bounded operating thesis', () => {
   for (const text of [
-    'does not promise automation, revenue lift, time savings, or autonomous action',
-    'Any live access, deployment, ongoing operation, case study, or commercial proposal is separate',
-    'optional and is not scored',
-    'not be added to a general marketing list'
-  ]) assert.ok(visibleText.includes(text), `missing boundary: ${text}`);
+    "We don't sell automation. We deploy operational agents.",
+    'One agent, one operating lane, one measurable outcome.',
+    'Instagram DM is the current contact lane.',
+    'SIMULATED LANE · REAL OPERATING MODEL',
+    'Example lanes, not claims.',
+  ]) assert.ok(visibleText.includes(text), `missing: ${text}`);
+  for (const stale of ['TWO EVALUATIONS OPEN', 'Applications close', 'Submit one-lane application', 'two-lanes-motion.mp4']) {
+    assert.ok(!page.includes(stale), `stale campaign marker: ${stale}`);
+  }
 });
 
-test('legacy prices and generic automation language are absent', () => {
+test('model is accessible without motion and names the human hold', () => {
+  assert.ok(page.includes('class="skip" href="#model"'));
+  for (const state of ['Observe', 'Assemble', 'Draft', 'Hold', 'Record']) assert.ok(visibleText.includes(state));
+  assert.ok(visibleText.includes('human approval decides what may proceed.'));
+  assert.ok(!/<video\b/i.test(page), 'permanent homepage must not contain video');
+  assert.ok(page.includes('@media(prefers-reduced-motion:reduce)'));
+});
+
+test('local mapper keeps inputs on device and provides an OPERATE fallback', () => {
+  for (const field of ['repeated-workflow', 'continuity-break', 'observable-outcome']) {
+    assert.ok(page.includes(`name="${field}"`), `missing mapper field: ${field}`);
+  }
+  for (const text of ['navigator.clipboard.writeText', 'Nothing is submitted or stored.', 'Local only.', 'OPERATE brief template']) {
+    assert.ok(page.includes(text), `missing mapper safeguard: ${text}`);
+  }
+  assert.ok(!page.includes('data-netlify'), 'must not contain hosted form collection');
+  assert.ok(!page.includes('name="email"'), 'must not expose or collect email');
+});
+
+test('homepage makes permissions and execution separation explicit', () => {
+  for (const text of ['read', 'classify', 'draft', 'queue', 'execute', 'stop', 'Execution is separately permissioned']) {
+    assert.ok(visibleText.toLowerCase().includes(text.toLowerCase()), `missing boundary: ${text}`);
+  }
+});
+
+test('public site does not state prices, invented results, or stale package copy', () => {
   assert.ok(!/\$\d/.test(page), 'public dollar price found');
-  assert.ok(!page.includes('September 18'));
+  assert.ok(!/client results|clients saved|revenue lift/i.test(page), 'unsupported result claim found');
   assert.ok(!page.includes('Most Requested'));
   assert.ok(!page.includes('Strategic Intelligence'));
-  assert.ok(!/\[[A-Z][A-Z0-9 _-]+\]/.test(page), 'placeholder found');
 });

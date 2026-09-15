@@ -4,52 +4,35 @@
 
 ## Platform
 
-web
+Static web site. No hosted form, database, analytics requirement, metered service, or external font dependency is required for the public conversion path.
 
 ## Users
 
-Owner-operators of real small businesses who have decision authority and one repeated operating lane that loses continuity, requires human judgment, or repeatedly fails at a handoff. Baton Rouge and fitness-adjacent businesses receive priority when fit is equal; selection is not limited to one industry.
+Owner-operators and operators with one repeated workflow where context disappears between tools or handoffs, and where a responsible human retains judgment.
 
 ## Product Purpose
 
-Select two businesses for a sponsored Axiom one-lane operating evaluation. Each business leaves with an evidence-backed definition of one lane, one measurable outcome, permission boundaries, failure conditions, and a go/no-go agent scope. Success is a scope-ready or honestly rejected evaluation—not an automation demo.
+Explain Deploy Axiom's permanent operating-agent model and give a prospective operator a private, local-only way to prepare an `OPERATE` brief for the current Instagram DM contact lane.
 
 ## Positioning
 
-Axiom does not sell automation. It deploys operational agents. The sponsored evaluation tests whether one repeated lane is real, bounded, measurable, and permission-safe before access, deployment, or commercial terms are discussed.
-
-## Operating Context
-
-Applications open after approved publication on September 13, 2026 and close Monday, September 14, 2026 at 8:00 p.m. CDT. Fit review and owner screens occur September 15. Selected businesses complete the evaluation agreement, information boundary, and working-session booking by September 16. The evaluation itself runs for ten business days from its first working session.
+“We don't sell automation. We deploy operational agents.” The unit is one agent, one operating lane, one measurable outcome. Axiom operates the bounded lane, carries relevant context forward, records the disposition, and stops at human judgment.
 
 ## Capabilities and Constraints
 
-- Exactly two sponsored evaluations, one operating lane per business.
-- The evaluation fee is sponsored in full; no automatic continuation or charge.
-- Included: owner working session, current-state lane map, leak definition, baseline/measurement contract, read/classify/draft/queue/execute permission map, failure surface, synthetic or read-only evaluation when permitted, and final operator scope with go/no-go finding.
-- Excluded: production deployment, credentials in the application, live writes, outbound messages, payments, financial actions, broad “automate everything” projects, regulated professional judgment, indefinite operation, and guaranteed savings or revenue.
-- Any live access, deployment, ongoing service, case study, or commercial proposal is separate and permissioned.
-- Applicant data is used only to administer this selection unless separately authorized.
-- Public case-study permission is optional and not scored.
+- The homepage is static HTML, CSS, and JavaScript using only system/local fonts and locally hosted favicon/SVG and PNG social assets.
+- The operating-model sequence is a clearly labeled simulation, not evidence or a deployment claim.
+- Example lanes are job models only: lead disposition, check-in triage, content production handoff, and intake-to-scope.
+- The lane mapper does not submit, persist, transmit, or collect data. It copies an `OPERATE` brief locally when browser clipboard access is available; the no-JavaScript template remains visible in source.
+- Instagram DM is the public contact lane. No unverified email address is exposed.
+- Read, classify, draft, queue, execute, and stop are permission states. Execution is separately permissioned.
+- The September 2026 two-business campaign is archived and closed. Its old server route stays closed (410) for historical integrity, and its release packets remain tracked.
+- The signed `/api/meta/webhook` function remains intact and separately tested.
 
 ## Brand Commitments
 
-Operational, outcome-based systems language. “One operational agent. One operating lane. One measurable outcome.” Openly non-human Hermes identity where relevant. Real basalt/mineral matter, matte black, bone, mineral gray, and one restrained phosphor-green signal. No AI hype, cyberpunk, robot helmet, generic SaaS dashboard, fake metrics, or invented client proof.
-
-## Evidence on Hand
-
-- Sealed one-lane evaluation system under `/Users/percystewart/axiom/operating/one-lane-evaluation/`.
-- Existing Axiom operating evidence demonstrates bounded governance and testing, not client commercial outcomes.
-- Legacy `deployaxiom.com` content and prices are not current authority.
-
-## Product Principles
-
-1. Diagnose before deployment.
-2. One lane and one outcome only.
-3. Unknown is valid; invented certainty is not.
-4. A safe rejection is a useful result.
-5. Commercial terms and live authority remain separate gates.
+Calm, precise, mechanism-first language with masculine restraint. No automation hype, generic money promises, invented results, unsupported live-lane claims, prices, fake metrics, client logos, or generic SaaS dashboard aesthetics.
 
 ## Accessibility & Inclusion
 
-The application must be keyboard-operable, mobile-first, screen-reader labeled, high-contrast, usable at 200% zoom, and understandable without AI vocabulary.
+Semantic sections, a skip link, keyboard-visible focus, labeled inputs, a static operating-state sequence, a live copy-status message, responsive layout, and a reduced-motion rule. The core model and brief template remain meaningful without JavaScript.

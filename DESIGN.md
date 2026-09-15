@@ -2,62 +2,55 @@
 
 ## Mode
 
-Persuade. One bounded application replaces legacy package-shopping.
+Permanent product homepage. Explain the operating model and make a bounded first contact easy without pretending a public form is an operating system.
 
 ## Screen job
 
-Let an owner/operator understand a sponsored one-lane evaluation, its limits, and submit one concrete repeated workflow without exposing credentials or private operational data.
+Let an operator understand how a Deploy Axiom lane works: the trigger enters, context is assembled, a draft is held for human judgment, and the resulting disposition is recorded for the next pass.
 
 ## Primary action
 
-Submit the one-lane evaluation form.
+Start with `OPERATE` in Instagram DM. The local lane mapper prepares, but never sends or stores, that brief.
 
 ## Content hierarchy
 
-1. Two businesses; one operating lane each.
-2. Evaluation outcome and exact deadline.
-3. Five-stage inspection method and exclusions.
-4. Specific workflow application.
-5. Terms and privacy.
+1. Exact thesis: “We don't sell automation. We deploy operational agents.”
+2. One agent / one lane / one measurable outcome.
+3. Continuity problem and simulated operating model.
+4. Deployment contract and example jobs.
+5. Permission boundaries and local-only lane mapper.
+6. Current Instagram contact lane and closed-campaign archive.
 
 ## Visual language
 
-- World: industrial calibration bench.
-- Material: bone work paper, black basalt, mineral gray, one phosphor-green live signal.
-- Typography: Barlow Condensed for operating declarations; Public Sans for precise instructions.
-- Hero: original generated physical-mechanism study labelled as illustration, never evidence.
-- Structure: editorial inspection sheet; no SaaS cards, dashboard mockups, tier grids, gradients, or robot imagery.
-- Motion: background mechanism only, no baked text; reduced-motion mode uses a static dark field/poster.
+- World: field notebook / operating contract, not a product dashboard.
+- Material: warm work paper, near-black ink, muted mineral green, one restrained signal green.
+- Typography: system sans-serif only; no network font request or unrecorded font license.
+- Structure: editorial rules, state sequence, and plain operating cards.
+- Motion: none on the permanent homepage. The model has accessible static meaning and respects reduced-motion preferences.
 
 ## States
 
-- Open: complete form available.
-- Disabled/closed: all inputs disabled after September 14, 2026 at 8:00 p.m. CDT; close notice visible.
-- Success: dedicated confirmation page with no implied selection.
-- Error: browser-native required-field and email validation; Netlify owns transport errors on live deploy.
-- Permission: separate deployment, access, operating, case-study, and commercial decisions remain outside the public application.
+- Contact: Instagram DM opens only when the visitor elects to follow the link.
+- Mapper: browser validates all three fields; clipboard copy either confirms locally or supplies a visible fallback message.
+- No JavaScript: an `OPERATE` template is present in the page's `noscript` content.
+- Archive: campaign is explicitly CLOSED, has `noindex,follow`, and offers no enabled application.
+- Webhook: signed Meta webhook and its isolated function behavior are unchanged.
 
 ## Responsive behavior
 
-- Desktop: declaration and visual share the viewport; method stays beside the form.
-- Mobile: declaration leads, mechanism remains visible, method precedes form, every touch target is at least 44 pixels.
-
-## Evidence used
-
-- Axiom editorial canon and recent usage register.
-- One-lane evaluation doctrine and sealed invariant vocabulary.
-- Live legacy site as product-truth evidence and visual anti-reference.
-- UIZZE public catalogue browsing was unavailable during this bounded build; no external layout was copied.
+- Desktop: hierarchy uses wide editorial spacing; state and permission sequences run across the page.
+- Mobile: sections stack; touch targets remain at least 46px; the state sequence becomes vertical rather than overflowing.
 
 ## Forbidden defaults
 
-Rounded card grids, package/pricing comparisons, fake metrics, client logos without proof, cyberpunk agents, human stand-ins, neon abundance, ambient gradients, guaranteed outcomes, and generic “Book a call” conversion.
+Autoplay video, external font dependencies, rounded SaaS card grids, pricing, fake metrics, client proof without evidence, cyberpunk, robot imagery, generic “Book a call” conversion, open-campaign language, hosted application forms, and hidden data collection.
 
 ## Acceptance criteria
 
-- Legacy visible prices and package tiers are absent.
-- The offer says one operational lane and one measurable outcome.
-- Evaluation and deployment are explicitly separate.
-- Form requests no credentials or protected records.
-- Optional case-study interest is unchecked and unscored.
-- Exact deadline, terms, privacy, closed state, success state, keyboard focus, and responsive layout are observable.
+- Homepage contains the exact thesis and current Instagram contact lane.
+- Simulation label, human Hold, and no-JS meaning are present.
+- Example lanes are clearly examples, not deployment claims.
+- Mapper is local-only, secret-safe, clipboard-based, and has a visible fallback template.
+- Metadata, canonical URL, favicon, OG asset, sitemap, robots, CSP, and build output are present.
+- Archive is closed and excluded from search indexing; release history and a server-closed legacy route remain preserved.
