@@ -83,6 +83,20 @@ test('homepage loads local assets, preserves manual copy fallback, and has a com
   const mobileStyles = stylesheet().split('@media(max-width:390px){').at(-1);
   assert.ok(mobileStyles.includes('.nav{display:none}'), 'mobile styles must hide the center nav');
   assert.ok(mobileStyles.includes('header{gap:'), 'mobile header must reserve compact spacing');
+  assert.ok(mobileStyles.includes('.brand{font-size:.78rem;letter-spacing:.08em}'), '390px header must compact the expanded brand');
+});
+
+test('homepage keeps the thesis direct and the hero note materially quiet', () => {
+  assert.match(homepage, /<a class="brand" href="\/" aria-label="Deploy Axiom home">DEPLOY AXIOM<\/a>/);
+  const hero = homepage.match(/<section class="hero"[\s\S]*?<\/section>/)?.[0] ?? '';
+  assert.ok(!hero.includes('Deploy Axiom / operational agents'), 'decorative hero kicker must be removed');
+  assert.ok(homepage.includes('SIMULATED LANE · REAL OPERATING MODEL'), 'required model disclosure is missing');
+
+  const styles = stylesheet();
+  assert.match(styles, /h1\{[^}]*letter-spacing:-\.04em;/, 'H1 tracking must not be tighter than -0.04em');
+  const heroNote = styles.match(/\.hero-note\{([^}]*)\}/)?.[1] ?? '';
+  assert.ok(!/border-left\s*:/.test(heroNote), 'hero note must not use a side-tab border');
+  assert.match(heroNote, /border-top:1px solid var\(--ink\);/, 'hero note needs a quiet top rule');
 });
 
 test('all public pages avoid inline code and use local stylesheets', () => {
