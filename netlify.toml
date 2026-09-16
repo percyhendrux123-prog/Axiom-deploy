@@ -1,5 +1,5 @@
 [build]
-  command = "rm -rf dist && mkdir -p dist/assets && cp index.html success.html robots.txt sitemap.xml dist/ && cp -R archive dist/archive && cp assets/favicon.svg assets/axiom-og.png dist/assets/"
+  command = "rm -rf dist && mkdir -p dist/assets && cp index.html success.html robots.txt sitemap.xml dist/ && cp -R archive dist/archive && cp assets/favicon.svg assets/axiom-og.png assets/site.css assets/site.js dist/assets/"
   publish = "dist"
 
 [functions]
@@ -8,7 +8,8 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "DENY"

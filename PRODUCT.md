@@ -4,7 +4,7 @@
 
 ## Platform
 
-Static web site. No hosted form, database, analytics requirement, metered service, or external font dependency is required for the public conversion path.
+web
 
 ## Users
 
@@ -20,6 +20,7 @@ Explain Deploy Axiom's permanent operating-agent model and give a prospective op
 
 ## Capabilities and Constraints
 
+- Static web site. No hosted form, database, analytics requirement, metered service, or external font dependency is required for the public conversion path.
 - The homepage is static HTML, CSS, and JavaScript using only system/local fonts and locally hosted favicon/SVG and PNG social assets.
 - The operating-model sequence is a clearly labeled simulation, not evidence or a deployment claim.
 - Example lanes are job models only: lead disposition, check-in triage, content production handoff, and intake-to-scope.

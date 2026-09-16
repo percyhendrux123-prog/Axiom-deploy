@@ -5,6 +5,8 @@ import { join } from 'node:path';
 
 const root = new URL('..', import.meta.url).pathname;
 const page = readFileSync(join(root, 'index.html'), 'utf8');
+const stylesheet = readFileSync(join(root, 'assets/site.css'), 'utf8');
+const script = readFileSync(join(root, 'assets/site.js'), 'utf8');
 const visibleText = page.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
 test('permanent homepage replaces the expired campaign with a bounded operating thesis', () => {
@@ -25,16 +27,17 @@ test('model is accessible without motion and names the human hold', () => {
   for (const state of ['Observe', 'Assemble', 'Draft', 'Hold', 'Record']) assert.ok(visibleText.includes(state));
   assert.ok(visibleText.includes('human approval decides what may proceed.'));
   assert.ok(!/<video\b/i.test(page), 'permanent homepage must not contain video');
-  assert.ok(page.includes('@media(prefers-reduced-motion:reduce)'));
+  assert.ok(stylesheet.includes('@media(prefers-reduced-motion:reduce)'));
 });
 
 test('local mapper keeps inputs on device and provides an OPERATE fallback', () => {
   for (const field of ['repeated-workflow', 'continuity-break', 'observable-outcome']) {
     assert.ok(page.includes(`name="${field}"`), `missing mapper field: ${field}`);
   }
-  for (const text of ['navigator.clipboard.writeText', 'Nothing is submitted or stored.', 'Local only.', 'OPERATE brief template']) {
+  for (const text of ['Nothing is submitted or stored.', 'Local only.', 'OPERATE brief template']) {
     assert.ok(page.includes(text), `missing mapper safeguard: ${text}`);
   }
+  assert.ok(script.includes('navigator.clipboard.writeText'), 'clipboard behavior must live in local script');
   assert.ok(!page.includes('data-netlify'), 'must not contain hosted form collection');
   assert.ok(!page.includes('name="email"'), 'must not expose or collect email');
 });
