@@ -43,7 +43,10 @@ test('homepage lane mapper is local-only, creates an OPERATE brief, and has visi
     'Local only.', 'Do not include passwords, API keys, private records, or other secrets.',
     '<noscript>', 'OPERATE brief template',
   ]) assert.ok(homepage.includes(marker), `missing mapper marker: ${marker}`);
-  assert.ok(!homepage.includes('<form name='), 'homepage must not contain a hosted form');
+  assert.ok(!/<form\b/i.test(homepage), 'local mapper must use a non-submitting container, not a form');
+  for (const marker of ['FormData', "addEventListener('submit'", 'fetch(', 'XMLHttpRequest', 'sendBeacon', 'localStorage', 'sessionStorage', 'document.cookie']) {
+    assert.ok(!script().includes(marker), `lane mapper must not use submission or persistence behavior: ${marker}`);
+  }
 });
 
 test('archive is closed, indexed away, and preserves historical route context without an enabled application', () => {
