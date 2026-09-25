@@ -23,8 +23,8 @@ const prohibitedRootMarkers = [
 
 test('homepage states the permanent operating-agent model and contact lane', () => {
   for (const marker of [
-    "We don't sell automation. We deploy operational agents.",
-    'one agent, one operating lane, one measurable outcome',
+    'Nothing in your business waits on you to remember it.',
+    'We start with your leads and missed calls',
     'Start with OPERATE',
     'https://ig.me/m/deployaxiom',
     'Instagram DM is the current contact lane',

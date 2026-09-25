@@ -11,8 +11,8 @@ const visibleText = page.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
 test('permanent homepage replaces the expired campaign with a bounded operating thesis', () => {
   for (const text of [
-    "We don't sell automation. We deploy operational agents.",
-    'One agent, one operating lane, one measurable outcome.',
+    'Nothing in your business waits on you to remember it.',
+    'We start with your leads and missed calls',
     'Instagram DM is the current contact lane.',
     'SIMULATED LANE · REAL OPERATING MODEL',
     'Example lanes, not claims.',
