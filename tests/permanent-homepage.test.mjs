@@ -28,12 +28,19 @@ test('homepage states the permanent operating-agent model and contact lane', () 
     'Start with OPERATE',
     'https://ig.me/m/deployaxiom',
     'Instagram DM is the current contact lane',
-    'SIMULATED LANE · REAL OPERATING MODEL',
-    'Observe', 'Assemble', 'Draft', 'Hold', 'Record',
-    'human approval', 'read', 'classify', 'draft', 'queue', 'execute', 'stop',
+    'EXAMPLE JOB · HOW EACH ONE RUNS',
+    'Catch', 'Gather', 'Prepare', 'You decide', 'Log',
+    'waits for your OK', 'read', 'sort', 'draft', 'line up', 'Act*', 'stop',
   ]) assert.ok(homepage.includes(marker), `missing homepage marker: ${marker}`);
   assert.ok(!/<video\b/i.test(homepage), 'homepage must not load autoplay video');
   for (const marker of prohibitedRootMarkers) assert.ok(!homepage.includes(marker), `stale root marker: ${marker}`);
+});
+
+test('homepage copy avoids retired internal language', () => {
+  const visible = homepage.replace(/<[^>]+>/g, ' ');
+  for (const retired of [/operational agents?/i, /operating lanes?/i, /\bone lane\b/i, /\bdeployments?\b/i, /sell automation/i, /One agent\. One lane\./i]) {
+    assert.ok(!retired.test(visible), `retired public phrase found: ${retired}`);
+  }
 });
 
 test('homepage lane mapper is local-only, creates an OPERATE brief, and has visible no-JS fallback', () => {
@@ -64,7 +71,7 @@ test('metadata and static assets are local, canonical, and shareable', () => {
   for (const marker of [
     '<link rel="canonical" href="https://deployaxiom.com/">',
     'property="og:title"', 'property="og:description"', 'property="og:image" content="https://deployaxiom.com/assets/axiom-og.png"',
-    'name="twitter:card"', 'name="twitter:image" content="https://deployaxiom.com/assets/axiom-og.png"', 'property="og:image:alt" content="Deploy Axiom operational agents"', 'name="twitter:image:alt" content="Deploy Axiom operational agents"', 'name="theme-color" content="#ebe7dc"', 'rel="icon" href="/assets/favicon.svg"',
+    'name="twitter:card"', 'name="twitter:image" content="https://deployaxiom.com/assets/axiom-og.png"', 'property="og:image:alt" content="Deploy Axiom: Nothing in your business waits on you to remember it."', 'name="twitter:image:alt" content="Deploy Axiom: Nothing in your business waits on you to remember it."', 'name="theme-color" content="#ebe7dc"', 'rel="icon" href="/assets/favicon.svg"',
   ]) assert.ok(homepage.includes(marker), `missing metadata marker: ${marker}`);
   for (const asset of ['assets/favicon.svg', 'assets/axiom-og.png']) {
     const fullPath = join(root, asset);
@@ -93,7 +100,7 @@ test('homepage keeps the thesis direct and the hero note materially quiet', () =
   assert.match(homepage, /<a class="brand" href="\/" aria-label="Deploy Axiom home">DEPLOY AXIOM<\/a>/);
   const hero = homepage.match(/<section class="hero"[\s\S]*?<\/section>/)?.[0] ?? '';
   assert.ok(!hero.includes('Deploy Axiom / operational agents'), 'decorative hero kicker must be removed');
-  assert.ok(homepage.includes('SIMULATED LANE · REAL OPERATING MODEL'), 'required model disclosure is missing');
+  assert.ok(homepage.includes('EXAMPLE JOB · HOW EACH ONE RUNS'), 'required example disclosure is missing');
 
   const styles = stylesheet();
   assert.match(styles, /h1\{[^}]*letter-spacing:-\.04em;/, 'H1 tracking must not be tighter than -0.04em');

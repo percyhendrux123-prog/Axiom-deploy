@@ -14,7 +14,7 @@
 
   button.addEventListener('click', async () => {
     if (requiredControls.some((control) => !control.reportValidity())) return;
-    const brief = `OPERATE\nRepeated workflow: ${workflow.value}\nContinuity break: ${continuityBreak.value}\nObservable outcome: ${observableOutcome.value}\n\nNo secrets included.`;
+    const brief = `OPERATE\nWhat keeps slipping: ${workflow.value}\nWhere it gets dropped: ${continuityBreak.value}\nWhat handled looks like: ${observableOutcome.value}\n\nNo secrets included.`;
     manualOutput.textContent = brief;
     try {
       await navigator.clipboard.writeText(brief);

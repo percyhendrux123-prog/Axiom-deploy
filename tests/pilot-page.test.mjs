@@ -14,8 +14,8 @@ test('permanent homepage replaces the expired campaign with a bounded operating 
     'Nothing in your business waits on you to remember it.',
     'We start with your leads and missed calls',
     'Instagram DM is the current contact lane.',
-    'SIMULATED LANE · REAL OPERATING MODEL',
-    'Example lanes, not claims.',
+    'EXAMPLE JOB · HOW EACH ONE RUNS',
+    'Examples, not client work.',
   ]) assert.ok(visibleText.includes(text), `missing: ${text}`);
   for (const stale of ['TWO EVALUATIONS OPEN', 'Applications close', 'Submit one-lane application', 'two-lanes-motion.mp4']) {
     assert.ok(!page.includes(stale), `stale campaign marker: ${stale}`);
@@ -24,8 +24,8 @@ test('permanent homepage replaces the expired campaign with a bounded operating 
 
 test('model is accessible without motion and names the human hold', () => {
   assert.ok(page.includes('class="skip" href="#model"'));
-  for (const state of ['Observe', 'Assemble', 'Draft', 'Hold', 'Record']) assert.ok(visibleText.includes(state));
-  assert.ok(visibleText.includes('human approval decides what may proceed.'));
+  for (const state of ['Catch', 'Gather', 'Prepare', 'You decide', 'Log']) assert.ok(visibleText.includes(state));
+  assert.ok(visibleText.includes('Anything that commits your business waits for your OK.'));
   assert.ok(!/<video\b/i.test(page), 'permanent homepage must not contain video');
   assert.ok(stylesheet.includes('@media(prefers-reduced-motion:reduce)'));
 });
@@ -43,7 +43,7 @@ test('local mapper keeps inputs on device and provides an OPERATE fallback', () 
 });
 
 test('homepage makes permissions and execution separation explicit', () => {
-  for (const text of ['read', 'classify', 'draft', 'queue', 'execute', 'stop', 'Execution is separately permissioned']) {
+  for (const text of ['read', 'sort', 'draft', 'line up', 'act*', 'stop', 'Acting for your business is a separate yes']) {
     assert.ok(visibleText.toLowerCase().includes(text.toLowerCase()), `missing boundary: ${text}`);
   }
 });
