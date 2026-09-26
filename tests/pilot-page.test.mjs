@@ -13,7 +13,7 @@ test('permanent homepage replaces the expired campaign with a bounded operating 
   for (const text of [
     'Nothing in your business waits on you to remember it.',
     'We start with your leads and missed calls',
-    'Instagram DM is the current contact lane.',
+    'Or send LEADS to us on Instagram.',
     'EXAMPLE JOB · HOW EACH ONE RUNS',
     'Examples, not client work.',
   ]) assert.ok(visibleText.includes(text), `missing: ${text}`);
@@ -30,11 +30,11 @@ test('model is accessible without motion and names the human hold', () => {
   assert.ok(stylesheet.includes('@media(prefers-reduced-motion:reduce)'));
 });
 
-test('local mapper keeps inputs on device and provides an OPERATE fallback', () => {
+test('local mapper keeps inputs on device and provides a LEADS fallback', () => {
   for (const field of ['repeated-workflow', 'continuity-break', 'observable-outcome']) {
     assert.ok(page.includes(`name="${field}"`), `missing mapper field: ${field}`);
   }
-  for (const text of ['Nothing is submitted or stored.', 'Local only.', 'OPERATE brief template']) {
+  for (const text of ['Nothing is submitted or stored.', 'Local only.', 'LEADS brief template']) {
     assert.ok(page.includes(text), `missing mapper safeguard: ${text}`);
   }
   assert.ok(script.includes('navigator.clipboard.writeText'), 'clipboard behavior must live in local script');

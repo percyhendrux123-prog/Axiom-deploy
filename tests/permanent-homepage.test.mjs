@@ -25,9 +25,9 @@ test('homepage states the permanent operating-agent model and contact lane', () 
   for (const marker of [
     'Nothing in your business waits on you to remember it.',
     'We start with your leads and missed calls',
-    'Start with OPERATE',
+    'DM: LEADS',
     'https://ig.me/m/deployaxiom',
-    'Instagram DM is the current contact lane',
+    'Call <a href="tel:+12256358671">(225) 635-8671</a> any hour',
     'EXAMPLE JOB · HOW EACH ONE RUNS',
     'Catch', 'Gather', 'Prepare', 'You decide', 'Log',
     'waits for your OK', 'read', 'sort', 'draft', 'line up', 'Act*', 'stop',
@@ -38,17 +38,17 @@ test('homepage states the permanent operating-agent model and contact lane', () 
 
 test('homepage copy avoids retired internal language', () => {
   const visible = homepage.replace(/<[^>]+>/g, ' ');
-  for (const retired of [/operational agents?/i, /operating lanes?/i, /\bone lane\b/i, /\bdeployments?\b/i, /sell automation/i, /One agent\. One lane\./i]) {
+  for (const retired of [/operational agents?/i, /operating lanes?/i, /\bone lane\b/i, /\bdeployments?\b/i, /sell automation/i, /One agent\. One lane\./i, /\bOPERATE\b/, /contact lane/i]) {
     assert.ok(!retired.test(visible), `retired public phrase found: ${retired}`);
   }
 });
 
-test('homepage lane mapper is local-only, creates an OPERATE brief, and has visible no-JS fallback', () => {
+test('homepage lane mapper is local-only, creates a LEADS brief, and has visible no-JS fallback', () => {
   for (const marker of [
     'id="lane-mapper"', 'name="repeated-workflow"', 'name="continuity-break"', 'name="observable-outcome"',
-    'Copy OPERATE brief', 'Nothing is submitted or stored',
+    'Copy LEADS brief', 'Nothing is submitted or stored',
     'Local only.', 'Do not include passwords, API keys, private records, or other secrets.',
-    '<noscript>', 'OPERATE brief template',
+    '<noscript>', 'LEADS brief template',
   ]) assert.ok(homepage.includes(marker), `missing mapper marker: ${marker}`);
   assert.ok(!/<form\b/i.test(homepage), 'local mapper must use a non-submitting container, not a form');
   for (const marker of ['FormData', "addEventListener('submit'", 'fetch(', 'XMLHttpRequest', 'sendBeacon', 'localStorage', 'sessionStorage', 'document.cookie']) {
@@ -87,7 +87,7 @@ test('homepage loads local assets, preserves manual copy fallback, and has a com
   assert.ok(!/<script(?![^>]*\bsrc=)[^>]*>/i.test(homepage), 'homepage must not contain inline script');
   assert.match(homepage, /<nav class="nav" aria-label="Primary">/);
   assert.ok(homepage.includes('id="manual-brief"'), 'manual fallback is missing');
-  assert.ok(homepage.includes('OPERATE brief template'), 'manual template is missing');
+  assert.ok(homepage.includes('LEADS brief template'), 'manual template is missing');
   assert.match(script(), /navigator\.clipboard\.writeText/);
   assert.match(script(), /manualBrief\.focus\(\)/);
   const mobileStyles = stylesheet().split('@media(max-width:390px){').at(-1);

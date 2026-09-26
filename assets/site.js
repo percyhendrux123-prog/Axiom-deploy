@@ -14,13 +14,13 @@
 
   button.addEventListener('click', async () => {
     if (requiredControls.some((control) => !control.reportValidity())) return;
-    const brief = `OPERATE\nWhat keeps slipping: ${workflow.value}\nWhere it gets dropped: ${continuityBreak.value}\nWhat handled looks like: ${observableOutcome.value}\n\nNo secrets included.`;
+    const brief = `LEADS\nWhat keeps slipping: ${workflow.value}\nWhere it gets dropped: ${continuityBreak.value}\nWhat handled looks like: ${observableOutcome.value}\n\nNo secrets included.`;
     manualOutput.textContent = brief;
     try {
       await navigator.clipboard.writeText(brief);
-      status.textContent = 'OPERATE brief copied locally.';
+      status.textContent = 'LEADS brief copied locally.';
     } catch {
-      status.textContent = 'Copy failed. Use the OPERATE template below.';
+      status.textContent = 'Copy failed. Use the LEADS template below.';
       manualBrief.focus();
     }
   });
