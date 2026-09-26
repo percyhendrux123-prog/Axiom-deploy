@@ -1,5 +1,5 @@
 [build]
-  command = "rm -rf dist && mkdir -p dist/assets && cp index.html success.html robots.txt sitemap.xml dist/ && cp -R archive dist/archive && cp assets/favicon.svg assets/axiom-og.png assets/site.css assets/site.js dist/assets/"
+  command = "rm -rf dist && mkdir -p dist/assets && cp index.html success.html robots.txt sitemap.xml dist/ && cp -R archive dist/archive && cp -R baton-rouge dist/baton-rouge && cp assets/favicon.svg assets/axiom-og.png assets/site.css assets/site.js dist/assets/ && cp assets/sales-line-test-call.m4a dist/assets/"
   publish = "dist"
 
 [functions]
