@@ -1,5 +1,5 @@
-Panchang ExtraBold © Indian Type Foundry.
+Clash Display Bold © Indian Type Foundry.
 Official webfont obtained from Fontshare CDN for Deploy Axiom's own website.
 Licensed under the ITF Free Font License: https://www.fontshare.com/licenses/itf-ffl
-Font family: https://www.fontshare.com/fonts/panchang
+Font family: https://www.fontshare.com/fonts/clash-display
 Do not modify the font file or redistribute it for another product.
