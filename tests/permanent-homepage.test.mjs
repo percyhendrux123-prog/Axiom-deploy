@@ -94,7 +94,7 @@ test('metadata and static assets are local, canonical, and shareable', () => {
 });
 
 test('homepage loads local assets, preserves manual copy fallback, and has a compact mobile header', () => {
-  assert.match(homepage, /<link rel="stylesheet" href="\/assets\/site\.css">/);
+  assert.match(homepage, /<link rel="stylesheet" href="\/assets\/site\.css\?v=clash1">/);
   assert.match(homepage, /<script src="\/assets\/site\.js" defer><\/script>/);
   assert.ok(!/<style[ >]/i.test(homepage), 'homepage must not contain inline style');
   assert.ok(!/<script(?![^>]*\bsrc=)[^>]*>/i.test(homepage), 'homepage must not contain inline script');
@@ -125,7 +125,7 @@ test('homepage keeps the thesis direct and the hero note materially quiet', () =
 test('all public pages avoid inline code and use local stylesheets', () => {
   for (const path of ['index.html', 'success.html', archivePath]) {
     const page = read(path);
-    assert.match(page, /<link rel="stylesheet" href="(?:\/)?assets\/site\.css">|<link rel="stylesheet" href="\/assets\/site\.css">/);
+    assert.match(page, /<link rel="stylesheet" href="\/?assets\/site\.css(?:\?v=clash1)?">/);
     assert.ok(!/<style[ >]/i.test(page), `${path} must not contain inline style`);
     assert.ok(!/<script(?![^>]*\bsrc=)[^>]*>/i.test(page), `${path} must not contain inline script`);
   }
