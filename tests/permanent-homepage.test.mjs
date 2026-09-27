@@ -21,6 +21,19 @@ const prohibitedRootMarkers = [
   'command@deployaxiom.com',
 ];
 
+test('clay typography uses a local display font without changing the live contact lane', () => {
+  const css = stylesheet();
+  assert.match(css, /@font-face\{font-family:Panchang;src:url\('\/assets\/Panchang-ExtraBold\.woff2'\)/);
+  assert.match(css, /\.clay h1\{[^}]*font-family:Panchang/);
+  assert.match(css, /\.clay \.section-heading h2\{[^}]*font-family:Panchang/);
+  assert.ok(!css.includes('ui-rounded'), 'clay copy must not resolve to rounded platform fonts');
+  assert.ok(existsSync(join(root, 'assets/Panchang-ExtraBold.woff2')));
+  assert.ok(statSync(join(root, 'assets/Panchang-ExtraBold.woff2')).size > 10000);
+  assert.ok(read('netlify.toml').includes('cp assets/Panchang-ExtraBold.woff2 dist/assets/'));
+  assert.match(homepage, /href="tel:\+1\d{10}"/, 'live sales-line link must remain valid');
+  assert.ok(homepage.includes('(225) 635-8671'), 'live sales-line text must remain unchanged');
+});
+
 test('homepage states the permanent operating-agent model and contact lane', () => {
   for (const marker of [
     'Nothing in your business waits on you to remember it.',

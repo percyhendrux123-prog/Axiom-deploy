@@ -6,8 +6,10 @@
 @media(max-width:390px){.clay header{padding:.5rem .5rem .5rem 1rem}.clay header>.cta{min-height:40px;padding:.45rem .8rem}header{gap:.75rem;padding:1rem 0}.nav{display:none}.brand{font-size:.78rem;letter-spacing:.08em}header>.cta{min-height:38px;padding:.45rem .65rem;font-size:.78rem;white-space:nowrap}.notice{padding:2rem 1rem;font-size:16px}.notice h1{font-size:2.65rem}}
 
 /* Clay layer (design/clay-preview, 2026-09-27). Loaded after site.css on the homepage only. */
+/* Fontshare Panchang ExtraBold; self-hosted for consistent display across devices. */
+@font-face{font-family:Panchang;src:url('/assets/Panchang-ExtraBold.woff2') format('woff2');font-style:normal;font-weight:800;font-display:swap}
 :root{--clay:#efe9dd;--clay-hi:#fffaf0;--hold:#ffd9a8;--signal-lo:#8fcf1c;--r-xl:36px;--r-lg:28px;--r-md:20px;--r-sm:14px;--pop:10px 10px 22px rgba(120,105,80,.28),-8px -8px 18px rgba(255,255,255,.85),inset 2px 2px 3px rgba(255,255,255,.7),inset -3px -3px 6px rgba(120,105,80,.12);--pop-sm:6px 6px 14px rgba(120,105,80,.26),-5px -5px 12px rgba(255,255,255,.85),inset 1px 1px 2px rgba(255,255,255,.7),inset -2px -2px 4px rgba(120,105,80,.12);--press:inset 5px 5px 10px rgba(120,105,80,.22),inset -5px -5px 10px rgba(255,255,255,.8);--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .18 0 0 0 0 .15 0 0 0 .17 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");--pop-ink:6px 6px 14px rgba(40,35,25,.38),-5px -5px 12px rgba(255,255,255,.85),inset 1px 1px 2px rgba(255,255,255,.18),inset -3px -3px 6px rgba(0,0,0,.35);--pop-green:6px 6px 14px rgba(90,120,20,.35),-5px -5px 12px rgba(255,255,255,.85),inset 2px 2px 3px rgba(255,255,255,.6),inset -3px -3px 6px rgba(60,90,0,.25)}
-body.clay{background:var(--grain),radial-gradient(1200px 600px at 85% -10%,#f6f1e6 0,transparent 60%),var(--paper);font-family:ui-rounded,"SF Pro Rounded",ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6}
+body.clay{background:var(--grain),radial-gradient(1200px 600px at 85% -10%,#f6f1e6 0,transparent 60%),var(--paper);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6}
 .clay a:focus-visible,.clay button:focus-visible,.clay input:focus-visible,.clay textarea:focus-visible{outline:3px solid #3f6f00;outline-offset:4px}
 .clay .skip{border-radius:var(--r-sm)}
 .clay header{position:sticky;top:.8rem;z-index:4;gap:1rem;margin-top:.8rem;padding:.7rem .7rem .7rem 1.3rem;background:var(--clay);border:0;border-radius:999px;box-shadow:var(--pop-sm)}
@@ -17,7 +19,7 @@ body.clay{background:var(--grain),radial-gradient(1200px 600px at 85% -10%,#f6f1
 .clay .cta:hover{transform:translateY(-2px)}.clay .cta:active{transform:translateY(1px);box-shadow:var(--press)}
 .clay .cta--quiet{color:var(--ink);background:var(--grain),var(--clay);box-shadow:var(--pop-sm)}
 .clay .hero{grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:clamp(2rem,5vw,4rem);align-items:center;padding:clamp(3.5rem,9vw,7rem) 0 clamp(3rem,7vw,5rem);border:0}
-.clay h1{max-width:13ch;font-size:clamp(3rem,7.4vw,6.4rem);font-weight:900;letter-spacing:-.045em;line-height:.92}
+.clay h1{max-width:17ch;font-family:Panchang,ui-sans-serif,system-ui,sans-serif;font-size:clamp(2.45rem,5vw,4.75rem);font-weight:800;letter-spacing:-.035em;line-height:1.04;overflow-wrap:normal}
 .clay .lead{max-width:38rem;font-size:clamp(1.1rem,1.6vw,1.3rem)}
 .clay .actions{gap:1rem}
 .clay .hero-note{align-self:center;padding:1.6rem;background:var(--clay);border:0;border-radius:var(--r-xl);box-shadow:var(--pop);font-size:1rem}
@@ -29,7 +31,7 @@ body.clay{background:var(--grain),radial-gradient(1200px 600px at 85% -10%,#f6f1
 .clay-caption{display:block;margin-top:1rem;font-size:.75rem;color:var(--muted)}
 .clay .section{margin:clamp(2.5rem,6vw,4.5rem) 0;padding:clamp(2rem,5vw,3.5rem);background:var(--clay);border:0;border-radius:var(--r-xl);box-shadow:var(--pop)}
 .clay .section-heading{grid-template-columns:1fr 1.6fr;margin-bottom:2.2rem}
-.clay .section-heading h2{font-size:clamp(2rem,3.8vw,3.4rem);font-weight:900;letter-spacing:-.045em;line-height:1}
+.clay .section-heading h2{font-family:Panchang,ui-sans-serif,system-ui,sans-serif;font-size:clamp(1.65rem,2.65vw,2.6rem);font-weight:800;letter-spacing:-.035em;line-height:1.15}
 .clay .section-heading p{font-size:1.05rem}
 .clay .states{gap:1rem;border:0}
 .clay .state{min-height:170px;padding:1.2rem;background:var(--clay-hi);border:0;border-radius:var(--r-lg);box-shadow:var(--pop-sm)}
@@ -54,6 +56,7 @@ body.clay{background:var(--grain),radial-gradient(1200px 600px at 85% -10%,#f6f1
 .clay pre{background:var(--clay);border-radius:var(--r-sm);box-shadow:var(--press)}
 .clay footer{margin:0 0 1.5rem;padding:1.4rem 1.6rem;background:var(--clay);border-radius:var(--r-lg);box-shadow:var(--pop-sm)}
 .clay header,.clay .hero-note,.clay .section:not(.boundary),.clay footer,.clay .mapper input,.clay .mapper textarea,.clay .contract article{background-image:var(--grain)}.clay .state:not(.hold),.clay .lane,.clay .mapper,.clay-msg--in{background:var(--grain),var(--clay-hi)}.clay .boundary{background:var(--grain),var(--field)}.clay a:focus-visible,.clay button:focus-visible{outline-color:#1c1e1a}
-@media(max-width:860px){.clay .hero{grid-template-columns:1fr}.clay .states{grid-template-columns:repeat(2,1fr)}.clay .contract{grid-template-columns:repeat(2,1fr)}.clay .boundary-list{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:860px){.clay .hero{grid-template-columns:1fr}.clay h1{font-size:clamp(2.45rem,4.45vw,2.9rem);letter-spacing:-.04em}.clay .states{grid-template-columns:repeat(2,1fr)}.clay .contract{grid-template-columns:repeat(2,1fr)}.clay .boundary-list{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:720px){.clay header{top:.5rem}.clay .section-heading,.clay .states,.clay .contract,.clay .lanes,.clay .mapper-grid{grid-template-columns:1fr}.clay .state{min-height:auto}.clay .section{padding:1.4rem;border-radius:var(--r-lg)}.clay .clay-msg--in{margin-right:8%}.clay .clay-msg--out{margin-left:8%}}
+@media(max-width:350px){.clay h1{font-size:25px}}
 
