@@ -37,7 +37,7 @@ test('firm typography uses the self-hosted Cinzel brand face and keeps the live 
 test('homepage states the headline, engagements, method, limits, notes and contact', () => {
   for (const marker of [
     '<h1>The work runs. The authority stays yours.</h1>',
-    'Commitments of money, price or promise remain with the owner.',
+    'Anything that spends money, sets a price or makes a promise waits for the owner.',
     'https://ig.me/m/deployaxiom', 'Begin in Instagram DM',
     'Engagements', 'Clients are described rather than named',
     'Intake', 'Context', 'Preparation', 'Decision', 'Record',
