@@ -124,6 +124,25 @@ textarea{min-height:96px;resize:vertical}
 .article figcaption{font-size:14px;color:var(--muted);margin-top:16px}
 .article .next{border-top:3px solid var(--ink);margin-top:56px;padding-top:20px;font-size:16px}
 
+/* Baton Rouge page */
+.who-band{padding:44px 0;background:var(--stone-2)}
+.who-line{margin:0;max-width:52em;font-size:19px;color:#2A2D33}
+.who-label{display:block;font:700 12px/1 var(--display);letter-spacing:.2em;text-transform:uppercase;color:var(--brass);margin-bottom:14px}
+.recording{max-width:640px;border-top:3px solid var(--ink);border-bottom:1px solid var(--ink);padding:30px 0 26px}
+.recording audio{width:100%}
+.faq{display:grid;grid-template-columns:1fr 1fr;border-top:3px solid var(--ink)}
+.faq article{padding:32px 32px 30px 0;border-bottom:1px solid var(--rule)}
+.faq article:nth-child(even){padding:32px 0 30px 32px;border-left:1px solid var(--rule)}
+.faq h3{font:700 16px/1.35 var(--display);letter-spacing:.08em;text-transform:uppercase;margin:0 0 12px}
+.faq p{margin:0;color:#2A2D33}
+.closing{text-align:center}
+.closing .numeral{margin-bottom:22px}
+.closing .lede{margin-top:6px}
+@media (max-width:900px){
+  .faq{grid-template-columns:1fr}
+  .faq article,.faq article:nth-child(even){padding:28px 0;border-left:0}
+}
+
 /* Responsive */
 @media (max-width:900px){
   .steps{grid-template-columns:1fr 1fr}

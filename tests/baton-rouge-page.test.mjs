@@ -14,7 +14,9 @@ test('Baton Rouge page leads with the locked line, then the proof', () => {
   assert.ok(line > -1 && proof > line, 'line must come first, proof second');
   assert.ok(page.includes('<link rel="canonical" href="https://deployaxiom.com/baton-rouge/">'));
   assert.ok(page.includes('tel:+12256358671'));
-  assert.ok(page.includes('https://ig.me/m/deployaxiom'));
+  assert.ok(page.includes('mailto:percy@deployaxiom.com'));
+  assert.ok(!page.includes('ig.me/'), 'Instagram DM contact is retired');
+  assert.ok(page.includes('/assets/firm.css'), 'uses the firm design');
 });
 
 test('Baton Rouge page makes no retired, price, or result claims', () => {
