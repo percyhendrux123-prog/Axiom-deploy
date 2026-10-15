@@ -36,7 +36,7 @@ test('firm typography uses the self-hosted Cinzel brand face and keeps the live 
 
 test('homepage states the headline, engagements, method, limits, notes and contact', () => {
   for (const marker of [
-    '<h1>The work runs. The authority stays yours.</h1>',
+    'no longer solely governance. <span class="h1-turn">It\'s operations.</span></h1>',
     'Anything that spends money, sets a price or makes a promise waits for the owner.',
     'https://ig.me/m/deployaxiom', 'Begin in Instagram DM',
     'Engagements', 'Clients are described rather than named',
@@ -93,7 +93,7 @@ test('metadata and static assets are local, canonical, and shareable', () => {
   for (const marker of [
     '<link rel="canonical" href="https://deployaxiom.com/">',
     'property="og:title"', 'property="og:description"', 'property="og:image" content="https://deployaxiom.com/assets/axiom-og.png"',
-    'name="twitter:card"', 'name="twitter:image" content="https://deployaxiom.com/assets/axiom-og.png"', 'property="og:image:alt" content="Deploy Axiom: The work runs. The authority stays yours."', 'name="twitter:image:alt" content="Deploy Axiom: The work runs. The authority stays yours."', 'name="theme-color" content="#F2EEE6"', 'rel="icon" href="/assets/avatar.svg"',
+    'name="twitter:card"', 'name="twitter:image" content="https://deployaxiom.com/assets/axiom-og.png"', 'property="og:image:alt" content="Deploy Axiom: When rules and regulations begin to move, it&#39;s no longer solely governance. It&#39;s operations."', 'name="twitter:image:alt" content="Deploy Axiom: When rules and regulations begin to move, it&#39;s no longer solely governance. It&#39;s operations."', 'name="theme-color" content="#F2EEE6"', 'rel="icon" href="/assets/avatar.svg"',
   ]) assert.ok(homepage.includes(marker), `missing metadata marker: ${marker}`);
   for (const asset of ['assets/avatar.svg', 'assets/axiom-og.png', 'assets/wordmark-ink.svg', 'assets/wordmark-stone.svg']) {
     const fullPath = join(root, asset);
@@ -119,7 +119,7 @@ test('homepage loads local assets, preserves manual copy fallback, and has a com
 test('homepage uses the wordmark and keeps the hero direct', () => {
   assert.ok(homepage.includes('src="/assets/wordmark-ink.svg" alt="AXIOM"'));
   const hero = homepage.match(/<section class="hero"[\s\S]*?<\/section>/)?.[0] ?? '';
-  assert.ok(hero.includes('<h1>The work runs. The authority stays yours.</h1>'));
+  assert.ok(hero.includes('no longer solely governance. <span class="h1-turn">It\'s operations.</span></h1>'));
   assert.ok(!/<img|<video|<svg/i.test(hero), 'hero carries no imagery');
   assert.match(stylesheet(), /@media \(prefers-reduced-motion:reduce\)/);
 });

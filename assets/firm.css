@@ -31,7 +31,8 @@ nav .nav-cta:hover{background:var(--ink);color:var(--stone)}
 /* Hero */
 .hero{padding:112px 0 96px;text-align:center}
 .kicker{font:600 12px/1.7 var(--display);letter-spacing:.24em;text-transform:uppercase;color:var(--brass);margin:0 0 30px}
-h1{font:700 clamp(36px,5.6vw,66px)/1.12 var(--display);letter-spacing:.02em;margin:0 auto;max-width:15ch}
+h1{font:700 clamp(30px,4.4vw,52px)/1.18 var(--display);letter-spacing:.02em;margin:0 auto;max-width:22ch}
+.h1-turn{display:block;margin-top:.35em;color:var(--brass)}
 .entablature{width:180px;height:7px;margin:40px auto 34px;border-top:3px solid var(--brass);border-bottom:1px solid var(--brass)}
 .lede{max-width:40em;margin:0 auto;font-size:21px;line-height:1.6;color:#2A2D33}
 .actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:center;margin-top:40px}
