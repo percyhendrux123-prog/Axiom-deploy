@@ -6,7 +6,7 @@ import { join } from 'node:path';
 const root = new URL('..', import.meta.url).pathname;
 const read = (path) => readFileSync(join(root, path), 'utf8');
 const homepage = read('index.html');
-const stylesheet = () => read('assets/site.css');
+const stylesheet = () => read('assets/firm.css');
 const script = () => read('assets/site.js');
 const archivePath = 'archive/two-business-evaluation-2026-09/index.html';
 const prohibitedRootMarkers = [
@@ -21,32 +21,41 @@ const prohibitedRootMarkers = [
   'command@deployaxiom.com',
 ];
 
-test('clay typography uses a local display font without changing the live contact lane', () => {
+test('firm typography uses the self-hosted Cinzel brand face and keeps the live sales line', () => {
   const css = stylesheet();
-  assert.match(css, /@font-face\{font-family:'Clash Display';src:url\('\/assets\/ClashDisplay-Bold\.woff2'\)/);
-  assert.match(css, /\.clay h1\{[^}]*font-family:'Clash Display'/);
-  assert.match(css, /\.clay \.section-heading h2\{[^}]*font-family:'Clash Display'/);
-  assert.ok(!css.includes('ui-rounded'), 'clay copy must not resolve to rounded platform fonts');
-  assert.ok(existsSync(join(root, 'assets/ClashDisplay-Bold.woff2')));
-  assert.ok(statSync(join(root, 'assets/ClashDisplay-Bold.woff2')).size > 10000);
-  assert.ok(read('netlify.toml').includes('cp assets/ClashDisplay-Bold.woff2 dist/assets/'));
-  assert.match(homepage, /href="tel:\+1\d{10}"/, 'live sales-line link must remain valid');
+  assert.match(css, /@font-face\{font-family:'Cinzel';src:url\('\/assets\/fonts\/Cinzel\.ttf'\)/);
+  assert.ok(existsSync(join(root, 'assets/fonts/Cinzel.ttf')));
+  assert.ok(existsSync(join(root, 'assets/fonts/OFL.txt')), 'OFL license must ship beside the font');
+  assert.ok(!css.includes('fonts.googleapis.com'));
+  assert.ok(!/gradient|#2f6b4f|ui-rounded/i.test(css), 'no gradients, retired green, or rounded fonts');
+  assert.ok(read('netlify.toml').includes('cp -R assets/fonts assets/notes dist/assets/'));
+  assert.match(homepage, /href="tel:\+12256358671"/, 'live sales-line link must remain valid');
   assert.ok(homepage.includes('(225) 635-8671'), 'live sales-line text must remain unchanged');
+  assert.ok(!/style="/.test(homepage), 'CSP forbids inline styles');
 });
 
-test('homepage states the permanent operating-agent model and contact lane', () => {
+test('homepage states the locked line, real work, method, limits, notes and contact', () => {
   for (const marker of [
     'Nothing in your business waits on you to remember it.',
-    'We start with your leads and missed calls',
-    'DM: LEADS',
-    'https://ig.me/m/deployaxiom',
-    'Call <a href="tel:+12256358671">(225) 635-8671</a> any hour',
-    'EXAMPLE JOB · HOW EACH ONE RUNS',
+    'The owner approves anything involving money, prices or promises.',
+    'DM: LEADS', 'https://ig.me/m/deployaxiom',
+    'The work, this month', 'Clients are described, not named',
     'Catch', 'Gather', 'Prepare', 'You decide', 'Log',
-    'waits for your OK', 'read', 'sort', 'draft', 'line up', 'Act*', 'stop',
+    'waits for your OK', 'Where we stop', 'A draft never counts as a yes.',
+    '/notes/one-front-door/',
   ]) assert.ok(homepage.includes(marker), `missing homepage marker: ${marker}`);
+  for (const retiredLead of [/missed calls/i, /web leads/i, /answer your phones?/i]) {
+    assert.ok(!retiredLead.test(homepage.replace(/<[^>]+>/g, ' ')), `retired lead language: ${retiredLead}`);
+  }
   assert.ok(!/<video\b/i.test(homepage), 'homepage must not load autoplay video');
   for (const marker of prohibitedRootMarkers) assert.ok(!homepage.includes(marker), `stale root marker: ${marker}`);
+});
+
+test('note 01 is published as a static page with its diagram', () => {
+  const note = read('notes/one-front-door/index.html');
+  for (const marker of ['One Front Door', '/assets/notes/one-front-door.svg', 'rel="canonical"']) assert.ok(note.includes(marker), `missing note marker: ${marker}`);
+  assert.ok(existsSync(join(root, 'assets/notes/one-front-door.svg')));
+  assert.ok(!/style="/.test(note), 'CSP forbids inline styles');
 });
 
 test('homepage copy avoids retired internal language', () => {
@@ -84,9 +93,9 @@ test('metadata and static assets are local, canonical, and shareable', () => {
   for (const marker of [
     '<link rel="canonical" href="https://deployaxiom.com/">',
     'property="og:title"', 'property="og:description"', 'property="og:image" content="https://deployaxiom.com/assets/axiom-og.png"',
-    'name="twitter:card"', 'name="twitter:image" content="https://deployaxiom.com/assets/axiom-og.png"', 'property="og:image:alt" content="Deploy Axiom: Nothing in your business waits on you to remember it."', 'name="twitter:image:alt" content="Deploy Axiom: Nothing in your business waits on you to remember it."', 'name="theme-color" content="#ebe7dc"', 'rel="icon" href="/assets/favicon.svg"',
+    'name="twitter:card"', 'name="twitter:image" content="https://deployaxiom.com/assets/axiom-og.png"', 'property="og:image:alt" content="Deploy Axiom: Nothing in your business waits on you to remember it."', 'name="twitter:image:alt" content="Deploy Axiom: Nothing in your business waits on you to remember it."', 'name="theme-color" content="#F2EEE6"', 'rel="icon" href="/assets/avatar.svg"',
   ]) assert.ok(homepage.includes(marker), `missing metadata marker: ${marker}`);
-  for (const asset of ['assets/favicon.svg', 'assets/axiom-og.png']) {
+  for (const asset of ['assets/avatar.svg', 'assets/axiom-og.png', 'assets/wordmark-ink.svg', 'assets/wordmark-stone.svg']) {
     const fullPath = join(root, asset);
     assert.ok(existsSync(fullPath), `missing asset: ${asset}`);
     assert.ok(statSync(fullPath).size > 0, `empty asset: ${asset}`);
@@ -94,38 +103,31 @@ test('metadata and static assets are local, canonical, and shareable', () => {
 });
 
 test('homepage loads local assets, preserves manual copy fallback, and has a compact mobile header', () => {
-  assert.match(homepage, /<link rel="stylesheet" href="\/assets\/site\.css\?v=clash1">/);
+  assert.match(homepage, /<link rel="stylesheet" href="\/assets\/firm\.css\?v=\d+">/);
   assert.match(homepage, /<script src="\/assets\/site\.js" defer><\/script>/);
   assert.ok(!/<style[ >]/i.test(homepage), 'homepage must not contain inline style');
   assert.ok(!/<script(?![^>]*\bsrc=)[^>]*>/i.test(homepage), 'homepage must not contain inline script');
-  assert.match(homepage, /<nav class="nav" aria-label="Primary">/);
+  assert.match(homepage, /<nav aria-label="Main">/);
   assert.ok(homepage.includes('id="manual-brief"'), 'manual fallback is missing');
   assert.ok(homepage.includes('LEADS brief template'), 'manual template is missing');
   assert.match(script(), /navigator\.clipboard\.writeText/);
   assert.match(script(), /manualBrief\.focus\(\)/);
-  const mobileStyles = stylesheet().split('@media(max-width:390px){').at(-1);
-  assert.ok(mobileStyles.includes('.nav{display:none}'), 'mobile styles must hide the center nav');
-  assert.ok(mobileStyles.includes('header{gap:'), 'mobile header must reserve compact spacing');
-  assert.ok(mobileStyles.includes('.brand{font-size:.78rem;letter-spacing:.08em}'), '390px header must compact the expanded brand');
+  const mobileStyles = stylesheet().split('@media (max-width:640px){').at(-1);
+  assert.ok(mobileStyles.includes('nav a:not(.nav-cta){display:none}'), 'mobile hides all nav links but Contact');
 });
 
-test('homepage keeps the thesis direct and the hero note materially quiet', () => {
-  assert.match(homepage, /<a class="brand" href="\/" aria-label="Deploy Axiom home">DEPLOY AXIOM<\/a>/);
+test('homepage uses the wordmark and keeps the hero direct', () => {
+  assert.ok(homepage.includes('src="/assets/wordmark-ink.svg" alt="AXIOM"'));
   const hero = homepage.match(/<section class="hero"[\s\S]*?<\/section>/)?.[0] ?? '';
-  assert.ok(!hero.includes('Deploy Axiom / operational agents'), 'decorative hero kicker must be removed');
-  assert.ok(homepage.includes('EXAMPLE JOB · HOW EACH ONE RUNS'), 'required example disclosure is missing');
-
-  const styles = stylesheet();
-  assert.match(styles, /h1\{[^}]*letter-spacing:-\.04em;/, 'H1 tracking must not be tighter than -0.04em');
-  const heroNote = styles.match(/\.hero-note\{([^}]*)\}/)?.[1] ?? '';
-  assert.ok(!/border-left\s*:/.test(heroNote), 'hero note must not use a side-tab border');
-  assert.match(heroNote, /border-top:1px solid var\(--ink\);/, 'hero note needs a quiet top rule');
+  assert.ok(hero.includes('<h1>Nothing in your business waits on you to remember it.</h1>'));
+  assert.ok(!/<img|<video|<svg/i.test(hero), 'hero carries no imagery');
+  assert.match(stylesheet(), /@media \(prefers-reduced-motion:reduce\)/);
 });
 
 test('all public pages avoid inline code and use local stylesheets', () => {
-  for (const path of ['index.html', 'success.html', archivePath]) {
+  for (const [path, css] of [['index.html', 'firm'], ['notes/one-front-door/index.html', 'firm'], ['success.html', 'site'], [archivePath, 'site']]) {
     const page = read(path);
-    assert.match(page, /<link rel="stylesheet" href="\/?assets\/site\.css(?:\?v=clash1)?">/);
+    assert.match(page, new RegExp(`<link rel="stylesheet" href="/?assets/${css}\\.css(?:\\?v=[a-z0-9]+)?">`));
     assert.ok(!/<style[ >]/i.test(page), `${path} must not contain inline style`);
     assert.ok(!/<script(?![^>]*\bsrc=)[^>]*>/i.test(page), `${path} must not contain inline script`);
   }
