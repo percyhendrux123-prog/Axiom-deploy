@@ -38,7 +38,7 @@ test('homepage states the headline, engagements, method, limits, notes and conta
   for (const marker of [
     'no longer solely governance. <span class="h1-turn">It\'s operations.</span></h1>',
     'Anything that spends money, sets a price or makes a promise waits for the owner.',
-    'https://ig.me/m/deployaxiom', 'Begin in Instagram DM',
+    'mailto:percy@deployaxiom.com',
     'Engagements', 'Clients are described rather than named',
     'Intake', 'Context', 'Preparation', 'Decision', 'Record',
     'waits for the owner', 'Limits of authority', 'A draft is never an approval.',
@@ -65,12 +65,12 @@ test('homepage copy avoids retired internal language', () => {
   }
 });
 
-test('homepage lane mapper is local-only, creates a LEADS brief, and has visible no-JS fallback', () => {
+test('homepage lane mapper is local-only, creates a brief, and has visible no-JS fallback', () => {
   for (const marker of [
     'id="lane-mapper"', 'name="repeated-workflow"', 'name="continuity-break"', 'name="observable-outcome"',
-    'Copy LEADS brief', 'Nothing is submitted or stored',
+    'Copy brief', 'Nothing is submitted or stored',
     'Local only.', 'Do not include passwords, API keys, private records, or other secrets.',
-    '<noscript>', 'LEADS brief template',
+    '<noscript>', 'Brief template',
   ]) assert.ok(homepage.includes(marker), `missing mapper marker: ${marker}`);
   assert.ok(!/<form\b/i.test(homepage), 'local mapper must use a non-submitting container, not a form');
   for (const marker of ['FormData', "addEventListener('submit'", 'fetch(', 'XMLHttpRequest', 'sendBeacon', 'localStorage', 'sessionStorage', 'document.cookie']) {
@@ -109,7 +109,7 @@ test('homepage loads local assets, preserves manual copy fallback, and has a com
   assert.ok(!/<script(?![^>]*\bsrc=)[^>]*>/i.test(homepage), 'homepage must not contain inline script');
   assert.match(homepage, /<nav aria-label="Main">/);
   assert.ok(homepage.includes('id="manual-brief"'), 'manual fallback is missing');
-  assert.ok(homepage.includes('LEADS brief template'), 'manual template is missing');
+  assert.ok(homepage.includes('Brief template'), 'manual template is missing');
   assert.match(script(), /navigator\.clipboard\.writeText/);
   assert.match(script(), /manualBrief\.focus\(\)/);
   const mobileStyles = stylesheet().split('@media (max-width:640px){').at(-1);

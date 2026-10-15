@@ -14,13 +14,13 @@
 
   button.addEventListener('click', async () => {
     if (requiredControls.some((control) => !control.reportValidity())) return;
-    const brief = `LEADS\nThe recurring work: ${workflow.value}\nWhere continuity breaks: ${continuityBreak.value}\nWhat resolution looks like: ${observableOutcome.value}\n\nNo secrets included.`;
+    const brief = `BRIEF\nThe recurring work: ${workflow.value}\nWhere continuity breaks: ${continuityBreak.value}\nWhat resolution looks like: ${observableOutcome.value}\n\nNo secrets included.`;
     manualOutput.textContent = brief;
     try {
       await navigator.clipboard.writeText(brief);
-      status.textContent = 'LEADS brief copied locally.';
+      status.textContent = 'Brief copied. Paste it into an email to percy@deployaxiom.com.';
     } catch {
-      status.textContent = 'Copy failed. Use the LEADS template below.';
+      status.textContent = 'Copy failed. Use the template below.';
       manualBrief.focus();
     }
   });

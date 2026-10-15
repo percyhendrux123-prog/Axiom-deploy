@@ -28,11 +28,11 @@ test('method is accessible without motion and names the human hold', () => {
   assert.ok(stylesheet.includes('@media (prefers-reduced-motion:reduce)'));
 });
 
-test('local mapper keeps inputs on device and provides a LEADS fallback', () => {
+test('local mapper keeps inputs on device and provides a brief fallback', () => {
   for (const field of ['repeated-workflow', 'continuity-break', 'observable-outcome']) {
     assert.ok(page.includes(`name="${field}"`), `missing mapper field: ${field}`);
   }
-  for (const text of ['Nothing is submitted or stored.', 'Local only.', 'LEADS brief template']) {
+  for (const text of ['Nothing is submitted or stored.', 'Local only.', 'Brief template']) {
     assert.ok(page.includes(text), `missing mapper safeguard: ${text}`);
   }
   assert.ok(script.includes('navigator.clipboard.writeText'), 'clipboard behavior must live in local script');

@@ -6,8 +6,8 @@
 
       <!-- Percy -->
       <rect x="10" y="150" width="120" height="100" rx="4" fill="#fff" stroke="#121316" stroke-width="1.5"/>
-      <text x="70" y="195" text-anchor="middle" font-size="16" font-weight="700" fill="#121316">Percy</text>
-      <text x="70" y="216" text-anchor="middle" font-size="11" fill="#5d636b">owner</text>
+      <text x="70" y="195" text-anchor="middle" font-size="16" font-weight="700" fill="#121316">Owner</text>
+      <text x="70" y="216" text-anchor="middle" font-size="11" fill="#5d636b">one person</text>
 
       <!-- request / answer arrows -->
       <line x1="132" y1="178" x2="218" y2="178" stroke="#121316" stroke-width="1.5" marker-end="url(#ah)"/>
