@@ -11,9 +11,9 @@ const visibleText = page.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
 test('permanent homepage replaces the expired campaign with the locked line and real work', () => {
   for (const text of [
-    'Nothing in your business waits on you to remember it.',
-    'The work, this month',
-    'Clients are described, not named, until they say otherwise.',
+    'The work runs. The authority stays yours.',
+    'Engagements',
+    'Clients are described rather than named until they consent to be.',
   ]) assert.ok(visibleText.includes(text), `missing: ${text}`);
   for (const stale of ['TWO EVALUATIONS OPEN', 'Applications close', 'Submit one-lane application', 'two-lanes-motion.mp4', 'Examples, not client work.']) {
     assert.ok(!page.includes(stale), `stale marker: ${stale}`);
@@ -22,8 +22,8 @@ test('permanent homepage replaces the expired campaign with the locked line and 
 
 test('method is accessible without motion and names the human hold', () => {
   assert.ok(page.includes('class="skip" href="#work"'));
-  for (const state of ['Catch', 'Gather', 'Prepare', 'You decide', 'Log']) assert.ok(visibleText.includes(state));
-  assert.ok(visibleText.includes('Anything that commits your business waits for your OK.'));
+  for (const state of ['Intake', 'Context', 'Preparation', 'Decision', 'Record']) assert.ok(visibleText.includes(state));
+  assert.ok(visibleText.includes('Anything that commits the business waits for the owner.'));
   assert.ok(!/<video\b/i.test(page), 'permanent homepage must not contain video');
   assert.ok(stylesheet.includes('@media (prefers-reduced-motion:reduce)'));
 });
@@ -41,7 +41,7 @@ test('local mapper keeps inputs on device and provides a LEADS fallback', () => 
 });
 
 test('homepage makes permissions and execution separation explicit', () => {
-  for (const text of ['We handle', 'You approve', 'Never alone', 'Read, sort, draft and line up', 'A draft never counts as a yes', 'Moving money, setting prices, or making a promise in your name']) {
+  for (const text of ['Delegated', 'Held for approval', 'Reserved to the owner', 'Reading, sorting, drafting', 'A draft is never an approval', 'Moving money, setting prices, and making commitments']) {
     assert.ok(visibleText.includes(text), `missing boundary: ${text}`);
   }
 });
