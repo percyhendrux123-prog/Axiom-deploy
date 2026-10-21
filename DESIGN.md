@@ -21,12 +21,25 @@ Start with `OPERATE` in Instagram DM. The local lane mapper prepares, but never 
 5. Permission boundaries and local-only lane mapper.
 6. Current Instagram contact lane and closed-campaign archive.
 
+## Brand standard (Percy, 2026-10-11; replaces the earlier green canon)
+
+First line: Axiom should feel like hiring a firm. An agency. Hired authority.
+
+- Source: Rome. Inscription capitals (Trajan's Column), stone, proportion, columns and arches. The Aurelius temper: self-command, duty, restraint. Authority does not shout.
+- Logo: a wordmark first. "AXIOM" in capitals, widely tracked, drawn as outlined SVG paths (no live font). A single Roman "A" is the avatar/monogram and must read at 40px inside a circular crop.
+- Logo source files and the current options: `~/Desk/Axiom/Brand/2026-10-11-wordmark/` (build.py regenerates them). Chosen mark (Percy, 2026-10-11): option C's form set in option A's typeface. "AXIOM" in Cinzel at weight 800, tracking 0.28em, Ink on Stone or Stone on Ink, no rules. Avatar: the single Cinzel A, no frame. Files: `svg/FINAL-*.svg`.
+- Never: robots, brains, circuit lines, glow, neon, gradients, or anything that reads as an AI startup or a toy.
+
 ## Visual language
 
-- World: field notebook / operating contract, not a product dashboard.
-- Material: warm work paper, near-black ink, muted mineral green, one restrained signal green.
-- Typography: system sans-serif only; no network font request or unrecorded font license.
-- Structure: editorial rules, state sequence, and plain operating cards.
+- World: a firm's letterhead and its brass door plate. Not a product dashboard, not a startup.
+- Color: two colors per surface, at most three in the system.
+  - Ink `#121316` (near-black) and Navy `#15203A` (deep navy) carry text and fields.
+  - Stone `#F2EEE6` (off-white travertine) is the paper.
+  - Brass `#8C7350` is the single muted accent, used only for hairline rules and small marks, never for body text or large fills.
+  - The mineral green and signal green are retired. Remove them when the site is next reskinned.
+- Typography: Cinzel (Roman inscription capitals) is the display face, matching the logo. Body text stays a quiet sans or serif at reading size. Fonts must be self-hosted SIL OFL files with the license committed beside them; no network font requests. Nothing rounded or playful.
+- Structure: editorial rules (paired thick/thin lines, like an entablature), generous margins, centered or strictly left-aligned columns. Proportion over decoration.
 - Motion: none on the permanent homepage. The model has accessible static meaning and respects reduced-motion preferences.
 
 ## States
@@ -44,7 +57,7 @@ Start with `OPERATE` in Instagram DM. The local lane mapper prepares, but never 
 
 ## Forbidden defaults
 
-Autoplay video, external font dependencies, rounded SaaS card grids, pricing, fake metrics, client proof without evidence, cyberpunk, robot imagery, generic “Book a call” conversion, open-campaign language, hosted application forms, and hidden data collection.
+Autoplay video, external font dependencies, rounded SaaS card grids, pricing, fake metrics, client proof without evidence, cyberpunk, robot imagery, brain or circuit motifs, glow effects, neon, gradients, green accents, generic “Book a call” conversion, open-campaign language, hosted application forms, and hidden data collection.
 
 ## Acceptance criteria
 
