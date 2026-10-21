@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Field Report 01 from Deploy Axiom: a zero-cost data layer for agents, an independent review that found four safety defects, and why one orchestrator holds the tempo.">
+  <link rel="canonical" href="https://deployaxiom.com/notes/one-tempo/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="One Tempo · Deploy Axiom Field Report 01">
+  <meta property="og:description" content="Field Report 01 from Deploy Axiom: a zero-cost data layer for agents, an independent review that found four safety defects, and why one orchestrator holds the tempo.">
+  <meta property="og:image" content="https://deployaxiom.com/assets/notes/fig1-one-tempo.png">
+  <meta property="og:url" content="https://deployaxiom.com/notes/one-tempo/">
+  <meta property="og:image:alt" content="Figure 1. One tempo: the owner talks to the orchestrator; specialists report to it; the reviewer can read, not change.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="One Tempo · Deploy Axiom Field Report 01">
+  <meta name="twitter:description" content="Field Report 01 from Deploy Axiom: a zero-cost data layer for agents, an independent review that found four safety defects, and why one orchestrator holds the tempo.">
+  <meta name="twitter:image" content="https://deployaxiom.com/assets/notes/fig1-one-tempo.png">
+  <meta name="twitter:image:alt" content="Figure 1. One tempo: the owner talks to the orchestrator; specialists report to it; the reviewer can read, not change.">
+  <link rel="icon" href="/assets/avatar.svg" type="image/svg+xml">
+  <title>One Tempo · Deploy Axiom Field Report 01</title>
+  <link rel="stylesheet" href="/assets/firm.css?v=2">
+</head>
+<body>
+  <header class="masthead">
+    <div class="frame masthead-row">
+      <a class="brand" href="/" aria-label="Deploy Axiom, home"><img src="/assets/wordmark-ink.svg" alt="AXIOM" width="140" height="41"></a>
+      <nav aria-label="Main">
+        <a href="/#work">Engagements</a>
+        <a href="/#notes">Notes</a>
+        <a class="nav-cta" href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <article class="article report">
+      <p class="kicker">Field Report · 01</p>
+      <h1>One Tempo: Why Talking to Every Agent Breaks the Workflow</h1>
+      <p class="dek">Field Report 01: A Zero-Cost Data Layer for Agents</p>
+      <p class="byline">P. K. Stewart · Deploy Axiom · Baton Rouge, Louisiana · October 2026</p>
+      <div class="entablature" aria-hidden="true"></div>
+      <p class="abstract"><strong>Abstract.</strong> In one working session we put our agent harness under control, scoped a commercial agent data-discovery product, built a free equivalent on public sources, and had an independent reviewer find four safety defects that our own tests had passed. The session also produced a live example of the field note&#x27;s point: a helper inside the harness handed finished work to another agent on its own. This report records what was observed and what was not.</p>
+<h2>Field note — P. K. Stewart</h2>
+<p><em>Synchronized Agentics</em></p>
+<p>It can feel very empowering. It makes you feel very capable. Flying a fleet of agents: you have your researcher, your orchestrator, your marketer, sales, a reviewer, and the proper rules and regulations. You're so good at prompts, the conversations are brewing in each profile. You feel synced with every agent. The productivity rate and success rate of your agent-to-agent workflows, with you in the loop, still show signs of improvement.</p>
+<p>The way I learned to design, and to operate the design, is through visualization. I attach what needs to be done to the closest thing I can picture that looks exactly like it, based on what I currently know and believe.</p>
+<p>From a logical viewpoint, what I see in front of me is agentic agents prepared to take on roles, formatted as a structured business. That's the map.</p>
+<p>Take a Fortune 500 CEO. He's not going to give access and one-to-one conversation to the janitorial staff. He's not going to be in the editing room with the chief editor. He's not going to be picking out fonts for the media team. That work is handed off to the orchestrator. What is the orchestrator? Guided, held in check by one person: one cadence, one tempo. If people were to try to stay in tempo with other models, it would increase the probability of getting off beat. That's what I'm seeing: a hell of a lot of people talking to more than one agent. I used to do it.</p>
+<p>In the middle of one of my workflows, I noticed something about these permission gates. The permissions are not at the gate. They're at the identity. That's what made me scale back and look at the overall workflow with me, the human, in the loop, to see whether the issue was not the workflow, but the one instructing it.</p>
+<h2>Where the field note met the session</h2>
+<p>The field note is the thesis. The session supplied an example of it. Midway through, the harness's auto-decomposer took a task that was already finished, split it into five copies, and handed them to a different agent. Nobody asked it to. The harness itself had started talking to more than one agent, off tempo, and the result was five pieces of duplicated work that had to be found and archived. The correction was the one the field note describes: one orchestrator holding the tempo, the helper automation brought under the same written rules as the agents, and one human instructing one point of contact.</p>
+<figure><img src="/assets/notes/fig1-one-tempo.png" alt="Figure 1. One tempo: the owner talks to the orchestrator; specialists report to it; the reviewer can read, not change." width="1600" height="900"><figcaption>Figure 1. One tempo: the owner talks to the orchestrator; specialists report to it; the reviewer can read, not change.</figcaption></figure>
+
+<h2>What this means for an operator</h2>
+<p>A free data layer is real and useful for public-source research, but only if its limits are written next to its results. Three practices carried this build: an acceptance list written before the work, a separate reviewer agent with no ability to change anything, and a rule that nothing counts as done until a different agent, on a different model family, reproduces it. The same session showed that the tools around your agents (routers, helpers, auto-splitters) need the same discipline as the agents themselves. If a helper function can quietly change which model sees your data, it belongs in your written rules.</p>
+<hr class="rule">
+<h2>Summary for agents</h2>
+<pre><code class="language-yaml">report: field-report-01
+author: P. K. Stewart, Deploy Axiom
+date: 2026-10-20
+objective: &gt;
+  Provide agents a command-line data layer on free public sources, with
+  structured output, and bring the agent harness under explicit control.
+constraints:
+  spend: zero
+  client_data: none used
+  approvals: no publish, no remote, no deployment, no billing change
+sources:
+  - SEC EDGAR
+  - OpenAlex
+  - arXiv
+  - GitHub (repository search, unauthenticated)
+  - US Census (2024 ACS with a free key; 2010 Gazetteer keyless fallback)
+  - local Crawl4AI browser crawler
+  - Firecrawl Alexandria (tool discovery only; optional)
+results:
+  evaluation_markers: 18
+  first_run_2026_10_20: {pass: 14, pass_degraded: 2, pass_with_review_gap: 1, unverified: 1, fail: 0}
+  after_closure_2026_10_21: {pass: 16, pass_degraded: 2, gap: 0, unverified: 0, fail: 0}
+  live_tests: &quot;69 passed, 1 skipped, 2 expected failures (keyless upstream)&quot;
+  offline_tests: &quot;61 passed, 11 skipped (live tests are opt-in)&quot;
+  harness_control_evals: &quot;21 of 21 passed&quot;
+  review_defects_found: 4
+  review_defects_fixed: 4
+limits:
+  - Census current data requires a free key (wired in the same evening; 2024 ACS verified)
+  - Jina Reader refuses keyless requests
+  - OpenAlex keyless rate limit appears after bursts; reported as partial
+  - Not a replacement for paid person or contact enrichment
+  - DNS rebinding is not hardened; trusted public URLs only
+  - Speculative browser connections are guarded but not proven; hostname pre-lookups not observed
+  - Reviewer agent ran the same model family as the builder; cross-family check was the verifier
+  - Firecrawl spend confirmed at the provider's usage endpoint (998 of 1,000 free credits, rechecked 2026-10-21); web dashboard not viewed
+status: local build, verified, unpublished
+reading_rule: &gt;
+  Treat every figure as a recorded observation unless marked INFERRED or [CONFIRM].
+</code></pre>
+<hr class="rule">
+<h2>1. Objective</h2>
+<p>Two objectives, one session.</p>
+<ol>
+<li><strong>Control the harness.</strong> The software that runs our agents (the harness) had background helper functions quietly routed to a third-party model. A separate automatic task-splitter (an auto-decomposer) then divided a task that was already finished and handed the pieces to another agent. We wanted every helper function on one declared model family, and no automatic task splitting.</li>
+<li><strong>Build a data layer.</strong> Agents need reliable access to public company, research, code, demographic and web data. A commercial product, Firecrawl's Alexandria, offers a discovery layer for agent tools and data. We scoped it, found that its discovery step is free (Firecrawl's documentation states: "Discovery is free; execution uses the credits listed on the tool"), and built our own equivalent on free public sources as a command-line tool with a <code>sources</code> command that lists what is available, its inputs, and its cost.</li>
+</ol>
+<h2>2. Constraints</h2>
+<ul>
+<li><strong>Zero spend.</strong> Every default source costs nothing. No paid executions.</li>
+<li><strong>No client data.</strong> Nothing from any client entered the build, the tests or the queries.</li>
+<li><strong>Approval boundaries.</strong> Local build only. No publication, no remote repository, no deployment, no billing change. Accounts, credentials and anything that commits the business remain with the owner. A draft is not an approval.</li>
+<li><strong>Observed, never inferred.</strong> A builder's claim counts as verified only when a different agent reproduces it.</li>
+</ul>
+<h2>3. Method</h2>
+<p>Six stages, matching the method we use for client systems.</p>
+<ol>
+<li><strong>Intake.</strong> A written acceptance specification of 18 checkable markers.</li>
+<li><strong>Context.</strong> Prior decisions and the limits of each public source were gathered before building.</li>
+<li><strong>Build.</strong> One agent built the tool and saved the output of every command it ran.</li>
+<li><strong>Independent review (separate agent, read-only).</strong> A reviewer with no write access, running offline, tested the build for failure points. It was a separate agent from the builder but ran the same model family. Two passes that day, two more the next morning.</li>
+<li><strong>Independent verification (different model family).</strong> A different agent, on a different model family from the builder and reviewer, re-ran the commands and the full test suite after completion.</li>
+<li><strong>Record.</strong> Evidence files, a marker table, a handoff note and a list of limits were written down.</li>
+</ol>
+<p>Evidence tiers: <strong>B</strong> builder ran it; <strong>R</strong> separate read-only reviewer examined it; <strong>V</strong> independent verifier on a different model family reproduced it. Statuses: <strong>PASS</strong> observed; <strong>PASS-DEGRADED</strong> works with a documented upstream limit; <strong>GAP</strong> incomplete evidence; <strong>UNVERIFIED</strong> self-report only.</p>
+<h3>Harness control (observed)</h3>
+<p>The harness work was a separate, bounded change. All auxiliary model slots were moved to one model family. Automatic decomposition was turned off. A set of 21 control checks was written to confirm the configuration holds; all 21 passed. A test card left in the waiting state was not split over a five-minute observation and was then archived. Residual routes remain and are listed in Section 6.</p>
+<h2>4. Results</h2>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Status</th>
+<th>Evidence type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SEC EDGAR (listed-company search and filings)</td>
+<td>PASS. Apple Inc. resolved by name; five recent filings returned</td>
+<td>B, V (live run)</td>
+</tr>
+<tr>
+<td>Local Crawl4AI (page to markdown)</td>
+<td>PASS. Own website converted to 69 lines of markdown, headline matched the live site</td>
+<td>B, V (live run)</td>
+</tr>
+<tr>
+<td>arXiv (papers)</td>
+<td>PASS. Results returned on independent re-run</td>
+<td>B, V (live run)</td>
+</tr>
+<tr>
+<td>OpenAlex (papers)</td>
+<td>PASS-DEGRADED. Builder run succeeded; verifier run hit a keyless rate limit (HTTP 429), and the tool reported <code>partial</code> with a warning rather than failing</td>
+<td>B, V (live run)</td>
+</tr>
+<tr>
+<td>GitHub (repository search)</td>
+<td>PASS. Three repositories returned; repositories only, not code files</td>
+<td>B, V (live run)</td>
+</tr>
+<tr>
+<td>US Census</td>
+<td>PASS-DEGRADED. Keyless current data no longer exists; the tool falls back to 2010 Gazetteer data and labels it HISTORICAL. Same evening, with a free key: 2024 ACS 5-year returned for ZIP 70808</td>
+<td>B, V (live run)</td>
+</tr>
+<tr>
+<td>Firecrawl Alexandria (discovery)</td>
+<td>PASS for tools-only discovery with zero credits used. Not exercised in the final re-verification (no key loaded)</td>
+<td>B (earlier live run); operator check, 0 credits</td>
+</tr>
+<tr>
+<td>Jina Reader (fallback)</td>
+<td>Expected failure. Refuses keyless requests (HTTP 401); recorded as an honest upstream failure</td>
+<td>B, V (live test)</td>
+</tr>
+<tr>
+<td>Structured output (<code>--json</code> on every command)</td>
+<td>PASS. One object with command, status, data, sources, warnings</td>
+<td>B, V</td>
+</tr>
+</tbody>
+</table>
+<p>Totals across the 18 markers on the first run (2026-10-20): 14 PASS, 2 PASS-DEGRADED, 1 PASS with a review gap, 1 UNVERIFIED, 0 FAIL.</p>
+<p>The next morning we closed the two open markers rather than leave them standing. The spend marker moved to PASS when the provider's own usage record showed 998 of 1,000 free credits remaining. The review gap is covered in Section 5. Totals after closure: 16 PASS, 2 PASS-DEGRADED, 0 FAIL, nothing unverified.</p>
+<p>Test totals on independent re-run: live suite 69 passed, 1 skipped, 2 expected failures (Jina keyless, Census keyless). Offline suite 61 passed, 11 skipped. Lint clean. The packaged build matched its recorded checksum. No stray processes remained. After the next morning's fixes, the verifier re-ran the suites again: 63 offline passed, 3 real-browser safety tests passed, lint clean.</p>
+<h3>One output, as returned</h3>
+<p><code>datalayer census 70808 --json</code>, re-run live on 2026-10-21 with the free Census key loaded (key not shown):</p>
+<pre><code class="language-json">{
+  &quot;command&quot;: &quot;census&quot;,
+  &quot;status&quot;: &quot;ok&quot;,
+  &quot;data&quot;: {
+    &quot;dataset&quot;: &quot;2024 ACS 5-year estimates (2020–2024)&quot;,
+    &quot;year&quot;: 2024,
+    &quot;matches&quot;: [
+      {
+        &quot;name&quot;: &quot;ZCTA5 70808&quot;,
+        &quot;population&quot;: 35843,
+        &quot;median_age&quot;: 31.5,
+        &quot;median_household_income_usd&quot;: 69418,
+        &quot;geoid&quot;: &quot;70808&quot;
+      }
+    ],
+    &quot;match_count&quot;: 1
+  },
+  &quot;sources&quot;: [&quot;https://api.census.gov/data/2024/acs/acs5&quot;],
+  &quot;warnings&quot;: []
+}
+</code></pre>
+<p>Without the key the same command returns <code>"status": "partial"</code>, 2010 Gazetteer figures (population 32,504) and a <code>HISTORICAL</code> warning. The tool says which one you got.</p>
+<h2>5. What review caught</h2>
+<p>The builder's own suite of about 60 tests passed. A separate read-only reviewer agent still found four safety defects. (It ran the same model family as the builder; a different family was used for verification, not review. We note it because it is the obvious next improvement.) In plain terms:</p>
+<ol>
+<li><strong>Redirects bypassed the public-address check.</strong> The tool refused to fetch private network addresses, but a public page could redirect it to one. <em>At scale:</em> an agent fetching thousands of URLs would eventually follow one. The check must apply to every hop, not only the first request.</li>
+<li><strong>No overall time limit on a request.</strong> Each network step had a timeout, but a slow server could keep the whole request alive indefinitely. <em>At scale:</em> a handful of slow hosts stall a fleet of agents. A hard deadline on the whole request fixes this.</li>
+<li><strong>Orphaned worker processes.</strong> When the browser worker failed, cleanup could be skipped and child processes left running. <em>At scale:</em> silent resource leakage that surfaces as a slow machine days later.</li>
+<li><strong>The browser had its own redirect path.</strong> The first fix covered the plain HTTP client; the second review found the same hole in the browser. The tool now refuses to follow redirects there. A real-browser test reproduced the problem before the fix and recorded zero private-address requests after it.</li>
+</ol>
+<p>All four are fixed, each with a regression test that failed before and passes now. Fourteen safety regression tests are now in place: eleven offline and three in a real browser. <strong>Closing the review gap.</strong> On the first run, the fix for defect 4 was tested and self-reviewed but had no independent review; the second reviewer's verdict was "ship after fixes", not a clean approval. We did not want a fix counted as a pass on its builder's word. The next morning a third independent pass, read-only, reviewed that fix alone. It confirmed the redirect hole is closed and re-ran the browser test (passed). It also raised two smaller items: a possible speculative-connection path (a page hinting the browser to pre-open a connection) that it could not demonstrate, and an error path that leaves a request pending instead of refusing it. We tried to reproduce the first one: the guarded browser opened zero connections, and so did an unguarded browser, so the path could not be shown on this build. Both got fixes the same morning. A fourth review confirmed the error-path fix on inspection and offline tests; its permissions do not allow live browser runs, so the verifier re-ran the browser tests, which passed. On the speculative connection, the reviewer would not count our backstop as proven, because the browser never made that connection even without protection, so a test cannot tell the two apart. We agreed, and list it under limits instead of calling it a pass.</p>
+<p>A separate observation about the harness: two identical blocked states triggered an automatic escalation, and the auto-decomposer split a finished task into five duplicate tasks for a different agent. It was caught, the duplicates archived, and the feature disabled. Unsupervised helper automation is also a source of duplicated work.</p>
+<h2>6. Limits, stated plainly</h2>
+<ul>
+<li><strong>Census current data needs a free key.</strong> A key was requested, activated and wired in the same evening; a live check returned 2024 ACS 5-year estimates. Without a key, the fallback is 2010 data and must not be used for current targeting.</li>
+<li><strong>Jina Reader refuses keyless traffic.</strong> The local crawler is the primary web path.</li>
+<li><strong>OpenAlex rate-limits keyless bursts.</strong> The tool reports <code>partial</code> instead of hiding it.</li>
+<li><strong>Not a replacement for paid contact enrichment.</strong> The tool covers public company filings, papers, repositories and pages. It does not find people or contact details.</li>
+<li><strong>Speculative browser connections are guarded but not proven.</strong> The browser has settings that stop it pre-opening connections. On this build it never pre-opened one, with or without those settings, so their effect could not be shown. Hostname pre-lookups are not observed by the tests.</li>
+<li><strong>DNS rebinding is not hardened.</strong> The address check happens before the connection; a misconfigured or untrusted name server could change its answer between the two. Use trusted public URLs only.</li>
+<li><strong>Single-process command line.</strong> The overall request deadline is designed for the command-line tool, not a multi-threaded library.</li>
+<li><strong>Spend, checked at the provider.</strong> The optional Firecrawl account sits on its free 1,000-credit monthly allowance. Its own usage endpoint reported 998 of 1,000 credits remaining. No money moved.</li>
+<li><strong>Harness residuals.</strong> A few fallback routes and model aliases were not yet moved to the single model family at the time of writing.</li>
+<li><strong>Build state.</strong> The tool is local only: committed to a private local repository, no remote, not published.</li>
+<li><strong>Comparison to Firecrawl.</strong> We compared discovery cost only. We did not benchmark quality, coverage or reliability against Alexandria, and make no claim that ours is equivalent in breadth. Execution of Alexandria tools is credit-priced per Firecrawl's documentation, and we did not run any.</li>
+</ul>
+<hr class="rule">
+<p><em>Figures trace to the evaluation record. Census examples (keyed and keyless) re-run 2026-10-21.</em></p>
+      <div class="next">Related: <a href="/notes/one-front-door/"><strong>One Front Door.</strong></a> Why every request goes through one agent.</div>
+    </article>
+  </main>
+  <footer class="footer">
+    <div class="frame footer-row">
+      <img src="/assets/wordmark-stone.svg" alt="AXIOM" width="120" height="35">
+      <p>Deploy Axiom · Baton Rouge, Louisiana<br>When rules and regulations begin to move, it&#39;s no longer solely governance. It&#39;s operations.</p>
+      <p class="footer-links"><a href="mailto:percy@deployaxiom.com">percy@deployaxiom.com</a> · <a href="tel:+12256358671">(225) 635-8671</a> · <a href="https://www.instagram.com/deployaxiom/">Instagram</a> · <a href="/">Home</a></p>
+    </div>
+  </footer>
+</body>
+</html>
