@@ -70,6 +70,8 @@ h2{font:700 clamp(28px,3.4vw,40px)/1.15 var(--display);letter-spacing:.03em;marg
 .ledger .who{font:700 16px/1.5 var(--display);letter-spacing:.06em;text-transform:uppercase}
 .ledger .what{color:#2A2D33}
 .ledger li:last-child{border-bottom:3px solid var(--ink)}
+.sub-h{margin:64px 0 20px;font:700 15px/1.6 var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--brass)}
+.ledger .who a{color:inherit;text-decoration:underline;text-underline-offset:4px}
 
 /* Method (dark) */
 .dark{background:var(--ink);color:var(--stone);border-top:0}
