@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const root = new URL('..', import.meta.url).pathname;
@@ -168,4 +168,15 @@ test('product context declares web platform and preserves static conversion cons
   const product = read('PRODUCT.md');
   assert.match(product, /## Platform\n\nweb\n/);
   assert.match(product, /## Capabilities and Constraints[\s\S]*No hosted form, database, analytics requirement, metered service, or external font dependency is required for the public conversion path\./);
+});
+
+test('notes index lists every published note and is linked from the homepage', () => {
+  const idx = read('notes/index.html');
+  const notes = readdirSync(join(root, 'notes')).filter((d) => statSync(join(root, 'notes', d)).isDirectory());
+  assert.ok(notes.length >= 6);
+  for (const d of notes) assert.ok(idx.includes(`href="/notes/${d}/"`), `notes index missing ${d}`);
+  assert.match(idx, /<link rel="canonical" href="https:\/\/deployaxiom.com\/notes\/">/);
+  assert.ok(homepage.includes('href="/notes/">Notes</a>'), 'footer Notes link points to the index');
+  assert.ok(homepage.includes('href="/notes/">All notes</a>'));
+  assert.ok(read('sitemap.xml').includes('https://deployaxiom.com/notes/</loc>'));
 });
