@@ -1,0 +1,14 @@
+{
+  "name": "deploy-axiom-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "test:browser": "node --test tests/browser/*.test.mjs",
+    "audit": "npm audit",
+    "build": "env -u NETLIFY_AUTH_TOKEN netlify build"
+  },
+  "devDependencies": {
+    "playwright": "1.64.1"
+  }
+}

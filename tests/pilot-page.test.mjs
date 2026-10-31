@@ -12,8 +12,8 @@ const visibleText = page.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 test('permanent homepage replaces the expired campaign with the locked line and real work', () => {
   for (const text of [
     "When rules and regulations begin to move, it's no longer solely governance. It's operations.",
-    'Engagements',
-    'Clients are described rather than named until they consent to be.',
+    'Work',
+    'Clients are described rather than named until they agree to be.',
   ]) assert.ok(visibleText.includes(text), `missing: ${text}`);
   for (const stale of ['TWO EVALUATIONS OPEN', 'Applications close', 'Submit one-lane application', 'two-lanes-motion.mp4', 'Examples, not client work.']) {
     assert.ok(!page.includes(stale), `stale marker: ${stale}`);

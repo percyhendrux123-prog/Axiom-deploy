@@ -1,69 +1,72 @@
 # Axiom Site Design Contract
 
-## Mode
+## Mode and screen job
 
-Permanent product homepage. Explain the operating model and make a bounded first contact easy without pretending a public form is an operating system.
-
-## Screen job
-
-Let an operator understand how a Deploy Axiom lane works: the trigger enters, context is assembled, a draft is held for human judgment, and the resulting disposition is recorded for the next pass.
+A firm's letterhead, stone and brass door plate. Explain the work through observed records, show where authority stops, and let the owner prepare a brief without submitting anything to the site. Static HTML/CSS, no motion, no dashboard chrome.
 
 ## Primary action
 
-Start with `OPERATE` in Instagram DM. The local lane mapper prepares, but never sends or stores, that brief.
+`Start an engagement` in the masthead and hero links to `#contact` (the existing Contact destination). The closing band repeats the action as a native disclosure that opens the local brief composer. Copying is local; email is an explicit visitor choice. No hosted form, transmission, storage, analytics, or automatic send.
 
-## Content hierarchy
+## Content hierarchy — remake 2026-10-30
 
-1. Exact thesis: “We don't sell automation. We deploy operational agents.”
-2. One agent / one lane / one measurable outcome.
-3. Continuity problem and simulated operating model.
-4. Deployment contract and example jobs.
-5. Permission boundaries and local-only lane mapper.
-6. Current Instagram contact lane and closed-campaign archive.
+1. Locked headline: “Nothing in your business waits on you to remember it.”
+2. Approved subhead, engagement/call actions, and the approved anonymized artifact plate.
+3. Ink proof strip: three Cinzel numerals, each with a label and evidence link.
+4. Work: three editorial story cards with the supplied roles, results and links.
+5. I · Limits of authority, ahead of Method.
+6. II · Method, including the former governance headline and five steps.
+7. III · Founder, no photo or silhouette until supplied.
+8. IV · Findings: Notes framed around what was found, plus All notes.
+9. V · Closing engagement band, local brief disclosure, and contact footer.
 
-## Brand standard (Percy, 2026-10-11; replaces the earlier green canon)
+Copy is supplied, not authored by the builder. No paraphrasing, shortening, invented claims, or publication of HOLD strings. Claim IDs, editorial flags, internal ledgers and paths never enter the public payload. The preview retains `{FOUNDER}` until Percy supplies the name; this is a production-review gate, not a name choice.
 
-First line: Axiom should feel like hiring a firm. An agency. Hired authority.
+## Brand standard
 
-- Source: Rome. Inscription capitals (Trajan's Column), stone, proportion, columns and arches. The Aurelius temper: self-command, duty, restraint. Authority does not shout.
-- Logo: a wordmark first. "AXIOM" in capitals, widely tracked, drawn as outlined SVG paths (no live font). A single Roman "A" is the avatar/monogram and must read at 40px inside a circular crop.
-- Logo source files and the current options: `~/Desk/Axiom/Brand/2026-10-11-wordmark/` (build.py regenerates them). Chosen mark (Percy, 2026-10-11): option C's form set in option A's typeface. "AXIOM" in Cinzel at weight 800, tracking 0.28em, Ink on Stone or Stone on Ink, no rules. Avatar: the single Cinzel A, no frame. Files: `svg/FINAL-*.svg`.
-- Never: robots, brains, circuit lines, glow, neon, gradients, or anything that reads as an AI startup or a toy.
+- Roman inscription capitals and restrained editorial proportion: a firm, not an AI startup.
+- Wordmark: existing outlined Cinzel AXIOM SVG; monogram: the existing single A.
+- Ink `#121316`, Stone `#F2EEE6`, Brass `#8C7350`. Brass is for rules and small marks, never body copy or broad fills. Navy is legacy only, not a new surface color.
+- Cinzel display and numerals, self-hosted with the SIL OFL license beside it. Quiet system serif body text. No network fonts.
+- Square edges, paired thick/thin rules, generous margins, no shadows or decorative widgets.
+- Never: robots, brains, circuits, glow, neon, gradients, green accents, rounded SaaS grids, autoplay, animation, smooth scrolling, fake metrics, prices, generic “Book a call” language, or hidden collection.
 
-## Visual language
+## Patterns
 
-- World: a firm's letterhead and its brass door plate. Not a product dashboard, not a startup.
-- Color: two colors per surface, at most three in the system.
-  - Ink `#121316` (near-black) and Navy `#15203A` (deep navy) carry text and fields.
-  - Stone `#F2EEE6` (off-white travertine) is the paper.
-  - Brass `#8C7350` is the single muted accent, used only for hairline rules and small marks, never for body text or large fills.
-  - The mineral green and signal green are retired. Remove them when the site is next reskinned.
-- Typography: Cinzel (Roman inscription capitals) is the display face, matching the logo. Body text stays a quiet sans or serif at reading size. Fonts must be self-hosted SIL OFL files with the license committed beside them; no network font requests. Nothing rounded or playful.
-- Structure: editorial rules (paired thick/thin lines, like an entablature), generous margins, centered or strictly left-aligned columns. Proportion over decoration.
-- Motion: none on the permanent homepage. The model has accessible static meaning and respects reduced-motion preferences.
+### Proof strip
 
-## States
+`.proof-strip.dark` is a single Ink band, not separate KPI tiles. `.proof-grid` has three equal columns with fine dividing rules. Each `.proof-cell` contains a large `.proof-number` set in Cinzel, a complete supplied label, and a plainly underlined link. The numbers are date-bound observations, not performance promises. Re-verify counts on publish day through AXIOM; the builder does not read the internal ledger.
 
-- Contact: Instagram DM opens only when the visitor elects to follow the link.
-- Mapper: browser validates all three fields; clipboard copy either confirms locally or supplies a visible fallback message.
-- No JavaScript: an `OPERATE` template is present in the page's `noscript` content.
-- Archive: campaign is explicitly CLOSED, has `noindex,follow`, and offers no enabled application.
-- Webhook: signed Meta webhook and its isolated function behavior are unchanged.
+On mobile all three cells stack, labels wrap naturally and links retain a 46px minimum target. No fixed heights, clipped text or horizontal carousel. The report metric row reuses the typography on Stone without inventing links.
 
-## Responsive behavior
+### Story card
 
-- Desktop: hierarchy uses wide editorial spacing; state and permission sequences run across the page.
-- Mobile: sections stack; touch targets remain at least 46px; the state sequence becomes vertical rather than overflowing.
+`.story-card` is an editorial article, not a dashboard or clickable tile. Three columns on wide screens, stacked below 1000px. Each has an Ink top rule, Cinzel role, full supplied result, and only the approved metric/link when available. Do not truncate copy, equalize by hiding text, or fabricate a field report. Card 2 has no link and its HOLD-marked metric line is omitted.
 
-## Forbidden defaults
+### Document plate
 
-Autoplay video, external font dependencies, rounded SaaS card grids, pricing, fake metrics, client proof without evidence, cyberpunk, robot imagery, brain or circuit motifs, glow effects, neon, gradients, green accents, generic “Book a call” conversion, open-campaign language, hosted application forms, and hidden data collection.
+`.document-plate` displays the approved 2400×1800 PNG intact, without crop, distortion, recoloring, recreation or invented rows. It is the sole evidence/dashboard-like surface, not a UI to interact with. Exact caption: “Example record. Client details removed.” Use the supplied descriptive alt text and explicit dimensions. The image links directly to the full-resolution local PNG for inspection.
 
-## Acceptance criteria
+The homepage places the plate to the right of the hero and below the buttons on mobile. The field report gives it the full article width, with reading copy in a narrower column. It also serves as the local OG/Twitter image; social alt uses the supplied caption.
 
-- Homepage contains the exact thesis and current Instagram contact lane.
-- Simulation label, human Hold, and no-JS meaning are present.
-- Example lanes are clearly examples, not deployment claims.
-- Mapper is local-only, secret-safe, clipboard-based, and has a visible fallback template.
-- Metadata, canonical URL, favicon, OG asset, sitemap, robots, CSP, and build output are present.
-- Archive is closed and excluded from search indexing; release history and a server-closed legacy route remain preserved.
+## Field report
+
+Canonical route: `/field-reports/insurance-client-care/` (the task's route overrides the deck's suggested Notes URL). Static article, Field Report 02, supplied headline/byline, three metrics, artifact, The gap, What runs, What waits for her, What isn't proven yet, and engagement/back links. Preserve all evidence limits visibly, especially that no enrolled client has received a check-in yet. Include canonical, description, OG/Twitter, favicon and sitemap. Draft preview is not approval to publish the report.
+
+## Responsive and accessible behavior
+
+- Verify 1440px desktop and 390px mobile, including the expanded brief; content must fit without hiding overflow.
+- Hero and story columns stack. The plate remains uncropped and opens at native resolution.
+- Mobile masthead retains the top-right engagement CTA without overlapping the wordmark.
+- Semantic headings, skip links, native disclosure, labeled fields, visible keyboard focus, and live clipboard status.
+- No JavaScript: native disclosure and the complete manual brief template still work.
+- Clipboard denial: the filled manual template is focused and remains copyable. No persistence or network requests are added.
+
+## Preserved surfaces and acceptance
+
+- Existing Notes, Baton Rouge, Privacy, Terms, archive, success route and signed Meta webhook remain intact.
+- Archive remains CLOSED and `noindex,follow`; the legacy application function remains server-closed (410).
+- CSP stays self-only, with no inline code, remote fonts or unsafe-inline allowances.
+- Tests cover section order, three linked proof cells, three stories, supplied copy, HOLD omission, report metadata, sitemap/build payload, real-browser links, 390px overflow, clipboard success/denial, and no-JS use.
+- Only `dist/` is deployed. No copy deck, claims ledger, tests, source rules, review briefs or internal artifacts enter that payload.
+- A160 ends at draft preview plus AXIOM review. Percy approval is required before any main push or production publication.
