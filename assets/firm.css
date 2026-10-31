@@ -300,6 +300,7 @@ html:has(.remake){scroll-behavior:auto;scroll-padding-top:100px}
 .remake .founder-copy{max-width:40em}
 .remake .founder-copy p:first-child{margin-top:0}
 .remake .founder-name{font:600 20px/1.5 var(--display)}
+.remake .founder-photo{display:block;width:100%;max-width:360px;height:auto;margin-top:32px;filter:grayscale(1)}
 .remake .engagement-band .heading{max-width:760px;margin-bottom:32px}
 .remake .engagement-band .heading p:not(.numeral){color:var(--stone)}
 .remake .contact-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:start}
@@ -349,6 +350,7 @@ html:has(.remake){scroll-behavior:auto;scroll-padding-top:100px}
   .remake .proof-number{font-size:38px}
   .remake .proof-cell p{margin:12px 0}
   .remake .founder-grid{grid-template-columns:1fr;gap:0}
+  .remake .founder-photo{max-width:280px;margin:20px 0 28px}
   .remake .contact-actions{grid-template-columns:1fr}
   .remake .mapper{padding:24px 18px}
   .remake .fallback{padding:18px}
