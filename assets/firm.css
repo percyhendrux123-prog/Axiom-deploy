@@ -622,3 +622,6 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:1}
 @media (max-width:640px){
   nav a[href="#notes"],nav a[href="/#notes"],nav a[href="/notes/"]{display:inline-flex;min-width:48px;justify-content:center}
 }
+
+/* End of page: no rubber-band past the footer; any overscroll that remains shows Ink, matching the footer */
+html{background:var(--ink);overscroll-behavior-y:none}
