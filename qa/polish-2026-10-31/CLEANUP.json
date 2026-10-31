@@ -1,9 +1,15 @@
 {
+  "phase": "inline-link-revision",
   "removed": [
     "dist",
     ".netlify",
     "qa/remake"
   ],
   "dist_exists": false,
+  "generated_folders_absent": {
+    "dist": true,
+    ".netlify": true,
+    "qa/remake": true
+  },
   "matching_test_or_review_processes": []
 }

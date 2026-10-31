@@ -2,6 +2,7 @@ import { chromium, webkit } from 'playwright';
 import { createServer } from 'node:http';
 import { readFile, stat, mkdir, writeFile } from 'node:fs/promises';
 import { resolve, sep, extname, join } from 'node:path';
+import { measureTargets } from '../../tests/browser/target-geometry.mjs';
 
 const root = process.cwd();
 const dist = resolve(root, 'dist');
@@ -47,20 +48,12 @@ try {
         await page.goto(base + path);
         await page.evaluate(() => document.fonts.ready);
         await page.locator('img').evaluateAll(imgs => Promise.all(imgs.map(img => { img.loading = 'eager'; return img.decode().catch(() => {}); })));
-        const metrics = await page.evaluate(() => {
-          const describe = e => ({ tag: e.tagName, class: e.className, text: (e.innerText || e.getAttribute('aria-label') || '').trim().slice(0, 100) });
-          const visible = e => e.checkVisibility();
-          const rect = e => { const r = e.getBoundingClientRect(); return { width: r.width, height: r.height, left: r.left, right: r.right }; };
-          return {
-            viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth,
-            outside: [...document.querySelectorAll('main *, header *, footer *')].filter(visible).filter(e => { const r = rect(e); return r.width && (r.left < -1 || r.right > innerWidth + 1); }).map(e => ({ ...describe(e), ...rect(e) })),
-            smallTargets: [...document.querySelectorAll('a, button, summary, input, textarea')].filter(visible).filter(e => !e.classList.contains('skip')).filter(e => { const r = rect(e); return r.width < 44 || r.height < 44; }).map(e => ({ ...describe(e), ...rect(e) })),
-            h1: document.querySelector('h1')?.innerText,
-            text: document.body.textContent.replace(/\s+/g, ' ').trim(),
-            font: getComputedStyle(document.querySelector('h1')).fontFamily,
-            scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
-          };
-        });
+        const metrics = { ...await page.evaluate(measureTargets), ...await page.evaluate(() => ({
+          h1: document.querySelector('h1')?.innerText,
+          text: document.body.textContent.replace(/\s+/g, ' ').trim(),
+          font: getComputedStyle(document.querySelector('h1')).fontFamily,
+          scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
+        })) };
         let axe;
         if (['home', 'field-report'].includes(name) && [390, 1440].includes(width)) {
           await page.evaluate(axeSource);
@@ -70,6 +63,14 @@ try {
           });
         }
         if ([1440, 390].includes(width) && !process.env.NO_SCREENSHOTS) await page.screenshot({ path: join(output, `${name}-${width}.png`), fullPage: true });
+        if (name === 'privacy' && width === 390 && !process.env.NO_SCREENSHOTS) {
+          const clip = await page.locator('h2').filter({ hasText: 'Google user data' }).evaluate(heading => {
+            const top = heading.getBoundingClientRect().top + scrollY - 24;
+            const bottom = heading.nextElementSibling.getBoundingClientRect().bottom + scrollY + 24;
+            return { x: 0, y: top, width: innerWidth, height: bottom - top };
+          });
+          await page.screenshot({ path: join(output, 'privacy-google-data-390.png'), fullPage: true, clip });
+        }
         results.push({ path, name, width, ...metrics, errors, badResources, external, ...(axe ? { axe } : {}) });
         page.off('pageerror', onError); page.off('console', onConsole); page.off('response', onResponse); page.off('request', onRequest);
       }

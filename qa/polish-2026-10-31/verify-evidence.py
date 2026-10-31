@@ -25,13 +25,14 @@ for phase, expected in [('after', 91), ('webkit', 39)]:
     assert len({r['path'] for r in data}) == 13
     assert all(not r['outside'] and r['scrollWidth'] <= r['width'] for r in data)
     assert all(not r['smallTargets'] for r in data if r['width'] <= 430)
+    assert all(not r['nonInlineTextLinks'] for r in data)
     assert all(not r['errors'] and not r['badResources'] and not r['external'] for r in data)
     axes = [r for r in data if r.get('axe')]
     assert len(axes) == 4
     assert all(not r['axe']['violations'] and not r['axe']['incomplete'] for r in axes)
-    manifest['audits'][phase] = {'route_width_checks': len(data), 'routes': 13, 'widths': sorted({r['width'] for r in data}), 'overflow_failures': 0, 'mobile_target_failures': 0, 'page_or_resource_errors': 0, 'external_requests': 0, 'axe_runs': len(axes), 'axe_version': axes[0]['axe']['version'], 'axe_violations': 0, 'axe_incomplete': 0}
+    manifest['audits'][phase] = {'route_width_checks': len(data), 'routes': 13, 'widths': sorted({r['width'] for r in data}), 'overflow_failures': 0, 'mobile_standalone_target_failures': 0, 'inline_text_flow_failures': 0, 'inline_exception': 'WCAG 2.5.8 and 2.5.5: links in running text stay native inline; only standalone controls are sized >=44x44px', 'page_or_resource_errors': 0, 'external_requests': 0, 'axe_runs': len(axes), 'axe_version': axes[0]['axe']['version'], 'axe_violations': 0, 'axe_incomplete': 0}
 manifest['tests'] = {}
-for name, expected in [('node-tests.log', 48), ('browser-tests.log', 9)]:
+for name, expected in [('node-tests.log', 49), ('browser-tests.log', 10)]:
     text = (root / name).read_text()
     passed_match, failed_match = re.search(r'ℹ pass (\d+)', text), re.search(r'ℹ fail (\d+)', text)
     assert passed_match is not None and failed_match is not None
@@ -48,6 +49,11 @@ for name in ['package.json', 'package-lock.json', 'netlify.toml', 'assets/founde
 for name in ['CONTACT-SHEET.png', 'CHANGES.md']:
     path = root / name
     assert path.is_file()
+privacy_detail = root / 'after/privacy-google-data-390.png'
+with Image.open(privacy_detail) as image:
+    assert image.width == 390
+    manifest['privacy_inline_detail'] = {'path': str(privacy_detail.relative_to(repo)), 'width': image.width, 'height': image.height, 'sha256': sha256(privacy_detail.read_bytes()).hexdigest()}
 manifest['adversarial_review'] = {'passes': 1, 'defects_found': 1, 'severity': 'P2', 'defect': 'Report CTA Stone-on-Stone hover label', 'fix': 'Explicit report hover/active colors; real browser regression observed red then green', 'fixed': True, 'report': 'qa/polish-2026-10-31/REVIEW-Axiom-deploy-design-polish-2026-10-31.md'}
+manifest['inline_link_revision_review'] = {'profile': 'codereview', 'completed_passes': 1, 'mode': 'text-only self-contained public-source patch review', 'repository_read_attempt': 'Declined due to profile repository-scope restriction; no policy/config change', 'concrete_defects_found': 0, 'independent_runtime_verification': False, 'report': 'qa/polish-2026-10-31/REVIEW-Inline-links-findings.md', 'runtime_verification': 'Parent executed the test/build/Chromium/WebKit audits; AXIOM independent visual review is next'}
 (root / 'EVIDENCE.json').write_text(json.dumps(manifest, indent=2) + '\n')
 print(json.dumps({'screenshots': len(manifest['screenshots']), 'audits': manifest['audits'], 'tests': manifest['tests'], 'unchanged_sensitive_surfaces': len(manifest['preserved_files'])}, indent=2))

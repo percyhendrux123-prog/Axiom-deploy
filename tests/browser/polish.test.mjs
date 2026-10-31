@@ -4,6 +4,7 @@ import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { resolve, sep, extname, join } from 'node:path';
 import { chromium } from 'playwright';
+import { measureTargets } from './target-geometry.mjs';
 
 const dist = resolve(new URL('../..', import.meta.url).pathname, 'dist');
 const routes = ['/', '/notes/', '/notes/one-front-door/', '/notes/one-tempo/', '/notes/the-gap-is-the-user/', '/notes/the-outcome/', '/notes/the-gathering/', '/notes/left-foot-right-foot/', '/field-reports/insurance-client-care/', '/privacy/', '/terms/', '/baton-rouge/', '/success.html'];
@@ -45,7 +46,7 @@ test('every polished route is stationary with ordinary motion preferences', asyn
   } finally { await context.close(); }
 });
 
-test('all page families fit mobile with at least 44px interactive targets', async () => {
+test('all page families fit mobile with 44px standalone targets and naturally inline prose links', async () => {
   const failures = [];
   for (const width of [360, 390, 430, 768, 1000, 1024, 1440]) {
     const context = await browser.newContext({ viewport: { width, height: 1000 } });
@@ -54,25 +55,36 @@ test('all page families fit mobile with at least 44px interactive targets', asyn
       for (const path of routes) {
         await page.goto(base + path);
         await page.evaluate(() => document.fonts.ready);
-        const result = await page.evaluate(() => {
-          const visible = e => e.checkVisibility();
-          const describe = e => `${e.tagName}.${e.className}: ${(e.textContent || '').trim().slice(0, 60)}`;
-          return {
-            scrollWidth: document.documentElement.scrollWidth,
-            outside: [...document.querySelectorAll('main *, header *, footer *')].filter(visible).filter(e => {
-              const r = e.getBoundingClientRect();
-              return r.width && (r.left < -1 || r.right > innerWidth + 1);
-            }).map(describe),
-            small: [...document.querySelectorAll('a, button, summary, input, textarea')].filter(visible).filter(e => !e.classList.contains('skip')).filter(e => {
-              const r = e.getBoundingClientRect(); return r.width < 44 || r.height < 44;
-            }).map(describe),
-          };
-        });
-        if (result.scrollWidth > width || result.outside.length || (width <= 430 && result.small.length)) failures.push({ path, width, ...result });
+        const result = await page.evaluate(measureTargets);
+        if (result.scrollWidth > width || result.outside.length || result.nonInlineTextLinks.length || (width <= 430 && result.smallTargets.length)) failures.push({ path, width, ...result });
       }
     } finally { await context.close(); }
   }
   assert.deepEqual(failures, []);
+});
+
+test('privacy policy links wrap within evenly led mobile prose', async () => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  try {
+    const page = await context.newPage();
+    await page.goto(base + '/privacy/');
+    await page.evaluate(() => document.fonts.ready);
+    const policy = page.locator('.article a[href="https://developers.google.com/terms/api-services-user-data-policy"]');
+    assert.equal(await policy.evaluate(element => getComputedStyle(element).display), 'inline');
+    const lines = await policy.evaluate(element => {
+      const paragraph = element.closest('p');
+      const walker = document.createTreeWalker(paragraph, NodeFilter.SHOW_TEXT);
+      const tops = new Set();
+      while (walker.nextNode()) {
+        const range = document.createRange();
+        range.selectNodeContents(walker.currentNode);
+        for (const rect of range.getClientRects()) if (rect.width) tops.add(rect.top);
+      }
+      return { tops: [...tops].sort((a, b) => a - b), leading: parseFloat(getComputedStyle(paragraph).lineHeight), fragments: element.getClientRects().length };
+    });
+    assert.ok(lines.fragments > 1, 'the policy name shares surrounding lines instead of moving as one box');
+    assert.ok(lines.tops.slice(1).every((top, index) => Math.abs(top - lines.tops[index] - lines.leading) < 1), JSON.stringify(lines));
+  } finally { await context.close(); }
 });
 
 test('keyboard focus stays visible on the dark engagement and the light composer', async () => {
@@ -96,9 +108,10 @@ test('keyboard focus stays visible on the dark engagement and the light composer
     for (const width of [360, 390]) {
       await page.setViewportSize({ width, height: 844 });
       await page.getByLabel('The recurring work', { exact: true }).fill('X'.repeat(800));
-      const metrics = await page.evaluate(() => ({ width: document.documentElement.scrollWidth, targets: [...document.querySelectorAll('#brief-composer a, #brief-composer button, #brief-composer textarea')].filter(e => e.checkVisibility()).map(e => { const r = e.getBoundingClientRect(); return { width: r.width, height: r.height }; }) }));
-      assert.equal(metrics.width, width);
-      assert.ok(metrics.targets.every(r => r.width >= 44 && r.height >= 44));
+      const metrics = await page.evaluate(measureTargets);
+      assert.equal(metrics.scrollWidth, width);
+      assert.deepEqual(metrics.smallTargets, []);
+      assert.deepEqual(metrics.nonInlineTextLinks, []);
     }
   } finally { await context.close(); }
 });

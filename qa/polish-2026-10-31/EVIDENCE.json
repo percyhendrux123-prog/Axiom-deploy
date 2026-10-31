@@ -72,8 +72,8 @@
     {
       "path": "qa/polish-2026-10-31/after/home-390.png",
       "width": 390,
-      "height": 8235,
-      "sha256": "86408a69e0b7cb2ec6d5dbf19f493e0a039a9262a013f85c43387cf576b814a5"
+      "height": 8220,
+      "sha256": "2e1dcebbb1b4c2ae543ef36c93497d05025092624e0dee9b1388eae42506d411"
     },
     {
       "path": "qa/polish-2026-10-31/after/notes-1440.png",
@@ -108,8 +108,8 @@
     {
       "path": "qa/polish-2026-10-31/after/field-report-390.png",
       "width": 390,
-      "height": 3914,
-      "sha256": "24eae2f523c1aef1a4a467d28a06223c14e689a8c885b540ad7bb3d1836730ac"
+      "height": 3905,
+      "sha256": "06d504cee8bb901b97dfa967481839047cf5fbee9331173c3b2de7e6dc9fb695"
     },
     {
       "path": "qa/polish-2026-10-31/after/privacy-1440.png",
@@ -120,8 +120,8 @@
     {
       "path": "qa/polish-2026-10-31/after/privacy-390.png",
       "width": 390,
-      "height": 4063,
-      "sha256": "6513bdab5545c083cfac88ad5f4a1f92e2b6d1bd979981f8e3ea58f07e5b0bda"
+      "height": 3974,
+      "sha256": "ffb314412f139698064f340f0c27ee58589881f06595d069846df87627ea2cf7"
     }
   ],
   "audits": {
@@ -138,7 +138,9 @@
         1440
       ],
       "overflow_failures": 0,
-      "mobile_target_failures": 0,
+      "mobile_standalone_target_failures": 0,
+      "inline_text_flow_failures": 0,
+      "inline_exception": "WCAG 2.5.8 and 2.5.5: links in running text stay native inline; only standalone controls are sized >=44x44px",
       "page_or_resource_errors": 0,
       "external_requests": 0,
       "axe_runs": 4,
@@ -155,7 +157,9 @@
         1440
       ],
       "overflow_failures": 0,
-      "mobile_target_failures": 0,
+      "mobile_standalone_target_failures": 0,
+      "inline_text_flow_failures": 0,
+      "inline_exception": "WCAG 2.5.8 and 2.5.5: links in running text stay native inline; only standalone controls are sized >=44x44px",
       "page_or_resource_errors": 0,
       "external_requests": 0,
       "axe_runs": 4,
@@ -166,11 +170,11 @@
   },
   "tests": {
     "node-tests.log": {
-      "passed": 48,
+      "passed": 49,
       "failed": 0
     },
     "browser-tests.log": {
-      "passed": 9,
+      "passed": 10,
       "failed": 0
     }
   },
@@ -232,6 +236,12 @@
       "sha256": "14df7dc9bbf75244dfaf893518734cfb45293c0f5244ea522c8fefc07b4c0798"
     }
   ],
+  "privacy_inline_detail": {
+    "path": "qa/polish-2026-10-31/after/privacy-google-data-390.png",
+    "width": 390,
+    "height": 471,
+    "sha256": "2d71f43ead672483d9fdd5036d8aac17ce1580723fc8e6cf39936b2254583315"
+  },
   "adversarial_review": {
     "passes": 1,
     "defects_found": 1,
@@ -240,5 +250,15 @@
     "fix": "Explicit report hover/active colors; real browser regression observed red then green",
     "fixed": true,
     "report": "qa/polish-2026-10-31/REVIEW-Axiom-deploy-design-polish-2026-10-31.md"
+  },
+  "inline_link_revision_review": {
+    "profile": "codereview",
+    "completed_passes": 1,
+    "mode": "text-only self-contained public-source patch review",
+    "repository_read_attempt": "Declined due to profile repository-scope restriction; no policy/config change",
+    "concrete_defects_found": 0,
+    "independent_runtime_verification": false,
+    "report": "qa/polish-2026-10-31/REVIEW-Inline-links-findings.md",
+    "runtime_verification": "Parent executed the test/build/Chromium/WebKit audits; AXIOM independent visual review is next"
   }
 }
