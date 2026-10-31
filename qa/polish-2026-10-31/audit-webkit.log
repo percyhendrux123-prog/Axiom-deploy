@@ -1,0 +1,31 @@
+webkit: 360px, 13 routes captured
+webkit: 390px, 13 routes captured
+webkit: 1440px, 13 routes captured
+{
+  "phase": "webkit",
+  "checks": 39,
+  "overflows": [],
+  "smallTargetPages": [],
+  "axe": [
+    {
+      "path": "/",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "path": "/field-reports/insurance-client-care/",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "path": "/field-reports/insurance-client-care/",
+      "width": 1440,
+      "violations": []
+    }
+  ]
+}

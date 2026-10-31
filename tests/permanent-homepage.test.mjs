@@ -126,7 +126,7 @@ test('homepage uses the wordmark and keeps the hero direct', () => {
 });
 
 test('all public pages avoid inline code and use local stylesheets', () => {
-  for (const [path, css] of [['index.html', 'firm'], ['notes/one-front-door/index.html', 'firm'], ['success.html', 'site'], [archivePath, 'site']]) {
+  for (const [path, css] of [['index.html', 'firm'], ['notes/one-front-door/index.html', 'firm'], ['success.html', 'firm'], [archivePath, 'site']]) {
     const page = read(path);
     assert.match(page, new RegExp(`<link rel="stylesheet" href="/?assets/${css}\\.css(?:\\?v=[a-z0-9]+)?">`));
     assert.ok(!/<style[ >]/i.test(page), `${path} must not contain inline style`);

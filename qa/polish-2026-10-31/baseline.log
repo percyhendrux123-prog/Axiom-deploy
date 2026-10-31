@@ -1,0 +1,315 @@
+before: 360px, 13 routes captured
+before: 390px, 13 routes captured
+before: 430px, 13 routes captured
+before: 768px, 13 routes captured
+before: 1000px, 13 routes captured
+before: 1024px, 13 routes captured
+before: 1440px, 13 routes captured
+{
+  "phase": "before",
+  "checks": 91,
+  "overflows": [
+    {
+      "path": "/notes/one-tempo/",
+      "width": 360,
+      "outside": 2
+    },
+    {
+      "path": "/notes/the-outcome/",
+      "width": 360,
+      "outside": 0
+    },
+    {
+      "path": "/notes/the-gathering/",
+      "width": 360,
+      "outside": 0
+    },
+    {
+      "path": "/notes/one-tempo/",
+      "width": 390,
+      "outside": 2
+    },
+    {
+      "path": "/notes/the-outcome/",
+      "width": 390,
+      "outside": 0
+    },
+    {
+      "path": "/notes/the-gathering/",
+      "width": 390,
+      "outside": 0
+    },
+    {
+      "path": "/notes/one-tempo/",
+      "width": 430,
+      "outside": 2
+    },
+    {
+      "path": "/notes/the-outcome/",
+      "width": 430,
+      "outside": 0
+    },
+    {
+      "path": "/notes/the-gathering/",
+      "width": 430,
+      "outside": 0
+    },
+    {
+      "path": "/notes/one-tempo/",
+      "width": 768,
+      "outside": 1
+    },
+    {
+      "path": "/notes/one-tempo/",
+      "width": 1000,
+      "outside": 1
+    },
+    {
+      "path": "/notes/one-tempo/",
+      "width": 1024,
+      "outside": 1
+    },
+    {
+      "path": "/notes/one-tempo/",
+      "width": 1440,
+      "outside": 1
+    }
+  ],
+  "smallTargetPages": [
+    {
+      "path": "/",
+      "width": 360,
+      "count": 15
+    },
+    {
+      "path": "/notes/",
+      "width": 360,
+      "count": 8
+    },
+    {
+      "path": "/notes/one-front-door/",
+      "width": 360,
+      "count": 8
+    },
+    {
+      "path": "/field-reports/insurance-client-care/",
+      "width": 360,
+      "count": 8
+    },
+    {
+      "path": "/privacy/",
+      "width": 360,
+      "count": 11
+    },
+    {
+      "path": "/terms/",
+      "width": 360,
+      "count": 9
+    },
+    {
+      "path": "/baton-rouge/",
+      "width": 360,
+      "count": 9
+    },
+    {
+      "path": "/success.html",
+      "width": 360,
+      "count": 1
+    },
+    {
+      "path": "/notes/one-tempo/",
+      "width": 360,
+      "count": 9
+    },
+    {
+      "path": "/notes/the-gap-is-the-user/",
+      "width": 360,
+      "count": 9
+    },
+    {
+      "path": "/notes/the-outcome/",
+      "width": 360,
+      "count": 9
+    },
+    {
+      "path": "/notes/the-gathering/",
+      "width": 360,
+      "count": 9
+    },
+    {
+      "path": "/notes/left-foot-right-foot/",
+      "width": 360,
+      "count": 9
+    },
+    {
+      "path": "/",
+      "width": 390,
+      "count": 15
+    },
+    {
+      "path": "/notes/",
+      "width": 390,
+      "count": 8
+    },
+    {
+      "path": "/notes/one-front-door/",
+      "width": 390,
+      "count": 8
+    },
+    {
+      "path": "/field-reports/insurance-client-care/",
+      "width": 390,
+      "count": 8
+    },
+    {
+      "path": "/privacy/",
+      "width": 390,
+      "count": 11
+    },
+    {
+      "path": "/terms/",
+      "width": 390,
+      "count": 9
+    },
+    {
+      "path": "/baton-rouge/",
+      "width": 390,
+      "count": 9
+    },
+    {
+      "path": "/success.html",
+      "width": 390,
+      "count": 1
+    },
+    {
+      "path": "/notes/one-tempo/",
+      "width": 390,
+      "count": 9
+    },
+    {
+      "path": "/notes/the-gap-is-the-user/",
+      "width": 390,
+      "count": 9
+    },
+    {
+      "path": "/notes/the-outcome/",
+      "width": 390,
+      "count": 9
+    },
+    {
+      "path": "/notes/the-gathering/",
+      "width": 390,
+      "count": 9
+    },
+    {
+      "path": "/notes/left-foot-right-foot/",
+      "width": 390,
+      "count": 9
+    },
+    {
+      "path": "/",
+      "width": 430,
+      "count": 15
+    },
+    {
+      "path": "/notes/",
+      "width": 430,
+      "count": 8
+    },
+    {
+      "path": "/notes/one-front-door/",
+      "width": 430,
+      "count": 8
+    },
+    {
+      "path": "/field-reports/insurance-client-care/",
+      "width": 430,
+      "count": 8
+    },
+    {
+      "path": "/privacy/",
+      "width": 430,
+      "count": 11
+    },
+    {
+      "path": "/terms/",
+      "width": 430,
+      "count": 9
+    },
+    {
+      "path": "/baton-rouge/",
+      "width": 430,
+      "count": 9
+    },
+    {
+      "path": "/success.html",
+      "width": 430,
+      "count": 1
+    },
+    {
+      "path": "/notes/one-tempo/",
+      "width": 430,
+      "count": 9
+    },
+    {
+      "path": "/notes/the-gap-is-the-user/",
+      "width": 430,
+      "count": 9
+    },
+    {
+      "path": "/notes/the-outcome/",
+      "width": 430,
+      "count": 9
+    },
+    {
+      "path": "/notes/the-gathering/",
+      "width": 430,
+      "count": 9
+    },
+    {
+      "path": "/notes/left-foot-right-foot/",
+      "width": 430,
+      "count": 9
+    }
+  ],
+  "axe": [
+    {
+      "path": "/",
+      "width": 390,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "count": 9
+        },
+        {
+          "id": "landmark-unique",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "/field-reports/insurance-client-care/",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 1440,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "count": 9
+        },
+        {
+          "id": "landmark-unique",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "/field-reports/insurance-client-care/",
+      "width": 1440,
+      "violations": []
+    }
+  ]
+}

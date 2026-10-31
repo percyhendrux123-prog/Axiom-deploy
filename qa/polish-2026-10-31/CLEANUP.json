@@ -1,0 +1,9 @@
+{
+  "removed": [
+    "dist",
+    ".netlify",
+    "qa/remake"
+  ],
+  "dist_exists": false,
+  "matching_test_or_review_processes": []
+}

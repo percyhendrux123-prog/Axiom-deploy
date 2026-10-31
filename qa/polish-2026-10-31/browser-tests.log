@@ -1,0 +1,21 @@
+
+> test:browser
+> node --test tests/browser/*.test.mjs
+
+✔ every polished route is stationary with ordinary motion preferences (210.269417ms)
+✔ all page families fit mobile with at least 44px interactive targets (1072.356209ms)
+✔ keyboard focus stays visible on the dark engagement and the light composer (82.995292ms)
+✔ report engagement label remains readable on hover and press (226.317833ms)
+✔ Baton Rouge recording and native questions still work without sending anything (658.970166ms)
+✔ home and field report render without overflow, bad resources, motion or console errors (843.14325ms)
+✔ all new surface links resolve, including fragments, metadata image and sitemap routes (596.888375ms)
+✔ engagement brief validates, copies locally, falls back safely and never submits (928.713959ms)
+✔ no JavaScript still opens the brief and exposes the complete manual template (119.27ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2666.999708

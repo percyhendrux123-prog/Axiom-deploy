@@ -1,0 +1,35 @@
+after: 360px, 13 routes captured
+after: 390px, 13 routes captured
+after: 430px, 13 routes captured
+after: 768px, 13 routes captured
+after: 1000px, 13 routes captured
+after: 1024px, 13 routes captured
+after: 1440px, 13 routes captured
+{
+  "phase": "after",
+  "checks": 91,
+  "overflows": [],
+  "smallTargetPages": [],
+  "axe": [
+    {
+      "path": "/",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "path": "/field-reports/insurance-client-care/",
+      "width": 390,
+      "violations": []
+    },
+    {
+      "path": "/",
+      "width": 1440,
+      "violations": []
+    },
+    {
+      "path": "/field-reports/insurance-client-care/",
+      "width": 1440,
+      "violations": []
+    }
+  ]
+}

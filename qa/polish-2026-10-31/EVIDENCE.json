@@ -1,0 +1,244 @@
+{
+  "branch": "design/polish-2026-10-31",
+  "baseline": "cbe8a830a9d2db0b664dfb6ce7d6c5abbdbe9977",
+  "preview_only": true,
+  "screenshots": [
+    {
+      "path": "qa/polish-2026-10-31/before/home-1440.png",
+      "width": 1440,
+      "height": 5278,
+      "sha256": "a105c7b1192297d5e92d9bba52a279f250f03725f753db56798d87d82d74659b"
+    },
+    {
+      "path": "qa/polish-2026-10-31/before/home-390.png",
+      "width": 390,
+      "height": 8233,
+      "sha256": "5a93ee41cec6a4077b613644b32ce6aa64acf71cdd451787ba676b102440a973"
+    },
+    {
+      "path": "qa/polish-2026-10-31/before/notes-1440.png",
+      "width": 1440,
+      "height": 1510,
+      "sha256": "6bac4f8d580b249af2613b3f2aa9d9875b37a6e27ce9bb86339c1ed94c8f0a42"
+    },
+    {
+      "path": "qa/polish-2026-10-31/before/notes-390.png",
+      "width": 390,
+      "height": 1992,
+      "sha256": "1ced8c61e8cd2e1b8e6fd75c2f974ff02c9c27e42c6828581e84be6981994467"
+    },
+    {
+      "path": "qa/polish-2026-10-31/before/note-1440.png",
+      "width": 1440,
+      "height": 4075,
+      "sha256": "3fb1dd4d1d34a615f00f9db52c9fdc094aa6edcd9637a9413923c8c3d5fde733"
+    },
+    {
+      "path": "qa/polish-2026-10-31/before/note-390.png",
+      "width": 390,
+      "height": 4918,
+      "sha256": "421e3fb5eab4d3537ed26751682f390f471986fb1da845c00e797d74073b73de"
+    },
+    {
+      "path": "qa/polish-2026-10-31/before/field-report-1440.png",
+      "width": 1440,
+      "height": 3452,
+      "sha256": "e2194d27d8703a818d4cebb2056ba4fc4357a98649f2122b2a28cd7a72f9cde5"
+    },
+    {
+      "path": "qa/polish-2026-10-31/before/field-report-390.png",
+      "width": 390,
+      "height": 3898,
+      "sha256": "6d8d1d0358da7ed534ec3625bf590584c23e760d88da517dc60362ed76c81a11"
+    },
+    {
+      "path": "qa/polish-2026-10-31/before/privacy-1440.png",
+      "width": 1440,
+      "height": 3224,
+      "sha256": "48ad6ab53d1af70816c9d200d47fbe85b4282a4f3d6769428b9133d71aa37bc1"
+    },
+    {
+      "path": "qa/polish-2026-10-31/before/privacy-390.png",
+      "width": 390,
+      "height": 4196,
+      "sha256": "3b7500e954bfc79833ff33fed257d28e7f1e850a4c823252c2930895b02b3412"
+    },
+    {
+      "path": "qa/polish-2026-10-31/after/home-1440.png",
+      "width": 1440,
+      "height": 5288,
+      "sha256": "9b320d80e070a9faa677a4c2b40e7f1256f913fd73ab2dd5c375b93150507abf"
+    },
+    {
+      "path": "qa/polish-2026-10-31/after/home-390.png",
+      "width": 390,
+      "height": 8235,
+      "sha256": "86408a69e0b7cb2ec6d5dbf19f493e0a039a9262a013f85c43387cf576b814a5"
+    },
+    {
+      "path": "qa/polish-2026-10-31/after/notes-1440.png",
+      "width": 1440,
+      "height": 1373,
+      "sha256": "14b9e1ae0dcc5e3269090b7edf72dc1f78418472b668ba1f0cdb0b54206c3976"
+    },
+    {
+      "path": "qa/polish-2026-10-31/after/notes-390.png",
+      "width": 390,
+      "height": 1912,
+      "sha256": "5bfd27101c8f5d6da76590222ea8f34320159eb4ee4e243c192db5a848c520d1"
+    },
+    {
+      "path": "qa/polish-2026-10-31/after/note-1440.png",
+      "width": 1440,
+      "height": 3933,
+      "sha256": "7f78a1e8d33b809c08bb8dac96f20e0eb24e290c1c0f02fb2a2c747e30dc06eb"
+    },
+    {
+      "path": "qa/polish-2026-10-31/after/note-390.png",
+      "width": 390,
+      "height": 4780,
+      "sha256": "3ee7cb7327104889e475baa1b81a310ca6cb16b5579840bbbc22b5f81f89e31f"
+    },
+    {
+      "path": "qa/polish-2026-10-31/after/field-report-1440.png",
+      "width": 1440,
+      "height": 3571,
+      "sha256": "5803c2d9bf8af917207ef37f417e1d71a6de71e3a68e726c68d1ee6d7ad31493"
+    },
+    {
+      "path": "qa/polish-2026-10-31/after/field-report-390.png",
+      "width": 390,
+      "height": 3914,
+      "sha256": "24eae2f523c1aef1a4a467d28a06223c14e689a8c885b540ad7bb3d1836730ac"
+    },
+    {
+      "path": "qa/polish-2026-10-31/after/privacy-1440.png",
+      "width": 1440,
+      "height": 2951,
+      "sha256": "a90d62f69ea803c7b176816e7f8a6bc188fa768c8392fbcf83a5cd5acaa446bf"
+    },
+    {
+      "path": "qa/polish-2026-10-31/after/privacy-390.png",
+      "width": 390,
+      "height": 4063,
+      "sha256": "6513bdab5545c083cfac88ad5f4a1f92e2b6d1bd979981f8e3ea58f07e5b0bda"
+    }
+  ],
+  "audits": {
+    "after": {
+      "route_width_checks": 91,
+      "routes": 13,
+      "widths": [
+        360,
+        390,
+        430,
+        768,
+        1000,
+        1024,
+        1440
+      ],
+      "overflow_failures": 0,
+      "mobile_target_failures": 0,
+      "page_or_resource_errors": 0,
+      "external_requests": 0,
+      "axe_runs": 4,
+      "axe_version": "4.14.0",
+      "axe_violations": 0,
+      "axe_incomplete": 0
+    },
+    "webkit": {
+      "route_width_checks": 39,
+      "routes": 13,
+      "widths": [
+        360,
+        390,
+        1440
+      ],
+      "overflow_failures": 0,
+      "mobile_target_failures": 0,
+      "page_or_resource_errors": 0,
+      "external_requests": 0,
+      "axe_runs": 4,
+      "axe_version": "4.14.0",
+      "axe_violations": 0,
+      "axe_incomplete": 0
+    }
+  },
+  "tests": {
+    "node-tests.log": {
+      "passed": 48,
+      "failed": 0
+    },
+    "browser-tests.log": {
+      "passed": 9,
+      "failed": 0
+    }
+  },
+  "preserved_files": [
+    {
+      "path": "package.json",
+      "sha256": "9e985904249713dcb1e983d2f940b8474c58419b7b3627c7ae3b9e5ab9e037c8"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "8e7f50d04ffbd0e560438191950883ab392f56c98571e76943143bbd69b1d662"
+    },
+    {
+      "path": "netlify.toml",
+      "sha256": "558cc0d908a89ef3f12b776c27577316081c8c3139b70895bf6356a2b0d171b0"
+    },
+    {
+      "path": "assets/founder.jpg",
+      "sha256": "da7663f8718dc7283d893a13b617a9a3da1ef2ca94df66a57d933e7da1a3c793"
+    },
+    {
+      "path": "assets/field-reports/check-log.png",
+      "sha256": "b776d953d3d6934a74153fe7405a4b9fb0944c716e7760523ba5f4f7f36d6a49"
+    },
+    {
+      "path": "assets/fonts/Cinzel.ttf",
+      "sha256": "f4d83d34d1f6c741193e4acf4b3dff9531e5a67b6aa65228d00a7db72a4e0f34"
+    },
+    {
+      "path": "assets/fonts/OFL.txt",
+      "sha256": "f2b3029aba64c378bf0963b62945eee15e564fe4330b934c8f2eb058282b5e83"
+    },
+    {
+      "path": "assets/wordmark-ink.svg",
+      "sha256": "ea436821d1338cf38c670ee07563829daf0d615130c5cfa80087d23b35b6a996"
+    },
+    {
+      "path": "assets/wordmark-stone.svg",
+      "sha256": "cbad748409ad1042f23fae0989e6b968d66fc6ab8129a085cce658268b618a25"
+    },
+    {
+      "path": "assets/site.js",
+      "sha256": "6d7df8064e62b94db3dc2f079bce36982e8eed869064aa486d747f242f670daa"
+    },
+    {
+      "path": "assets/br.js",
+      "sha256": "48212f77cd1388e91f0665a4570c41fb68c72fa11b436879a204392d9f5eb93f"
+    },
+    {
+      "path": "netlify/functions/application-submit.mjs",
+      "sha256": "1a6620657e083bc54b16be7c497075b0e9d99f2dda2cd3f74cf9242213b78ab0"
+    },
+    {
+      "path": "netlify/functions/meta-webhook.mjs",
+      "sha256": "5755ce59977d5bdc7e20ff723cd2388a3e15dbc2adb5903fc9b0a600722b8bd6"
+    },
+    {
+      "path": "archive/two-business-evaluation-2026-09/index.html",
+      "sha256": "14df7dc9bbf75244dfaf893518734cfb45293c0f5244ea522c8fefc07b4c0798"
+    }
+  ],
+  "adversarial_review": {
+    "passes": 1,
+    "defects_found": 1,
+    "severity": "P2",
+    "defect": "Report CTA Stone-on-Stone hover label",
+    "fix": "Explicit report hover/active colors; real browser regression observed red then green",
+    "fixed": true,
+    "report": "qa/polish-2026-10-31/REVIEW-Axiom-deploy-design-polish-2026-10-31.md"
+  }
+}

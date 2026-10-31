@@ -1,0 +1,45 @@
+
+> build
+> env -u NETLIFY_AUTH_TOKEN netlify build --offline
+
+[96m[1m​[22m[39m
+[96m[1mNetlify Build                                                 [22m[39m
+[96m[1m────────────────────────────────────────────────────────────────[22m[39m
+[36m[1m​[22m[39m
+[36m[1m❯ Version[22m[39m
+  @netlify/build 37.4.0
+[36m[1m​[22m[39m
+[36m[1m❯ Flags[22m[39m
+  dry: false
+  offline: true
+[36m[1m​[22m[39m
+[36m[1m❯ Current directory[22m[39m
+  /Users/percykeith/axiom/worktrees/polish-2026-10-31
+[36m[1m​[22m[39m
+[36m[1m❯ Config file[22m[39m
+  /Users/percykeith/axiom/worktrees/polish-2026-10-31/netlify.toml
+[36m[1m​[22m[39m
+[36m[1m❯ Context[22m[39m
+  production
+[96m[1m​[22m[39m
+[96m[1mbuild.command from netlify.toml                               [22m[39m
+[96m[1m────────────────────────────────────────────────────────────────[22m[39m
+​
+[36m$ rm -rf dist && mkdir -p dist/assets && cp index.html success.html robots.txt sitemap.xml googlea9420335e9b52691.html dist/ && cp -R archive dist/archive && cp -R baton-rouge dist/baton-rouge && cp assets/favicon.svg assets/axiom-og.png assets/site.css assets/site.js dist/assets/ && cp assets/ClashDisplay-Bold.woff2 dist/assets/ && cp assets/sales-line-test-call.m4a dist/assets/ && cp assets/br.js dist/assets/ && cp assets/firm.css assets/wordmark-ink.svg assets/wordmark-stone.svg assets/avatar.svg assets/founder.jpg dist/assets/ && cp -R assets/fonts assets/notes dist/assets/ && cp -R field-reports dist/field-reports && cp -R assets/field-reports dist/assets/field-reports && cp -R notes dist/notes && cp -R privacy dist/privacy && cp -R terms dist/terms[39m
+​
+[90m(build.command completed in 48ms)[39m
+[96m[1m​[22m[39m
+[96m[1mFunctions bundling                                            [22m[39m
+[96m[1m────────────────────────────────────────────────────────────────[22m[39m
+​
+Packaging Functions from [36mnetlify/functions[39m directory:
+ - application-submit.mjs
+ - meta-webhook.mjs
+​
+​
+[90m(Functions bundling completed in 42ms)[39m
+[96m[1m​[22m[39m
+[96m[1mNetlify Build Complete                                        [22m[39m
+[96m[1m────────────────────────────────────────────────────────────────[22m[39m
+​
+[90m(Netlify Build completed in 113ms)[39m
