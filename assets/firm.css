@@ -618,3 +618,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:1}
   .closing-number{padding:18px 12px;font-size:clamp(24px,7vw,32px);letter-spacing:.02em}
   .notice{padding:56px var(--gutter)}
 }
+
+@media (max-width:640px){
+  nav a[href="#notes"],nav a[href="/#notes"],nav a[href="/notes/"]{display:inline-flex;min-width:48px;justify-content:center}
+}

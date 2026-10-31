@@ -10,7 +10,7 @@ test('polish preserves original copy, metadata, images, links and scripts on eve
   for (const [path, expected] of Object.entries(fixture)) {
     const content = read(path).replace(/<link rel="stylesheet"[^>]*>/g, '').replace(/ role="group"/g, '').replace(/\s+/g, ' ').trim();
     assert.equal(createHash('sha256').update(content).digest('hex'), expected, path);
-    assert.ok(read(path).includes('/assets/firm.css?v=4'), `${path}: shared letterhead stylesheet`);
+    assert.ok(read(path).includes('/assets/firm.css?v=5'), `${path}: shared letterhead stylesheet`);
   }
 });
 
