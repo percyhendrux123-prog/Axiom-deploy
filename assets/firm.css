@@ -625,3 +625,16 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:1}
 
 /* End of page: no rubber-band past the footer; any overscroll that remains shows Ink, matching the footer */
 html{background:var(--ink);overscroll-behavior-y:none}
+
+/* Axiom Explained video band: click-to-load, nothing from YouTube until play */
+.explained-band{padding-top:0}
+.explained{margin:0 auto;max-width:960px}
+.explained-play,.explained-frame{display:block;position:relative;width:100%;aspect-ratio:16/9;border:1px solid var(--rule);background:var(--ink)}
+.explained-play img{display:block;width:100%;height:100%;object-fit:cover}
+.explained-mark{position:absolute;left:84%;top:28%;width:64px;height:64px;margin:-32px 0 0 -32px;background:var(--ink);border:1px solid var(--brass);transition:transform .2s ease}
+.explained-mark::after{content:"";position:absolute;left:26px;top:21px;border-style:solid;border-width:11px 0 11px 17px;border-color:transparent transparent transparent var(--stone)}
+.explained-play:hover .explained-mark,.explained-play:focus-visible .explained-mark{transform:scale(1.06)}
+.explained-play:focus-visible{outline:2px solid var(--brass);outline-offset:4px}
+.explained figcaption{margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);color:var(--muted);font-size:15px}
+.explained figcaption span{color:var(--ink);font-family:var(--display);letter-spacing:.06em}
+@media (max-width:640px){.explained-mark{width:52px;height:52px;margin:-26px 0 0 -26px}.explained-mark::after{left:20px;top:16px;border-width:10px 0 10px 15px}}
