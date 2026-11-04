@@ -124,9 +124,9 @@ test('report engagement label remains readable on hover and press', async () => 
     const button = page.locator('.next .button');
     await button.hover();
     const colors = () => button.evaluate(e => { const s = getComputedStyle(e); return { text: s.color, background: s.backgroundColor }; });
-    assert.deepEqual(await colors(), { text: 'rgb(18, 19, 22)', background: 'rgb(242, 238, 230)' });
+    assert.deepEqual(await colors(), { text: 'rgb(240, 240, 238)', background: 'rgb(14, 15, 17)' });
     await page.mouse.down();
-    try { assert.deepEqual(await colors(), { text: 'rgb(242, 238, 230)', background: 'rgb(18, 19, 22)' }); }
+    try { assert.deepEqual(await colors(), { text: 'rgb(14, 15, 17)', background: 'rgb(240, 240, 238)' }); }
     finally { await page.mouse.move(0, 0); await page.mouse.up(); }
   } finally { await context.close(); }
 });

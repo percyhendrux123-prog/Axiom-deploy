@@ -1,0 +1,77 @@
+/* Deploy Axiom: night shell for the inner pages (A230).
+   Loaded after firm.css on every inner page, so notes, the field report,
+   Baton Rouge, privacy and terms share the homepage's Axiōma terminal look
+   without touching a word of their copy. Figures that carry diagrams keep a
+   light plate so their dark linework stays legible. */
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-display:swap;font-weight:400;src:url('/assets/axioma/fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-display:swap;font-weight:400;src:url('/assets/axioma/fonts/ibm-plex-mono-latin-ext-400-normal.woff2') format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-display:swap;font-weight:500;src:url('/assets/axioma/fonts/ibm-plex-mono-latin-500-normal.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-display:swap;font-weight:600;src:url('/assets/axioma/fonts/ibm-plex-mono-latin-600-normal.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Geist Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url('/assets/axioma/fonts/geist-latin-wght-normal.woff2') format('woff2-variations');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Geist Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url('/assets/axioma/fonts/geist-latin-ext-wght-normal.woff2') format('woff2-variations');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+:root{
+  /* firm.css tokens remapped onto the night palette */
+  --ink:#f0f0ee;--stone:#0e0f11;--stone-2:#141518;--navy:#c9cacd;--brass:#c9cacd;
+  --muted:#a3a7ae;--rule:#2a2c31;
+  --serif:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  --display:'Geist Variable','Helvetica Neue',Arial,sans-serif;
+  --night:#0e0f11;--panel:#141518;--text:#d9dadc;--strong:#f0f0ee;--dim:#8a8e96;--mid:#c9cacd;
+  color-scheme:dark;
+}
+html{background:var(--night);overscroll-behavior-y:none}
+body{color:var(--text);font-size:16px;line-height:1.7}
+::selection{background:#3a3d44;color:var(--strong)}
+:focus-visible{outline-color:var(--strong)!important}
+a{text-decoration-color:var(--dim);text-underline-offset:.22em}
+a:hover{text-decoration-color:var(--strong)}
+
+/* masthead: the ink wordmark turns to light ink on night */
+.masthead{background:rgb(14 15 17 / .92);border-bottom-color:var(--rule)}
+.brand img{filter:invert(1) brightness(1.05)}
+nav{font:400 14px/1 var(--serif);letter-spacing:0;text-transform:none}
+nav a{color:var(--text)}
+nav a:hover{color:var(--strong)}
+nav .nav-cta{color:var(--strong);border-color:var(--dim)}
+nav .nav-cta:hover{background:var(--panel);color:var(--strong);border-color:var(--strong)}
+
+/* type: Geist display, mono body, no Roman capitals */
+h1,h2{font-family:var(--display);letter-spacing:-.03em;color:var(--strong)}
+h1{font-weight:640;text-transform:none}
+.kicker,.numeral,.article th,.article h3,.fallback strong{letter-spacing:.04em}
+.lede,.ledger .what,.limit p,.faq details p{color:var(--text)}
+.article p,.article li,.record dd{color:var(--text)}
+.article .abstract{color:var(--mid)}
+.steps span:not(.step-n),.closing-lede,.footer{color:var(--mid)}
+.trades-lead,.closing-alt,.dark .heading p:not(.numeral){color:var(--dim)}
+
+/* bands that were Ink become a panel, not an inverted light band */
+.dark,.footer,.trades{background:var(--panel);color:var(--text)}
+.trades{color:var(--strong);border-block:1px solid var(--rule)}
+.trades-lead{color:var(--mid)}
+.footer{border-top:1px solid var(--rule)}
+.dark h2,.dark h3,.dark strong{color:var(--strong)}
+.steps li{border-color:var(--rule)}
+
+/* buttons: firm.css states, read through the night tokens (light primary,
+   outline on hover, light again on press); mono label, no tracked capitals */
+.button,.remake .button{font:500 14px/1.45 var(--serif);letter-spacing:0;text-transform:none}
+
+/* code, records and plates on panel */
+.article code,.article pre,.record,.plate{background:var(--panel);border-color:var(--rule);color:var(--strong)}
+.record{border-top-color:var(--dim)}
+.article table{border-top-color:var(--dim)}
+input,textarea{background:var(--panel);color:var(--strong);border-color:var(--dim)}
+input::placeholder,textarea::placeholder{color:var(--dim)}
+
+/* figures keep a light plate so diagrams and records stay legible */
+.article figure,.document-plate{background:#f2eee6;color:#121316;border-color:var(--rule)}
+.article figure figcaption,.document-plate figcaption{color:#3d4047}
+.document-plate a{color:#121316}
+
+/* text that firm.css set in Stone on Ink bands reads as light text on panel */
+.footer-links a,.closing-number,.closing-alt a,.remake .proof-cell p,.remake .engagement-band .heading p:not(.numeral),.remake .contact-call,.br-steps li.hold strong,.closing .kicker{color:var(--strong)}
+.remake .contact-call{border-color:var(--dim)}
+.dark .numeral,.dark .step-n,.br-steps .step-n{color:var(--mid)}
+.numeral{border-bottom-color:var(--dim)}
+.closing-number{border-color:var(--dim);outline-color:var(--dim)}

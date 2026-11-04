@@ -64,7 +64,7 @@ test('home and field report render without overflow, bad resources, motion or co
         assert.deepEqual(dimensions.outside, [], JSON.stringify({ path, ...dimensions }));
         assert.equal(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior), 'auto');
         if (path === '/') assert.ok((await page.locator('.hero__title').evaluate((element) => getComputedStyle(element).fontFamily)).includes('Geist'));
-        else assert.ok((await page.locator('.proof-number').first().evaluate((element) => getComputedStyle(element).fontFamily)).includes('Cinzel'));
+        else assert.ok((await page.locator('.proof-number').first().evaluate((element) => getComputedStyle(element).fontFamily)).includes('Geist'), 'inner pages share the night shell type');
         const cta = await page.locator('.nav-cta').boundingBox();
         assert.ok(cta.height >= 46, 'CTA touch target');
         if (width !== 768) await page.screenshot({ path: join(screenshotDir, `${name}-${width}.png`), fullPage: true });

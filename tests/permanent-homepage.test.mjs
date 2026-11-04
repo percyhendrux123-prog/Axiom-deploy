@@ -198,3 +198,16 @@ test('notes index lists every published note and is linked from the homepage', (
   assert.ok(homepage.includes('href="/notes/">All notes</a>'));
   assert.ok(read('sitemap.xml').includes('https://deployaxiom.com/notes/</loc>'));
 });
+
+test('inner pages wear the night shell after the letterhead stylesheet, without copy changes', () => {
+  const pages = ['notes/index.html', 'field-reports/insurance-client-care/index.html', 'privacy/index.html', 'terms/index.html', 'baton-rouge/index.html', 'success.html',
+    ...readdirSync(join(root, 'notes')).filter((d) => statSync(join(root, 'notes', d)).isDirectory()).map((d) => `notes/${d}/index.html`)];
+  for (const path of pages) {
+    const page = read(path);
+    const firm = page.indexOf('/assets/firm.css?v=7');
+    const shell = page.indexOf('/assets/axioma/pages.css?v=');
+    assert.ok(firm > 0 && shell > firm, `${path}: pages.css must follow firm.css`);
+  }
+  assert.ok(!read(archivePath).includes('axioma/pages.css'), 'closed archive keeps its historical look');
+  assert.ok(existsSync(join(root, 'assets/axioma/pages.css')));
+});
