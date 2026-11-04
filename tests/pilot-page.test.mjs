@@ -5,7 +5,7 @@ import { join } from 'node:path';
 
 const root = new URL('..', import.meta.url).pathname;
 const page = readFileSync(join(root, 'index.html'), 'utf8');
-const stylesheet = readFileSync(join(root, 'assets/firm.css'), 'utf8');
+const stylesheet = readFileSync(join(root, 'assets/axioma/axioma.css'), 'utf8');
 const script = readFileSync(join(root, 'assets/site.js'), 'utf8');
 const visibleText = page.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
@@ -21,7 +21,7 @@ test('permanent homepage replaces the expired campaign with the locked line and 
 });
 
 test('method is accessible without motion and names the human hold', () => {
-  assert.ok(page.includes('class="skip" href="#work"'));
+  assert.ok(page.includes('class="skip" href="#main"'));
   for (const state of ['Intake', 'Context', 'Preparation', 'Decision', 'Record']) assert.ok(visibleText.includes(state));
   assert.ok(visibleText.includes('Anything that commits the business waits for the owner.'));
   assert.ok(!/<video\b/i.test(page), 'permanent homepage must not contain video');

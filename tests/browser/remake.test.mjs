@@ -16,7 +16,7 @@ before(async () => {
     base = process.env.PREVIEW_URL;
     assert.match(new URL(base).hostname, /^[0-9a-f]{24}--axiom-deploy\.netlify\.app$/, 'remote QA requires an immutable Axiom draft URL');
   } else {
-    const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.svg': 'image/svg+xml', '.ttf': 'font/ttf' };
+    const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.svg': 'image/svg+xml', '.ttf': 'font/ttf', '.woff2': 'font/woff2', '.webp': 'image/webp', '.jpg': 'image/jpeg' };
     server = createServer(async (request, response) => {
       try {
         let file = resolve(dist, '.' + decodeURIComponent(new URL(request.url, 'http://localhost').pathname));
@@ -58,12 +58,13 @@ test('home and field report render without overflow, bad resources, motion or co
         assert.equal((await page.goto(base + path)).status(), 200);
         await page.evaluate(() => document.fonts.ready);
         assert.equal(await page.locator('h1').count(), 1);
-        assert.equal(await page.locator('.document-plate img').evaluate((image) => image.naturalWidth), 2400);
+        if (path !== '/') assert.equal(await page.locator('.document-plate img').evaluate((image) => image.naturalWidth), 2400);
         const dimensions = await overflow(page);
         assert.ok(dimensions.document <= width, JSON.stringify({ path, ...dimensions }));
         assert.deepEqual(dimensions.outside, [], JSON.stringify({ path, ...dimensions }));
         assert.equal(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior), 'auto');
-        assert.ok((await page.locator('.proof-number').first().evaluate((element) => getComputedStyle(element).fontFamily)).includes('Cinzel'));
+        if (path === '/') assert.ok((await page.locator('.hero__title').evaluate((element) => getComputedStyle(element).fontFamily)).includes('Geist'));
+        else assert.ok((await page.locator('.proof-number').first().evaluate((element) => getComputedStyle(element).fontFamily)).includes('Cinzel'));
         const cta = await page.locator('.nav-cta').boundingBox();
         assert.ok(cta.height >= 46, 'CTA touch target');
         if (width !== 768) await page.screenshot({ path: join(screenshotDir, `${name}-${width}.png`), fullPage: true });

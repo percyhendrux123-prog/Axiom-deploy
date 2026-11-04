@@ -10,7 +10,7 @@ const dist = resolve(new URL('../..', import.meta.url).pathname, 'dist');
 const routes = ['/', '/notes/', '/notes/one-front-door/', '/notes/one-tempo/', '/notes/the-gap-is-the-user/', '/notes/the-outcome/', '/notes/the-gathering/', '/notes/left-foot-right-foot/', '/field-reports/insurance-client-care/', '/privacy/', '/terms/', '/baton-rouge/', '/success.html'];
 let server, browser, base;
 before(async () => {
-  const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.ttf': 'font/ttf', '.m4a': 'audio/mp4' };
+  const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.ttf': 'font/ttf', '.m4a': 'audio/mp4', '.woff2': 'font/woff2', '.webp': 'image/webp' };
   server = createServer(async (request, response) => {
     try {
       let file = resolve(dist, '.' + decodeURIComponent(new URL(request.url, 'http://localhost').pathname));
@@ -95,7 +95,7 @@ test('keyboard focus stays visible on the dark engagement and the light composer
     await page.keyboard.press('Tab');
     assert.equal(await page.locator(':focus').getAttribute('class'), 'skip');
     await page.keyboard.press('Enter');
-    assert.equal(new URL(page.url()).hash, '#work');
+    assert.equal(new URL(page.url()).hash, '#main');
     await page.locator('#brief-composer summary').focus();
     await page.keyboard.press('Enter');
     assert.equal(await page.locator('#brief-composer').getAttribute('open'), '');
@@ -104,7 +104,7 @@ test('keyboard focus stays visible on the dark engagement and the light composer
     const focus = await page.locator(':focus').evaluate(e => {
       const s = getComputedStyle(e); return { color: s.outlineColor, style: s.outlineStyle, width: s.outlineWidth };
     });
-    assert.deepEqual(focus, { color: 'rgb(18, 19, 22)', style: 'solid', width: '2px' });
+    assert.deepEqual(focus, { color: 'rgb(240, 240, 238)', style: 'solid', width: '2px' });
     for (const width of [360, 390]) {
       await page.setViewportSize({ width, height: 844 });
       await page.getByLabel('The recurring work', { exact: true }).fill('X'.repeat(800));

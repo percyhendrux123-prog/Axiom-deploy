@@ -7,6 +7,7 @@ const root = new URL('..', import.meta.url).pathname;
 const read = (path) => readFileSync(join(root, path), 'utf8');
 const homepage = read('index.html');
 const stylesheet = () => read('assets/firm.css');
+const homeStylesheet = () => read('assets/axioma/axioma.css');
 const script = () => read('assets/site.js');
 const archivePath = 'archive/two-business-evaluation-2026-09/index.html';
 const prohibitedRootMarkers = [
@@ -32,6 +33,20 @@ test('firm typography uses the self-hosted Cinzel brand face and keeps the live 
   assert.match(homepage, /href="tel:\+12256358671"/, 'live sales-line link must remain valid');
   assert.ok(homepage.includes('(225) 635-8671'), 'live sales-line text must remain unchanged');
   assert.ok(!/style="/.test(homepage), 'CSP forbids inline styles');
+});
+
+test('homepage terminal design self-hosts its type with licenses and keeps signals out of decoration', () => {
+  const css = homeStylesheet();
+  for (const font of ['ibm-plex-mono-latin-400-normal.woff2', 'geist-latin-wght-normal.woff2', 'cormorant-garamond-latin-500-italic.woff2']) {
+    assert.ok(css.includes(`/assets/axioma/fonts/${font}`), font);
+    assert.ok(existsSync(join(root, 'assets/axioma/fonts', font)), font);
+  }
+  for (const license of ['LICENSE-IBM-Plex-Mono.txt', 'LICENSE-Geist.txt', 'LICENSE-Cormorant-Garamond.txt']) assert.ok(existsSync(join(root, 'assets/axioma/fonts', license)), license);
+  assert.ok(existsSync(join(root, 'assets/axioma/LICENSE-Pretext.txt')), 'Pretext MIT license ships beside the bundle');
+  assert.ok(!/fonts\.googleapis|@import url\(http|gradient/i.test(css), 'no remote fonts or gradients');
+  assert.match(css, /@media \(prefers-reduced-motion:reduce\)/);
+  assert.ok(css.includes('overscroll-behavior-y:none'), 'no blank bounce past the footer');
+  assert.ok(read('netlify.toml').includes('cp -R assets/axioma dist/assets/axioma'));
 });
 
 test('homepage states the headline, engagements, method, limits, notes and contact', () => {
@@ -93,7 +108,7 @@ test('metadata and static assets are local, canonical, and shareable', () => {
   for (const marker of [
     '<link rel="canonical" href="https://deployaxiom.com/">',
     'property="og:title"', 'property="og:description"', 'property="og:image" content="https://deployaxiom.com/assets/field-reports/check-log.png"',
-    'name="twitter:card"', 'name="twitter:image" content="https://deployaxiom.com/assets/field-reports/check-log.png"', 'property="og:image:alt" content="Example record. Client details removed."', 'name="twitter:image:alt" content="Example record. Client details removed."', 'name="theme-color" content="#F2EEE6"', 'rel="icon" href="/assets/avatar.svg"',
+    'name="twitter:card"', 'name="twitter:image" content="https://deployaxiom.com/assets/field-reports/check-log.png"', 'property="og:image:alt" content="Example record. Client details removed."', 'name="twitter:image:alt" content="Example record. Client details removed."', 'name="theme-color" content="#0E0F11"', 'rel="icon" href="/assets/avatar.svg"',
   ]) assert.ok(homepage.includes(marker), `missing metadata marker: ${marker}`);
   for (const asset of ['assets/avatar.svg', 'assets/axiom-og.png', 'assets/wordmark-ink.svg', 'assets/wordmark-stone.svg']) {
     const fullPath = join(root, asset);
@@ -103,34 +118,36 @@ test('metadata and static assets are local, canonical, and shareable', () => {
 });
 
 test('homepage loads local assets, preserves manual copy fallback, and has a compact mobile header', () => {
-  assert.match(homepage, /<link rel="stylesheet" href="\/assets\/firm\.css\?v=\d+">/);
+  assert.match(homepage, /<link rel="stylesheet" href="\/assets\/axioma\/axioma\.css\?v=\d+">/);
   assert.match(homepage, /<script src="\/assets\/site\.js" defer><\/script>/);
   assert.ok(!/<style[ >]/i.test(homepage), 'homepage must not contain inline style');
-  assert.ok(!/<script(?![^>]*\bsrc=)[^>]*>/i.test(homepage), 'homepage must not contain inline script');
+  assert.ok(!/<script(?![^>]*\bsrc=)(?![^>]*type="application\/ld\+json")[^>]*>/i.test(homepage), 'homepage must not contain inline script (JSON-LD data is not script)');
   assert.match(homepage, /<nav aria-label="Main">/);
   assert.ok(homepage.includes('id="manual-brief"'), 'manual fallback is missing');
   assert.ok(homepage.includes('Brief template'), 'manual template is missing');
   assert.match(script(), /navigator\.clipboard\.writeText/);
   assert.match(script(), /manualBrief\.focus\(\)/);
-  assert.ok(stylesheet().includes('nav a:not(.nav-cta){display:none}'), 'mobile hides all nav links but the primary CTA');
+  assert.ok(homeStylesheet().includes('.bar__nav .nav-hide-sm{display:none}'), 'mobile hides secondary nav links');
+  assert.match(homepage, /<li><a href="#notes">/, 'Notes stays visible on phones beside the primary action');
+  assert.ok(!/<li class="nav-hide-sm"><a href="#notes">/.test(homepage));
 });
 
-test('homepage uses the wordmark and keeps the hero direct', () => {
-  assert.ok(homepage.includes('src="/assets/wordmark-ink.svg" alt="AXIOM"'));
-  const hero = homepage.match(/<section class="hero"[\s\S]*?<\/section>/)?.[0] ?? '';
-  assert.ok(hero.includes('Nothing in your business waits on you to remember it.</h1>'));
-  assert.equal((hero.match(/<img/g) ?? []).length, 1, 'hero carries only the approved document plate');
-  assert.ok(hero.includes('/assets/field-reports/check-log.png'));
-  assert.ok(!/<video|<svg/i.test(hero), 'no decorative motion or diagrams');
-  assert.match(stylesheet(), /@media \(prefers-reduced-motion:reduce\)/);
+test('homepage keeps the hero direct: headline, plain-English line, two actions, no media', () => {
+  const hero = homepage.match(/<section class="hero[\s\S]*?<\/section>/)?.[0] ?? '';
+  assert.ok(hero.includes('Nothing in your business waits on you to remember it.<span class="cursor" aria-hidden="true"></span></h1>'));
+  assert.ok(hero.includes('in plain English'));
+  assert.ok(hero.includes('href="#contact">Start an engagement</a>'));
+  assert.ok(hero.includes('href="tel:+12256358671"'));
+  assert.ok(!/<video|<img/i.test(hero), 'no media in the hero');
+  assert.match(homeStylesheet(), /@media \(prefers-reduced-motion:reduce\)/);
 });
 
 test('all public pages avoid inline code and use local stylesheets', () => {
-  for (const [path, css] of [['index.html', 'firm'], ['notes/one-front-door/index.html', 'firm'], ['success.html', 'firm'], [archivePath, 'site']]) {
+  for (const [path, css] of [['index.html', 'axioma/axioma'], ['notes/one-front-door/index.html', 'firm'], ['success.html', 'firm'], [archivePath, 'site']]) {
     const page = read(path);
     assert.match(page, new RegExp(`<link rel="stylesheet" href="/?assets/${css}\\.css(?:\\?v=[a-z0-9]+)?">`));
     assert.ok(!/<style[ >]/i.test(page), `${path} must not contain inline style`);
-    assert.ok(!/<script(?![^>]*\bsrc=)[^>]*>/i.test(page), `${path} must not contain inline script`);
+    assert.ok(!/<script(?![^>]*\bsrc=)(?![^>]*type="application\/ld\+json")[^>]*>/i.test(page), `${path} must not contain inline script`);
   }
 });
 
