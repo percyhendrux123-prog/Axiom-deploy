@@ -17,7 +17,7 @@ test('terminal homepage keeps the business order: hero, axiom, story, ledger, wo
   }
   const ledger = home.match(/<section class="section wrap" id="proof"[\s\S]*?<\/section>/)?.[0] ?? '';
   assert.equal((ledger.match(/class="ledger__cell"/g) ?? []).length, 3);
-  for (const value of ['>231<', '>155<', '>96<', 'not client data']) assert.ok(ledger.includes(value), value);
+  for (const value of ['>247<', '>165<', '>99<', 'not client data']) assert.ok(ledger.includes(value), value);
   assert.equal((home.match(/class="listing__item"/g) ?? []).length, 4);
   assert.ok(home.includes('href="/field-reports/insurance-client-care/"'));
   assert.ok(home.includes('href="https://github.com/percyhendrux123-prog/escalation-desk"'));
