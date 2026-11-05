@@ -23,7 +23,7 @@
 <link rel="icon" href="/assets/avatar.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/axioma/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/axioma/fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/axioma/axioma.css?v=3">
+<link rel="stylesheet" href="/assets/axioma/axioma.css?v=4">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -160,6 +160,23 @@
 <li class="listing__item"><h3 class="listing__path">hermes-tripwire/</h3><p class="listing__what">An open-source plugin that logs every action an agent was refused and alerts the owner.</p><p class="listing__ev"><span class="tone-dim">evidence: </span>public, with tests</p><p class="listing__link"><a href="https://github.com/percyhendrux123-prog/hermes-tripwire">See the public code</a></p></li>
 <li class="listing__item"><h3 class="listing__path">handydandy/</h3><p class="listing__what">When a session runs long, the agent finishes the job and writes a handoff, so the next session picks up clean.</p><p class="listing__ev"><span class="tone-dim">evidence: </span>merged into the Hermes plugin catalog</p></li>
 </ol>
+</section>
+
+<section class="section wrap" id="catalog" aria-labelledby="catalog-title">
+<div class="head">
+<p class="prompt" aria-hidden="true"><span class="prompt__host">deploy@axiom</span><span class="tone-dim">:~$ </span><span class="prompt__cmd">hermes plugins list --catalog --author percy</span></p>
+<h2 id="catalog-title">In the Hermes Agent plugin catalog</h2>
+<p>These are the guardrails we run on our own agents, reviewed and accepted into the Hermes Agent plugin catalog.</p>
+</div>
+<div class="term">
+<div class="term__head"><span>plugins</span><span class="tone-dim">3 accepted, Oct 29 to Nov 5, 2026</span></div>
+<ol class="catalog">
+<li class="catalog__item" data-plugin="tripwire" data-version="0.1.1"><h3 class="catalog__name">tripwire <span class="catalog__ver">0.1.1</span></h3><p class="catalog__merged"><span class="tone-dim">merged </span><time datetime="2026-10-29">Oct 29, 2026</time></p><p class="catalog__what">Writes down every action an agent was refused, so the owner gets one short alert instead of finding out later.</p><p class="catalog__links"><a href="https://github.com/percyhendrux123-prog/hermes-tripwire">tripwire code</a><a href="https://github.com/NousResearch/hermes-agent/pull/145692">PR #145692</a></p></li>
+<li class="catalog__item" data-plugin="handydandy" data-version="0.3.0"><h3 class="catalog__name">handydandy <span class="catalog__ver">0.3.0</span></h3><p class="catalog__merged"><span class="tone-dim">merged </span><time datetime="2026-11-02">Nov 2, 2026</time></p><p class="catalog__what">Tells you when a session has run long and can have the agent write a handoff, so the next session starts clean.</p><p class="catalog__links"><a href="https://github.com/percyhendrux123-prog/hermes-handydandy">handydandy code</a><a href="https://github.com/NousResearch/hermes-agent/pull/146647">PR #146647</a></p></li>
+<li class="catalog__item" data-plugin="hermes-axioma" data-version="0.3.0"><h3 class="catalog__name">hermes-axioma <span class="catalog__ver">0.3.0</span></h3><p class="catalog__merged"><span class="tone-dim">merged </span><time datetime="2026-11-05">Nov 5, 2026</time></p><p class="catalog__what">Axiōma: marks the few phrases in an agent's reply that deserve a second look. It advises; it never approves anything.</p><p class="catalog__links"><a href="https://github.com/percyhendrux123-prog/hermes-axioma">hermes-axioma code</a><a href="https://github.com/NousResearch/hermes-agent/pull/149364">PR #149364</a></p></li>
+</ol>
+<p class="term__foot"><span class="tone-dim"># </span>community plugins, written and maintained by us. Hermes Agent is made by Nous Research.</p>
+</div>
 </section>
 
 <section class="section wrap" id="limits" aria-labelledby="limits-title">

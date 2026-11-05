@@ -132,6 +132,18 @@ ul,ol{padding:0;list-style:none}
 .listing__ev{font-size:13px;color:var(--mid)}
 .listing__link a{display:inline-flex;align-items:center;min-height:44px;font-size:14px}
 
+/* catalog: three accepted plugins, one terminal panel, no accent of its own
+   (the conductor's cursor hand-off reaches its prompt like any section) */
+.catalog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.catalog__item{display:grid;gap:8px;align-content:start;padding:24px 20px 20px}
+.catalog__item+.catalog__item{border-left:1px solid var(--rule)}
+.catalog__name{font-family:var(--display);font-weight:580;font-size:1.5rem;letter-spacing:-.03em;line-height:1.15;color:var(--strong);overflow-wrap:anywhere}
+.catalog__ver{font:400 14px/1 var(--mono);letter-spacing:0;color:var(--mid);margin-left:.35em}
+.catalog__merged{font-size:13px;color:var(--mid)}
+.catalog__what{color:var(--text)}
+.catalog__links{display:flex;flex-wrap:wrap;column-gap:20px}
+.catalog__links a{display:inline-flex;align-items:center;min-height:44px;font-size:14px}
+
 /* limits of authority: the gate, as a permission table */
 .limits{display:grid;border:1px solid var(--rule);background:var(--panel)}
 .limit{display:grid;grid-template-columns:minmax(180px,240px) minmax(0,1fr);gap:24px;padding:20px}
@@ -252,6 +264,8 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
   .gate__inner{grid-template-columns:minmax(0,1fr);justify-items:start}
   .caduceus{font-size:11px}
   .listing{grid-template-columns:minmax(0,1fr)}
+  .catalog{grid-template-columns:minmax(0,1fr)}
+  .catalog__item+.catalog__item{border-left:0;border-top:1px solid var(--rule)}
   .founder-grid{grid-template-columns:minmax(0,1fr)}
   .founder-photo{max-width:240px}
 }
