@@ -144,7 +144,7 @@ ul,ol{padding:0;list-style:none}
 .explained{display:grid;gap:14px;max-width:960px}
 .explained-play{position:relative;display:block;aspect-ratio:16/9;border:1px solid var(--rule);background:var(--panel);overflow:hidden}
 .explained-play img{width:100%;height:100%;object-fit:cover}
-.explained-mark{position:absolute;left:5%;bottom:8%;width:64px;height:64px;background:var(--night);border:1px solid var(--strong);transition:background-color 160ms var(--ease-out)}
+.explained-mark{position:absolute;left:84%;top:28%;width:64px;height:64px;margin:-32px 0 0 -32px;background:var(--night);border:1px solid var(--strong);transition:background-color 160ms var(--ease-out)}
 .explained-mark::after{content:'';position:absolute;left:25px;top:20px;border-style:solid;border-width:12px 0 12px 19px;border-color:transparent transparent transparent var(--strong)}
 .explained-play:hover .explained-mark{background:var(--panel)}
 .explained-frame{display:block;width:100%;aspect-ratio:16/9;border:1px solid var(--rule);background:var(--night)}
@@ -263,8 +263,8 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
   .notes-list a{grid-template-columns:minmax(0,1fr);gap:2px}
   .mapper{padding:20px 16px}
   .button{white-space:normal;text-align:center}
-  .explained-mark{width:52px;height:52px}
-  .explained-mark::after{left:20px;top:15px;border-width:11px 0 11px 17px}
+  .explained-mark{width:40px;height:40px;margin:-20px 0 0 -20px;left:82%;top:19%}
+  .explained-mark::after{left:15px;top:11px;border-width:9px 0 9px 13px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:.01ms!important;animation:none!important}

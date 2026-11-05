@@ -1,6 +1,6 @@
 # A230 page by page: what moved
 
-Branch `design/axioma-terminal` (worktree `~/axiom/worktrees/axioma-terminal`). Draft preview: https://6aebc6387b9ab52ea526c910--axiom-deploy.netlify.app (Netlify draft, `noindex`, production untouched).
+Branch `design/axioma-terminal` (worktree `~/axiom/worktrees/axioma-terminal`). Draft preview: https://6aebc7c038b7ecd8fb722edd--axiom-deploy.netlify.app (Netlify draft, `noindex`, production untouched).
 
 ## Homepage `/`
 

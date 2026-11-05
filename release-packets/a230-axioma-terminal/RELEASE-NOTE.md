@@ -1,7 +1,7 @@
 # deployaxiom.com becomes Axiōma: release note
 
 **Status:** built and checked on a branch. Nothing is live. Production still shows the stone letterhead.
-**Look at it:** https://6aebc6387b9ab52ea526c910--axiom-deploy.netlify.app (a private Netlify draft; search engines are told to ignore it).
+**Look at it:** https://6aebc7c038b7ecd8fb722edd--axiom-deploy.netlify.app (a private Netlify draft; search engines are told to ignore it).
 **To ship:** say the word. AXIOM fast-forwards `main` to `design/axioma-terminal`, Netlify builds it, and AXIOM confirms the live site and checks it on the test phone. One revert undoes it.
 
 ## What a visitor sees now
@@ -24,6 +24,8 @@
 | Every old URL | 200 | 200 on the preview (all pages, sitemap, robots, Google verification file) |
 | Repo tests | 41 + 10 browser | 42 + 10 browser, all passing |
 | Medallion drag | (new) | 59.3 frames a second on the mini's screen; the layout work takes 0.1 ms a frame |
+
+Lighthouse and the drag timing were measured on the first preview build. The current preview differs only in where the video's play button sits (moved off a diagram label on phones); axe, the security policy and every URL were re-checked on it.
 
 Lighthouse SEO reads 92 on both versions. The one failed item is its robots.txt check, which our security policy blocks inside the test browser. Google's crawler is not affected, and nothing changed there.
 
