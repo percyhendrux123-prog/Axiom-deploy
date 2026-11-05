@@ -2,71 +2,50 @@
 
 ## Mode and screen job
 
-A firm's letterhead, stone and brass door plate. Explain the work through observed records, show where authority stops, and let the owner prepare a brief without submitting anything to the site. Static HTML/CSS, no motion, no dashboard chrome.
+The Axiōma terminal (A230, Percy's choice after seeing the A227 Phase 2 build: "that's Axiom ... this isn't anything to hide"). A night terminal that a non-technical owner still understands in five seconds: the headline and a plain-English panel say what Axiom does, what waits for the owner, and where it runs. The terminal styling is the frame, never the explanation. Static HTML and CSS; one deferred script upgrades the story to its interactive form.
+
+The previous contract (stone and brass letterhead, Cinzel, no motion) is in git history at `5327f8f`. Inner pages keep that structure and copy and wear the night shell (`assets/axioma/pages.css`, loaded after `firm.css`).
 
 ## Primary action
 
-`Start an engagement` in the masthead and hero links to `#contact` (the existing Contact destination). The closing band repeats the action as a native disclosure that opens the local brief composer. Copying is local; email is an explicit visitor choice. No hosted form, transmission, storage, analytics, or automatic send.
+`Start an engagement` in the bar, the hero and the contact section, all to `#contact`; the hero pairs it with `Call (225) 635-8671`. The contact section opens the local brief composer (native disclosure). Copying is local; email is an explicit visitor choice. No hosted form, transmission, storage, analytics or automatic send. One label per intent.
 
-## Content hierarchy — remake 2026-10-30
+## Homepage hierarchy
 
-1. Locked headline: “Nothing in your business waits on you to remember it.”
-2. Approved subhead, engagement/call actions, and the approved anonymized artifact plate.
-3. Ink proof strip: three Cinzel numerals, each with a label and evidence link.
-4. Work: three editorial story cards with the supplied roles, results and links.
-5. I · Limits of authority, ahead of Method.
-6. II · Method, including the former governance headline and five steps.
-7. III · Founder, no photo or silhouette until supplied.
-8. IV · Findings: Notes framed around what was found, plus All notes.
-9. V · Closing engagement band, local brief disclosure, and contact footer.
-
-Copy is supplied, not authored by the builder. No paraphrasing, shortening, invented claims, or publication of HOLD strings. Claim IDs, editorial flags, internal ledgers and paths never enter the public payload. The preview retains `{FOUNDER}` until Percy supplies the name; this is a production-review gate, not a name choice.
+1. Bar: `deploy@axiom`, `/work /limits /method /notes`, `Start an engagement`. Phones keep `/work`, `/notes` and the action.
+2. Hero: `whoami` prompt, the locked headline with a block cursor, the lede, two actions; beside it the `# in plain English` panel (what it handles, what waits for you, where it runs).
+3. The gate: braille caduceus and the axiom, "Nothing sends, spends, or spins without the one who holds the gate."
+4. Story (`#story`): "Where an agent stops and asks", the draggable Hermes medallion, text that makes room, Axiōma signals that light on contact, and the signal key.
+5. Ledger (`#proof`): 231 / 155 / 96 from our own operation, never client data. Re-pull on publish day.
+6. Work: a listing (escalation-desk, client-care, hermes-tripwire, handydandy). Systems are described; clients are never named and no client story is told.
+7. Limits of authority, Method, the Axiom Explained video band (click-to-load), Founder, Findings, Contact, footer with credits.
 
 ## Brand standard
 
-- Roman inscription capitals and restrained editorial proportion: a firm, not an AI startup.
-- Wordmark: existing outlined Cinzel AXIOM SVG; monogram: the existing single A.
-- Ink `#121316`, Stone `#F2EEE6`, Brass `#8C7350`. Brass is for rules and small marks, never body copy or broad fills. Navy is legacy only, not a new surface color.
-- Cinzel display and numerals, self-hosted with the SIL OFL license beside it. Quiet system serif body text. No network fonts.
-- Square edges, paired thick/thin rules, generous margins, no shadows or decorative widgets.
-- Never: robots, brains, circuits, glow, neon, gradients, green accents, rounded SaaS grids, autoplay, animation, smooth scrolling, fake metrics, prices, generic “Book a call” language, or hidden collection.
+- Palette (Axiōma night): night `#0E0F11`, panel `#141518`, rule `#2A2C31`, dim `#8A8E96`, text `#D9DADC`, strong `#F0F0EE`. White carries the page.
+- Signals only: red `#FF453A` stop, yellow `#FFCC00` caution, green `#30D158` go, pale gold `#EADFB8` whisper. Color means state, never decoration, and every signal carries a second cue (bold solid / wavy / dashed / dotted underline) plus a spoken word for screen readers.
+- Type, all self-hosted with their SIL OFL licenses: IBM Plex Mono (body, prompts, UI), Geist (display), Cormorant Garamond italic (the axiom and the method line only). Latin and Latin Extended subsets (Axiōma needs ō).
+- Square edges, 1px rules, one bordered panel per idea, no shadows, no gradients, no glow, no rounded SaaS cards, no fake dashboards. Prompts are decoration (`aria-hidden`); every section has a plain-English heading.
+- Axiōma is given away: say "the spec is CC0 and the code is MIT" wherever it is named.
+- Never: prices, client names, client stories, invented metrics, emoji, hype, autoplay, smooth scrolling, boot screens on the business site.
 
-## Patterns
+## The medallion story
 
-### Proof strip
-
-`.proof-strip.dark` is a single Ink band, not separate KPI tiles. `.proof-grid` has three equal columns with fine dividing rules. Each `.proof-cell` contains a large `.proof-number` set in Cinzel, a complete supplied label, and a plainly underlined link. The numbers are date-bound observations, not performance promises. Re-verify counts on publish day through AXIOM; the builder does not read the internal ledger.
-
-On mobile all three cells stack, labels wrap naturally and links retain a 46px minimum target. No fixed heights, clipped text or horizontal carousel. The report metric row reuses the typography on Stone without inventing links.
-
-### Story card
-
-`.story-card` is an editorial article, not a dashboard or clickable tile. Three columns on wide screens, stacked below 1000px. Each has an Ink top rule, Cinzel role, full supplied result, and only the approved metric/link when available. Do not truncate copy, equalize by hiding text, or fabricate a field report. Card 2 has no link and its HOLD-marked metric line is omitted.
-
-### Document plate
-
-`.document-plate` displays the approved 2400×1800 PNG intact, without crop, distortion, recoloring, recreation or invented rows. It is the sole evidence/dashboard-like surface, not a UI to interact with. Exact caption: “Example record. Client details removed.” Use the supplied descriptive alt text and explicit dimensions. The image links directly to the full-resolution local PNG for inspection.
-
-The homepage places the plate to the right of the hero and below the buttons on mobile. The field report gives it the full article width, with reading copy in a narrower column. It also serves as the local OG/Twitter image; social alt uses the supplied caption.
-
-## Field report
-
-Canonical route: `/field-reports/insurance-client-care/` (the task's route overrides the deck's suggested Notes URL). Static article, Field Report 02, supplied headline/byline, three metrics, artifact, The gap, What runs, What waits for her, What isn't proven yet, and engagement/back links. Preserve all evidence limits visibly, especially that no enrolled client has received a check-in yet. Include canonical, description, OG/Twitter, favicon and sitemap. Draft preview is not approval to publish the report.
+- Markup is the source of truth: each paragraph on one line; marked phrases are `<span class="ax ax-LEVEL" data-axioma-level="LEVEL">…<span class="ax-sr"> (WORD)</span></span>`.
+- No JS or reduced motion: static float with a circular `shape-outside`, every phrase lit, nothing focusable or moving.
+- Motion allowed: `assets/axioma/home.js` loads `assets/axioma/story.js` when the story nears the viewport. The flow stays in the DOM as screen-reader copy; an `aria-hidden` word layer is drawn; the medallion becomes a round button (drag, arrow keys, Shift, Home) with a 2px focus ring. Pretext (MIT) does the line breaking. Source and rebuild steps: `src/axioma/`.
+- Credits stay in the footer: Pretext (MIT), herm of Hermes (Wikimedia Commons, CC0), the three typefaces (OFL).
 
 ## Responsive and accessible behavior
 
-- Verify 1440px desktop and 390px mobile, including the expanded brief; content must fit without hiding overflow.
-- Hero and story columns stack. The plate remains uncropped and opens at native resolution.
-- Mobile masthead retains the top-right engagement CTA without overlapping the wordmark.
-- Semantic headings, skip links, native disclosure, labeled fields, visible keyboard focus, and live clipboard status.
-- No JavaScript: native disclosure and the complete manual brief template still work.
-- Clipboard denial: the filled manual template is focused and remains copyable. No persistence or network requests are added.
+- Verify 1440 and 390 (and the browser suite's 360 to 1440 sweep): no horizontal overflow; standalone targets at least 44px; links inside sentences stay inline.
+- Skip link to `#main`, one `h1`, labelled sections, visible focus, live clipboard status, no-JS brief template.
+- Overscroll past the footer shows night (`html{background:var(--night);overscroll-behavior-y:none}`).
 
 ## Preserved surfaces and acceptance
 
-- Existing Notes, Baton Rouge, Privacy, Terms, archive, success route and signed Meta webhook remain intact.
-- Archive remains CLOSED and `noindex,follow`; the legacy application function remains server-closed (410).
-- CSP stays self-only, with no inline code, remote fonts or unsafe-inline allowances.
-- Tests cover section order, three linked proof cells, three stories, supplied copy, HOLD omission, report metadata, sitemap/build payload, real-browser links, 390px overflow, clipboard success/denial, and no-JS use.
-- Only `dist/` is deployed. No copy deck, claims ledger, tests, source rules, review briefs or internal artifacts enter that payload.
-- A160 ends at draft preview plus AXIOM review. Percy approval is required before any main push or production publication.
+- Every route stays: Notes and each note, the field report, Baton Rouge, Privacy, Terms, the closed archive (keeps its own look, `noindex`), success route, Google verification file, robots, sitemap, the signed Meta webhook and the closed (410) legacy function.
+- CSP stays self-only (plus the YouTube nocookie frame); no inline script except the JSON-LD data block, no inline style, no remote fonts.
+- Any new file under `assets/` must be in the netlify `cp` chain (`assets/axioma` is copied whole).
+- Tests: `npm test`, then build, then `npm run test:browser`; Lighthouse and axe before/after for each release.
+- A230 ends at a branch and a draft preview. Percy's go is required before any main push.

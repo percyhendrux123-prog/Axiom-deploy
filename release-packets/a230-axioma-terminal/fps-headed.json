@@ -1,0 +1,10 @@
+{
+  "mode": "headed Chromium on the mini display, 15 s continuous drag",
+  "frames": 890,
+  "fps": 59.3,
+  "p95_ms": 17.5,
+  "p99_ms": 17.7,
+  "frames_over_20ms": 3,
+  "engine_mean_ms": 0.106,
+  "engine_max_ms": 0.5
+}

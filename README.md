@@ -8,6 +8,10 @@ The 2026-10-30 remake follows the approved copy decks: a locked outcome headline
 
 The expired September 2026 two-business evaluation is preserved at `/archive/two-business-evaluation-2026-09/` as a closed, `noindex` historical page. Its release packets remain in `release-packets/`; the legacy application function stays server-closed with HTTP 410. The signed Meta webhook remains at `/api/meta/webhook`.
 
+## Axiōma terminal design (A230)
+
+The homepage is the Axiōma terminal design: night palette, IBM Plex Mono / Geist / Cormorant Garamond (self-hosted, OFL), a plain-English hero panel and the draggable medallion story (`assets/axioma/`, source in `src/axioma/`). Inner pages keep their copy and load `assets/axioma/pages.css` after `firm.css`. `DESIGN.md` is the contract.
+
 ## Local verification
 
 Requirements: Node.js and Netlify CLI (for the Netlify build verification). Browser tests use the pinned Playwright dev dependency; on a new machine run `npx playwright install chromium` after `npm ci`. They start and close their own loopback server and isolated headless browser. Netlify must be linked locally (`env -u NETLIFY_AUTH_TOKEN netlify link --id 09b62ef8-0282-4024-9302-050c078af0e3`) before `npm run build`; linking is not a deploy.

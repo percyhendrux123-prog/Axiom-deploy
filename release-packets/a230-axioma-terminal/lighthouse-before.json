@@ -1,0 +1,74 @@
+{
+  "baton-rouge-mobile": {
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 92,
+    "lcp": 900.523,
+    "cls": 0,
+    "tbt": 0
+  },
+  "field-reports_insurance-client-care-mobile": {
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 92,
+    "lcp": 900.588,
+    "cls": 0,
+    "tbt": 0
+  },
+  "home-desktop": {
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 92,
+    "lcp": 600.824,
+    "cls": 0,
+    "tbt": 0
+  },
+  "home-mobile": {
+    "perf": 95,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 92,
+    "lcp": 3000.631,
+    "cls": 0.037,
+    "tbt": 0
+  },
+  "notes-mobile": {
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 92,
+    "lcp": 900.518,
+    "cls": 0.014,
+    "tbt": 0
+  },
+  "notes_one-front-door-mobile": {
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 92,
+    "lcp": 900.626,
+    "cls": 0,
+    "tbt": 0
+  },
+  "privacy-mobile": {
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 92,
+    "lcp": 900.543,
+    "cls": 0,
+    "tbt": 0
+  },
+  "terms-mobile": {
+    "perf": 100,
+    "a11y": 100,
+    "bp": 100,
+    "seo": 92,
+    "lcp": 900.472,
+    "cls": 0,
+    "tbt": 0
+  }
+}
