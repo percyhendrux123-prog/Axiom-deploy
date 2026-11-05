@@ -27,3 +27,8 @@ Rules the engine keeps:
 - `assets/axioma/home.js` loads the engine only near the story and never for
   reduced-motion visitors; with no JavaScript the static story is complete.
 - `window.__storyState()` and `window.__storyFrames()` exist for verification.
+- Frames run on the page's motion conductor (`assets/axioma/home.js`,
+  `window.__axConductor`): the engine asks for frames only while the
+  medallion moves or settles, calls `hold()` when the reader takes it and
+  `release()` when it rests, and exposes `cue(i, on)` and `breathe(on)` for
+  the conductor's two story accents. There is no idle spin or wobble.

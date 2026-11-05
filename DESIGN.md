@@ -36,6 +36,15 @@ The previous contract (stone and brass letterhead, Cinzel, no motion) is in git 
 - Motion allowed: `assets/axioma/home.js` loads `assets/axioma/story.js` when the story nears the viewport. The flow stays in the DOM as screen-reader copy; an `aria-hidden` word layer is drawn; the medallion becomes a round button (drag, arrow keys, Shift, Home) with a 2px focus ring. Pretext (MIT) does the line breaking. Source and rebuild steps: `src/axioma/`.
 - Credits stay in the footer: Pretext (MIT), herm of Hermes (Wikimedia Commons, CC0), the three typefaces (OFL).
 
+## Motion: one conductor (A238)
+
+- `assets/axioma/home.js` holds the motion conductor: one scheduler on one animation loop that owns every accent on the homepage. The story engine runs its drag frames on that same loop. The loop sleeps when nothing changes.
+- One accent at a time. The section under a reading line 40% down the screen is the one being read; when it changes, the running accent settles first (300 ms at most), then the cursor hands over, then that section's accent plays after a 280 ms dwell, with 120 ms of stillness between accents.
+- The accents, each with a cue and an end: the terminal cursor moves to the prompt of the section being read and blinks two or three times (1.1 s cycle), then holds; the story's four signals light once in reading order on first arrival (420 ms each); the ledger counts up once on first arrival (640 ms, ease-out, from a dimmed zero; screen readers hear the real number throughout); the medallion ring breathes (1.4% scale, 6 s, on the compositor) only while the story is being read and the medallion is at rest. The ring turns and the face tilts only while the medallion travels; no idle spin.
+- Dragging or keying the medallion holds every accent; the ring breathes again 1.2 s after it rests. Pretext reflow and lighting on contact are unchanged.
+- Opacity and transform only (the signal lights reuse the story's existing color state). Nothing flashes faster than once a second. Nothing is baked into the HTML: with no JavaScript or with reduced motion, the page is complete and still (cursor solid, numbers final, story static).
+- Proof: `tests/motion.test.mjs` and `tests/browser/motion.test.mjs` (accents never overlap, every accent ends, one cursor on screen, layout shift 0 once motion runs, reduced motion off, drag holds accents).
+
 ## Responsive and accessible behavior
 
 - Verify 1440 and 390 (and the browser suite's 360 to 1440 sweep): no horizontal overflow; standalone targets at least 44px; links inside sentences stay inline.

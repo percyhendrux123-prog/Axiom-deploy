@@ -75,8 +75,14 @@ ul,ol{padding:0;list-style:none}
 .hero__copy{display:grid;gap:26px}
 .hero__title{font-family:var(--display);font-weight:640;font-size:clamp(2.5rem,5.6vw,4.6rem);line-height:.98;letter-spacing:-.045em;color:var(--strong);margin-left:-.03em;max-width:13ch;text-wrap:balance}
 .cursor{display:inline-block;width:.46em;height:.72em;margin-left:.12em;background:var(--strong);vertical-align:baseline}
-@media (prefers-reduced-motion:no-preference){.cursor{animation:blink 1.1s steps(1,end) infinite}}
-@keyframes blink{50%{opacity:0}}
+/* One cursor on the page, placed by the motion conductor (home.js) at the
+   prompt of the section being read. It blinks a few times on arrival, then
+   holds. The prompt cursor's box is reserved from the first paint, so moving
+   it never shifts a line; without the conductor only the hero's shows. */
+.cursor.is-away,.cursor.is-blink-off{opacity:0}
+.section .prompt__cmd::after{content:'';display:inline-block;width:.5em;height:.95em;margin-left:.3em;vertical-align:-.14em;background:var(--strong);opacity:0}
+.section .prompt.is-cursor .prompt__cmd::after{opacity:1}
+.section .prompt.is-cursor.is-blink-off .prompt__cmd::after{opacity:0}
 .hero__line{text-wrap:pretty;max-width:46ch;font-size:16px;line-height:1.7;color:var(--text)}
 .plain{border:1px solid var(--rule);background:var(--panel)}
 .plain__h{padding:12px 20px;border-bottom:1px solid var(--rule);font:400 13px/1.5 var(--mono);color:var(--strong)}
@@ -109,6 +115,8 @@ ul,ol{padding:0;list-style:none}
 .ledger__cell+.ledger__cell{border-left:1px solid var(--rule)}
 .ledger__num{font-family:var(--display);font-weight:560;font-size:clamp(2.6rem,6vw,4.5rem);line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums;color:var(--strong)}
 .ledger__num.tone-ok{color:var(--ok)}
+/* Waiting to be counted up (set by the conductor, never in the HTML). */
+.ledger__num.is-pending{opacity:.35}
 .ledger__label{font-size:13px;color:var(--text);max-width:30ch}
 .term__foot{padding:14px 20px;border-top:1px solid var(--rule);font-size:13px;color:var(--text)}
 .term__foot a{white-space:nowrap}

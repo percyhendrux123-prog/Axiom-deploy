@@ -12,6 +12,12 @@
 // around it line by line (Pretext does the measuring and line breaking).
 // Marked Axiōma phrases light when the medallion comes near them.
 //
+// Motion is owned by the page's conductor (assets/axioma/home.js): this
+// engine runs frames only while the medallion is moving or settling, on the
+// conductor's one animation loop, and tells the conductor when the reader
+// takes hold of the medallion and when it comes to rest. The conductor in
+// turn may light a phrase once (cue) and let the ring breathe at rest.
+//
 // Rebuild the shipped bundle after editing (see src/axioma/README.md).
 
 import { clearCache, layoutNextLineRange, prepareWithSegments } from '@chenglou/pretext'
@@ -53,8 +59,9 @@ function createEngine({ stage, layer, flow, med, hit, tilt, ring }) {
     mode: 'rest', // rest | drag | key | glide
     angle: 0, tiltX: 0, tiltY: 0,
     lastX: NaN, lastY: NaN, hBase: 0, height: 0,
-    visible: true, raf: 0, t: 0, frames: [],
+    visible: true, raf: 0, t: 0, frames: [], breathAnim: null, touched: false,
   }
+  const conductor = window.__axConductor || null
 
   // Build the visual layer once: one element per unmarked word. Marked
   // phrases are drawn as one element per line they land on (placeRuns), so
@@ -73,7 +80,7 @@ function createEngine({ stage, layer, flow, med, hit, tilt, ring }) {
       cuts.add(m.index + m[0].length)
     }
     const sorted = [...cuts].sort((a, b) => a - b)
-    const phrases = p.spans.map((sp) => ({ pieces: [], lit: false, level: sp.level, els: [] }))
+    const phrases = p.spans.map((sp) => ({ pieces: [], lit: false, cue: false, level: sp.level, els: [] }))
     for (let i = 0; i < sorted.length - 1; i++) {
       const a = sorted[i]
       const b = sorted[i + 1]
@@ -291,6 +298,7 @@ function createEngine({ stage, layer, flow, med, hit, tilt, ring }) {
             break
           }
         }
+        lit = lit || ph.cue
         if (lit !== ph.lit) {
           ph.lit = lit
           for (const el of ph.els) el.classList.toggle('is-lit', lit)
@@ -318,6 +326,7 @@ function createEngine({ stage, layer, flow, med, hit, tilt, ring }) {
   }
 
   function frame(t) {
+    if (disposed) return false
     const dt = Math.min(0.05, s.t ? (t - s.t) / 1000 : 1 / 60)
     s.t = t
     const t0 = performance.now()
@@ -353,31 +362,61 @@ function createEngine({ stage, layer, flow, med, hit, tilt, ring }) {
       s.vy += ((s.y - py) / dt - s.vy) * 0.35
     }
 
-    // The inscription ring turns slowly, faster while moving; the face tilts
-    // toward the direction of travel.
+    // The inscription ring turns only while the medallion travels, and the
+    // face tilts toward the direction of travel; at rest both settle still
+    // (the conductor may then let the ring breathe).
     const speed = Math.hypot(s.vx, s.vy)
-    s.angle = (s.angle + dt * (7 + Math.min(speed, 1600) * 0.05)) % 360
-    const idle = t / 1000
-    const ty = clamp(s.vx * 0.03, -24, 24) + Math.sin(idle * 0.7) * 6
-    const tx = clamp(-s.vy * 0.03, -24, 24) + Math.cos(idle * 0.5) * 3
+    s.angle = (s.angle + dt * Math.min(speed, 1600) * 0.05) % 360
+    const ty = clamp(s.vx * 0.03, -24, 24)
+    const tx = clamp(-s.vy * 0.03, -24, 24)
     const te = 1 - Math.exp(-dt * 8)
     s.tiltX += (tx - s.tiltX) * te
     s.tiltY += (ty - s.tiltY) * te
-    ring.style.transform = `rotate(${s.angle.toFixed(2)}deg)`
+    if (s.mode === 'rest' && speed < 2 && Math.abs(s.tiltX) < 0.15 && Math.abs(s.tiltY) < 0.15) {
+      s.tiltX = 0
+      s.tiltY = 0
+      s.vx = 0
+      s.vy = 0
+    }
+    writeRing()
     tilt.style.transform = `perspective(700px) rotateX(${s.tiltX.toFixed(2)}deg) rotateY(${s.tiltY.toFixed(2)}deg)`
 
     if (s.x !== s.lastX || s.y !== s.lastY) relayout()
 
     s.frames.push(t, performance.now() - t0)
     if (s.frames.length > 7200) s.frames.splice(0, 3600)
-    s.raf = s.visible ? requestAnimationFrame(frame) : 0
+    const more = s.visible && (s.mode !== 'rest' || s.vx !== 0 || s.vy !== 0 || s.tiltX !== 0 || s.tiltY !== 0)
+    if (!more) {
+      s.t = 0
+      if (s.touched && !drag) {
+        s.touched = false
+        conductor?.release()
+      }
+    }
+    return more
   }
 
+  function writeRing() {
+    ring.style.transform = `rotate(${s.angle.toFixed(2)}deg)`
+  }
+
+  // One loop for the page: frames come from the conductor when it is there,
+  // from requestAnimationFrame otherwise.
+  function loop(t) {
+    s.raf = frame(t) ? requestAnimationFrame(loop) : 0
+  }
   function start() {
-    if (!s.raf && s.visible) {
+    if (!s.visible) return
+    if (conductor) conductor.drive(frame)
+    else if (!s.raf) {
       s.t = 0
-      s.raf = requestAnimationFrame(frame)
+      s.raf = requestAnimationFrame(loop)
     }
+  }
+  // The reader has taken hold of the medallion: every accent steps aside.
+  function touch() {
+    s.touched = true
+    conductor?.hold()
   }
 
   let drag = null
@@ -389,6 +428,7 @@ function createEngine({ stage, layer, flow, med, hit, tilt, ring }) {
     s.ty = s.y
     s.mode = 'drag'
     stage.classList.add('is-dragging')
+    touch()
     start()
   }
   function onPointerMove(e) {
@@ -416,6 +456,7 @@ function createEngine({ stage, layer, flow, med, hit, tilt, ring }) {
       s.ty = s.R + 2
       s.mode = 'key'
       e.preventDefault()
+      touch()
       start()
       return
     } else return
@@ -426,6 +467,7 @@ function createEngine({ stage, layer, flow, med, hit, tilt, ring }) {
     s.tx = clamp(fromX + dx, b.x0, b.x1)
     s.ty = clamp(fromY + dy, b.y0, b.y1)
     s.mode = 'key'
+    touch()
     start()
   }
   hit.addEventListener('pointerdown', onPointerDown)
@@ -467,10 +509,51 @@ function createEngine({ stage, layer, flow, med, hit, tilt, ring }) {
   window.__storyFrames = () => s.frames.slice()
   window.__storyState = () => ({ x: s.x, y: s.y, R: s.R, W: s.W, h: s.height, lit: model.flatMap((p) => p.phrases.filter((ph) => ph.lit).map((ph) => ph.level)) })
 
+  // What the conductor may do: light a phrase once, and let the ring breathe.
+  const allPhrases = model.flatMap((p) => p.phrases)
+  conductor?.attachStory({
+    count: allPhrases.length,
+    cue(i, on) {
+      const ph = allPhrases[i]
+      if (!ph || ph.cue === on) return
+      ph.cue = on
+      updateLit()
+    },
+    // The breath is a compositor animation of the ring's own `scale`
+    // (separate from the rotation the engine writes), so it costs the main
+    // thread nothing while it runs. Returns how long the settle takes.
+    breathe(on) {
+      if (on) {
+        if (!s.breathAnim && ring.animate) {
+          s.breathAnim = ring.animate(
+            [
+              { scale: '1', easing: 'cubic-bezier(0.37,0,0.63,1)' },
+              { scale: '1.014', easing: 'cubic-bezier(0.37,0,0.63,1)' },
+              { scale: '1' },
+            ],
+            { duration: 6000, iterations: Infinity },
+          )
+        }
+        return 0
+      }
+      if (!s.breathAnim) return 0
+      const cur = parseFloat(getComputedStyle(ring).scale) || 1
+      s.breathAnim.cancel()
+      s.breathAnim = null
+      if (Math.abs(cur - 1) < 0.0005) return 0
+      ring.animate([{ scale: String(cur) }, { scale: '1' }], { duration: 300, easing: 'cubic-bezier(0.23,1,0.32,1)' })
+      return 300
+    },
+  })
+
   return {
     dispose() {
       disposed = true
+      s.visible = false
+      s.breathAnim?.cancel()
       cancelAnimationFrame(s.raf)
+      conductor?.detachStory()
+      if (s.touched) conductor?.release()
       ro.disconnect()
       io.disconnect()
       document.fonts?.removeEventListener('loadingdone', onFonts)
