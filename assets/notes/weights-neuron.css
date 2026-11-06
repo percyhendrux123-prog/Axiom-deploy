@@ -1,0 +1,20 @@
+/* figures sit on a light plate (axioma/pages.css); re-scope the palette so text and controls stay legible */
+.article figure.neuron{--ink:#121316;--stone:#f2eee6;--muted:#4f535a;--rule:#bdb6a8;--brass:#8C7350;--strong:#121316}
+.article figure.neuron .nn-say{color:var(--ink)}
+.neuron .nn-lede{font-size:15px;color:var(--muted);margin:0 0 14px}
+.neuron svg{display:block;width:100%;height:auto}
+.neuron .box{fill:var(--stone);stroke:var(--rule);stroke-width:1.2}
+.neuron .box.hot{stroke:var(--brass);stroke-width:2.4}
+.neuron .lbl{fill:var(--muted);font:11px var(--serif)}
+.neuron .val{fill:var(--ink);font:600 15px var(--serif);font-variant-numeric:tabular-nums}
+.neuron .grd{fill:var(--brass);font:600 12px var(--serif)}
+.neuron .edge{stroke:var(--rule);stroke-width:1.4;fill:none}
+.neuron .edge.back{stroke:var(--brass);stroke-dasharray:4 3}
+.neuron .nn-btns{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 10px}
+.neuron button{font:700 11px/1 var(--display);letter-spacing:.12em;text-transform:uppercase;min-height:44px;padding:0 14px;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;border-radius:0}
+.neuron button.primary{background:var(--ink);color:var(--stone)}
+.neuron button:disabled{opacity:.35;cursor:default}
+.neuron .nn-say{border-left:3px solid var(--brass);padding:6px 12px;margin:10px 0 4px;font-size:16px;line-height:1.5}
+.neuron .nn-coach{color:var(--muted);font-size:15px;line-height:1.5;margin:4px 0 0 15px}
+.neuron .nn-hist{font-size:13px;color:var(--muted);margin-top:10px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+@media (max-width:640px){.neuron button{flex:1 1 45%}}
