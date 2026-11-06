@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="On how a model learns, and why it looked like contest prep.">
+  <link rel="canonical" href="https://deployaxiom.com/notes/weights/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Weights · Deploy Axiom Notes">
+  <meta property="og:description" content="On how a model learns, and why it looked like contest prep.">
+  <meta property="og:image" content="https://deployaxiom.com/assets/notes/weights-og.png">
+  <meta property="og:url" content="https://deployaxiom.com/notes/weights/">
+  <meta property="og:image:alt" content="Weights. An essay by P. K. Stewart.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Weights · Deploy Axiom Notes">
+  <meta name="twitter:description" content="On how a model learns, and why it looked like contest prep.">
+  <meta name="twitter:image" content="https://deployaxiom.com/assets/notes/weights-og.png">
+  <meta name="twitter:image:alt" content="Weights. An essay by P. K. Stewart.">
+  <link rel="icon" href="/assets/avatar.svg" type="image/svg+xml">
+  <title>Weights · Deploy Axiom Notes</title>
+  <link rel="stylesheet" href="/assets/firm.css?v=7">
+  <link rel="stylesheet" href="/assets/notes/weights-neuron.css">
+  <script src="/assets/notes/weights-neuron.js" defer></script>
+<link rel="stylesheet" href="/assets/axioma/pages.css?v=1">
+</head>
+<body>
+  <header class="masthead">
+    <div class="frame masthead-row">
+      <a class="brand" href="/" aria-label="Deploy Axiom, home"><img src="/assets/wordmark-ink.svg" alt="AXIOM" width="140" height="41"></a>
+      <nav aria-label="Main">
+        <a href="/#work">Engagements</a>
+        <a href="/notes/">Notes</a>
+        <a class="nav-cta" href="/#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <article class="article">
+      <p class="kicker">Notes on practice · Essay 05</p>
+      <h1>Weights</h1>
+      <p class="dek">On how a model learns, and why it looked like contest prep.</p>
+      <p class="byline">P. K. Stewart · Deploy Axiom · November 2026</p>
+      <div class="entablature" aria-hidden="true"></div>
+      <p>I learned how a model learns by building the smallest one there is: one neuron, the example Andrej Karpathy uses in micrograd. A few inputs, a few weights, one output, one target. I expected it to feel foreign. It felt like contest prep.</p>
+      <h2>The loop</h2>
+      <p>A model learns in four moves. It runs forward and produces an answer. It measures how far that answer missed the target. It traces the miss backward to find which weights caused it. Then it nudges each weight a little and runs again.</p>
+      <p>Prep is the same loop. You write the program and the athlete runs the week. Check-in tells you how far the week landed from where it needed to be. You work out why. You adjust, and the next week starts.</p>
+      <p>Nobody gets to the stage in one adjustment. A model doesn't get there in one step either. It gets there in hundreds of small corrections, each one based on what the last one actually did.</p>
+      <figure class="neuron" id="neuron">
+        <p class="nn-lede">One neuron, the example Andrej Karpathy uses in micrograd. Each box is a number, and the lines show how they combine. The goal is an output of 1. Step through it.</p>
+        <div class="nn-js" hidden>
+          <svg id="nn-g" viewBox="0 0 780 364" role="img" aria-label="A single neuron: two inputs, two weights and a bias feed a sum, an output and a loss."></svg>
+          <div class="nn-btns">
+            <button type="button" id="bF" class="primary">1. Forward</button>
+            <button type="button" id="bL">2. Measure the miss</button>
+            <button type="button" id="bB">3. Backward</button>
+            <button type="button" id="bN">4. Nudge</button>
+            <button type="button" id="bA">Run 20 rounds</button>
+            <button type="button" id="bR">Reset</button>
+          </div>
+          <p class="nn-say" id="nn-say" aria-live="polite"></p>
+          <p class="nn-coach" id="nn-coach"></p>
+          <p class="nn-hist" id="nn-hist"></p>
+        </div>
+        <noscript><p>This figure runs in your browser and needs JavaScript.</p></noscript>
+        <figcaption>Figure 1. One neuron learning, after Andrej Karpathy&#x27;s micrograd. It runs in your browser; nothing is sent anywhere.</figcaption>
+      </figure>
+      <h2>A lever that did nothing gets no blame</h2>
+      <p>In the neuron I built, one input was zero. Its weight got no correction at all, because nothing it did could have changed the result. The math refuses to blame a lever that didn't move.</p>
+      <p>Coaches get this wrong all the time. The client missed, so everything changes at once: food, cardio, steps, training split. Half of those weren't followed that week. You can't learn anything from a lever nobody pulled. You find out what was actually done, and you only adjust what actually ran.</p>
+      <h2>Step size</h2>
+      <p>Every correction has a size. In a model it's called the learning rate. If it's too small, progress crawls. If it's too big, the model overshoots, swings past the target, and can bounce around it without settling.</p>
+      <p>In prep that's the athlete who drops carbs hard after one bad check-in, goes flat, rebounds, and spends the next three weeks undoing one big reaction. The fix is the same in both places: small, proportional moves, repeated.</p>
+      <h2>One reading is noise</h2>
+      <p>One week's scale weight carries water, sodium, sleep and stress. One batch of training data carries noise too. Neither is the truth on its own. You trust the trend over several rounds and you don't rebuild the program off one morning.</p>
+      <h2>You choose what counts as a miss</h2>
+      <p>A model only gets better at what you measure. If the loss counts the wrong thing, the model gets very good at the wrong thing.</p>
+      <p>Coach to the scale alone and you get a lighter athlete, not a better one. The judges don't score a number. They score the look under the lights, so the check-in has to measure condition, fullness and balance. Weight is one reading among them.</p>
+      <h2>Weights</h2>
+      <p>Then there's the word. In bodybuilding we spend our lives under weights. In a model, the weights are what it learns, the numbers that decide how heavy each input counts.</p>
+      <p>That's what training is, in both places. A beginner treats every input as if it weighs the same. Experience teaches you which ones are heavy. The program sets the weights, the work tests them, and the honest measurement afterward decides how much each one counts next time.</p>
+      <p>I didn't learn this in a computer science program. I learned it across from athletes for years, adjusting one week at a time. It turns out that was the same lesson.</p>
+      <div class="next">Related: <a href="/notes/the-outcome/"><strong>The Outcome.</strong></a> A plan is the oldest automation, and the rule you run on yourself.</div>
+    </article>
+  </main>
+  <footer class="footer">
+    <div class="frame footer-row">
+      <img src="/assets/wordmark-stone.svg" alt="AXIOM" width="120" height="35">
+      <p>Deploy Axiom · Baton Rouge, Louisiana<br>When rules and regulations begin to move, it&#39;s no longer solely governance. It&#39;s operations.</p>
+      <p class="footer-links"><a href="mailto:percy@deployaxiom.com">percy@deployaxiom.com</a> · <a href="tel:+12256358671">(225) 635-8671</a> · <a href="https://www.instagram.com/deployaxiom/">Instagram</a> · <a href="/">Home</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></p>
+    </div>
+  </footer>
+</body>
+</html>
