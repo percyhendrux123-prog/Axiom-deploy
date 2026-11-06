@@ -32,7 +32,7 @@ test('catalog section lists exactly the three accepted plugins with correct vers
 });
 
 test('catalog section uses the accurate phrase and claims no partnership or endorsement', () => {
-  assert.ok(section.includes('hermes plugins list --catalog --author percy'));
+  assert.ok(section.includes('hermes plugins search axioma'));
   assert.ok(section.includes('accepted into the Hermes Agent plugin catalog'));
   assert.doesNotMatch(section, /partner|endorse|official|certified|approved by/i);
   assert.doesNotMatch(section, /0\.4\.\d|148914/, 'handydandy 0.4.x is in review, never listed');

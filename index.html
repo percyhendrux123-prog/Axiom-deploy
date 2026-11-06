@@ -23,7 +23,7 @@
 <link rel="icon" href="/assets/avatar.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/axioma/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/axioma/fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/axioma/axioma.css?v=4">
+<link rel="stylesheet" href="/assets/axioma/axioma.css?v=5">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -70,6 +70,27 @@
 <div><dt>Where it runs</dt><dd>On your own computer and accounts, not ours.</dd></div>
 </dl>
 </aside>
+</section>
+
+<section class="section wrap" id="replay" aria-labelledby="replay-title">
+<div class="head">
+<p class="prompt" aria-hidden="true"><span class="prompt__host">deploy@axiom</span><span class="tone-dim">:~$ </span><span class="prompt__cmd">axioma replay --example follow-up</span></p>
+<h2 id="replay-title">One job, start to finish</h2>
+<p>How one follow-up moves through an Axiom agent. The agent does the work up to the point where it would commit the business, then it stops and waits for you.</p>
+</div>
+<div class="term">
+<div class="term__head"><span>replay</span><span class="tone-dim">an example, not a client record</span></div>
+<ol class="replay">
+<li class="replay__row"><span class="replay__t">09:02</span><span class="replay__step">read</span><span class="replay__what">A client asks to move Thursday’s appointment.</span></li>
+<li class="replay__row"><span class="replay__t">09:02</span><span class="replay__step">sort</span><span class="replay__what">Scheduling change for an existing client. In this agent’s lane.</span></li>
+<li class="replay__row"><span class="replay__t">09:03</span><span class="replay__step">draft</span><span class="replay__what">Reply written and the new time pencilled in on the calendar.</span></li>
+<li class="replay__row"><span class="replay__t">09:03</span><span class="replay__step">check</span><span class="replay__what">The new time is open. Nothing double-booked. Tone matches past replies.</span></li>
+<li class="replay__row replay__row--hold"><span class="replay__t">09:03</span><span class="replay__step"><span class="ax ax-caution" data-axioma-level="caution">held<span class="ax-sr"> (caution)</span></span></span><span class="replay__what">It sends a message and moves a booking, so it waits for your yes.</span></li>
+<li class="replay__row"><span class="replay__t">09:41</span><span class="replay__step"><span class="ax ax-go" data-axioma-level="go">yes<span class="ax-sr"> (go)</span></span></span><span class="replay__what">You approve it from your phone.</span></li>
+<li class="replay__row"><span class="replay__t">09:41</span><span class="replay__step">done</span><span class="replay__what">Reply sent, booking moved, and the job written to the record.</span></li>
+</ol>
+<p class="term__foot"><span class="tone-dim"># </span>a simulated example of the pattern. Real jobs keep client names private.</p>
+</div>
 </section>
 
 <section class="gate" aria-label="The axiom">
@@ -164,17 +185,22 @@
 
 <section class="section wrap" id="catalog" aria-labelledby="catalog-title">
 <div class="head">
-<p class="prompt" aria-hidden="true"><span class="prompt__host">deploy@axiom</span><span class="tone-dim">:~$ </span><span class="prompt__cmd">hermes plugins list --catalog --author percy</span></p>
+<p class="prompt" aria-hidden="true"><span class="prompt__host">deploy@axiom</span><span class="tone-dim">:~$ </span><span class="prompt__cmd">hermes plugins search axioma</span></p>
 <h2 id="catalog-title">In the Hermes Agent plugin catalog</h2>
 <p>These are the guardrails we run on our own agents, reviewed and accepted into the Hermes Agent plugin catalog.</p>
 </div>
 <div class="term">
 <div class="term__head"><span>plugins</span><span class="tone-dim">3 accepted, Oct 29 to Nov 5, 2026</span></div>
 <ol class="catalog">
-<li class="catalog__item" data-plugin="tripwire" data-version="0.1.1"><h3 class="catalog__name">tripwire <span class="catalog__ver">0.1.1</span></h3><p class="catalog__merged"><span class="tone-dim">merged </span><time datetime="2026-10-29">Oct 29, 2026</time></p><p class="catalog__what">Writes down every action an agent was refused, so the owner gets one short alert instead of finding out later.</p><p class="catalog__links"><a href="https://github.com/percyhendrux123-prog/hermes-tripwire">tripwire code</a><a href="https://github.com/NousResearch/hermes-agent/pull/145692">PR #145692</a></p></li>
-<li class="catalog__item" data-plugin="handydandy" data-version="0.3.0"><h3 class="catalog__name">handydandy <span class="catalog__ver">0.3.0</span></h3><p class="catalog__merged"><span class="tone-dim">merged </span><time datetime="2026-11-02">Nov 2, 2026</time></p><p class="catalog__what">Tells you when a session has run long and can have the agent write a handoff, so the next session starts clean.</p><p class="catalog__links"><a href="https://github.com/percyhendrux123-prog/hermes-handydandy">handydandy code</a><a href="https://github.com/NousResearch/hermes-agent/pull/146647">PR #146647</a></p></li>
-<li class="catalog__item" data-plugin="hermes-axioma" data-version="0.3.0"><h3 class="catalog__name">hermes-axioma <span class="catalog__ver">0.3.0</span></h3><p class="catalog__merged"><span class="tone-dim">merged </span><time datetime="2026-11-05">Nov 5, 2026</time></p><p class="catalog__what">Axiōma: marks the few phrases in an agent's reply that deserve a second look. It advises; it never approves anything.</p><p class="catalog__links"><a href="https://github.com/percyhendrux123-prog/hermes-axioma">hermes-axioma code</a><a href="https://github.com/NousResearch/hermes-agent/pull/149364">PR #149364</a></p></li>
+<li class="catalog__item" data-plugin="tripwire" data-version="0.1.1"><h3 class="catalog__name">tripwire <span class="catalog__ver">0.1.1</span></h3><p class="catalog__merged"><span class="tone-dim">merged </span><time datetime="2026-10-29">Oct 29, 2026</time></p><p class="catalog__what">Writes down every action an agent was refused, so the owner gets one short alert instead of finding out later.</p><p class="catalog__install"><span class="tone-dim">install </span><code>hermes plugins install tripwire</code></p><p class="catalog__links"><a href="https://github.com/percyhendrux123-prog/hermes-tripwire">tripwire code</a><a href="https://github.com/NousResearch/hermes-agent/pull/145692">PR #145692</a></p></li>
+<li class="catalog__item" data-plugin="handydandy" data-version="0.3.0"><h3 class="catalog__name">handydandy <span class="catalog__ver">0.3.0</span></h3><p class="catalog__merged"><span class="tone-dim">merged </span><time datetime="2026-11-02">Nov 2, 2026</time></p><p class="catalog__what">Tells you when a session has run long and can have the agent write a handoff, so the next session starts clean.</p><p class="catalog__install"><span class="tone-dim">install </span><code>hermes plugins install handydandy</code></p><p class="catalog__links"><a href="https://github.com/percyhendrux123-prog/hermes-handydandy">handydandy code</a><a href="https://github.com/NousResearch/hermes-agent/pull/146647">PR #146647</a></p></li>
+<li class="catalog__item" data-plugin="hermes-axioma" data-version="0.3.0"><h3 class="catalog__name">hermes-axioma <span class="catalog__ver">0.3.0</span></h3><p class="catalog__merged"><span class="tone-dim">merged </span><time datetime="2026-11-05">Nov 5, 2026</time></p><p class="catalog__what">Axiōma: marks the few phrases in an agent's reply that deserve a second look. It advises; it never approves anything.</p><p class="catalog__install"><span class="tone-dim">install </span><code>hermes plugins install hermes-axioma</code></p><p class="catalog__links"><a href="https://github.com/percyhendrux123-prog/hermes-axioma">hermes-axioma code</a><a href="https://github.com/NousResearch/hermes-agent/pull/149364">PR #149364</a></p></li>
 </ol>
+<div class="lookup">
+<p class="lookup__h"><span class="tone-dim"># </span>check it yourself, from any Hermes install</p>
+<pre class="lookup__out"><code><span class="lookup__line"><span class="tone-dim">$ </span>hermes plugins info hermes-axioma</span><span class="lookup__line"><span class="lookup__strong">hermes-axioma [community]</span></span><span class="lookup__row"><span class="lookup__k">Repo:</span><span class="lookup__v">github.com/percyhendrux123-prog/hermes-axioma</span></span><span class="lookup__row"><span class="lookup__k">Version:</span><span class="lookup__v">0.3.0</span></span><span class="lookup__row"><span class="lookup__k">Pinned SHA:</span><span class="lookup__v">fdd1fee06a2e63ffa3eb74f8e894c626c9b0651e</span></span><span class="lookup__row"><span class="lookup__k">Maintainer:</span><span class="lookup__v">percyhendrux123-prog</span></span><span class="lookup__row"><span class="lookup__k">Tools:</span><span class="lookup__v">axioma_card</span></span><span class="lookup__row"><span class="lookup__k">Install:</span><span class="lookup__v">hermes plugins install hermes-axioma</span></span></code></pre>
+<p class="lookup__note">Output trimmed; the full entry also lists hooks and what the plugin does. <code>hermes plugins info tripwire</code> and <code>hermes plugins info handydandy</code> work the same way.</p>
+</div>
 <p class="term__foot"><span class="tone-dim"># </span>community plugins, written and maintained by us. Hermes Agent is made by Nous Research.</p>
 </div>
 </section>
@@ -279,6 +305,6 @@ No secrets included.</pre>
 </div></footer>
 <script src="/assets/site.js" defer></script>
 <script src="/assets/video.js" defer></script>
-<script src="/assets/axioma/home.js?v=2" defer></script>
+<script src="/assets/axioma/home.js?v=3" defer></script>
 </body>
 </html>

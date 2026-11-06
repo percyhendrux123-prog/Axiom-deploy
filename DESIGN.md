@@ -14,11 +14,12 @@ The previous contract (stone and brass letterhead, Cinzel, no motion) is in git 
 
 1. Bar: `deploy@axiom`, `/work /limits /method /notes`, `Start an engagement`. Phones keep `/work`, `/notes` and the action.
 2. Hero: `whoami` prompt, the locked headline with a block cursor, the lede, two actions; beside it the `# in plain English` panel (what it handles, what waits for you, where it runs).
-3. The gate: braille caduceus and the axiom, "Nothing sends, spends, or spins without the one who holds the gate."
-4. Story (`#story`): "Where an agent stops and asks", the draggable Hermes medallion, text that makes room, Axiōma signals that light on contact, and the signal key.
-5. Ledger (`#proof`): 231 / 155 / 96 from our own operation, never client data. Re-pull on publish day.
-6. Work: a listing (escalation-desk, client-care, hermes-tripwire, handydandy). Systems are described; clients are never named and no client story is told.
-7. Limits of authority, Method, the Axiom Explained video band (click-to-load), Founder, Findings, Contact, footer with credits.
+3. Replay (`#replay`): "One job, start to finish", a seven-row log of one example follow-up (read, sort, draft, check, held, yes, done), labelled as a simulated example, never a client record. `held` carries the caution signal and `yes` the go signal, each with its cue and spoken word.
+4. The gate: braille caduceus and the axiom, "Nothing sends, spends, or spins without the one who holds the gate."
+5. Story (`#story`): "Where an agent stops and asks", the draggable Hermes medallion, text that makes room, Axiōma signals that light on contact, and the signal key.
+6. Ledger (`#proof`): 231 / 155 / 96 from our own operation, never client data. Re-pull on publish day.
+7. Work: a listing (escalation-desk, client-care, hermes-tripwire, handydandy). Systems are described; clients are never named and no client story is told.
+8. Limits of authority, the catalog (each plugin shows its real install command, plus a trimmed real `hermes plugins info hermes-axioma` block that scrolls inside its box on phones), Method, the Axiom Explained video band (click-to-load), Founder, Findings, Contact, footer with credits.
 
 ## Brand standard
 
@@ -40,7 +41,7 @@ The previous contract (stone and brass letterhead, Cinzel, no motion) is in git 
 
 - `assets/axioma/home.js` holds the motion conductor: one scheduler on one animation loop that owns every accent on the homepage. The story engine runs its drag frames on that same loop. The loop sleeps when nothing changes.
 - One accent at a time. The section under a reading line 40% down the screen is the one being read; when it changes, the running accent settles first (300 ms at most), then the cursor hands over, then that section's accent plays after a 280 ms dwell, with 120 ms of stillness between accents.
-- The accents, each with a cue and an end: the terminal cursor moves to the prompt of the section being read and blinks two or three times (1.1 s cycle), then holds; the story's four signals light once in reading order on first arrival (420 ms each); the ledger counts up once on first arrival (640 ms, ease-out, from a dimmed zero; screen readers hear the real number throughout); the medallion ring breathes (1.4% scale, 6 s, on the compositor) only while the story is being read and the medallion is at rest. The ring turns and the face tilts only while the medallion travels; no idle spin.
+- The accents, each with a cue and an end: the terminal cursor moves to the prompt of the section being read and blinks two or three times (1.1 s cycle), then holds; the story's four signals light once in reading order on first arrival (420 ms each); the replay rows fade in once, in order, on first arrival (260 ms each, 300 ms apart, a 900 ms beat after `held`; dimmed in place before, so no layout shift; skipped if the replay is already on screen at load); the ledger counts up once on first arrival (640 ms, ease-out, from a dimmed zero; screen readers hear the real number throughout); the medallion ring breathes (1.4% scale, 6 s, on the compositor) only while the story is being read and the medallion is at rest. The ring turns and the face tilts only while the medallion travels; no idle spin.
 - Dragging or keying the medallion holds every accent; the ring breathes again 1.2 s after it rests. Pretext reflow and lighting on contact are unchanged.
 - Opacity and transform only (the signal lights reuse the story's existing color state). Nothing flashes faster than once a second. Nothing is baked into the HTML: with no JavaScript or with reduced motion, the page is complete and still (cursor solid, numbers final, story static).
 - Proof: `tests/motion.test.mjs` and `tests/browser/motion.test.mjs` (accents never overlap, every accent ends, one cursor on screen, layout shift 0 once motion runs, reduced motion off, drag holds accents).

@@ -267,6 +267,70 @@
     }
   }
 
+  // ---------------------------------------------------------------- replay
+  // The example job's rows appear once, in order, the first time the reader
+  // reaches the replay, with a beat at the held row before the yes. Until
+  // then they wait dimmed in place (nothing moves, nothing is hidden from a
+  // screen reader). With no JavaScript or reduced motion the log is complete.
+  var replay = []
+  function armReplay() {
+    var sec = doc.getElementById('replay')
+    if (!sec || C.played.replay) return
+    var rows = sec.querySelectorAll('.replay__row')
+    if (!rows.length || rows[0].getBoundingClientRect().top < win.innerHeight) {
+      C.played.replay = true
+      return
+    }
+    for (var i = 0; i < rows.length; i++) {
+      rows[i].classList.add('is-pending')
+      replay.push(rows[i])
+    }
+  }
+
+  function finishReplay() {
+    for (var i = 0; i < replay.length; i++) {
+      replay[i].classList.remove('is-pending')
+      replay[i].style.opacity = ''
+    }
+    replay = []
+    C.played.replay = true
+  }
+
+  function replayRun(section) {
+    var STEP = 300
+    var FADE = 260
+    var BEAT = 900 // the pause at the held row, before the yes
+    var t0 = 0
+    var stop = false
+    var starts = []
+    return {
+      id: 'replay-run', section: section,
+      begin: function (t) {
+        t0 = t
+        C.played.replay = true
+        var at = 0
+        for (var i = 0; i < replay.length; i++) {
+          starts.push(at)
+          at += STEP
+          if (replay[i].classList.contains('replay__row--hold')) at += BEAT
+        }
+      },
+      tick: function (t) {
+        if (stop) { finishReplay(); return true }
+        var all = true
+        for (var i = 0; i < replay.length; i++) {
+          var p = clamp01((t - t0 - starts[i]) / FADE)
+          var e = easeOut(p)
+          replay[i].style.opacity = String(0.18 + 0.82 * e)
+          if (p < 1) all = false
+        }
+        if (all) finishReplay()
+        return all
+      },
+      settle: function () { stop = true },
+    }
+  }
+
   // ---------------------------------------------------------------- story
   // The story engine (story.js) attaches itself here when it is live. Two
   // accents belong to it: the signals light once in reading order the first
@@ -329,6 +393,7 @@
     var isStory = section.id === 'story'
     var main = null
     if (section.id === 'proof' && ledger.length && !C.played.ledger) main = ledgerCount(section)
+    else if (section.id === 'replay' && replay.length && !C.played.replay) main = replayRun(section)
     else if (isStory && C.story && !C.played.sweep) main = signalSweep(section)
     if (main) { main.notBefore = t + DWELL; play(main) }
     if (hostFor(section)) {
@@ -397,6 +462,7 @@
     if (C.enabled || mq.matches || !('IntersectionObserver' in win)) return
     C.enabled = true
     armLedger()
+    armReplay()
     if (!io) watchSections()
     else if (C.active) planFor(C.active)
   }
@@ -416,6 +482,7 @@
       C.timer = 0
     }
     if (ledger.length) finishLedger()
+    if (replay.length) finishReplay()
     if (C.story) C.story.breathe(false)
     clearCursors()
   }
