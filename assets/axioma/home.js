@@ -27,6 +27,27 @@
   var DWELL = 280 // ms a section must hold the reading line before its accent
   var BLINK = 1100 // one blink cycle: on 550 ms, off 550 ms (under 1 flash/s)
 
+  // Diagram selection is independent of motion: native buttons still work
+  // under reduced motion. Without JS, every short explanation stays visible.
+  var system = doc.getElementById('system')
+  if (system) {
+    var nodes = [].slice.call(system.querySelectorAll('[data-system-node]'))
+    var panels = [].slice.call(system.querySelectorAll('.system__details > div'))
+    function selectNode(key) {
+      nodes.forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.systemNode === key)) })
+      panels.forEach(function (panel) { panel.hidden = panel.id !== 'system-' + key + '-info' })
+    }
+    system.classList.add('is-interactive')
+    selectNode('intro')
+    nodes.forEach(function (button) {
+      button.disabled = false
+      button.addEventListener('click', function () { selectNode(button.dataset.systemNode) })
+      button.addEventListener('focus', function () { selectNode(button.dataset.systemNode) })
+      button.addEventListener('pointerenter', function (event) { if (event.pointerType === 'mouse') selectNode(button.dataset.systemNode) })
+    })
+    system.addEventListener('keydown', function (event) { if (event.key === 'Escape') { selectNode('intro'); event.preventDefault() } })
+  }
+
   // ---------------------------------------------------------------- conductor
   var C = {
     enabled: false,
@@ -51,6 +72,7 @@
   // twice a second, not sixty times). Sleeping hands the frame back to the
   // browser, so scrolling stays on the compositor; one wake timer at most.
   function wake() {
+    if (doc.hidden) return
     if (C.timer) {
       win.clearTimeout(C.timer)
       C.timer = 0
@@ -61,7 +83,7 @@
     if (C.timer) win.clearTimeout(C.timer)
     C.timer = win.setTimeout(function () {
       C.timer = 0
-      if (!C.raf) C.raf = win.requestAnimationFrame(frame)
+      if (!C.raf && !doc.hidden) C.raf = win.requestAnimationFrame(frame)
     }, Math.max(0, ms - 8))
   }
 
@@ -73,6 +95,7 @@
 
   function frame(t) {
     C.raf = 0
+    if (doc.hidden) return
     var dt = C.lastT ? Math.min(0.05, (t - C.lastT) / 1000) : 1 / 60
     C.lastT = t
     var nextFrame = false
@@ -411,6 +434,79 @@
     }
   }
 
+  // ---------------------------------------------------------------- A295 life
+  // Finite, local accents. These use the same queue as the cursor and gate;
+  // none can run beside the caduceus or keep an offscreen loop alive.
+  function surfaceAccent(id, section, elements, duration, draw) {
+    var t0 = 0, stop = false
+    return {
+      id: id, section: section,
+      begin: function (t) { t0 = t; if (id !== 'link-response') C.played['life-' + section.id] = true },
+      tick: function (t) {
+        var p = stop ? 1 : clamp01((t - t0) / duration)
+        elements.forEach(function (el) { draw(el, p) })
+        if (p === 1) elements.forEach(function (el) { el.style.opacity = ''; el.style.transform = '' })
+        return p === 1 || 1000 / 30
+      },
+      settle: function () { stop = true },
+    }
+  }
+  function lifeFor(section) {
+    if (C.played['life-' + section.id]) return null
+    var id, elements, duration, draw
+    if (section.id === 'system') {
+      id = 'diagram-arrival'; duration = 900
+      elements = [].slice.call(section.querySelectorAll('.system__lines'))
+      draw = function (el, p) { el.style.opacity = String(0.42 + 0.58 * easeOut(p)) }
+    } else if (section.id === 'work' || section.id === 'limits') {
+      id = 'head-arrival'; duration = 620
+      elements = [].slice.call(section.querySelectorAll('.head h2'))
+      draw = function (el, p) { el.style.opacity = String(0.64 + 0.36 * easeOut(p)) }
+    } else if (section.id === 'method') {
+      id = 'rule-breath'; duration = 2200
+      elements = [].slice.call(section.querySelectorAll('.life-rule'))
+      draw = function (el, p) {
+        var breath = Math.sin(Math.PI * p)
+        el.style.opacity = String(0.48 + 0.3 * breath)
+        el.style.transform = 'scaleX(' + (1 + 0.06 * breath) + ')'
+      }
+    } else if (section.id === 'catalog' || section.id === 'notes') {
+      id = 'braille-shimmer'; duration = 2200
+      elements = [].slice.call(section.querySelectorAll('.life-texture'))
+      draw = function (el, p) { el.style.opacity = String(0.16 + 0.2 * Math.sin(Math.PI * p)) }
+    } else return null
+    return surfaceAccent(id, section, elements, duration, draw)
+  }
+  // Decoration is inserted only for motion-enabled visits. All source copy
+  // remains untouched, in its final state, with no JS or reduced motion.
+  function armLife() {
+    ;['method', 'catalog', 'notes'].forEach(function (id) {
+      var head = doc.querySelector('#' + id + ' .head')
+      if (!head || head.querySelector('.life-rule, .life-texture')) return
+      var accent = doc.createElement('span')
+      accent.className = id === 'method' ? 'life-rule' : 'life-texture'
+      accent.setAttribute('aria-hidden', 'true')
+      if (id !== 'method') accent.textContent = '⠂⠐⠠⠄⠂⠐⠠⠄'
+      head.appendChild(accent)
+    })
+  }
+  var responses = doc.querySelectorAll('#work .listing__link a, #notes .notes-list a')
+  function respond(event) {
+    if (event.type === 'pointerenter' && event.pointerType !== 'mouse') return
+    var el = event.currentTarget, section = el.closest('section')
+    if (!C.enabled || doc.hidden || C.held || section !== C.active) return
+    if ((C.accent && C.accent.id === 'link-response') || C.queue.some(function (a) { return a.id === 'link-response' })) return
+    settleAll()
+    play(surfaceAccent('link-response', section, [el], 700, function (link, p) {
+      // A two-pixel acknowledgement, not a moving target or a spring.
+      link.style.transform = 'translateX(' + (2 * Math.sin(Math.PI * p)) + 'px)'
+    }))
+  }
+  for (var ri = 0; ri < responses.length; ri++) {
+    responses[ri].addEventListener('pointerenter', respond)
+    responses[ri].addEventListener('focus', respond)
+  }
+
   // ---------------------------------------------------------------- sections
   function planFor(section) {
     var t = now()
@@ -420,6 +516,7 @@
     if (section.id === 'proof' && ledger.length && !C.played.ledger) main = ledgerCount(section)
     else if (section.id === 'replay' && replay.length && !C.played.replay) main = replayRun(section)
     else if (isStory && C.story && !C.played.sweep) main = signalSweep(section)
+    else main = lifeFor(section)
     if (main) { main.notBefore = t + DWELL; play(main) }
     if (hostFor(section)) {
       var blink = cursorBlink(section, main ? 2 : 3)
@@ -434,7 +531,7 @@
     if (section === C.active) return
     C.active = section
     settleAll()
-    if (C.enabled) planFor(section)
+    if (C.enabled && section) planFor(section)
   }
 
   var io = null
@@ -443,7 +540,10 @@
     // The reading line sits 40% down the viewport; the section under it is
     // the one being read.
     io = new IntersectionObserver(function (entries) {
-      for (var i = 0; i < entries.length; i++) if (entries[i].isIntersecting) setActive(entries[i].target)
+      var next = C.active
+      for (var i = 0; i < entries.length; i++) if (entries[i].target === next && !entries[i].isIntersecting) next = null
+      for (var j = 0; j < entries.length; j++) if (entries[j].isIntersecting) next = entries[j].target
+      setActive(next)
     }, { rootMargin: '-40% 0px -59% 0px' })
     for (var j = 0; j < sections.length; j++) io.observe(sections[j])
   }
@@ -480,7 +580,7 @@
   }
   C.attachCaduceus = function (api) {
     C.cad = { draw: api.draw, restore: api.restore, clock: 0 }
-    if (!C.enabled) { api.restore(); C.cad = null; return }
+    if (!C.enabled) { api.restore(); return }
     if (C.active && C.active.classList.contains('gate') && !C.held) play(caduceusLife(C.active))
   }
   C.drive = function (fn) {
@@ -494,6 +594,7 @@
     C.enabled = true
     armLedger()
     armReplay()
+    armLife()
     if (!io) watchSections()
     else if (C.active) planFor(C.active)
   }
@@ -515,9 +616,29 @@
     if (ledger.length) finishLedger()
     if (replay.length) finishReplay()
     if (C.story) C.story.breathe(false)
-    if (C.cad) { C.cad.restore(); C.cad = null }
+    doc.getAnimations().forEach(function (animation) { animation.cancel() })
+    // Keep the already-loaded engine available if motion is enabled again.
+    if (C.cad) C.cad.restore()
+    doc.querySelectorAll('.life-rule, .life-texture').forEach(function (el) { el.remove() })
     clearCursors()
   }
+
+  // No draws, timers or compositor breath while the tab is hidden. Resume
+  // through the same scheduler; the caduceus engine and clocks are unchanged.
+  var pausedAnimations = []
+  doc.addEventListener('visibilitychange', function () {
+    if (doc.hidden) {
+      if (C.raf) win.cancelAnimationFrame(C.raf)
+      if (C.timer) win.clearTimeout(C.timer)
+      C.raf = 0; C.timer = 0; C.lastT = 0
+      pausedAnimations = doc.getAnimations().filter(function (animation) { return animation.playState === 'running' })
+      pausedAnimations.forEach(function (animation) { animation.pause() })
+    } else {
+      pausedAnimations.forEach(function (animation) { if (C.enabled && animation.playState === 'paused') animation.play() })
+      pausedAnimations = []
+      wake()
+    }
+  })
 
   // Verification hooks.
   C.timeline = function () {

@@ -229,6 +229,8 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 .story__flow--sr .ax-sr{position:static;white-space:normal}
 .story__layer{position:absolute;inset:0;white-space:pre;color:var(--text)}
 .story__layer .w{position:absolute;left:0;top:0;will-change:transform}
+/* Reserve the STOP weight: lighting it must not move the glyph baseline. */
+.story__layer .ax-stop{font-weight:600}
 /* Axiōma spans. Unlit in the live story they are plain text; lit (or always,
    in the static story and the key) they carry color plus a second cue. */
 .ax{text-decoration-line:underline;text-decoration-color:transparent;text-decoration-thickness:1px;text-underline-offset:.24em;transition:color 240ms var(--ease-out),text-decoration-color 240ms var(--ease-out)}
@@ -321,6 +323,63 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
   .lookup__row{grid-template-columns:12ch minmax(0,1fr)}
 }
 
+/* Finite conductor accents, absolute so the reading flow never moves. */
+#method .head,#catalog .head,#notes .head{position:relative}
+.life-rule{position:absolute;left:0;top:-18px;width:56px;height:1px;background:var(--mid);opacity:.48;transform-origin:left center}
+.life-texture{position:absolute;right:0;top:-26px;font:400 17px/1 var(--braille);letter-spacing:5px;color:var(--mid);opacity:.16;pointer-events:none}
+
+/* A295: line-art map, native controls over responsive SVG edges. */
+.system__frame{border:1px solid var(--rule);background:var(--panel);min-width:0}
+.system__caption{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;padding:12px 20px;border-bottom:1px solid var(--rule);font-size:13px}
+.system__board{position:relative;aspect-ratio:1000/440;margin:24px 20px}
+.system__lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.system__lines--small{display:none}
+.system__edge{fill:none;stroke:var(--dim);stroke-width:1;vector-effect:non-scaling-stroke}
+.system__lines marker path{fill:var(--dim)}
+.system__dash{stroke-dasharray:5 5}
+.system__label{font:400 13px var(--mono);fill:var(--mid)}
+.system__node,.system__chip{position:absolute;display:flex;align-items:center;justify-content:center;min-height:44px;padding:6px;border-radius:0;font:500 13px/1.3 var(--mono);color:var(--strong);background:var(--panel);cursor:pointer}
+.system__node{left:8%;width:20%;height:13.636%;border:1px solid var(--mid);letter-spacing:.04em}
+.system__chip{height:10%;border:1px dashed var(--dim);background:var(--night);color:var(--mid)}
+.system__node:disabled,.system__chip:disabled{cursor:default;opacity:1}
+.system__node:hover,.system__chip:hover{border-color:var(--strong)}
+.system__node[aria-pressed="true"],.system__chip[aria-pressed="true"]{border:2px solid var(--strong);color:var(--strong);text-decoration:underline;text-underline-offset:.25em}
+.system__owner,.system__next{top:4.545%}
+.system__operator,.system__world{top:43.182%}
+.system__workers,.system__log{top:81.818%}
+.system__next,.system__world,.system__log{left:80%;width:19%}
+.system__axioma{left:40%;top:45%;width:12%}
+.system__gatekeeper{left:58%;top:45%;width:14%}
+.system__standing{left:17%;top:67%;width:14%}
+.system__tripwire{left:58%;top:75%;width:14%}
+.system__handydandy{left:47%;top:6.36%;width:15%}
+.system__details{display:grid;border-top:1px solid var(--rule);padding:24px 20px;gap:24px}
+.system__details h3{font:500 14px/1.5 var(--mono);color:var(--strong);margin-bottom:8px}
+.system__details p{max-width:76ch;font-size:14px}
+.system__details .system__hint{font-size:12px;color:var(--dim);margin-top:12px}
+.system.is-interactive .system__details{min-height:180px;align-content:start}
+.system__details [hidden]{display:none}
+.system__source{font-size:13px;max-width:90ch;color:var(--mid)}
+@media (max-width:700px){
+  .system__board{aspect-ratio:350/642;margin:24px 12px}
+  .system__lines--wide{display:none}
+  .system__lines--small{display:block}
+  .system__node{left:0;width:42%;height:8.723%;font-size:12px}
+  .system__chip{height:6.855%;font-size:12px}
+  .system__owner,.system__next{top:0}
+  .system__operator{top:26.791%}
+  .system__workers,.system__world{top:53.583%}
+  .system__next,.system__world,.system__log{left:62%;width:38%}
+  .system__log{top:91.277%}
+  .system__handydandy{left:62%;top:12.773%;width:38%}
+  .system__axioma{left:62%;top:30.218%;width:38%}
+  .system__gatekeeper{left:62%;top:41.744%;width:38%}
+  .system__standing{left:16%;top:44.237%;width:31%}
+  .system__tripwire{left:62%;top:74.455%;width:38%}
+  .system.is-interactive .system__details{min-height:244px}
+}
+
 @media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{transition-duration:.01ms!important;animation:none!important}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  .button:active{transform:none}
 }

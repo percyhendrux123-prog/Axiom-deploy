@@ -40,7 +40,7 @@ test('reduced motion turns every accent off and leaves the HTML complete', () =>
 test('accents animate opacity and transform only, inside the craft limits', () => {
   const home = code('assets/axioma/home.js');
   const styleWrites = [...home.matchAll(/\.style\.(\w+)/g)].map((m) => m[1]);
-  assert.deepEqual([...new Set(styleWrites)], ['opacity'], 'conductor writes opacity only (transform goes through the story engine)');
+  assert.deepEqual([...new Set(styleWrites)].sort(), ['opacity', 'transform'], 'A295 extends the conductor with compositor-only transforms, never layout properties');
   const story = code('src/axioma/story.js');
   assert.ok(/ring\.animate\(/.test(story) && story.includes("scale: '1.014'"), 'breathing is a compositor scale on the ring, 1.4% deep');
   const blink = Number(home.match(/var BLINK = (\d+)/)[1]);
