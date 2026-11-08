@@ -28,7 +28,7 @@ test('new life accents use the same conductor and stop on visibility changes', (
 });
 
 test('A295 preserves all pre-existing homepage content and the caduceus engine byte for byte', () => {
-  const original = home.replace(diagram + '\n\n', '').replace('home.js?v=5', 'home.js?v=4');
+  const original = home.replace(diagram + '\n\n', '').replace('home.js?v=6', 'home.js?v=4');
   const normalized = original.replace(/<link rel="stylesheet"[^>]*>/g, '').replace(/ role="group"/g, '').replace(/\s+/g, ' ').trim();
   assert.equal(createHash('sha256').update(read('assets/axioma/caduceus.js')).digest('hex'), 'c2c5449e5cb8669dd937855ae21a8fa18b6f678d94d133cbd4faf6969f670397');
   assert.equal(createHash('sha256').update(normalized).digest('hex'), '05e4d569f3d93efd9815af975b52a0b51ce75a094046bcf08d22f245df5cd40a');

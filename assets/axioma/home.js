@@ -1,19 +1,12 @@
 // Deploy Axiom homepage: the loader for the medallion story, and the motion
 // conductor that owns every accent on the page.
 //
-// The conductor is one scheduler on one requestAnimationFrame loop. Only one
-// accent runs at a time; each has a cue (the reader reached a section, or
-// let go of the medallion), a start and an end. When the reader moves to
-// another section, whatever is running settles first, then the cursor hands
-// over, then that section's accent plays. Nothing loops for decoration: the
-// cursor blinks a few times on arrival and then holds still, and the only
-// ambient motion (the medallion ring breathing) runs while the story is the
-// section being read and yields the moment anything else needs the stage.
-// The loop sleeps when nothing is moving.
-//
-// Visitors who prefer reduced motion get none of it: the conductor never
-// starts, the HTML is the finished page (cursor solid, numbers final, story
-// static), and the story engine is never loaded.
+// One conductor owns finite arrivals, interactions and quiet section-local
+// ambient life. The reading section alone may move; ambient accents yield to
+// interactions and never run beside the gate's reference caduceus. New chain
+// and divider draws are capped at 30 and 12 fps. The loop sleeps offscreen
+// and while hidden. Reduced motion keeps the finished page and a manual,
+// non-animated order walkthrough; neither story engine is loaded.
 (function () {
   'use strict'
   var win = window
@@ -33,7 +26,8 @@
   if (system) {
     var nodes = [].slice.call(system.querySelectorAll('[data-system-node]'))
     var panels = [].slice.call(system.querySelectorAll('.system__details > div'))
-    function selectNode(key) {
+    var selectNode = function (key) {
+      system.dataset.runStep = key
       nodes.forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.systemNode === key)) })
       panels.forEach(function (panel) { panel.hidden = panel.id !== 'system-' + key + '-info' })
     }
@@ -41,11 +35,29 @@
     selectNode('intro')
     nodes.forEach(function (button) {
       button.disabled = false
-      button.addEventListener('click', function () { selectNode(button.dataset.systemNode) })
-      button.addEventListener('focus', function () { selectNode(button.dataset.systemNode) })
-      button.addEventListener('pointerenter', function (event) { if (event.pointerType === 'mouse') selectNode(button.dataset.systemNode) })
+      button.addEventListener('click', function () { stopOrder(button.dataset.systemNode) })
+      button.addEventListener('focus', function () { if (!chainRun) selectNode(button.dataset.systemNode) })
+      button.addEventListener('pointerenter', function (event) { if (!chainRun && event.pointerType === 'mouse') selectNode(button.dataset.systemNode) })
     })
-    system.addEventListener('keydown', function (event) { if (event.key === 'Escape') { selectNode('intro'); event.preventDefault() } })
+    var controls = doc.createElement('div')
+    controls.className = 'system__controls'
+    var runButton = doc.createElement('button')
+    runButton.type = 'button'
+    runButton.textContent = 'Run one order'
+    runButton.setAttribute('aria-controls', 'system-panels')
+    var cancelButton = doc.createElement('button')
+    cancelButton.type = 'button'
+    cancelButton.textContent = 'Cancel order'
+    cancelButton.disabled = true
+    var example = doc.createElement('span')
+    example.textContent = 'An example order, not a live action.'
+    controls.append(runButton, cancelButton, example)
+    system.querySelector('.system__caption').after(controls)
+    system.querySelector('.system__details').id = 'system-panels'
+    system.dataset.runState = 'idle'
+    runButton.addEventListener('click', runOrder)
+    cancelButton.addEventListener('click', function () { stopOrder('intro') })
+    system.addEventListener('keydown', function (event) { if (event.key === 'Escape') { stopOrder('intro'); event.preventDefault() } })
   }
 
   // ---------------------------------------------------------------- conductor
@@ -55,6 +67,7 @@
     queue: [],
     drivers: [],
     raf: 0,
+    timer: 0,
     lastT: 0,
     nextAt: 0,
     held: false,
@@ -489,6 +502,44 @@
       if (id !== 'method') accent.textContent = '⠂⠐⠠⠄⠂⠐⠠⠄'
       head.appendChild(accent)
     })
+    doc.querySelectorAll('main section.section:not(#story)').forEach(function (section, index) {
+      if (section.querySelector('.life-divider')) return
+      var divider = doc.createElement('span')
+      divider.className = 'life-divider'
+      divider.setAttribute('aria-hidden', 'true')
+      divider.dataset.period = String(6300 + index * 283)
+      divider.dataset.phase = String(index * 1.71)
+      section.appendChild(divider)
+    })
+  }
+  function breatheRules(section, elapsed) {
+    var divider = section.querySelector('.life-divider')
+    if (!divider) return
+    var wave = Math.sin(elapsed * 2 * Math.PI / Number(divider.dataset.period) + Number(divider.dataset.phase))
+    divider.style.opacity = String(.20 + .04 * wave)
+    var rule = section.querySelector('.life-rule')
+    if (rule) rule.style.opacity = String(.52 + .04 * Math.sin(elapsed * 2 * Math.PI / 8731 + 2.3))
+  }
+  function resetRules(section) {
+    section.querySelectorAll('.life-divider,.life-rule').forEach(function (el) { el.style.opacity = '' })
+  }
+  function dividerBreath(section) {
+    var last = 0, elapsed = 0, stop = false
+    return {
+      id: 'divider-breath', section: section, ambient: true,
+      begin: function (t) { last = t },
+      tick: function (t) {
+        if (stop) { resetRules(section); return true }
+        if (!last) last = t
+        var delta = t - last
+        if (delta < 1000 / 12) return 1000 / 12 - delta
+        elapsed += delta; last = t
+        breatheRules(section, elapsed)
+        return 1000 / 12
+      },
+      pause: function () { last = 0 },
+      settle: function () { stop = true; resetRules(section) },
+    }
   }
   var responses = doc.querySelectorAll('#work .listing__link a, #notes .notes-list a')
   function respond(event) {
@@ -501,14 +552,142 @@
       // A two-pixel acknowledgement, not a moving target or a spring.
       link.style.transform = 'translateX(' + (2 * Math.sin(Math.PI * p)) + 'px)'
     }))
+    play(dividerBreath(section))
   }
   for (var ri = 0; ri < responses.length; ri++) {
     responses[ri].addEventListener('pointerenter', respond)
     responses[ri].addEventListener('focus', respond)
   }
 
+  // ---------------------------------------------------------------- living chain
+  var chainArt = []
+  var chainTime = 0
+  var chainBreathTime = 0
+  var chainRun = null
+  var orderKeys = ['owner', 'operator', 'workers', 'axioma', 'gatekeeper', 'standing', 'tripwire', 'handydandy', 'owner']
+  var orderTravel = [0, 550, 550, 700, 450, 700, 700, 700, 900]
+  var orderHold = [200, 200, 200, 1500, 1500, 1500, 1500, 1500, 0]
+  // Invisible routes follow the existing edges, with joins underneath nodes.
+  // There is only one visible pulse, including when the example takes a refusal.
+  var orderRoutes = [
+    ['M120 80V190', 'M120 250V360', 'M240 360V250L280 220H460', 'M460 220H650', 'M650 220H280L120 250V360H240V316', 'M240 316V250L280 220H650V350', 'M650 350V390H800H650V242L650 220H280V190H360V50H545', 'M545 50H800H360V190H280H240V80'],
+    ['M18 56V172', 'M18 228V344', 'M128 344V228L147 200H280V216', 'M280 216V290', 'M280 290V200H147L18 228V344H128V306', 'M128 306V228L147 200H280V318H190V500H280', 'M280 500V586V500H190V318H280V200H147V172H190V104H280', 'M280 104V56V104H190V172H147H128V56'],
+  ]
+  function stopOrder(key) {
+    if (!system) return
+    chainRun = null
+    system.dataset.runState = 'idle'
+    system.dataset.runStep = key
+    runButton.textContent = 'Run one order'
+    runButton.setAttribute('aria-disabled', 'false')
+    if (doc.activeElement === cancelButton) runButton.focus()
+    cancelButton.disabled = true
+    hidePulse()
+    selectNode(key)
+  }
+  function showOrderStep(key) {
+    if (system.dataset.runStep === key) return
+    system.dataset.runStep = key
+    selectNode(key)
+  }
+  function runOrder() {
+    if (mq.matches) {
+      if (!chainRun) chainRun = { manual: 0 }
+      else chainRun.manual++
+      if (chainRun.manual === orderKeys.length - 1) { stopOrder('owner'); return }
+      runButton.textContent = 'Next step'
+      system.dataset.runState = 'stepping'
+      cancelButton.disabled = false
+      showOrderStep(orderKeys[chainRun.manual])
+      return
+    }
+    if (chainRun) return
+    chainRun = { elapsed: 0 }
+    system.dataset.runState = 'running'
+    system.dataset.runElapsed = '0'
+    cancelButton.disabled = false
+    runButton.setAttribute('aria-disabled', 'true')
+    showOrderStep('owner')
+    settleAll()
+    play(chainLife(system))
+  }
+  function drawOrder(delta) {
+    chainRun.elapsed += delta
+    system.dataset.runElapsed = String(Math.round(chainRun.elapsed))
+    var remaining = chainRun.elapsed
+    for (var i = 0; i < orderKeys.length; i++) {
+      if (remaining < orderTravel[i]) {
+        system.dataset.runStep = 'travel'
+        chainArt.forEach(function (art) { drawPulse(art, art.routes[i - 1], remaining / orderTravel[i], .56) })
+        return
+      }
+      remaining -= orderTravel[i]
+      if (remaining < orderHold[i]) {
+        hidePulse()
+        showOrderStep(orderKeys[i])
+        return
+      }
+      remaining -= orderHold[i]
+    }
+    stopOrder('owner')
+  }
+  function armChain() {
+    if (!system || chainArt.length) return
+    system.querySelectorAll('.system__lines').forEach(function (svg, index) {
+      var dot = doc.createElementNS('http://www.w3.org/2000/svg', 'circle')
+      dot.setAttribute('r', '4')
+      dot.setAttribute('class', 'system__pulse')
+      dot.style.opacity = '0'
+      svg.appendChild(dot)
+      var routes = orderRoutes[index].map(function (d) {
+        var path = doc.createElementNS('http://www.w3.org/2000/svg', 'path')
+        path.setAttribute('d', d)
+        path.setAttribute('class', 'system__journey')
+        svg.appendChild(path)
+        return path
+      })
+      chainArt.push({ dot: dot, edges: [].slice.call(svg.querySelectorAll('.system__edge > path')), routes: routes })
+    })
+  }
+  function hidePulse() {
+    chainArt.forEach(function (art) { art.dot.style.opacity = '0' })
+  }
+  function drawPulse(art, path, p, opacity) {
+    var point = path.getPointAtLength(path.getTotalLength() * p)
+    art.dot.setAttribute('transform', 'translate(' + point.x + ' ' + point.y + ')')
+    art.dot.style.opacity = String(opacity)
+  }
+  function chainLife(section) {
+    var last = 0, stop = false
+    var edgeOrder = [0, 1, 3, 2, 5, 6, 4]
+    return {
+      id: 'chain-life', section: section, ambient: true,
+      begin: function (t) { last = t; armChain() },
+      tick: function (t) {
+        if (stop) { hidePulse(); return true }
+        if (!last) last = t
+        var delta = t - last
+        if (delta < 1000 / 30) return 1000 / 30 - delta
+        last = t
+        chainBreathTime += delta
+        breatheRules(section, chainBreathTime)
+        if (chainRun) drawOrder(delta)
+        else {
+          chainTime += delta
+          var edge = edgeOrder[Math.floor(chainTime / 3600) % edgeOrder.length]
+          var p = (chainTime % 3600) / 3600
+          chainArt.forEach(function (art) { drawPulse(art, art.edges[edge], p, .28 * Math.sin(Math.PI * p)) })
+        }
+        return 1000 / 30
+      },
+      pause: function () { last = 0 },
+      settle: function () { stop = true; hidePulse(); resetRules(section) },
+    }
+  }
+
   // ---------------------------------------------------------------- sections
   function planFor(section) {
+    if (section.id === 'system' && chainRun) { placeCursor(section); play(chainLife(section)); return }
     var t = now()
     play(cursorHandoff(section))
     var isStory = section.id === 'story'
@@ -523,6 +702,8 @@
       blink.notBefore = t + DWELL
       play(blink)
     }
+    if (section.id === 'system') play(chainLife(section))
+    else if (section.querySelector('.life-divider')) play(dividerBreath(section))
     if (isStory && C.story) play(ringBreath(section))
     if (section.classList.contains('gate') && C.cad) play(caduceusLife(section))
   }
@@ -591,6 +772,7 @@
   // ---------------------------------------------------------------- on / off
   function enable() {
     if (C.enabled || mq.matches || !('IntersectionObserver' in win)) return
+    if (chainRun) stopOrder('intro')
     C.enabled = true
     armLedger()
     armReplay()
@@ -601,6 +783,9 @@
   function disable() {
     if (!C.enabled) return
     C.enabled = false
+    if (chainRun) stopOrder('intro')
+    chainArt.forEach(function (art) { art.dot.remove(); art.routes.forEach(function (path) { path.remove() }) })
+    chainArt = []
     C.queue.length = 0
     if (C.accent) {
       // Jump the running accent to its end state at once.
@@ -619,7 +804,7 @@
     doc.getAnimations().forEach(function (animation) { animation.cancel() })
     // Keep the already-loaded engine available if motion is enabled again.
     if (C.cad) C.cad.restore()
-    doc.querySelectorAll('.life-rule, .life-texture').forEach(function (el) { el.remove() })
+    doc.querySelectorAll('.life-rule, .life-texture, .life-divider').forEach(function (el) { el.remove() })
     clearCursors()
   }
 
@@ -628,6 +813,7 @@
   var pausedAnimations = []
   doc.addEventListener('visibilitychange', function () {
     if (doc.hidden) {
+      if (C.accent && C.accent.pause) C.accent.pause()
       if (C.raf) win.cancelAnimationFrame(C.raf)
       if (C.timer) win.clearTimeout(C.timer)
       C.raf = 0; C.timer = 0; C.lastT = 0
