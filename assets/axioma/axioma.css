@@ -243,7 +243,7 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 .ax-caution.is-lit,.story__stage--static .ax-caution{color:var(--warn);text-decoration-color:currentColor}
 .ax-go.is-lit,.story__stage--static .ax-go{color:var(--ok);text-decoration-color:currentColor}
 .ax-whisper.is-lit,.story__stage--static .ax-whisper{color:var(--whisper);text-decoration-color:currentColor}
-.medallion{display:block;position:relative;width:var(--med,clamp(150px,26vw,220px));height:var(--med,clamp(150px,26vw,220px));border-radius:50%}
+.medallion{display:block;position:relative;width:var(--med,clamp(172px,45vw,336px));height:var(--med,clamp(172px,45vw,336px));border-radius:50%}
 .story__stage--static .medallion{float:right;margin:0 0 6px 18px;shape-outside:circle(50%);shape-margin:14px}
 .story__stage--live .medallion{position:absolute;left:0;top:0;z-index:2;-webkit-user-select:none;user-select:none;will-change:transform}
 .story__stage--live:not(.is-ready) .medallion{visibility:hidden}

@@ -146,7 +146,7 @@ function createEngine({ stage, layer, flow, med, hit, tilt, ring }) {
   function measureStage() {
     const oldW = s.W
     s.W = stage.clientWidth
-    s.R = Math.round(clamp(s.W * 0.15, 56, 112))
+    s.R = Math.round(clamp(s.W * 0.225, 86, 168))
     s.pad = Math.round(s.lh * 0.55)
     stage.style.setProperty('--med', `${s.R * 2}px`)
     s.hBase = layoutText(-1e5, -1e5, false)

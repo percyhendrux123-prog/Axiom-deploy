@@ -21,7 +21,7 @@ test('one conductor owns the page motion: one animation loop, story frames run t
   assert.ok(story.includes('conductor?.hold()') && story.includes('conductor?.release()'), 'drag holds every accent and releases at rest');
   assert.ok(!/Math\.sin\(idle|7 \+ Math\.min\(speed/.test(story), 'no idle spin or wobble at rest');
   assert.ok(read('assets/axioma/story.js').includes('attachStory'), 'shipped bundle is rebuilt from the source');
-  assert.ok(read('assets/axioma/home.js').includes("'/assets/axioma/story.js?v=2'"), 'bundle version bumped');
+  assert.ok(read('assets/axioma/home.js').includes("'/assets/axioma/story.js?v=3'"), 'bundle version bumped');
 });
 
 test('reduced motion turns every accent off and leaves the HTML complete', () => {

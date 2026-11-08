@@ -849,7 +849,7 @@
     if (loaded) return
     loaded = true
     var s = doc.createElement('script')
-    s.src = '/assets/axioma/story.js?v=2'
+    s.src = '/assets/axioma/story.js?v=3'
     s.defer = true
     doc.body.appendChild(s)
   }

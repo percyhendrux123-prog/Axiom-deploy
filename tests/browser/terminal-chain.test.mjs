@@ -102,3 +102,18 @@ test('reduced motion shows the complete wide art with no entrance or engine requ
     await shot(page, '.gate', 'caduceus-390-reduced');
   } finally { await context.close(); }
 });
+for (const width of [1440, 390]) test(`Hermes herm is noticeably larger in live and static layouts (${width})`, async () => {
+  for (const motion of ['no-preference', 'reduce']) {
+    const { context, page, errors } = await open(width, motion);
+    try {
+      await arrive(page, '#story');
+      if (motion === 'no-preference') await page.waitForSelector('.story__stage.is-ready');
+      const box = await page.locator('.medallion').boundingBox();
+      assert.ok(box.width >= (width === 390 ? 165 : 320), `medallion ${box.width}px`);
+      assert.ok(box.x >= 0 && box.x + box.width <= width);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth), width);
+      await shot(page, '#story', `medallion-${width}-${motion}`);
+      assert.deepEqual(errors, []);
+    } finally { await context.close(); }
+  }
+});
