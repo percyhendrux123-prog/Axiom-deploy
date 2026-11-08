@@ -430,19 +430,27 @@
   // rest over 0.9 s when the reader moves on. Ambient: anything else that
   // needs the stage asks it to settle first.
   function caduceusLife(section) {
-    var t0 = 0, stop = false, stopAt = 0, from = 0, amt = 0
+    var last = 0, activeTime = 0, stop = false, stopAt = 0, from = 0, amt = 0
     var IN = 1600, OUT = 900, STEP = 1000 / 24
     return {
       id: 'caduceus-life', section: section, ambient: true,
-      begin: function (t) { t0 = t; if (C.cad) C.cad.clock = C.cad.clock || t },
+      begin: function (t) { last = t },
       tick: function (t) {
         if (!C.cad) return true
+        var delta = last ? t - last : 0
+        last = t
+        if (!stop) {
+          activeTime += delta
+          C.cad.elapsed += delta
+          C.cad.entrance = Math.min(1100, C.cad.entrance + delta)
+        }
         if (stop) amt = from * (1 - easeOut(clamp01((t - stopAt) / OUT)))
-        else amt = easeOut(clamp01((t - t0) / IN))
-        C.cad.draw((t - C.cad.clock) / 1000, amt)
+        else amt = easeOut(clamp01(activeTime / IN))
+        C.cad.draw(C.cad.elapsed / 1000, amt, C.cad.entrance / 1100)
         if (stop && t - stopAt >= OUT) return true
         return STEP
       },
+      pause: function () { last = 0 },
       settle: function (t) { if (!stop) { stop = true; stopAt = t; from = amt } },
     }
   }
@@ -688,6 +696,7 @@
   // ---------------------------------------------------------------- sections
   function planFor(section) {
     if (section.id === 'system' && chainRun) { placeCursor(section); play(chainLife(section)); return }
+    if (section.classList.contains('gate') && C.cad) { play(caduceusLife(section)); return }
     var t = now()
     play(cursorHandoff(section))
     var isStory = section.id === 'story'
@@ -760,7 +769,7 @@
     if (C.enabled && C.story && C.active && C.active.id === 'story') play(ringBreath(C.active))
   }
   C.attachCaduceus = function (api) {
-    C.cad = { draw: api.draw, restore: api.restore, clock: 0 }
+    C.cad = { draw: api.draw, restore: api.restore, elapsed: 0, entrance: 0 }
     if (!C.enabled) { api.restore(); return }
     if (C.active && C.active.classList.contains('gate') && !C.held) play(caduceusLife(C.active))
   }
@@ -849,7 +858,7 @@
         if (cadLoaded || mq.matches) return
         cadLoaded = true
         var s = doc.createElement('script')
-        s.src = '/assets/axioma/caduceus.js?v=1'
+        s.src = '/assets/axioma/caduceus.js?v=2'
         s.defer = true
         doc.body.appendChild(s)
       }

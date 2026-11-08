@@ -7,10 +7,10 @@ const hash = s => createHash('sha256').update(s).digest('hex');
 const home = read('index.html');
 const js = read('assets/axioma/home.js');
 
-test('A296 locks reference caduceus engine, conductor function and gate markup independently', () => {
-  assert.equal(hash(read('assets/axioma/caduceus.js')), 'c2c5449e5cb8669dd937855ae21a8fa18b6f678d94d133cbd4faf6969f670397');
-  assert.equal(hash(js.match(/  function caduceusLife\(section\) \{[\s\S]*?\n  }/)[0]), 'a37f7f3ca6ce90e7462b94d2cd485dcbfc7848d7b1ab9e7772693e4ba23bcd2a');
-  assert.equal(hash(home.match(/<section class="gate"[\s\S]*?<\/section>/)[0]), 'a3a37a53b94a045f606cb251e2769767a938ede3347d003a32bf97883a1e8f49');
+test('A298 deliberately updates the reference art, entrance and static gate locks', () => {
+  assert.equal(hash(read('assets/axioma/caduceus.js')), '235810aad7f9594a2e6f1146e17f2e08cd01a5149ad42857de36807985ca36fa');
+  assert.equal(hash(js.match(/  function caduceusLife\(section\) \{[\s\S]*?\n  }/)[0]), 'bc2eec5c181f2eba6ad20bf0910ce6d51ba1dc175efdf2aa3449580e90f080ba');
+  assert.equal(hash(home.match(/<section class="gate"[\s\S]*?<\/section>/)[0]), '3d2eecd46ad7299288c85a71e66741be7ef4b00a1f5820cd693161e867c0637a');
   assert.equal(hash(home.match(/<div class="system__details"[\s\S]*?<\/div>\n<\/div>/)[0]), 'a04c80cfd729fb0c774ac8879e3f4da3bbe7ac6702d2f69b899bbdc3339eea6b');
 });
 
