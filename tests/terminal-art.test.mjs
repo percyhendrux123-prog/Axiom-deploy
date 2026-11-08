@@ -9,6 +9,14 @@ function engine() {
   return context.AxCaduceus.create();
 }
 const text = html => html.replace(/<[^>]*>/g, '');
+test('rot.js is vendored locally with its BSD license and explicit build inclusion', () => {
+  const vendor = read('assets/axioma/vendor/rot.min.js');
+  assert.ok(vendor.includes('Display'));
+  assert.match(read('assets/axioma/vendor/LICENSE-rot-js.txt'), /Redistribution and use in source and binary forms/);
+  assert.match(read('assets/axioma/vendor/README.md'), /2\.2\.1/);
+  assert.match(read('netlify.toml'), /assets\/axioma\/vendor/);
+  assert.match(read('index.html'), /rot\.js \(BSD-3-Clause\)/);
+});
 test('wide caduceus keeps its height and central staff, with single-dot dither', () => {
   const art = engine();
   assert.equal(art.width, 44);

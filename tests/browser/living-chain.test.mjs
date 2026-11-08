@@ -58,19 +58,19 @@ for (const width of [1440, 390]) test(`walkthrough routes stay on visible edges 
   const { context, page, errors } = await open(width);
   try {
     await page.getByRole('button', { name: 'Run one order', exact: true }).click();
-    await page.waitForSelector('.system__journey', { state: 'attached' });
+    await page.waitForSelector('.has-terminal');
     const misses = await page.evaluate(() => {
-      const svg = [...document.querySelectorAll('.system__lines')].find(e => getComputedStyle(e).display !== 'none');
+      const geometry = window.AxChain.geometry();
+      const board = document.querySelector('.system__board').getBoundingClientRect();
       const boxes = [...document.querySelectorAll('[data-system-node]')].map(e => e.getBoundingClientRect());
-      const matrix = svg.getScreenCTM();
-      const screen = p => new DOMPoint(p.x, p.y).matrixTransform(matrix);
-      const points = [...svg.querySelectorAll('.system__edge > path')].flatMap(path => {
-        const length = path.getTotalLength();
-        return Array.from({ length: Math.ceil(length) + 1 }, (_, i) => screen(path.getPointAtLength(i)));
+      const screen = p => ({ x: board.x + p[0] / (geometry.small ? 350 : 1000) * board.width, y: board.y + p[1] / (geometry.small ? 642 : 440) * board.height });
+      const sample = (path, step) => path.flatMap(([a, b]) => {
+        const count = Math.ceil(Math.hypot(b[0] - a[0], b[1] - a[1]) / step);
+        return Array.from({ length: count + 1 }, (_, i) => screen([a[0] + (b[0] - a[0]) * i / count, a[1] + (b[1] - a[1]) * i / count]));
       });
-      return [...svg.querySelectorAll('.system__journey')].flatMap((path, route) => {
-        const length = path.getTotalLength();
-        return Array.from({ length: 101 }, (_, i) => screen(path.getPointAtLength(length * i / 100)))
+      const points = geometry.edges.flatMap(path => sample(path, 1));
+      return geometry.routes.flatMap((path, route) => {
+        return sample(path, 4)
           .filter(p => !boxes.some(b => p.x >= b.left - 2 && p.x <= b.right + 2 && p.y >= b.top - 2 && p.y <= b.bottom + 2)
             && !points.some(q => Math.hypot(p.x - q.x, p.y - q.y) < 2))
           .map(p => ({ route, x: p.x, y: p.y }));
@@ -90,7 +90,7 @@ test('runtime sample: at most 30 pulse draws/s, bounded CPU, zero hidden work', 
     await page.evaluate(() => {
       window.__pulseFrames = [];
       window.__pulseObserver = new MutationObserver(() => window.__pulseFrames.push(performance.now()));
-      window.__pulseObserver.observe(document.querySelector('.system__lines--wide .system__pulse'), { attributes: true, attributeFilter: ['transform'] });
+      window.__pulseObserver.observe(document.querySelector('.system__terminal canvas'), { attributes: true, attributeFilter: ['data-pulse'] });
     });
     const sample = async (label, ms) => {
       const before = Object.fromEntries((await cdp.send('Performance.getMetrics')).metrics.map(m => [m.name, m.value]));
@@ -117,7 +117,7 @@ test('runtime sample: at most 30 pulse draws/s, bounded CPU, zero hidden work', 
   } finally { await context.close(); }
 });
 
-const pulse = page => page.locator('.system__lines--wide .system__pulse');
+const pulse = page => page.locator('.system__terminal canvas');
 for (const width of [1440, 390]) test(`one order visits every gate, returns evidence, replays and cancels (${width}px)`, async () => {
   const { context, page, errors } = await open(width);
   try {
@@ -255,18 +255,18 @@ test('ambient flow travels continuously, one pulse, and yields completely offscr
   const { context, page, errors } = await open();
   try {
     await page.waitForFunction(() => window.__axConductor.current() === 'chain-life', null, { timeout: 10000 });
-    const at = await pulse(page).getAttribute('transform');
+    const at = await pulse(page).getAttribute('data-pulse');
     await page.waitForTimeout(300);
-    assert.notEqual(await pulse(page).getAttribute('transform'), at);
-    assert.equal(await page.locator('.system__lines--wide .system__pulse').count(), 1);
-    assert.ok(Number(await pulse(page).evaluate(e => e.style.opacity)) <= .36);
+    assert.notEqual(await pulse(page).getAttribute('data-pulse'), at);
+    assert.equal(await page.locator('.system__terminal canvas').count(), 1);
+    assert.ok(Number(await pulse(page).getAttribute('data-pulse-opacity')) <= .36);
     await page.setViewportSize({ width: 1440, height: 400 });
     await page.locator('footer').evaluate(el => el.scrollIntoView());
     await page.waitForFunction(() => window.__axConductor.active === null);
     await page.waitForTimeout(1100);
-    const frozen = await pulse(page).getAttribute('transform');
+    const frozen = await pulse(page).getAttribute('data-pulse');
     await page.waitForTimeout(200);
-    assert.equal(await pulse(page).getAttribute('transform'), frozen);
+    assert.equal(await pulse(page).getAttribute('data-pulse'), frozen);
     assert.equal(await page.evaluate(() => window.__axConductor.raf || window.__axConductor.timer), 0);
     assert.deepEqual(errors, []);
   } finally { await context.close(); }

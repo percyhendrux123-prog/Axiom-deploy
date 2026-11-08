@@ -38,6 +38,24 @@ const arrive = (page, selector) => page.locator(selector).evaluate(el => scrollT
 const hide = page => page.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, value: true }); document.dispatchEvent(new Event('visibilitychange')); });
 const show = page => page.evaluate(() => { delete document.hidden; document.dispatchEvent(new Event('visibilitychange')); });
 const shot = (page, selector, name) => page.locator(selector).screenshot({ style: '.bar{visibility:hidden}', path: join(evidence, name + '.png') });
+for (const width of [1440, 390]) test(`rot Display uses one canvas, including after breakpoint resize (${width})`, async () => {
+  const { context, page, errors } = await open(width);
+  try {
+    await arrive(page, '#system');
+    await page.waitForSelector('.has-terminal');
+    assert.equal(await page.locator('#system canvas').count(), 1);
+    assert.equal(await page.locator('#system svg').count(), 0);
+    assert.equal(await page.locator('.system__alternative').getAttribute('aria-hidden'), null);
+    await shot(page, '#system', `terminal-${width}`);
+    const identity = await page.locator('#system canvas').evaluate(e => { e.dataset.identity = 'same'; return e.toDataURL(); });
+    assert.ok(identity.length > 1000, 'non-empty rendering');
+    await page.setViewportSize({ width: width === 390 ? 1440 : 390, height: 1000 });
+    await page.waitForTimeout(200);
+    assert.equal(await page.locator('#system canvas').count(), 1);
+    assert.equal(await page.locator('#system canvas').getAttribute('data-identity'), 'same');
+    assert.deepEqual(errors, []);
+  } finally { await context.close(); }
+});
 for (const width of [1440, 390]) test(`caduceus draws once, centered and pauses hidden/offscreen (${width})`, async () => {
   const { context, page, errors } = await open(width);
   try {

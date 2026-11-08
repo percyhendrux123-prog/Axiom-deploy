@@ -30,6 +30,7 @@
       system.dataset.runStep = key
       nodes.forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.systemNode === key)) })
       panels.forEach(function (panel) { panel.hidden = panel.id !== 'system-' + key + '-info' })
+      if (win.AxChain) win.AxChain.select(key)
     }
     system.classList.add('is-interactive')
     selectNode('intro')
@@ -568,19 +569,13 @@
   }
 
   // ---------------------------------------------------------------- living chain
-  var chainArt = []
   var chainTime = 0
   var chainBreathTime = 0
   var chainRun = null
   var orderKeys = ['owner', 'operator', 'workers', 'axioma', 'gatekeeper', 'standing', 'tripwire', 'handydandy', 'owner']
   var orderTravel = [0, 550, 550, 700, 450, 700, 700, 700, 900]
   var orderHold = [200, 200, 200, 1500, 1500, 1500, 1500, 1500, 0]
-  // Invisible routes follow the existing edges, with joins underneath nodes.
-  // There is only one visible pulse, including when the example takes a refusal.
-  var orderRoutes = [
-    ['M120 80V190', 'M120 250V360', 'M240 360V250L280 220H460', 'M460 220H650', 'M650 220H280L120 250V360H240V316', 'M240 316V250L280 220H650V350', 'M650 350V390H800H650V242L650 220H280V190H360V50H545', 'M545 50H800H360V190H280H240V80'],
-    ['M18 56V172', 'M18 228V344', 'M128 344V228L147 200H280V216', 'M280 216V290', 'M280 290V200H147L18 228V344H128V306', 'M128 306V228L147 200H280V318H190V500H280', 'M280 500V586V500H190V318H280V200H147V172H190V104H280', 'M280 104V56V104H190V172H147H128V56'],
-  ]
+
   function stopOrder(key) {
     if (!system) return
     chainRun = null
@@ -626,7 +621,7 @@
     for (var i = 0; i < orderKeys.length; i++) {
       if (remaining < orderTravel[i]) {
         system.dataset.runStep = 'travel'
-        chainArt.forEach(function (art) { drawPulse(art, art.routes[i - 1], remaining / orderTravel[i], .56) })
+        if (win.AxChain) win.AxChain.pulse('route', i - 1, remaining / orderTravel[i], .56)
         return
       }
       remaining -= orderTravel[i]
@@ -639,38 +634,15 @@
     }
     stopOrder('owner')
   }
-  function armChain() {
-    if (!system || chainArt.length) return
-    system.querySelectorAll('.system__lines').forEach(function (svg, index) {
-      var dot = doc.createElementNS('http://www.w3.org/2000/svg', 'circle')
-      dot.setAttribute('r', '4')
-      dot.setAttribute('class', 'system__pulse')
-      dot.style.opacity = '0'
-      svg.appendChild(dot)
-      var routes = orderRoutes[index].map(function (d) {
-        var path = doc.createElementNS('http://www.w3.org/2000/svg', 'path')
-        path.setAttribute('d', d)
-        path.setAttribute('class', 'system__journey')
-        svg.appendChild(path)
-        return path
-      })
-      chainArt.push({ dot: dot, edges: [].slice.call(svg.querySelectorAll('.system__edge > path')), routes: routes })
-    })
-  }
   function hidePulse() {
-    chainArt.forEach(function (art) { art.dot.style.opacity = '0' })
-  }
-  function drawPulse(art, path, p, opacity) {
-    var point = path.getPointAtLength(path.getTotalLength() * p)
-    art.dot.setAttribute('transform', 'translate(' + point.x + ' ' + point.y + ')')
-    art.dot.style.opacity = String(opacity)
+    if (win.AxChain) win.AxChain.hidePulse()
   }
   function chainLife(section) {
     var last = 0, stop = false
     var edgeOrder = [0, 1, 3, 2, 5, 6, 4]
     return {
       id: 'chain-life', section: section, ambient: true,
-      begin: function (t) { last = t; armChain() },
+      begin: function (t) { last = t },
       tick: function (t) {
         if (stop) { hidePulse(); return true }
         if (!last) last = t
@@ -684,7 +656,7 @@
           chainTime += delta
           var edge = edgeOrder[Math.floor(chainTime / 3600) % edgeOrder.length]
           var p = (chainTime % 3600) / 3600
-          chainArt.forEach(function (art) { drawPulse(art, art.edges[edge], p, .28 * Math.sin(Math.PI * p)) })
+          if (win.AxChain) win.AxChain.pulse('edge', edge, p, .28 * Math.sin(Math.PI * p))
         }
         return 1000 / 30
       },
@@ -793,8 +765,7 @@
     if (!C.enabled) return
     C.enabled = false
     if (chainRun) stopOrder('intro')
-    chainArt.forEach(function (art) { art.dot.remove(); art.routes.forEach(function (path) { path.remove() }) })
-    chainArt = []
+    hidePulse()
     C.queue.length = 0
     if (C.accent) {
       // Jump the running accent to its end state at once.
