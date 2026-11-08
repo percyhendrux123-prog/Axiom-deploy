@@ -52,7 +52,7 @@ test('insurance field report has the approved limits, artifact, metadata, sitema
   for (const marker of [
     'Field Report · 02', "An independent insurance agency's client care now runs without her remembering it. Referral asks still wait for her yes.",
     'The gap', 'What runs', 'What waits for her', "What isn't proven yet",
-    'No enrolled client has received a check-in yet.', 'A few delivery paths still pass only in testing.',
+    'Only one enrolled client has received a check-in.', 'A few delivery paths still pass only in testing.',
     'href="/#contact"', 'href="/notes/"', 'Example record. Client details removed.',
     'width="2400" height="1800"', 'rel="canonical" href="https://deployaxiom.com/field-reports/insurance-client-care/"',
     'property="og:type" content="article"', 'property="og:url"', 'property="og:title"', 'property="og:description"',
