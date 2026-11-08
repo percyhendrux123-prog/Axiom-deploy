@@ -38,7 +38,7 @@ test('medallion story ships as readable HTML with every signal carrying a second
   assert.ok(story.includes('role="img"') && story.includes('aria-label="The Hermes medallion'), 'static medallion is described');
   assert.ok(story.includes('Axiōma is given away: the spec is CC0 and the code is MIT.'), 'ownership language');
   for (const p of story.match(/<div class="story__flow">([\s\S]*?)<\/div>/)[1].match(/<p>[\s\S]*?<\/p>/g)) assert.ok(!/\n|  /.test(p), 'each story paragraph stays on one line with single spaces (engine offsets)');
-  assert.ok(home.includes('<script src="/assets/axioma/home.js?v=3" defer></script>'));
+  assert.ok(home.includes('<script src="/assets/axioma/home.js?v=4" defer></script>'));
   const loader = read('assets/axioma/home.js');
   assert.ok(loader.includes('prefers-reduced-motion: reduce'), 'engine never loads for reduced motion');
   assert.ok(existsSync(join(root, 'assets/axioma/story.js')) && existsSync(join(root, 'src/axioma/story.js')), 'bundle and its source are both tracked');

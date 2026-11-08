@@ -40,6 +40,7 @@
     holdUntil: 0,
     active: null,
     story: null,
+    cad: null,
     played: {},
     log: [],
   }
@@ -386,6 +387,30 @@
     }
   }
 
+  // ---------------------------------------------------------------- caduceus
+  // The gate's caduceus lives while the gate is the section being read
+  // (caduceus.js draws; this decides when). Its wings and snakes ease in over
+  // 1.6 s, move on their own clocks at 24 frames a second, and ease back to
+  // rest over 0.9 s when the reader moves on. Ambient: anything else that
+  // needs the stage asks it to settle first.
+  function caduceusLife(section) {
+    var t0 = 0, stop = false, stopAt = 0, from = 0, amt = 0
+    var IN = 1600, OUT = 900, STEP = 1000 / 24
+    return {
+      id: 'caduceus-life', section: section, ambient: true,
+      begin: function (t) { t0 = t; if (C.cad) C.cad.clock = C.cad.clock || t },
+      tick: function (t) {
+        if (!C.cad) return true
+        if (stop) amt = from * (1 - easeOut(clamp01((t - stopAt) / OUT)))
+        else amt = easeOut(clamp01((t - t0) / IN))
+        C.cad.draw((t - C.cad.clock) / 1000, amt)
+        if (stop && t - stopAt >= OUT) return true
+        return STEP
+      },
+      settle: function (t) { if (!stop) { stop = true; stopAt = t; from = amt } },
+    }
+  }
+
   // ---------------------------------------------------------------- sections
   function planFor(section) {
     var t = now()
@@ -402,6 +427,7 @@
       play(blink)
     }
     if (isStory && C.story) play(ringBreath(section))
+    if (section.classList.contains('gate') && C.cad) play(caduceusLife(section))
   }
 
   function setActive(section) {
@@ -452,6 +478,11 @@
     C.holdUntil = now() + 1200
     if (C.enabled && C.story && C.active && C.active.id === 'story') play(ringBreath(C.active))
   }
+  C.attachCaduceus = function (api) {
+    C.cad = { draw: api.draw, restore: api.restore, clock: 0 }
+    if (!C.enabled) { api.restore(); C.cad = null; return }
+    if (C.active && C.active.classList.contains('gate') && !C.held) play(caduceusLife(C.active))
+  }
   C.drive = function (fn) {
     if (C.drivers.indexOf(fn) < 0) C.drivers.push(fn)
     wake()
@@ -484,6 +515,7 @@
     if (ledger.length) finishLedger()
     if (replay.length) finishReplay()
     if (C.story) C.story.breathe(false)
+    if (C.cad) { C.cad.restore(); C.cad = null }
     clearCursors()
   }
 
@@ -498,6 +530,28 @@
   if (mq.addEventListener) mq.addEventListener('change', function () { if (mq.matches) disable(); else enable() })
 
   // ---------------------------------------------------------------- loader
+  // The caduceus drawing loads when the gate is about to scroll into view,
+  // never for visitors who prefer reduced motion.
+  var gate = doc.querySelector('main .gate .caduceus')
+  var cadLoaded = false
+  function watchGate() {
+    if (!gate || mq.matches || cadLoaded || !('IntersectionObserver' in win)) return
+    var gio = new IntersectionObserver(function (entries) {
+      if (entries.some(function (e) { return e.isIntersecting })) {
+        gio.disconnect()
+        if (cadLoaded || mq.matches) return
+        cadLoaded = true
+        var s = doc.createElement('script')
+        s.src = '/assets/axioma/caduceus.js?v=1'
+        s.defer = true
+        doc.body.appendChild(s)
+      }
+    }, { rootMargin: '600px 0px' })
+    gio.observe(gate)
+  }
+  watchGate()
+  if (mq.addEventListener) mq.addEventListener('change', watchGate)
+
   // Loads the medallion story engine only when the story is about to scroll
   // into view, and never for visitors who prefer reduced motion (for them the
   // static story in the HTML is the whole experience).
