@@ -84,6 +84,31 @@ test('reduced-motion teardown drops live sizing before a mobile resize', async (
     }
   } finally { await context.close(); }
 });
+for (const width of [1440, 390]) test(`seven external arrows, dashed semantics and clean corners survive box fills (${width})`, async () => {
+  const { context, page, errors } = await open(width, 'reduce', 2);
+  try {
+    await arrive(page, '#system');
+    await page.waitForSelector('.has-terminal');
+    const grid = await page.evaluate(() => {
+      const cells = {}, draw = ROT.Display.prototype.draw;
+      ROT.Display.prototype.draw = function (x, y, ch, ...rest) { cells[x + ',' + y] = ch; return draw.call(this, x, y, ch, ...rest); };
+      dispatchEvent(new Event('resize'));
+      ROT.Display.prototype.draw = draw;
+      return cells;
+    });
+    const chars = Object.values(grid);
+    assert.equal(chars.filter(c => '↑↓←→'.includes(c)).length, 7, 'one surviving arrow per relationship');
+    assert.ok(chars.includes('╌') || chars.includes('╎'), 'handoff/refused remain dashed');
+    assert.ok(!chars.includes('┼'), 'elbows have no four-way stubs');
+    if (width === 390) {
+      const entries = Object.keys(grid).map(k => k.split(',').map(Number));
+      const cols = Math.max(...entries.map(p => p[0])) + 1, rows = Math.max(...entries.map(p => p[1])) + 1;
+      for (const y of [147, 251]) assert.equal(grid[`${Math.round(128 / 350 * (cols - 1))},${Math.round(y / 642 * (rows - 1))}`], '│', 'evidence labels leave the riser cell free');
+    }
+    await writeFile(join(evidence, `terminal-grid-${width}.json`), JSON.stringify(grid, null, 2));
+    assert.deepEqual(errors, []);
+  } finally { await context.close(); }
+});
 for (const [width, dpr] of [[1440, 2], [390, 3]]) test(`terminal backing store matches CSS size at DPR ${dpr} (${width})`, async () => {
   const { context, page, errors } = await open(width, 'reduce', dpr);
   try {

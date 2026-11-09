@@ -89,24 +89,49 @@
     display.setOptions({ width: cols, height: rows })
     display.fit(rect)
     cells = {}; previous = null
-    edgeSegments[small ? 1 : 0].forEach(function (path) {
+    var boxes = Array.from(board.querySelectorAll('[data-system-node]')).map(function (button) {
+      var b = button.getBoundingClientRect()
+      return { button: button,
+        x0: Math.max(0, Math.round((b.left - rect.left) / rect.width * cols)), y0: Math.max(0, Math.round((b.top - rect.top) / rect.height * rows)),
+        x1: Math.min(cols - 1, Math.round((b.right - rect.left) / rect.width * cols) - 1), y1: Math.min(rows - 1, Math.round((b.bottom - rect.top) / rect.height * rows) - 1) }
+    })
+    function inBox(p) { return boxes.some(function (b) { return p[0] >= b.x0 && p[0] <= b.x1 && p[1] >= b.y0 && p[1] <= b.y1 }) }
+    var lines = {}, arrows = []
+    function connect(x, y, bit, dashed) {
+      var key = x + ',' + y, line = lines[key] || (lines[key] = { x: x, y: y, mask: 0, dashed: dashed })
+      line.mask |= bit
+    }
+    edgeSegments[small ? 1 : 0].forEach(function (path, index) {
       path.forEach(function (s) {
-        var a = cell(s[0]), b = cell(s[1]), count = Math.max(Math.abs(b[0] - a[0]), Math.abs(b[1] - a[1]))
-        for (var k = 0; k <= count; k++) {
-          var x = Math.round(a[0] + (b[0] - a[0]) * k / (count || 1)), y = Math.round(a[1] + (b[1] - a[1]) * k / (count || 1))
-          var ch = a[0] === b[0] ? '│' : '─'
-          if (cells[x + ',' + y] && cells[x + ',' + y][2] !== ch) ch = '┼'
-          put(x, y, ch)
+        var a = cell(s[0]), b = cell(s[1]), dx = Math.sign(b[0] - a[0]), dy = Math.sign(b[1] - a[1])
+        var count = Math.max(Math.abs(b[0] - a[0]), Math.abs(b[1] - a[1]))
+        for (var k = 0; k < count; k++) {
+          var x = a[0] + dx * k, y = a[1] + dy * k
+          connect(x, y, dx > 0 ? 2 : dx < 0 ? 8 : dy > 0 ? 4 : 1, index >= 5)
+          connect(x + dx, y + dy, dx > 0 ? 8 : dx < 0 ? 2 : dy > 0 ? 1 : 4, index >= 5)
         }
       })
-      var end = cell(path[path.length - 1][1]), last = path[path.length - 1]
-      put(end[0], end[1], last[1][1] > last[0][1] ? '↓' : last[1][1] < last[0][1] ? '↑' : '→')
+      var last = path[path.length - 1], end = cell(last[1]), start = cell(last[0])
+      var dx = Math.sign(end[0] - start[0]), dy = Math.sign(end[1] - start[1])
+      // The destination border belongs to the box. Stop the arrow one cell
+      // outside it, so filling any of the eleven nodes cannot erase it.
+      while (inBox(end)) { end[0] -= dx; end[1] -= dy }
+      arrows.push([end[0], end[1], dy > 0 ? '↓' : dy < 0 ? '↑' : dx > 0 ? '→' : '←'])
     })
-    labels[small ? 1 : 0].forEach(function (label) { var p = cell(label); text(p[0], p[1], label[2], '#B4B6BC') })
-    board.querySelectorAll('[data-system-node]').forEach(function (button) {
-      var b = button.getBoundingClientRect()
-      var x0 = Math.max(0, Math.round((b.left - rect.left) / rect.width * cols)), y0 = Math.max(0, Math.round((b.top - rect.top) / rect.height * rows))
-      var x1 = Math.min(cols - 1, Math.round((b.right - rect.left) / rect.width * cols) - 1), y1 = Math.min(rows - 1, Math.round((b.bottom - rect.top) / rect.height * rows) - 1)
+    var glyphs = { 1:'│', 2:'─', 3:'└', 4:'│', 5:'│', 6:'┌', 7:'├', 8:'─', 9:'┘', 10:'─', 11:'┴', 12:'┐', 13:'┤', 14:'┬', 15:'┼' }
+    Object.keys(lines).forEach(function (key) {
+      var line = lines[key], ch = glyphs[line.mask]
+      if (line.dashed && ch === '│') ch = '╎'
+      if (line.dashed && ch === '─') ch = '╌'
+      put(line.x, line.y, ch)
+    })
+    labels[small ? 1 : 0].forEach(function (label) {
+      var p = cell(label)
+      if (small && label[2] === 'evidence') p[0] = cell([128, label[1]])[0] - label[2].length - 2
+      text(p[0], p[1], label[2], '#B4B6BC')
+    })
+    boxes.forEach(function (b) {
+      var button = b.button, x0 = b.x0, x1 = b.x1, y0 = b.y0, y1 = b.y1
       var active = button.dataset.systemNode === selected, color = active ? '#F0F0EE' : button.classList.contains('system__chip') ? '#B4B6BC' : '#D9DADC'
       for (var y = y0; y <= y1; y++) for (var x = x0; x <= x1; x++) put(x, y, ' ', color)
       for (var xx = x0 + 1; xx < x1; xx++) { put(xx, y0, active ? '═' : '─', color); put(xx, y1, active ? '═' : '─', color) }
@@ -115,6 +140,7 @@
       put(x0, y1, active ? '╚' : '└', color); put(x1, y1, active ? '╝' : '┘', color)
       text(Math.round((x0 + x1 - button.textContent.length + 1) / 2), Math.round((y0 + y1) / 2), button.textContent, color)
     })
+    arrows.forEach(function (a) { put(a[0], a[1], a[2]) })
     display.clear()
     Object.keys(cells).forEach(function (key) { display.draw.apply(display, cells[key]) })
     flush(); dirty = false
