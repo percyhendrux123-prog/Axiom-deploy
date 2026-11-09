@@ -144,6 +144,25 @@ for (const width of [1440, 390]) test(`rot Display uses one canvas, including af
     assert.deepEqual(errors, []);
   } finally { await context.close(); }
 });
+for (const width of [901, 1024, 1440, 390]) test(`display headlines stay on one desktop line without overflow (${width})`, async () => {
+  const { context, page, errors } = await open(width, 'reduce');
+  try {
+    const headings = await page.locator('.hero__title, .head h2').evaluateAll(els => els.map(el => {
+      const range = document.createRange(); range.selectNode(el.firstChild);
+      const rect = el.getBoundingClientRect();
+      return { text: el.textContent, lines: range.getClientRects().length, left: rect.left, right: Math.max(rect.right, ...Array.from(range.getClientRects()).map(r => r.right)), height: rect.height };
+    }));
+    if (width > 900) assert.ok(headings.every(h => h.lines === 1), JSON.stringify(headings));
+    else assert.ok(headings[0].lines > 1, 'mobile still wraps normally');
+    assert.ok(headings.every(h => h.left >= 0 && h.right <= width), JSON.stringify(headings));
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth), width);
+    if ([1440, 390].includes(width)) {
+      await shot(page, '.hero', `hero-${width}`);
+      await writeFile(join(evidence, `headlines-${width}.json`), JSON.stringify(headings, null, 2));
+    }
+    assert.deepEqual(errors, []);
+  } finally { await context.close(); }
+});
 for (const width of [1440, 390]) test(`caduceus is double-size desktop and scales proportionally into the mobile column (${width})`, async () => {
   const { context, page, errors } = await open(width, 'reduce');
   try {

@@ -270,6 +270,17 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 
 /* ---------- small screens ---------- */
 
+/* Desktop headlines read across, not down a narrow hero column. Type follows
+   the available width; mobile retains its original wrapping and hierarchy. */
+@media (min-width:901px){
+  .hero{container-type:inline-size;row-gap:26px;align-items:start}
+  .hero__copy{display:contents}
+  .hero__copy>.prompt,.hero__title{grid-column:1/-1}
+  .hero__title{font-size:4cqw;max-width:none;white-space:nowrap;text-wrap:nowrap;margin-left:0}
+  .hero__line,.hero__copy>.actions{grid-column:1}
+  .hero>.plain{grid-column:2;grid-row:3/span 2}
+  .head h2{white-space:nowrap}
+}
 @media (max-width:900px){
   .hero{grid-template-columns:minmax(0,1fr);align-items:start}
   .gate__inner{grid-template-columns:minmax(0,1fr);justify-items:center}
