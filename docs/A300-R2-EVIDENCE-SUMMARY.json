@@ -1,0 +1,292 @@
+{
+  "implementation_commit": "83fa07ef6b19d0f3dc595541859532585001b407",
+  "review_base": "4aac7d46ec8eed4e1c6987669424b68a1bfa407f",
+  "engines": [
+    "chromium",
+    "webkit"
+  ],
+  "viewports": [
+    1440,
+    390
+  ],
+  "webkit_layout_shift_api_supported": false,
+  "metric_cases": {
+    "before": {
+      "before-chromium-1440-host-metrics": {
+        "font_metrics": {
+          "loaded": true,
+          "braille": 23,
+          "cursor": 34
+        },
+        "initial_slot": {
+          "height": 612,
+          "width": 1012,
+          "left": 214,
+          "top": 1189.3125,
+          "documentTop": 1684.3125
+        },
+        "width_min": 1012,
+        "width_max": 1023,
+        "width_drift": 11,
+        "left_drift": 5.5,
+        "layout_shift_sum": 0.0016795927372685185,
+        "cursor_frames": 103,
+        "steps": 55,
+        "max_scroll_error": 0,
+        "max_system_document_drift": 0.0
+      },
+      "before-chromium-390-host-metrics": {
+        "font_metrics": {
+          "loaded": true,
+          "braille": 23,
+          "cursor": 34
+        },
+        "initial_slot": {
+          "height": 189,
+          "width": 308,
+          "left": 41,
+          "top": 1148.515625,
+          "documentTop": 2456.515625
+        },
+        "width_min": 308,
+        "width_max": 312,
+        "width_drift": 4,
+        "left_drift": 2,
+        "layout_shift_sum": 0,
+        "cursor_frames": 92,
+        "steps": 55,
+        "max_scroll_error": 0,
+        "max_system_document_drift": 0.0
+      },
+      "before-webkit-1440-host-metrics": {
+        "font_metrics": {
+          "loaded": true,
+          "braille": 23.25,
+          "cursor": 34
+        },
+        "initial_slot": {
+          "height": 612,
+          "width": 1022.65625,
+          "left": 208.671875,
+          "top": 1189.3125,
+          "documentTop": 1684.3125
+        },
+        "width_min": 1022.65625,
+        "width_max": 1033.421875,
+        "width_drift": 10.765625,
+        "left_drift": 5.390625,
+        "layout_shift_sum": null,
+        "cursor_frames": 95,
+        "steps": 55,
+        "max_scroll_error": 0,
+        "max_system_document_drift": 0.0
+      },
+      "before-webkit-390-host-metrics": {
+        "font_metrics": {
+          "loaded": true,
+          "braille": 23.25,
+          "cursor": 34
+        },
+        "initial_slot": {
+          "height": 189,
+          "width": 315.828125,
+          "left": 37.078125,
+          "top": 1149,
+          "documentTop": 2419
+        },
+        "width_min": 315.828125,
+        "width_max": 319.15625,
+        "width_drift": 3.328125,
+        "left_drift": 1.65625,
+        "layout_shift_sum": null,
+        "cursor_frames": 91,
+        "steps": 55,
+        "max_scroll_error": 0,
+        "max_system_document_drift": 0.0
+      }
+    },
+    "after": {
+      "after-chromium-1440-host-metrics": {
+        "font_metrics": {
+          "loaded": true,
+          "braille": 23,
+          "cursor": 34
+        },
+        "initial_slot": {
+          "height": 612,
+          "width": 1180,
+          "left": 130,
+          "top": 1189.3125,
+          "documentTop": 1684.3125
+        },
+        "width_min": 1180,
+        "width_max": 1180,
+        "width_drift": 0,
+        "left_drift": 0,
+        "layout_shift_sum": 0,
+        "cursor_frames": 102,
+        "steps": 55,
+        "max_scroll_error": 0,
+        "max_system_document_drift": 0.0
+      },
+      "after-chromium-390-host-metrics": {
+        "font_metrics": {
+          "loaded": true,
+          "braille": 23,
+          "cursor": 34
+        },
+        "initial_slot": {
+          "height": 189,
+          "width": 350,
+          "left": 20,
+          "top": 1148.515625,
+          "documentTop": 2456.515625
+        },
+        "width_min": 350,
+        "width_max": 350,
+        "width_drift": 0,
+        "left_drift": 0,
+        "layout_shift_sum": 0,
+        "cursor_frames": 92,
+        "steps": 55,
+        "max_scroll_error": 0,
+        "max_system_document_drift": 0.0
+      },
+      "after-webkit-1440-host-metrics": {
+        "font_metrics": {
+          "loaded": true,
+          "braille": 23.25,
+          "cursor": 34
+        },
+        "initial_slot": {
+          "height": 612,
+          "width": 1180,
+          "left": 130,
+          "top": 1189.3125,
+          "documentTop": 1684.3125
+        },
+        "width_min": 1180,
+        "width_max": 1180,
+        "width_drift": 0,
+        "left_drift": 0,
+        "layout_shift_sum": null,
+        "cursor_frames": 94,
+        "steps": 55,
+        "max_scroll_error": 0,
+        "max_system_document_drift": 0.0
+      },
+      "after-webkit-390-host-metrics": {
+        "font_metrics": {
+          "loaded": true,
+          "braille": 23.25,
+          "cursor": 34
+        },
+        "initial_slot": {
+          "height": 189,
+          "width": 350,
+          "left": 20,
+          "top": 1149,
+          "documentTop": 2419
+        },
+        "width_min": 350,
+        "width_max": 350,
+        "width_drift": 0,
+        "left_drift": 0,
+        "layout_shift_sum": null,
+        "cursor_frames": 93,
+        "steps": 55,
+        "max_scroll_error": 0,
+        "max_system_document_drift": 0.0
+      }
+    }
+  },
+  "natural_scroll_cases": {
+    "after-chromium-1440-scroll": {
+      "steps": 55,
+      "layout_shift_sum": 0,
+      "max_scroll_error": 0,
+      "max_system_document_drift": 0.0
+    },
+    "after-chromium-390-scroll": {
+      "steps": 55,
+      "layout_shift_sum": 0,
+      "max_scroll_error": 0,
+      "max_system_document_drift": 0.0
+    },
+    "after-webkit-1440-scroll": {
+      "steps": 55,
+      "layout_shift_sum": null,
+      "max_scroll_error": 0,
+      "max_system_document_drift": 0.0
+    },
+    "after-webkit-390-scroll": {
+      "steps": 55,
+      "layout_shift_sum": null,
+      "max_scroll_error": 0,
+      "max_system_document_drift": 0.0
+    }
+  },
+  "after_step_count": 440,
+  "npm-test.log": {
+    "passed": 58,
+    "failed": 0
+  },
+  "full-browser.log": {
+    "passed": 73,
+    "failed": 0
+  },
+  "cross-engine.log": {
+    "passed": 20,
+    "failed": 0
+  },
+  "supplementary_review": {
+    "static_comparisons": 28,
+    "cursor_controls": 8,
+    "resize_checks": 12,
+    "failures": []
+  },
+  "art_bounds": {
+    "caduceus-size-1440": {
+      "box": {
+        "x": 172.140625,
+        "y": 1684.3125,
+        "width": 1095.703125,
+        "height": 612
+      },
+      "slot": {
+        "x": 130,
+        "y": 1684.3125,
+        "width": 1180,
+        "height": 612
+      },
+      "column": {
+        "left": 130,
+        "right": 1310
+      }
+    },
+    "caduceus-size-390": {
+      "box": {
+        "x": 25.796875,
+        "y": 2456.515625,
+        "width": 338.390625,
+        "height": 189
+      },
+      "slot": {
+        "x": 20,
+        "y": 2456.515625,
+        "width": 350,
+        "height": 189
+      },
+      "column": {
+        "left": 20,
+        "right": 370
+      }
+    }
+  },
+  "standing_proof": {
+    "handle": "standing:67",
+    "passed": true,
+    "target": "https://deployaxiom.com",
+    "scope": "Public reference HTTP only, not proof of unshipped code."
+  }
+}
