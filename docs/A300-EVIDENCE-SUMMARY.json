@@ -1,0 +1,264 @@
+{
+  "base": "57dfe87bf337e1b67212830acef9724541fa453e",
+  "implementation_head": "ea07b25f95bcda0f04bfd02c35c82334c320f27c",
+  "engines": [
+    {
+      "engine": "chromium",
+      "version": "156.0.8078.4",
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+      "layoutShiftSupported": true,
+      "overflowAnchorSupported": true
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+      "layoutShiftSupported": false,
+      "overflowAnchorSupported": true
+    }
+  ],
+  "widths": {
+    "chromium-1440": {
+      "frame_before_first_draw": 863.75,
+      "frame_after_first_draw": 796.875,
+      "frame_fixed_before": 796.875,
+      "frame_fixed_after": 796.875,
+      "layout_shift_supported": true,
+      "before_delayed_draw_shift_sum": 0.013504002700617286,
+      "after_delayed_draw_shift_sum": 0,
+      "empty_frame_before": 0,
+      "empty_frame_after": 612,
+      "art_settled_height": 612,
+      "gate_before": 948.03125,
+      "gate_after": 948.03125,
+      "board_before": 451.4375,
+      "board_after": 451.4375,
+      "scroll_steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    "chromium-390": {
+      "frame_before_first_draw": 1233.03125,
+      "frame_after_first_draw": 1058.96875,
+      "frame_fixed_before": 1058.96875,
+      "frame_fixed_after": 1058.96875,
+      "layout_shift_supported": true,
+      "before_delayed_draw_shift_sum": 0.09145600801282051,
+      "after_delayed_draw_shift_sum": 0,
+      "empty_frame_before": 0,
+      "empty_frame_after": 189,
+      "art_settled_height": 189,
+      "gate_before": 533.6875,
+      "gate_after": 533.6875,
+      "board_before": 594.296875,
+      "board_after": 594.296875,
+      "scroll_steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    "webkit-1440": {
+      "frame_before_first_draw": 863.75,
+      "frame_after_first_draw": 796.875,
+      "frame_fixed_before": 796.875,
+      "frame_fixed_after": 796.875,
+      "layout_shift_supported": false,
+      "before_delayed_draw_shift_sum": null,
+      "after_delayed_draw_shift_sum": null,
+      "empty_frame_before": 0,
+      "empty_frame_after": 612,
+      "art_settled_height": 612,
+      "gate_before": 948.015625,
+      "gate_after": 948.015625,
+      "board_before": 451.4375,
+      "board_after": 451.4375,
+      "scroll_steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    "webkit-390": {
+      "frame_before_first_draw": 1233.03125,
+      "frame_after_first_draw": 1058.96875,
+      "frame_fixed_before": 1058.96875,
+      "frame_fixed_after": 1058.96875,
+      "layout_shift_supported": false,
+      "before_delayed_draw_shift_sum": null,
+      "after_delayed_draw_shift_sum": null,
+      "empty_frame_before": 0,
+      "empty_frame_after": 189,
+      "art_settled_height": 189,
+      "gate_before": 533.6875,
+      "gate_after": 533.6875,
+      "board_before": 594.296875,
+      "board_after": 594.296875,
+      "scroll_steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    }
+  },
+  "original_webkit_repeats": [
+    {
+      "file": "base-repro-1-webkit-1440-scroll.json",
+      "unexpected_steps": [
+        {
+          "i": 29,
+          "previousY": 1945,
+          "scrollY": 2607,
+          "actual_delta": 662
+        }
+      ]
+    },
+    {
+      "file": "base-repro-2-webkit-1440-scroll.json",
+      "unexpected_steps": []
+    },
+    {
+      "file": "base-repro-3-webkit-1440-scroll.json",
+      "unexpected_steps": [
+        {
+          "i": 29,
+          "previousY": 1945,
+          "scrollY": 2607,
+          "actual_delta": 662
+        }
+      ]
+    },
+    {
+      "file": "base-repro-4-webkit-1440-scroll.json",
+      "unexpected_steps": []
+    },
+    {
+      "file": "base-repro-5-webkit-1440-scroll.json",
+      "unexpected_steps": []
+    },
+    {
+      "file": "base-repro-6-webkit-1440-scroll.json",
+      "unexpected_steps": []
+    },
+    {
+      "file": "base-repro-7-webkit-1440-scroll.json",
+      "unexpected_steps": []
+    },
+    {
+      "file": "base-repro-8-webkit-1440-scroll.json",
+      "unexpected_steps": []
+    }
+  ],
+  "final_webkit_repeats": [
+    {
+      "file": "final-repeat-1-webkit-1440-scroll.json",
+      "steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    {
+      "file": "final-repeat-1-webkit-390-scroll.json",
+      "steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    {
+      "file": "final-repeat-2-webkit-1440-scroll.json",
+      "steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    {
+      "file": "final-repeat-2-webkit-390-scroll.json",
+      "steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    {
+      "file": "final-repeat-3-webkit-1440-scroll.json",
+      "steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    {
+      "file": "final-repeat-3-webkit-390-scroll.json",
+      "steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    {
+      "file": "final-repeat-4-webkit-1440-scroll.json",
+      "steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    {
+      "file": "final-repeat-4-webkit-390-scroll.json",
+      "steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    {
+      "file": "final-repeat-5-webkit-1440-scroll.json",
+      "steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    {
+      "file": "final-repeat-5-webkit-390-scroll.json",
+      "steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    {
+      "file": "final-repeat-6-webkit-1440-scroll.json",
+      "steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    {
+      "file": "final-repeat-6-webkit-390-scroll.json",
+      "steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    {
+      "file": "final-repeat-7-webkit-1440-scroll.json",
+      "steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    {
+      "file": "final-repeat-7-webkit-390-scroll.json",
+      "steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    {
+      "file": "final-repeat-8-webkit-1440-scroll.json",
+      "steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    },
+    {
+      "file": "final-repeat-8-webkit-390-scroll.json",
+      "steps": 55,
+      "max_scroll_error": 0,
+      "max_system_document_top_drift": 0.0
+    }
+  ],
+  "final_repeat_steps": 880,
+  "original_jump_runs": 2,
+  "tests": {
+    "npm_test": {
+      "pass": 58,
+      "fail": 0
+    },
+    "chromium_browser_suite": {
+      "pass": 71,
+      "fail": 0
+    },
+    "cross_engine_scroll_suite": {
+      "pass": 16,
+      "fail": 0
+    }
+  },
+  "unchanged_source_sha256": {
+    "assets/axioma/caduceus.js": "235810aad7f9594a2e6f1146e17f2e08cd01a5149ad42857de36807985ca36fa",
+    "assets/axioma/home.js": "0a7e28177168fa3f47f63f7819b1c131d33f4929e7c552a0d4f6c8ffea6b338f"
+  }
+}
