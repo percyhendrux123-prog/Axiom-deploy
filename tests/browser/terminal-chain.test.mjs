@@ -144,6 +144,19 @@ for (const width of [1440, 390]) test(`rot Display uses one canvas, including af
     assert.deepEqual(errors, []);
   } finally { await context.close(); }
 });
+for (const width of [1440, 390]) test(`caduceus is double-size desktop and scales proportionally into the mobile column (${width})`, async () => {
+  const { context, page, errors } = await open(width, 'reduce');
+  try {
+    const box = await page.locator('.caduceus').boundingBox();
+    const column = await page.locator('.gate__inner').evaluate(e => { const r = e.getBoundingClientRect(), s = getComputedStyle(e); return { left: r.left + parseFloat(s.paddingLeft), right: r.right - parseFloat(s.paddingRight) }; });
+    if (width === 1440) { assert.ok(Math.abs(box.width / 547.859375 - 2) < .02); assert.equal(box.height, 612); }
+    assert.ok(box.x >= column.left && box.x + box.width <= column.right, 'whole art fits its column');
+    assert.ok(Math.abs(box.width / box.height - 547.859375 / 306) < .01, 'unchanged aspect ratio');
+    assert.ok(Math.abs(box.x + box.width / 2 - width / 2) < 1, 'centered');
+    await writeFile(join(evidence, `caduceus-size-${width}.json`), JSON.stringify({ box, column }, null, 2));
+    assert.deepEqual(errors, []);
+  } finally { await context.close(); }
+});
 for (const width of [1440, 390]) test(`caduceus draws once, centered and pauses hidden/offscreen (${width})`, async () => {
   const { context, page, errors } = await open(width);
   try {

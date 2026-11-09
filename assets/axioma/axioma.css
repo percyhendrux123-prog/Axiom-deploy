@@ -97,8 +97,10 @@ ul,ol{padding:0;list-style:none}
 
 /* ---------- the gate ---------- */
 .gate{border-block:1px solid var(--rule);background:var(--panel)}
-.gate__inner{display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;align-items:center;gap:clamp(32px,5vw,64px);padding-block:clamp(48px,7vw,88px);text-align:center}
-.caduceus{justify-self:center;font-family:var(--braille);font-size:17px;line-height:1;letter-spacing:0;white-space:pre}
+.gate__inner{display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;align-items:center;gap:clamp(32px,5vw,64px);padding-block:clamp(48px,7vw,88px);text-align:center;max-width:calc(var(--max) + 2*var(--gutter));container-type:inline-size}
+/* 34px is exactly 2x the reviewed desktop art. The same 44×18 grid scales
+   as one piece below that, with its full wingspan inside the content column. */
+.caduceus{justify-self:center;font-family:var(--braille);font-size:min(34px,3cqw);line-height:1;letter-spacing:0;white-space:pre}
 .cad-cursor{color:var(--whisper)}
 .cad-strong{color:var(--strong)}.cad-mid{color:var(--mid)}.cad-dim{color:var(--dim)}.cad-glint{color:var(--whisper)}
 .gate__quote blockquote p{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(2rem,4.4vw,3.6rem);line-height:1.12;letter-spacing:-.01em;color:var(--strong);max-width:18ch;margin-inline:auto;text-wrap:balance;padding-bottom:.1em}
@@ -271,14 +273,12 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 @media (max-width:900px){
   .hero{grid-template-columns:minmax(0,1fr);align-items:start}
   .gate__inner{grid-template-columns:minmax(0,1fr);justify-items:center}
-  .caduceus{font-size:11px}
   .listing{grid-template-columns:minmax(0,1fr)}
   .catalog{grid-template-columns:minmax(0,1fr)}
   .catalog__item+.catalog__item{border-left:0;border-top:1px solid var(--rule)}
   .founder-grid{grid-template-columns:minmax(0,1fr)}
   .founder-photo{max-width:240px}
 }
-@media (max-width:359px){.caduceus{font-size:9px}}
 @media (max-width:640px){
   body{font-size:14px}
   .bar__row{gap:12px}
