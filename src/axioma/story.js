@@ -564,6 +564,7 @@ function createEngine({ stage, layer, flow, med, hit, tilt, ring }) {
       hit.removeEventListener('keydown', onKeyDown)
       layer.replaceChildren()
       stage.style.height = ''
+      stage.style.removeProperty('--med')
       med.style.transform = ''
       ring.style.transform = ''
       tilt.style.transform = ''

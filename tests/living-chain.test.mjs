@@ -9,7 +9,7 @@ const js = read('assets/axioma/home.js');
 
 test('A298 deliberately updates the reference art, entrance and static gate locks', () => {
   assert.equal(hash(read('assets/axioma/caduceus.js')), '235810aad7f9594a2e6f1146e17f2e08cd01a5149ad42857de36807985ca36fa');
-  assert.equal(hash(js.match(/  function caduceusLife\(section\) \{[\s\S]*?\n  }/)[0]), 'bc2eec5c181f2eba6ad20bf0910ce6d51ba1dc175efdf2aa3449580e90f080ba');
+  assert.equal(hash(js.match(/  function caduceusLife\(section\) \{[\s\S]*?\n  }/)[0]), '4d5bf162fea79a652ff99646284eb409ba550c3d89e1c295be1bca9c2524df52');
   assert.equal(hash(home.match(/<section class="gate"[\s\S]*?<\/section>/)[0]), '3d2eecd46ad7299288c85a71e66741be7ef4b00a1f5820cd693161e867c0637a');
   assert.equal(hash(home.match(/<div class="system__details"[\s\S]*?<\/div>\n<\/div>/)[0]), 'a04c80cfd729fb0c774ac8879e3f4da3bbe7ac6702d2f69b899bbdc3339eea6b');
 });

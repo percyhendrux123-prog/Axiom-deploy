@@ -84,6 +84,7 @@
     held: false,
     holdUntil: 0,
     active: null,
+    reading: null,
     story: null,
     cad: null,
     played: {},
@@ -134,8 +135,8 @@
     }
 
     if (C.enabled) {
-      var tn = now()
       if (texture && C.active) wait = Math.min(wait, textureTick(t))
+      var tn = now()
       var r = C.accent ? C.accent.tick(tn) : null
       if (r === true) endAccent(tn)
       if (!C.accent && C.queue.length && !C.held && tn >= C.holdUntil && tn >= C.nextAt) {
@@ -448,7 +449,7 @@
       id: 'caduceus-life', section: section, ambient: true,
       begin: function (t) { last = t },
       tick: function (t) {
-        if (!C.cad) return true
+        if (!C.cad || !C.cad.inView) return true
         var delta = last ? t - last : 0
         last = t
         if (!stop) {
@@ -679,7 +680,7 @@
   // ---------------------------------------------------------------- sections
   function planFor(section) {
     if (section.id === 'system' && chainRun) { placeCursor(section); play(chainLife(section)); return }
-    if (section.classList.contains('gate') && C.cad) { play(caduceusLife(section)); return }
+    if (section.classList.contains('gate') && C.cad) { placeCursor(section); if (C.cad.inView) play(caduceusLife(section)); return }
     var t = now()
     play(cursorHandoff(section))
     var isStory = section.id === 'story'
@@ -697,14 +698,14 @@
     if (section.id === 'system') play(chainLife(section))
     else if (section.querySelector('.life-divider')) play(dividerBreath(section))
     if (isStory && C.story) play(ringBreath(section))
-    if (section.classList.contains('gate') && C.cad) play(caduceusLife(section))
+
   }
 
   function setActive(section) {
     if (section === C.active) return
     C.active = section
-    settleAll()
     textureLast = 0
+    settleAll()
     if (C.enabled && section) planFor(section)
   }
 
@@ -714,9 +715,10 @@
     // The reading line sits 40% down the viewport; the section under it is
     // the one being read.
     io = new IntersectionObserver(function (entries) {
-      var next = C.active
+      var next = C.reading
       for (var i = 0; i < entries.length; i++) if (entries[i].target === next && !entries[i].isIntersecting) next = null
       for (var j = 0; j < entries.length; j++) if (entries[j].isIntersecting) next = entries[j].target
+      C.reading = next
       setActive(next)
     }, { rootMargin: '-40% 0px -59% 0px' })
     for (var j = 0; j < sections.length; j++) io.observe(sections[j])
@@ -753,9 +755,23 @@
     if (C.enabled && C.story && C.active && C.active.id === 'story') play(ringBreath(C.active))
   }
   C.attachCaduceus = function (api) {
-    C.cad = { draw: api.draw, restore: api.restore, elapsed: 0, entrance: 0 }
-    if (!C.enabled) { api.restore(); return }
-    if (C.active && C.active.classList.contains('gate') && !C.held) play(caduceusLife(C.active))
+    C.cad = { draw: api.draw, restore: api.restore, elapsed: 0, entrance: 0, inView: false }
+    if (!C.enabled) { C.cad.entrance = 1100; api.restore() }
+    var art = doc.querySelector('.gate .caduceus'), section = art.closest('.gate')
+    // The reference enters on actual visibility, not several scroll beats
+    // later at the reading line. It takes the conductor, never a second loop.
+    new IntersectionObserver(function (entries) {
+      C.cad.inView = entries[0].isIntersecting
+      if (!C.enabled) return
+      if (!C.cad.inView) {
+        C.queue = C.queue.filter(function (accent) { return accent.id !== 'caduceus-life' })
+        if (C.accent && C.accent.id === 'caduceus-life') settleAll()
+        if (C.active === section && C.reading !== section) setActive(C.reading)
+        return
+      }
+      if (C.cad.entrance < 1100 && C.active !== section) setActive(section)
+      else if (C.active === section && !C.held) { settleAll(); play(caduceusLife(section)) }
+    }, { threshold: .1 }).observe(art)
   }
   C.drive = function (fn) {
     if (C.drivers.indexOf(fn) < 0) C.drivers.push(fn)
@@ -776,6 +792,7 @@
   function disable() {
     if (!C.enabled) return
     C.enabled = false
+    textureLast = 0
     if (chainRun) stopOrder('intro')
     hidePulse()
     C.queue.length = 0
@@ -792,11 +809,10 @@
     }
     if (ledger.length) finishLedger()
     if (replay.length) finishReplay()
-    textureLast = 0
     if (C.story) C.story.breathe(false)
     doc.getAnimations().forEach(function (animation) { animation.cancel() })
     // Keep the already-loaded engine available if motion is enabled again.
-    if (C.cad) C.cad.restore()
+    if (C.cad) { C.cad.entrance = 1100; C.cad.restore() }
     doc.querySelectorAll('.life-rule, .life-texture, .life-divider').forEach(function (el) { el.remove() })
     clearCursors()
   }
@@ -810,6 +826,7 @@
       if (C.raf) win.cancelAnimationFrame(C.raf)
       if (C.timer) win.clearTimeout(C.timer)
       C.raf = 0; C.timer = 0; C.lastT = 0
+      textureLast = 0
       pausedAnimations = doc.getAnimations().filter(function (animation) { return animation.playState === 'running' })
       pausedAnimations.forEach(function (animation) { animation.pause() })
     } else {
@@ -826,7 +843,6 @@
   C.current = function () { return C.accent ? C.accent.id : null }
   win.__axConductor = C
 
-      textureLast = 0
   enable()
   if (mq.addEventListener) mq.addEventListener('change', function () { if (mq.matches) disable(); else enable() })
 
