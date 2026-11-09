@@ -40,10 +40,14 @@ const watchShifts = () => {
   // page total must still round to 0, and nothing may shift once motion runs.
   window.__shifts = 0;
   window.__shiftsAfter = 0;
+  window.__shiftDetails = [];
   new PerformanceObserver((list) => {
     for (const e of list.getEntries()) if (!e.hadRecentInput) {
       window.__shifts += e.value;
-      if (window.__scrollStart && e.startTime > window.__scrollStart) window.__shiftsAfter += e.value;
+      if (window.__scrollStart && e.startTime > window.__scrollStart) {
+        window.__shiftsAfter += e.value;
+        window.__shiftDetails.push({ value: e.value, t: e.startTime, sources: e.sources.map(s => ({ node: (s.node?.outerHTML || s.node?.parentElement?.outerHTML)?.slice(0, 400), scroll: scrollY, active: window.__axConductor?.active?.id, text: s.node?.textContent?.slice(0, 80), before: s.previousRect, after: s.currentRect })) });
+      }
     }
   })
     .observe({ type: 'layout-shift', buffered: true });
@@ -107,7 +111,9 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
       // Accents are short and every one ends: the cursor blinks at most three
       // 1.1 s cycles, everything else but the breathing ring is done in 2.5 s.
       for (const e of timeline) {
-        if (e.id === 'ring-breath' || e.t1 === null) continue;
+        // Persistent, section-local ambient accents have no finite duration;
+        // their offscreen/hidden termination is checked separately.
+        if (['ring-breath', 'caduceus-life', 'chain-life', 'divider-breath'].includes(e.id) || e.t1 === null) continue;
         const limit = e.id === 'cursor-blink' ? 3 * 1100 + 200 : 2500;
         assert.ok(e.t1 - e.t0 <= limit, `${e.id} lasted ${Math.round(e.t1 - e.t0)} ms`);
       }
@@ -115,7 +121,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
       assert.deepEqual(await page.locator('#proof .ledger__num').allTextContents(), ['247', '165', '99']);
       assert.equal(await page.locator('.is-pending, #proof .ax-sr').count(), 0, 'ledger settled to its real numbers');
       assert.equal(await page.evaluate(() => document.getAnimations().filter((a) => a.effect?.getTiming().iterations === Infinity).length), 0, 'no endless CSS animation');
-      assert.equal(await page.evaluate(() => window.__shiftsAfter), 0, 'no layout shift once motion runs');
+      assert.equal(await page.evaluate(() => window.__shiftsAfter), 0, 'no layout shift once motion runs: ' + JSON.stringify(await page.evaluate(() => window.__shiftDetails)));
       assert.ok(await page.evaluate(() => window.__shifts) < 0.001, 'CLS rounds to 0');
       assert.deepEqual(errors, []);
     } finally { await context.close(); }

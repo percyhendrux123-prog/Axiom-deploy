@@ -21,7 +21,7 @@ Explain Deploy Axiom's permanent operating-agent model and give a prospective op
 ## Capabilities and Constraints
 
 - Static web site. No hosted form, database, analytics requirement, metered service, or external font dependency is required for the public conversion path.
-- The homepage is static HTML, CSS, and JavaScript using only self-hosted fonts (SIL OFL) and locally hosted favicon/SVG, PNG and WebP assets. Its one interactive piece, the medallion story, loads a deferred local script only when motion is allowed; the static story is complete without it.
+- The homepage is static HTML, CSS, and JavaScript using only self-hosted fonts (SIL OFL) and locally hosted favicon/SVG, PNG and WebP assets. The medallion story loads a deferred local script only when motion is allowed; the static story is complete without it. The interactive Axiom map uses native buttons and local SVG line art; every explanation remains readable without JavaScript, and selection still works under reduced motion. All motion belongs to the homepage's single conductor.
 - The operating-model sequence is a clearly labeled simulation, not evidence or a deployment claim.
 - Example lanes are job models only: lead disposition, check-in triage, content production handoff, and intake-to-scope.
 - The lane mapper does not submit, persist, transmit, or collect data. It copies an `OPERATE` brief locally when browser clipboard access is available; the no-JavaScript template remains visible in source.

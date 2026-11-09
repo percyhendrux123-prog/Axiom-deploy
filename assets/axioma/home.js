@@ -1,19 +1,12 @@
 // Deploy Axiom homepage: the loader for the medallion story, and the motion
 // conductor that owns every accent on the page.
 //
-// The conductor is one scheduler on one requestAnimationFrame loop. Only one
-// accent runs at a time; each has a cue (the reader reached a section, or
-// let go of the medallion), a start and an end. When the reader moves to
-// another section, whatever is running settles first, then the cursor hands
-// over, then that section's accent plays. Nothing loops for decoration: the
-// cursor blinks a few times on arrival and then holds still, and the only
-// ambient motion (the medallion ring breathing) runs while the story is the
-// section being read and yields the moment anything else needs the stage.
-// The loop sleeps when nothing is moving.
-//
-// Visitors who prefer reduced motion get none of it: the conductor never
-// starts, the HTML is the finished page (cursor solid, numbers final, story
-// static), and the story engine is never loaded.
+// One conductor owns finite arrivals, interactions and quiet section-local
+// ambient life. The reading section alone may move; ambient accents yield to
+// interactions and never run beside the gate's reference caduceus. New chain
+// and divider draws are capped at 30 and 12 fps. The loop sleeps offscreen
+// and while hidden. Reduced motion keeps the finished page and a manual,
+// non-animated order walkthrough; neither story engine is loaded.
 (function () {
   'use strict'
   var win = window
@@ -26,6 +19,63 @@
   var GAP = 120 // ms of stillness between one accent ending and the next
   var DWELL = 280 // ms a section must hold the reading line before its accent
   var BLINK = 1100 // one blink cycle: on 550 ms, off 550 ms (under 1 flash/s)
+  var texture = doc.querySelector('.page-texture__tile')
+  var textureLast = 0, textureTime = 0
+  function textureTick(t) {
+    if (!textureLast) textureLast = t
+    var delta = t - textureLast
+    if (delta < 250) return 250 - delta
+    textureTime += delta; textureLast = t
+    // Whole CSS pixels keep these subpixel dots visible throughout the drift
+    // and when reduced motion freezes the current position.
+    texture.style.transform = 'translate(' + Math.round(6 * Math.sin(textureTime / 11000)) + 'px,' + Math.round(4 * Math.sin(textureTime / 17000)) + 'px)'
+    return 250
+  }
+
+  // Diagram selection is independent of motion: native buttons still work
+  // under reduced motion. Without JS, every short explanation stays visible.
+  var system = doc.getElementById('system')
+  if (system) {
+    var nodes = [].slice.call(system.querySelectorAll('[data-system-node]'))
+    var panels = [].slice.call(system.querySelectorAll('.system__details > div'))
+    var selectNode = function (key) {
+      system.dataset.runStep = key
+      nodes.forEach(function (button) { button.setAttribute('aria-pressed', String(button.dataset.systemNode === key)) })
+      panels.forEach(function (panel) { panel.hidden = panel.id !== 'system-' + key + '-info' })
+      if (win.AxChain) win.AxChain.select(key)
+    }
+    system.classList.add('is-interactive')
+    selectNode('intro')
+    nodes.forEach(function (button) {
+      button.disabled = false
+      button.addEventListener('click', function () { stopOrder(button.dataset.systemNode) })
+      button.addEventListener('focus', function () { if (!chainRun) selectNode(button.dataset.systemNode) })
+      button.addEventListener('pointerenter', function (event) { if (!chainRun && event.pointerType === 'mouse') selectNode(button.dataset.systemNode) })
+    })
+    var controls = doc.createElement('div')
+    controls.className = 'system__controls'
+    var runButton = doc.createElement('button')
+    runButton.type = 'button'
+    runButton.textContent = 'Run one order'
+    runButton.setAttribute('aria-controls', 'system-panels')
+    var cancelButton = doc.createElement('button')
+    cancelButton.type = 'button'
+    cancelButton.textContent = 'Cancel order'
+    cancelButton.disabled = true
+    var example = doc.createElement('span')
+    example.textContent = 'An example order, not a live action.'
+    var orderSpinner = doc.createElement('span')
+    orderSpinner.className = 'system__spinner'
+    orderSpinner.setAttribute('aria-hidden', 'true')
+    var spinnerSpec = win.AxCliSpinners && win.AxCliSpinners.dots
+    controls.append(runButton, cancelButton, orderSpinner, example)
+    system.querySelector('.system__caption').after(controls)
+    system.querySelector('.system__details').id = 'system-panels'
+    system.dataset.runState = 'idle'
+    runButton.addEventListener('click', runOrder)
+    cancelButton.addEventListener('click', function () { stopOrder('intro') })
+    system.addEventListener('keydown', function (event) { if (event.key === 'Escape') { stopOrder('intro'); event.preventDefault() } })
+  }
 
   // ---------------------------------------------------------------- conductor
   var C = {
@@ -34,11 +84,13 @@
     queue: [],
     drivers: [],
     raf: 0,
+    timer: 0,
     lastT: 0,
     nextAt: 0,
     held: false,
     holdUntil: 0,
     active: null,
+    reading: null,
     story: null,
     cad: null,
     played: {},
@@ -51,6 +103,7 @@
   // twice a second, not sixty times). Sleeping hands the frame back to the
   // browser, so scrolling stays on the compositor; one wake timer at most.
   function wake() {
+    if (doc.hidden) return
     if (C.timer) {
       win.clearTimeout(C.timer)
       C.timer = 0
@@ -61,7 +114,7 @@
     if (C.timer) win.clearTimeout(C.timer)
     C.timer = win.setTimeout(function () {
       C.timer = 0
-      if (!C.raf) C.raf = win.requestAnimationFrame(frame)
+      if (!C.raf && !doc.hidden) C.raf = win.requestAnimationFrame(frame)
     }, Math.max(0, ms - 8))
   }
 
@@ -73,6 +126,7 @@
 
   function frame(t) {
     C.raf = 0
+    if (doc.hidden) return
     var dt = C.lastT ? Math.min(0.05, (t - C.lastT) / 1000) : 1 / 60
     C.lastT = t
     var nextFrame = false
@@ -87,6 +141,8 @@
     }
 
     if (C.enabled) {
+      if (texture && C.active) wait = Math.min(wait, textureTick(t))
+      if (C.chrome) wait = Math.min(wait, C.chrome.tick(t))
       var tn = now()
       var r = C.accent ? C.accent.tick(tn) : null
       if (r === true) endAccent(tn)
@@ -394,25 +450,251 @@
   // rest over 0.9 s when the reader moves on. Ambient: anything else that
   // needs the stage asks it to settle first.
   function caduceusLife(section) {
-    var t0 = 0, stop = false, stopAt = 0, from = 0, amt = 0
+    var last = 0, activeTime = 0, stop = false, stopAt = 0, from = 0, amt = 0
     var IN = 1600, OUT = 900, STEP = 1000 / 24
     return {
       id: 'caduceus-life', section: section, ambient: true,
-      begin: function (t) { t0 = t; if (C.cad) C.cad.clock = C.cad.clock || t },
+      begin: function (t) { last = t },
       tick: function (t) {
-        if (!C.cad) return true
+        if (!C.cad || !C.cad.inView) return true
+        var delta = last ? t - last : 0
+        last = t
+        if (!stop) {
+          activeTime += delta
+          C.cad.elapsed += delta
+          C.cad.entrance = Math.min(1100, C.cad.entrance + delta)
+        }
         if (stop) amt = from * (1 - easeOut(clamp01((t - stopAt) / OUT)))
-        else amt = easeOut(clamp01((t - t0) / IN))
-        C.cad.draw((t - C.cad.clock) / 1000, amt)
+        else amt = easeOut(clamp01(activeTime / IN))
+        C.cad.draw(C.cad.elapsed / 1000, amt, C.cad.entrance / 1100)
         if (stop && t - stopAt >= OUT) return true
         return STEP
       },
+      pause: function () { last = 0 },
       settle: function (t) { if (!stop) { stop = true; stopAt = t; from = amt } },
+    }
+  }
+
+  // ---------------------------------------------------------------- A295 life
+  // Finite, local accents. These use the same queue as the cursor and gate;
+  // none can run beside the caduceus or keep an offscreen loop alive.
+  function surfaceAccent(id, section, elements, duration, draw) {
+    var t0 = 0, stop = false
+    return {
+      id: id, section: section,
+      begin: function (t) { t0 = t; if (id !== 'link-response') C.played['life-' + section.id] = true },
+      tick: function (t) {
+        var p = stop ? 1 : clamp01((t - t0) / duration)
+        elements.forEach(function (el) { draw(el, p) })
+        if (p === 1) elements.forEach(function (el) { el.style.opacity = ''; el.style.transform = '' })
+        return p === 1 || 1000 / 30
+      },
+      settle: function () { stop = true },
+    }
+  }
+  function lifeFor(section) {
+    if (C.played['life-' + section.id]) return null
+    var id, elements, duration, draw
+    if (section.id === 'system') {
+      id = 'diagram-arrival'; duration = 900
+      elements = [].slice.call(section.querySelectorAll('.system__lines'))
+      draw = function (el, p) { el.style.opacity = String(0.42 + 0.58 * easeOut(p)) }
+    } else if (section.id === 'work' || section.id === 'limits') {
+      id = 'head-arrival'; duration = 620
+      elements = [].slice.call(section.querySelectorAll('.head h2'))
+      draw = function (el, p) { el.style.opacity = String(0.64 + 0.36 * easeOut(p)) }
+    } else if (section.id === 'method') {
+      id = 'rule-breath'; duration = 2200
+      elements = [].slice.call(section.querySelectorAll('.life-rule'))
+      draw = function (el, p) {
+        var breath = Math.sin(Math.PI * p)
+        el.style.opacity = String(0.48 + 0.3 * breath)
+        el.style.transform = 'scaleX(' + (1 + 0.06 * breath) + ')'
+      }
+    } else if (section.id === 'catalog' || section.id === 'notes') {
+      id = 'braille-shimmer'; duration = 2200
+      elements = [].slice.call(section.querySelectorAll('.life-texture'))
+      draw = function (el, p) { el.style.opacity = String(0.16 + 0.2 * Math.sin(Math.PI * p)) }
+    } else return null
+    return surfaceAccent(id, section, elements, duration, draw)
+  }
+  // Decoration is inserted only for motion-enabled visits. All source copy
+  // remains untouched, in its final state, with no JS or reduced motion.
+  function armLife() {
+    ;['method', 'catalog', 'notes'].forEach(function (id) {
+      var head = doc.querySelector('#' + id + ' .head')
+      if (!head || head.querySelector('.life-rule, .life-texture')) return
+      var accent = doc.createElement('span')
+      accent.className = id === 'method' ? 'life-rule' : 'life-texture'
+      accent.setAttribute('aria-hidden', 'true')
+      if (id !== 'method') accent.textContent = '⠂⠐⠠⠄⠂⠐⠠⠄'
+      head.appendChild(accent)
+    })
+    doc.querySelectorAll('main section.section:not(#story)').forEach(function (section, index) {
+      if (section.querySelector('.life-divider')) return
+      var divider = doc.createElement('span')
+      divider.className = 'life-divider'
+      divider.setAttribute('aria-hidden', 'true')
+      divider.dataset.period = String(6300 + index * 283)
+      divider.dataset.phase = String(index * 1.71)
+      section.appendChild(divider)
+    })
+  }
+  function breatheRules(section, elapsed) {
+    var divider = section.querySelector('.life-divider')
+    if (!divider) return
+    var wave = Math.sin(elapsed * 2 * Math.PI / Number(divider.dataset.period) + Number(divider.dataset.phase))
+    divider.style.opacity = String(.20 + .04 * wave)
+    var rule = section.querySelector('.life-rule')
+    if (rule) rule.style.opacity = String(.52 + .04 * Math.sin(elapsed * 2 * Math.PI / 8731 + 2.3))
+  }
+  function resetRules(section) {
+    section.querySelectorAll('.life-divider,.life-rule').forEach(function (el) { el.style.opacity = '' })
+  }
+  function dividerBreath(section) {
+    var last = 0, elapsed = 0, stop = false
+    return {
+      id: 'divider-breath', section: section, ambient: true,
+      begin: function (t) { last = t },
+      tick: function (t) {
+        if (stop) { resetRules(section); return true }
+        if (!last) last = t
+        var delta = t - last
+        if (delta < 1000 / 12) return 1000 / 12 - delta
+        elapsed += delta; last = t
+        breatheRules(section, elapsed)
+        return 1000 / 12
+      },
+      pause: function () { last = 0 },
+      settle: function () { stop = true; resetRules(section) },
+    }
+  }
+  var responses = doc.querySelectorAll('#work .listing__link a, #notes .notes-list a')
+  function respond(event) {
+    if (event.type === 'pointerenter' && event.pointerType !== 'mouse') return
+    var el = event.currentTarget, section = el.closest('section')
+    if (!C.enabled || doc.hidden || C.held || section !== C.active) return
+    if ((C.accent && C.accent.id === 'link-response') || C.queue.some(function (a) { return a.id === 'link-response' })) return
+    settleAll()
+    play(surfaceAccent('link-response', section, [el], 700, function (link, p) {
+      // A two-pixel acknowledgement, not a moving target or a spring.
+      link.style.transform = 'translateX(' + (2 * Math.sin(Math.PI * p)) + 'px)'
+    }))
+    play(dividerBreath(section))
+  }
+  for (var ri = 0; ri < responses.length; ri++) {
+    responses[ri].addEventListener('pointerenter', respond)
+    responses[ri].addEventListener('focus', respond)
+  }
+
+  // ---------------------------------------------------------------- living chain
+  var chainTime = 0
+  var chainBreathTime = 0
+  var chainRun = null
+  var orderKeys = ['owner', 'operator', 'workers', 'axioma', 'gatekeeper', 'standing', 'tripwire', 'handydandy', 'owner']
+  var orderTravel = [0, 550, 550, 700, 450, 700, 700, 700, 900]
+  var orderHold = [200, 200, 200, 1500, 1500, 1500, 1500, 1500, 0]
+
+  function stopOrder(key) {
+    if (!system) return
+    chainRun = null
+    orderSpinner.textContent = ''
+    system.dataset.runState = 'idle'
+    system.dataset.runStep = key
+    runButton.textContent = 'Run one order'
+    runButton.setAttribute('aria-disabled', 'false')
+    if (doc.activeElement === cancelButton) runButton.focus()
+    cancelButton.disabled = true
+    hidePulse()
+    selectNode(key)
+  }
+  function showOrderStep(key) {
+    if (system.dataset.runStep === key) return
+    system.dataset.runStep = key
+    selectNode(key)
+  }
+  function runOrder() {
+    if (mq.matches) {
+      if (!chainRun) chainRun = { manual: 0 }
+      else chainRun.manual++
+      if (chainRun.manual === orderKeys.length - 1) { stopOrder('owner'); return }
+      runButton.textContent = 'Next step'
+      system.dataset.runState = 'stepping'
+      cancelButton.disabled = false
+      showOrderStep(orderKeys[chainRun.manual])
+      return
+    }
+    if (chainRun) return
+    chainRun = { elapsed: 0 }
+    system.dataset.runState = 'running'
+    system.dataset.runElapsed = '0'
+    cancelButton.disabled = false
+    runButton.setAttribute('aria-disabled', 'true')
+    showOrderStep('owner')
+    settleAll()
+    play(chainLife(system))
+  }
+  function drawOrder(delta) {
+    chainRun.elapsed += delta
+    // Only this example is working: the same active-time clock freezes the
+    // loader during hidden/offscreen pauses, and each gate's resolution hold.
+    if (spinnerSpec) {
+      var glyph = spinnerSpec.frames[Math.floor(chainRun.elapsed / spinnerSpec.interval) % spinnerSpec.frames.length]
+      if (orderSpinner.textContent !== glyph) orderSpinner.textContent = glyph
+    }
+    system.dataset.runElapsed = String(Math.round(chainRun.elapsed))
+    var remaining = chainRun.elapsed
+    for (var i = 0; i < orderKeys.length; i++) {
+      if (remaining < orderTravel[i]) {
+        system.dataset.runStep = 'travel'
+        if (win.AxChain) win.AxChain.pulse('route', i - 1, remaining / orderTravel[i], .56)
+        return
+      }
+      remaining -= orderTravel[i]
+      if (remaining < orderHold[i]) {
+        hidePulse()
+        showOrderStep(orderKeys[i])
+        return
+      }
+      remaining -= orderHold[i]
+    }
+    stopOrder('owner')
+  }
+  function hidePulse() {
+    if (win.AxChain) win.AxChain.hidePulse()
+  }
+  function chainLife(section) {
+    var last = 0, stop = false
+    var edgeOrder = [0, 1, 3, 2, 5, 6, 4]
+    return {
+      id: 'chain-life', section: section, ambient: true,
+      begin: function (t) { last = t },
+      tick: function (t) {
+        if (stop) { hidePulse(); return true }
+        if (!last) last = t
+        var delta = t - last
+        if (delta < 1000 / 30) return 1000 / 30 - delta
+        last = t
+        chainBreathTime += delta
+        breatheRules(section, chainBreathTime)
+        if (chainRun) drawOrder(delta)
+        else {
+          chainTime += delta
+          var edge = edgeOrder[Math.floor(chainTime / 3600) % edgeOrder.length]
+          var p = (chainTime % 3600) / 3600
+          if (win.AxChain) win.AxChain.pulse('edge', edge, p, .28 * Math.sin(Math.PI * p))
+        }
+        return 1000 / 30
+      },
+      pause: function () { last = 0 },
+      settle: function () { stop = true; hidePulse(); resetRules(section) },
     }
   }
 
   // ---------------------------------------------------------------- sections
   function planFor(section) {
+    if (section.id === 'system' && chainRun) { placeCursor(section); play(chainLife(section)); return }
+    if (section.classList.contains('gate') && C.cad) { placeCursor(section); if (C.cad.inView) play(caduceusLife(section)); return }
     var t = now()
     play(cursorHandoff(section))
     var isStory = section.id === 'story'
@@ -420,21 +702,25 @@
     if (section.id === 'proof' && ledger.length && !C.played.ledger) main = ledgerCount(section)
     else if (section.id === 'replay' && replay.length && !C.played.replay) main = replayRun(section)
     else if (isStory && C.story && !C.played.sweep) main = signalSweep(section)
+    else main = lifeFor(section)
     if (main) { main.notBefore = t + DWELL; play(main) }
     if (hostFor(section)) {
       var blink = cursorBlink(section, main ? 2 : 3)
       blink.notBefore = t + DWELL
       play(blink)
     }
+    if (section.id === 'system') play(chainLife(section))
+    else if (section.querySelector('.life-divider')) play(dividerBreath(section))
     if (isStory && C.story) play(ringBreath(section))
-    if (section.classList.contains('gate') && C.cad) play(caduceusLife(section))
+
   }
 
   function setActive(section) {
     if (section === C.active) return
     C.active = section
+    textureLast = 0
     settleAll()
-    if (C.enabled) planFor(section)
+    if (C.enabled && section) planFor(section)
   }
 
   var io = null
@@ -443,7 +729,11 @@
     // The reading line sits 40% down the viewport; the section under it is
     // the one being read.
     io = new IntersectionObserver(function (entries) {
-      for (var i = 0; i < entries.length; i++) if (entries[i].isIntersecting) setActive(entries[i].target)
+      var next = C.reading
+      for (var i = 0; i < entries.length; i++) if (entries[i].target === next && !entries[i].isIntersecting) next = null
+      for (var j = 0; j < entries.length; j++) if (entries[j].isIntersecting) next = entries[j].target
+      C.reading = next
+      setActive(next)
     }, { rootMargin: '-40% 0px -59% 0px' })
     for (var j = 0; j < sections.length; j++) io.observe(sections[j])
   }
@@ -479,9 +769,23 @@
     if (C.enabled && C.story && C.active && C.active.id === 'story') play(ringBreath(C.active))
   }
   C.attachCaduceus = function (api) {
-    C.cad = { draw: api.draw, restore: api.restore, clock: 0 }
-    if (!C.enabled) { api.restore(); C.cad = null; return }
-    if (C.active && C.active.classList.contains('gate') && !C.held) play(caduceusLife(C.active))
+    C.cad = { draw: api.draw, restore: api.restore, elapsed: 0, entrance: 0, inView: false }
+    if (!C.enabled) { C.cad.entrance = 1100; api.restore() }
+    var art = doc.querySelector('.gate .caduceus'), section = art.closest('.gate')
+    // The reference enters on actual visibility, not several scroll beats
+    // later at the reading line. It takes the conductor, never a second loop.
+    new IntersectionObserver(function (entries) {
+      C.cad.inView = entries[0].isIntersecting
+      if (!C.enabled) return
+      if (!C.cad.inView) {
+        C.queue = C.queue.filter(function (accent) { return accent.id !== 'caduceus-life' })
+        if (C.accent && C.accent.id === 'caduceus-life') settleAll()
+        if (C.active === section && C.reading !== section) setActive(C.reading)
+        return
+      }
+      if (C.cad.entrance < 1100 && C.active !== section) setActive(section)
+      else if (C.active === section && !C.held) { settleAll(); play(caduceusLife(section)) }
+    }, { threshold: .1 }).observe(art)
   }
   C.drive = function (fn) {
     if (C.drivers.indexOf(fn) < 0) C.drivers.push(fn)
@@ -491,15 +795,21 @@
   // ---------------------------------------------------------------- on / off
   function enable() {
     if (C.enabled || mq.matches || !('IntersectionObserver' in win)) return
+    if (chainRun) stopOrder('intro')
     C.enabled = true
     armLedger()
     armReplay()
+    armLife()
     if (!io) watchSections()
     else if (C.active) planFor(C.active)
   }
   function disable() {
     if (!C.enabled) return
     C.enabled = false
+    if (C.chrome) C.chrome.disable()
+    textureLast = 0
+    if (chainRun) stopOrder('intro')
+    hidePulse()
     C.queue.length = 0
     if (C.accent) {
       // Jump the running accent to its end state at once.
@@ -515,9 +825,32 @@
     if (ledger.length) finishLedger()
     if (replay.length) finishReplay()
     if (C.story) C.story.breathe(false)
-    if (C.cad) { C.cad.restore(); C.cad = null }
+    doc.getAnimations().forEach(function (animation) { animation.cancel() })
+    // Keep the already-loaded engine available if motion is enabled again.
+    if (C.cad) { C.cad.entrance = 1100; C.cad.restore() }
+    doc.querySelectorAll('.life-rule, .life-texture, .life-divider').forEach(function (el) { el.remove() })
     clearCursors()
   }
+
+  // No draws, timers or compositor breath while the tab is hidden. Resume
+  // through the same scheduler; the caduceus engine and clocks are unchanged.
+  var pausedAnimations = []
+  doc.addEventListener('visibilitychange', function () {
+    if (doc.hidden) {
+      if (C.chrome) C.chrome.pause()
+      if (C.accent && C.accent.pause) C.accent.pause()
+      if (C.raf) win.cancelAnimationFrame(C.raf)
+      if (C.timer) win.clearTimeout(C.timer)
+      C.raf = 0; C.timer = 0; C.lastT = 0
+      textureLast = 0
+      pausedAnimations = doc.getAnimations().filter(function (animation) { return animation.playState === 'running' })
+      pausedAnimations.forEach(function (animation) { animation.pause() })
+    } else {
+      pausedAnimations.forEach(function (animation) { if (C.enabled && animation.playState === 'paused') animation.play() })
+      pausedAnimations = []
+      wake()
+    }
+  })
 
   // Verification hooks.
   C.timeline = function () {
@@ -525,6 +858,7 @@
   }
   C.current = function () { return C.accent ? C.accent.id : null }
   win.__axConductor = C
+  C.refresh = wake
 
   enable()
   if (mq.addEventListener) mq.addEventListener('change', function () { if (mq.matches) disable(); else enable() })
@@ -542,7 +876,7 @@
         if (cadLoaded || mq.matches) return
         cadLoaded = true
         var s = doc.createElement('script')
-        s.src = '/assets/axioma/caduceus.js?v=1'
+        s.src = '/assets/axioma/caduceus.js?v=2'
         s.defer = true
         doc.body.appendChild(s)
       }
@@ -562,7 +896,7 @@
     if (loaded) return
     loaded = true
     var s = doc.createElement('script')
-    s.src = '/assets/axioma/story.js?v=2'
+    s.src = '/assets/axioma/story.js?v=3'
     s.defer = true
     doc.body.appendChild(s)
   }

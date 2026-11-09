@@ -31,6 +31,9 @@
 /* Overscroll past the footer shows night, never a blank light area. */
 html{background:var(--night);overscroll-behavior-y:none;scroll-behavior:auto;scroll-padding-top:calc(var(--bar) + 16px);-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--night);color:var(--text);font:400 15px/1.65 var(--mono);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body.axioma{isolation:isolate}
+.page-texture{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;contain:strict}
+.page-texture__tile{position:absolute;inset:-32px;background:url('/assets/axioma/braille-tile.svg') repeat;opacity:.09;will-change:transform}
 ::selection{background:var(--select);color:var(--strong)}
 img{display:block;max-width:100%;height:auto}
 a{color:var(--strong);text-decoration:underline;text-decoration-color:var(--dim);text-underline-offset:.22em;text-decoration-thickness:1px;transition:text-decoration-color 160ms var(--ease-out)}
@@ -94,10 +97,17 @@ ul,ol{padding:0;list-style:none}
 
 /* ---------- the gate ---------- */
 .gate{border-block:1px solid var(--rule);background:var(--panel)}
-.gate__inner{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:clamp(32px,7vw,96px);padding-block:clamp(48px,7vw,88px)}
-.caduceus{font-family:var(--braille);font-size:17px;line-height:1;letter-spacing:0;white-space:pre}
+.gate__inner{display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;align-items:center;gap:clamp(32px,5vw,64px);padding-block:clamp(48px,7vw,88px);text-align:center;max-width:calc(var(--max) + 2*var(--gutter));container-type:inline-size}
+/* 34px is exactly 2x the reviewed desktop art. The same 44×18 grid scales
+   as one piece below that, with its full wingspan inside the content column. */
+/* Reserve all 18 rows even while a live text frame is being replaced. WebKit
+   otherwise intermittently advances scroll by the full art height (612px).
+   Reserve the column width too: Apple Braille's draw-in cursor is wider than
+   one braille cell. Center the unchanged-size art inside this stable slot. */
+.caduceus{inline-size:100%;block-size:18em;justify-self:center;font-family:var(--braille);font-size:min(34px,3cqw);line-height:1;letter-spacing:0;white-space:pre}
+.cad-cursor{color:var(--whisper)}
 .cad-strong{color:var(--strong)}.cad-mid{color:var(--mid)}.cad-dim{color:var(--dim)}.cad-glint{color:var(--whisper)}
-.gate__quote blockquote p{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(2rem,4.4vw,3.6rem);line-height:1.12;letter-spacing:-.01em;color:var(--strong);max-width:18ch;text-wrap:balance;padding-bottom:.1em}
+.gate__quote blockquote p{font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(2rem,4.4vw,3.6rem);line-height:1.12;letter-spacing:-.01em;color:var(--strong);max-width:18ch;margin-inline:auto;text-wrap:balance;padding-bottom:.1em}
 .gate__quote figcaption{margin-top:22px;font-size:14px;color:var(--text)}
 
 /* ---------- sections ---------- */
@@ -229,6 +239,8 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 .story__flow--sr .ax-sr{position:static;white-space:normal}
 .story__layer{position:absolute;inset:0;white-space:pre;color:var(--text)}
 .story__layer .w{position:absolute;left:0;top:0;will-change:transform}
+/* Reserve the STOP weight: lighting it must not move the glyph baseline. */
+.story__layer .ax-stop{font-weight:600}
 /* Axiōma spans. Unlit in the live story they are plain text; lit (or always,
    in the static story and the key) they carry color plus a second cue. */
 .ax{text-decoration-line:underline;text-decoration-color:transparent;text-decoration-thickness:1px;text-underline-offset:.24em;transition:color 240ms var(--ease-out),text-decoration-color 240ms var(--ease-out)}
@@ -240,7 +252,7 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 .ax-caution.is-lit,.story__stage--static .ax-caution{color:var(--warn);text-decoration-color:currentColor}
 .ax-go.is-lit,.story__stage--static .ax-go{color:var(--ok);text-decoration-color:currentColor}
 .ax-whisper.is-lit,.story__stage--static .ax-whisper{color:var(--whisper);text-decoration-color:currentColor}
-.medallion{display:block;position:relative;width:var(--med,clamp(150px,26vw,220px));height:var(--med,clamp(150px,26vw,220px));border-radius:50%}
+.medallion{display:block;position:relative;width:var(--med,clamp(172px,45vw,336px));height:var(--med,clamp(172px,45vw,336px));border-radius:50%}
 .story__stage--static .medallion{float:right;margin:0 0 6px 18px;shape-outside:circle(50%);shape-margin:14px}
 .story__stage--live .medallion{position:absolute;left:0;top:0;z-index:2;-webkit-user-select:none;user-select:none;will-change:transform}
 .story__stage--live:not(.is-ready) .medallion{visibility:hidden}
@@ -250,6 +262,8 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 .medallion__tilt{position:relative;display:block;width:100%;height:100%;border-radius:50%;transform-style:preserve-3d;will-change:transform}
 .medallion__face{position:absolute;z-index:1;inset:10.5%;width:79%;height:79%;border-radius:50%;pointer-events:none}
 .medallion__ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible;will-change:transform}
+.medallion__chrome{position:absolute;inset:0;z-index:2;display:block;width:100%;height:100%;border-radius:50%;opacity:.15;pointer-events:none;mask-image:url('/assets/axioma/ring-mask.svg');mask-size:100% 100%;mask-repeat:no-repeat}
+.medallion__chrome[hidden]{display:none}
 .medallion__disc{fill:var(--panel)}
 .medallion__line{fill:none;stroke:var(--dim);stroke-width:.8}
 .medallion__text{font:500 8.4px var(--mono);fill:var(--mid)}
@@ -259,10 +273,23 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 .story__key .ax{transition:none}
 
 /* ---------- small screens ---------- */
+
+/* Desktop headlines read across, not down a narrow hero column. Type follows
+   the available width; mobile retains its original wrapping and hierarchy. */
+@media (min-width:901px){
+  .hero{container-type:inline-size;row-gap:26px;align-items:start}
+  .hero__copy{display:contents}
+  .hero__copy>.prompt,.hero__title{grid-column:1/-1}
+  .hero__title{font-size:4cqw;max-width:none;white-space:nowrap;text-wrap:nowrap;margin-left:0}
+  .hero__line,.hero__copy>.actions{grid-column:1}
+  .hero>.plain{grid-column:2;grid-row:3/span 2}
+  .head h2{white-space:nowrap}
+  .gate__quote{width:100%}
+  .gate__quote blockquote p{max-width:none;white-space:nowrap;text-wrap:nowrap;font-size:3.4cqw}
+}
 @media (max-width:900px){
   .hero{grid-template-columns:minmax(0,1fr);align-items:start}
-  .gate__inner{grid-template-columns:minmax(0,1fr);justify-items:start}
-  .caduceus{font-size:11px}
+  .gate__inner{grid-template-columns:minmax(0,1fr);justify-items:center}
   .listing{grid-template-columns:minmax(0,1fr)}
   .catalog{grid-template-columns:minmax(0,1fr)}
   .catalog__item+.catalog__item{border-left:0;border-top:1px solid var(--rule)}
@@ -321,6 +348,72 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
   .lookup__row{grid-template-columns:12ch minmax(0,1fr)}
 }
 
+/* Conductor accents, absolute so the reading flow never moves. */
+.section{position:relative}
+.life-divider{position:absolute;left:0;right:0;top:0;height:1px;background:var(--mid);opacity:.20;pointer-events:none}
+#method .head,#catalog .head,#notes .head{position:relative}
+.life-rule{position:absolute;left:0;top:-18px;width:56px;height:1px;background:var(--mid);opacity:.48;transform-origin:left center}
+.life-texture{position:absolute;right:0;top:-26px;font:400 17px/1 var(--braille);letter-spacing:5px;color:var(--mid);opacity:.16;pointer-events:none}
+
+/* A298: one rot.js character display; native buttons remain the controls. */
+.system__frame{border:1px solid var(--rule);background:var(--panel);min-width:0}
+.system__caption{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;padding:12px 20px;border-bottom:1px solid var(--rule);font-size:13px}
+.system__board{position:relative;aspect-ratio:1000/440;margin:24px 20px}
+.system__lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.system__terminal canvas{display:block;width:100%;height:100%;pointer-events:none}
+.system__alternative{padding:12px 20px;font-size:13px;color:var(--mid)}
+/* Commit the enhanced layout with its engine/controls, not the viewport-lazy draw.
+   Waiting for has-terminal removed this paragraph's height during scrolling.
+   No-JS/failed-engine keeps it visible; enhanced mode keeps it available to AT. */
+.system.is-interactive.has-terminal-engine .system__alternative{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);padding:0}
+.has-terminal .system__board button{color:transparent;background:transparent;border-color:transparent;text-decoration:none}
+.has-terminal .system__board button:focus-visible{outline:2px solid var(--strong);outline-offset:3px}
+.system__controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:12px 20px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--dim)}
+.system__spinner{display:inline-block;width:1ch;min-height:1em;font:400 14px/1 var(--braille);color:var(--mid)}
+.system__controls button{min-height:44px;padding:8px 12px;border:1px solid var(--mid);background:var(--night);color:var(--strong);font:500 12px/1.5 var(--mono);cursor:pointer}
+.system__controls button:disabled,.system__controls button[aria-disabled="true"]{color:var(--dim);border-color:var(--rule);cursor:default}
+
+.system__node,.system__chip{position:absolute;display:flex;align-items:center;justify-content:center;min-height:44px;padding:6px;border-radius:0;font:500 13px/1.3 var(--mono);color:var(--strong);background:var(--panel);cursor:pointer}
+.system__node{left:8%;width:20%;height:13.636%;border:1px solid var(--mid);letter-spacing:.04em}
+.system__chip{height:10%;border:1px dashed var(--dim);background:var(--night);color:var(--mid)}
+.system__node:disabled,.system__chip:disabled{cursor:default;opacity:1}
+.system__node:hover,.system__chip:hover{border-color:var(--strong)}
+.system__node[aria-pressed="true"],.system__chip[aria-pressed="true"]{border:2px solid var(--strong);color:var(--strong);text-decoration:underline;text-underline-offset:.25em}
+.system__owner,.system__next{top:4.545%}
+.system__operator,.system__world{top:43.182%}
+.system__workers,.system__log{top:81.818%}
+.system__next,.system__world,.system__log{left:80%;width:19%}
+.system__axioma{left:40%;top:45%;width:12%}
+.system__gatekeeper{left:58%;top:45%;width:14%}
+.system__standing{left:17%;top:67%;width:14%}
+.system__tripwire{left:58%;top:75%;width:14%}
+.system__handydandy{left:47%;top:6.36%;width:15%}
+.system__details{display:grid;border-top:1px solid var(--rule);padding:24px 20px;gap:24px}
+.system__details h3{font:500 14px/1.5 var(--mono);color:var(--strong);margin-bottom:8px}
+.system__details p{max-width:76ch;font-size:14px}
+.system__details .system__hint{font-size:12px;color:var(--dim);margin-top:12px}
+.system.is-interactive .system__details{min-height:180px;align-content:start}
+.system__details [hidden]{display:none}
+.system__source{font-size:13px;max-width:90ch;color:var(--mid)}
+@media (max-width:700px){
+  .system__board{aspect-ratio:350/642;margin:24px 12px}
+
+  .system__node{left:0;width:42%;height:8.723%;font-size:12px}
+  .system__chip{height:6.855%;font-size:12px}
+  .system__owner,.system__next{top:0}
+  .system__operator{top:26.791%}
+  .system__workers,.system__world{top:53.583%}
+  .system__next,.system__world,.system__log{left:62%;width:38%}
+  .system__log{top:91.277%}
+  .system__handydandy{left:62%;top:12.773%;width:38%}
+  .system__axioma{left:62%;top:30.218%;width:38%}
+  .system__gatekeeper{left:62%;top:41.744%;width:38%}
+  .system__standing{left:16%;top:44.237%;width:31%}
+  .system__tripwire{left:62%;top:74.455%;width:38%}
+  .system.is-interactive .system__details{min-height:244px}
+}
+
 @media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{transition-duration:.01ms!important;animation:none!important}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  .button:active{transform:none}
 }

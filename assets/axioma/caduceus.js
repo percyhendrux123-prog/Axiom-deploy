@@ -1,7 +1,7 @@
 // Deploy Axiom: the living caduceus (A291).
 //
 // The braille caduceus in the gate section, drawn live on its own dot grid
-// (34 x 18 braille cells = 68 x 72 dots). The wings are the hand-made art from
+// (44 x 18 braille cells = 88 x 72 dots). The wings are the hand-made art from
 // the HTML; they lift and settle on a slow breath, each wing a little behind
 // the other, and a soft dither drifts outward across the feathers. The two
 // snakes are drawn from a helix around the staff. Each one undulates on its
@@ -14,7 +14,16 @@
 // caduceus at rest. With no JavaScript or with reduced motion this file is
 // never loaded and the static art in the HTML is the whole experience.
 (function (root) {
-  var W = 68, H = 72, CX = 33.5
+  var W = 88, H = 72, CX = 43.5, SOURCE_W = 68
+  // Keep the hand-carved feathers; only the wings widen, never the helix.
+  var WING_ART = [
+    '⠀⣠⣤⣤⣄⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣠⣤⣤⣄⠀',
+    '⠀⢹⣛⡿⢿⣿⣿⣿⣿⣶⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣶⣿⣿⣿⣿⡿⢿⣛⡏⠀',
+    '⠀⠀⠿⢿⣿⣾⣭⣿⣿⣿⣿⣿⣷⣦⡀⠀⢿⡿⠀⢀⣴⣾⣿⣿⣿⣿⣿⣭⣷⣿⡿⠿⠀⠀',
+    '⠀⠀⠀⠘⢷⣶⣿⣽⣿⣿⣿⣿⣿⣿⣿⣦⢸⡇⣴⣿⣿⣿⣿⣿⣿⣿⣿⣯⣿⣶⡾⠃⠀⠀⠀',
+    '⠀⠀⠀⠀⠀⠀⠲⢶⡶⠿⣿⣿⣿⣿⣿⣿⢻⡟⣿⣿⣿⣿⣿⣿⠿⢶⡶⠖⠀⠀⠀⠀⠀⠀',
+    '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠋⠚⠿⠛⠁⢸⡇⠈⠛⠿⠓⠙⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀'
+  ].join('\n')
   var BLANK = '\u2800'
   // Braille dot bit for (column, row) inside a 2 x 4 cell.
   var BIT = [[0x01, 0x08], [0x02, 0x10], [0x04, 0x20], [0x40, 0x80]]
@@ -53,27 +62,27 @@
 
   function parseArt(text) {
     var rows = text.split('\n').filter(function (r) { return r.length })
-    var g = new Float32Array(W * H)
+    var g = new Float32Array(SOURCE_W * H)
     for (var r = 0; r < rows.length && r < H / 4; r++) {
       var chars = Array.from(rows[r])
-      for (var c = 0; c < chars.length && c < W / 2; c++) {
+      for (var c = 0; c < chars.length && c < SOURCE_W / 2; c++) {
         var v = chars[c].codePointAt(0) - 0x2800
         if (v <= 0 || v > 255) continue
-        for (var dy = 0; dy < 4; dy++) for (var dx = 0; dx < 2; dx++) if (v & BIT[dy][dx]) g[(r * 4 + dy) * W + c * 2 + dx] = 1
+        for (var dy = 0; dy < 4; dy++) for (var dx = 0; dx < 2; dx++) if (v & BIT[dy][dx]) g[(r * 4 + dy) * SOURCE_W + c * 2 + dx] = 1
       }
     }
     return g
   }
 
-  function create(artText) {
-    var art = parseArt(artText)
+  function create() {
+    var art = parseArt(WING_ART)
     var field = new Float32Array(W * H)
     var glint = new Uint8Array(W * H)
 
     function artAt(x, y) {
       // Bilinear sample of the hand-made art, so a wing can move by less than a dot.
       var x0 = Math.floor(x), y0 = Math.floor(y), fx = x - x0, fy = y - y0
-      function px(xx, yy) { return xx < 0 || yy < 0 || xx >= W || yy > WING_BOTTOM ? 0 : art[yy * W + xx] }
+      function px(xx, yy) { return xx < 0 || yy < 0 || xx >= SOURCE_W || yy > WING_BOTTOM ? 0 : art[yy * SOURCE_W + xx] }
       return (px(x0, y0) * (1 - fx) + px(x0 + 1, y0) * fx) * (1 - fy) + (px(x0, y0 + 1) * (1 - fx) + px(x0 + 1, y0 + 1) * fx) * fy
     }
 
@@ -81,14 +90,17 @@
       for (var y = 0; y <= WING_BOTTOM; y++) {
         for (var x = 0; x < W; x++) {
           var side = x < CX ? -1 : 1
-          var u = Math.min(1, Math.abs(x - CX) / 34)
+          var u = Math.min(1, Math.abs(x - CX) / 44)
           // One slow breath for both wings; the right wing trails the left by
           // a breath of a second, and each feathers out at its own pace.
           var lag = side < 0 ? 0 : 0.55
           var k = side < 0 ? 1.25 : 1.4
           var lift = amt * 2.1 * Math.pow(u, 1.5) * Math.sin(TAU * t / 7.4 - lag - k * u)
           var riffle = amt * 0.35 * u * Math.sin(TAU * t / 2.9 + y * 0.45 + side * 0.9)
-          var c = artAt(x, y + lift + riffle)
+          var sx = 33.5 + (x - CX) / 1.29
+          // Leave the upright cap/staff at its original two-dot thickness.
+          if (Math.abs(x - CX) <= 1) sx = 33.5 + x - CX
+          var c = artAt(sx, y + lift + riffle)
           if (c > 0) {
             var drift = 0.5 + 0.5 * Math.sin(TAU * t / 5.3 - 7.5 * u + y * 0.32 + side * 0.7)
             c *= 1 - amt * 0.16 * drift
@@ -135,7 +147,7 @@
         var order = layers.filter(Boolean).sort(function (a, b) { return a.z - b.z })
         for (var x = 0; x < W; x++) {
           var v = 0, gl = 0, staffDone = false
-          var staff = (x === 33 || x === 34) && y <= 70
+          var staff = (x === CX - .5 || x === CX + .5) && y <= 70
           // Paint back to front: the snake behind, the staff, the snake in front.
           for (var o = 0; o <= order.length; o++) {
             var L = order[o]
@@ -171,7 +183,7 @@
             var e = (ax / rx) * (ax / rx) + ((yy - hy) / ry) * ((yy - hy) / ry)
             var i2 = yy * W + xx
             if (e < 1) { field[i2] = 1; glint[i2] = 0 }
-            else if (e < 1.5 && field[i2] > 0 && !(xx === 33 || xx === 34)) field[i2] = 0
+            else if (e < 1.5 && field[i2] > 0 && !(xx === CX - .5 || xx === CX + .5)) field[i2] = 0
           }
           // Eye.
           var ex = Math.round(hx - S.side * 0.9), ey = Math.round(hy)
@@ -183,12 +195,12 @@
           var sx = Math.round(hx - S.side * 4.6), ty = Math.round(hy - 0.4)
           for (var q = 0; q < reach; q++) {
             var tx = sx - S.side * q
-            if (tx === 33 || tx === 34) break
+            if (tx === CX - .5 || tx === CX + .5) break
             field[ty * W + tx] = 1
           }
           if (reach >= 3) {
             var fx = sx - S.side * reach
-            if (fx !== 33 && fx !== 34) { field[(ty - 1) * W + fx] = 1; field[(ty + 1) * W + fx] = 1 }
+            if (fx !== CX - .5 && fx !== CX + .5) { field[(ty - 1) * W + fx] = 1; field[(ty + 1) * W + fx] = 1 }
           }
         }
       }
@@ -196,11 +208,13 @@
 
     var ROW_TONE = ['strong', 'strong', 'strong', 'strong', 'strong', 'strong', 'strong', 'strong', 'mid', 'mid', 'mid', 'mid', 'mid', 'dim', 'dim', 'dim', 'dim', 'dim']
 
-    function frame(t, amt) {
+    function frame(t, amt, reveal) {
       amt = clamp01(amt || 0)
       wings(t, amt)
       snakes(t, amt)
       var out = []
+      var progress = reveal == null ? 1 : clamp01(reveal)
+      var edge = progress * (H / 4)
       for (var r = 0; r < H / 4; r++) {
         var line = '', tone = null, run = ''
         for (var c = 0; c < W / 2; c++) {
@@ -208,11 +222,16 @@
           for (var dy = 0; dy < 4; dy++) {
             for (var dx = 0; dx < 2; dx++) {
               var x = c * 2 + dx, y = r * 4 + dy, i = y * W + x
-              if (field[i] > BAYER[(y & 3) * 4 + (x & 3)]) { bits |= BIT[dy][dx]; glow += glint[i] }
+              // Individual-dot grain, not whole-cell holes. The fine ordered
+              // screen stays stable; a shallow density wave carries the life.
+              var density = Math.abs(x - CX) < 1 ? 1 : .87 + .05 * Math.sin(x * .71 + y * .53 + amt * t * .4)
+              if (field[i] * density > BAYER[(y & 3) * 4 + (x & 3)]) { bits |= BIT[dy][dx]; glow += glint[i] }
             }
           }
-          var ch = String.fromCharCode(0x2800 + bits)
-          var cls = glow >= 2 ? 'glint' : ROW_TONE[r]
+          var visible = r < Math.floor(edge) || (r === Math.floor(edge) && c < (edge % 1) * (W / 2))
+          var cursor = progress < 1 && r === Math.floor(edge) && c === Math.floor((edge % 1) * (W / 2))
+          var ch = cursor ? '▌' : String.fromCharCode(0x2800 + (visible ? bits : 0))
+          var cls = cursor ? 'cursor' : glow >= 2 ? 'glint' : ROW_TONE[r]
           if (cls !== tone) {
             if (run) line += '<span class="cad-' + tone + '">' + run + '</span>'
             tone = cls; run = ''
@@ -237,14 +256,16 @@
   var pre = document.querySelector('.gate .caduceus')
   if (!pre) return
   var still = pre.innerHTML
-  var engine = create(pre.textContent)
+  var engine = create()
   var last = ''
-  function draw(t, amt) {
-    var html = engine.frame(t, amt)
+  function draw(t, amt, reveal) {
+    pre.classList.add('is-live')
+    pre.dataset.entrance = reveal < 1 ? 'drawing' : 'settled'
+    var html = engine.frame(t, amt, reveal)
     if (html !== last) { pre.innerHTML = html; last = html }
   }
   pre.classList.add('is-live')
-  draw(0, 0)
+  draw(0, 0, 0)
   var C = root.__axConductor
   if (C && C.attachCaduceus) C.attachCaduceus({ draw: draw, restore: function () { pre.innerHTML = still; last = ''; pre.classList.remove('is-live') } })
 })(typeof window !== 'undefined' ? window : globalThis)

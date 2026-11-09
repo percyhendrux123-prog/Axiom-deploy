@@ -21,7 +21,7 @@ test('one conductor owns the page motion: one animation loop, story frames run t
   assert.ok(story.includes('conductor?.hold()') && story.includes('conductor?.release()'), 'drag holds every accent and releases at rest');
   assert.ok(!/Math\.sin\(idle|7 \+ Math\.min\(speed/.test(story), 'no idle spin or wobble at rest');
   assert.ok(read('assets/axioma/story.js').includes('attachStory'), 'shipped bundle is rebuilt from the source');
-  assert.ok(read('assets/axioma/home.js').includes("'/assets/axioma/story.js?v=2'"), 'bundle version bumped');
+  assert.ok(read('assets/axioma/home.js').includes("'/assets/axioma/story.js?v=3'"), 'bundle version bumped');
 });
 
 test('reduced motion turns every accent off and leaves the HTML complete', () => {
@@ -40,7 +40,7 @@ test('reduced motion turns every accent off and leaves the HTML complete', () =>
 test('accents animate opacity and transform only, inside the craft limits', () => {
   const home = code('assets/axioma/home.js');
   const styleWrites = [...home.matchAll(/\.style\.(\w+)/g)].map((m) => m[1]);
-  assert.deepEqual([...new Set(styleWrites)], ['opacity'], 'conductor writes opacity only (transform goes through the story engine)');
+  assert.deepEqual([...new Set(styleWrites)].sort(), ['opacity', 'transform'], 'A295 extends the conductor with compositor-only transforms, never layout properties');
   const story = code('src/axioma/story.js');
   assert.ok(/ring\.animate\(/.test(story) && story.includes("scale: '1.014'"), 'breathing is a compositor scale on the ring, 1.4% deep');
   const blink = Number(home.match(/var BLINK = (\d+)/)[1]);

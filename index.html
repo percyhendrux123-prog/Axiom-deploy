@@ -23,7 +23,7 @@
 <link rel="icon" href="/assets/avatar.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/axioma/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/axioma/fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/axioma/axioma.css?v=6">
+<link rel="stylesheet" href="/assets/axioma/axioma.css?v=11">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -43,6 +43,7 @@
 </script>
 </head>
 <body class="axioma">
+<div class="page-texture" aria-hidden="true"><span class="page-texture__tile"></span></div>
 <a class="skip" href="#main">Skip to content</a>
 <header class="bar"><div class="wrap bar__row">
 <a class="bar__home" href="/" aria-label="Deploy Axiom, home">deploy<span class="tone-dim">@</span>axiom</a>
@@ -95,30 +96,70 @@
 
 <section class="gate" aria-label="The axiom">
 <div class="wrap gate__inner">
-<pre class="caduceus" aria-hidden="true"><span class="cad-strong">⠀⣠⣤⣤⣄⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣠⣤⣤⣄⠀
-</span><span class="cad-strong">⠀⢹⣛⡿⢿⣿⣿⣿⣿⣶⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣶⣿⣿⣿⣿⡿⢿⣛⡏⠀
-</span><span class="cad-strong">⠀⠀⠿⢿⣿⣾⣭⣿⣿⣿⣿⣿⣷⣦⡀⠀⢿⡿⠀⢀⣴⣾⣿⣿⣿⣿⣿⣭⣷⣿⡿⠿⠀⠀
-</span><span class="cad-strong">⠀⠀⠀⠘⢷⣶⣿⣽⣿⣿⣿⣿⣿⣿⣿⣦⢸⡇⣴⣿⣿⣿⣿⣿⣿⣿⣯⣿⣶⡾⠃⠀⠀⠀
-</span><span class="cad-strong">⠀⠀⠀⠀⠀⠀⠲⢶⡶⠿⣿⣿⣿⣿⣿⣿⢻⡟⣿⣿⣿⣿⣿⣿⠿⢶⡶⠖⠀⠀⠀⠀⠀⠀
-</span><span class="cad-strong">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠋⠚⠿⠛⠁⢸⡇⠈⠛⠿⠓⠙⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀
-</span><span class="cad-strong">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣶⣟⣷⠦⠀⠀⢸⡇⠀⠀⠴⣾⣻⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-</span><span class="cad-strong">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠻⣷⣦⣄⡸⣇⣠⣴⣾⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-</span><span class="cad-mid">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣩⣽⣻⢷⣯⣍⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-</span><span class="cad-mid">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣐⠟⠋⠁⢸⡇⠈⠙⢻⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-</span><span class="cad-mid">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣧⣄⠀⢸⡇⠀⣠⣼⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-</span><span class="cad-mid">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⢻⢾⣵⡟⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-</span><span class="cad-mid">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡾⠛⢱⡎⠛⢷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-</span><span class="cad-dim">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢾⡄⠀⢸⡇⠀⢠⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-</span><span class="cad-dim">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢶⣜⢧⡶⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-</span><span class="cad-dim">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⢪⡟⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-</span><span class="cad-dim">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠼⠀⢸⡇⠀⠧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-</span><span class="cad-dim">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-</span></pre>
+<pre class="caduceus" aria-hidden="true"><span class="cad-strong">⠀⢀⢤⣤⢤⣤⢀⢀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⢀⢀⢤⣤⢤⣤⠀⠀</span>
+<span class="cad-strong">⠀⠉⢝⣙⠿⠽⢿⣽⢿⢽⢿⣵⢶⣤⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⢤⢴⢿⣽⢿⣿⢿⣽⠿⢿⢛⢽⠁⠀</span>
+<span class="cad-strong">⠀⠀⠘⠽⢿⣽⢷⣿⢭⣽⢿⣿⢿⢽⢿⣿⢷⢤⢄⠀⠐⢽⡿⠅⠀⢀⢴⣴⢿⣿⢿⣽⢿⣿⢿⢭⢽⣼⢿⠽⠿⠅⠀⠀</span>
+<span class="cad-strong">⠀⠀⠀⠀⠘⠷⢶⢴⢿⣽⢿⢽⢿⣽⢿⢽⢿⣽⢿⣵⠄⢽⡗⢤⢾⣽⢿⣿⢿⢽⢿⣽⢿⢽⢿⣭⢽⢵⢶⠽⠓⠀⠀⠀</span>
+<span class="cad-strong">⠀⠀⠀⠀⠀⠀⠀⠀⠲⢴⢶⠴⠿⢽⢿⣽⢿⣿⢿⢽⠟⢿⡟⢽⢿⣽⢿⢽⢿⣽⢿⠽⠷⢴⠶⠖⠀⠀⠀⠀⠀⠀⠀⠀</span>
+<span class="cad-strong">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠙⠛⠑⠛⠽⠟⠉⠁⢽⡇⠀⠙⠙⠿⠕⠉⠙⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</span>
+<span class="cad-strong">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⢾⣕⢶⠄⠀⢸⡇⠀⠠⣴⢺⣷⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</span>
+<span class="cad-strong">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⢾⣵⢤⢄⢀⠸⡇⢀⢀⢴⢜⢵⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</span>
+<span class="cad-mid">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⢝⢛⢽⠿⢽⢷⣴⢾⢭⢝⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</span>
+<span class="cad-mid">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢙⢽⠝⠉⠁⢸⡇⠉⠙⢹⢿⠅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</span>
+<span class="cad-mid">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢘⣽⢅⠀⠀⢸⡇⠀⠀⢼⢟⠅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</span>
+<span class="cad-mid">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠛⠽⢷⢼⣥⣕⢙⠙⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</span>
+<span class="cad-mid">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⢝⠝⠉⢰⡏⠙⠛⢵⠅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</span>
+<span class="cad-dim">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⢽⠀⠀⢸⡇⠀⠀⢽⠅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</span>
+<span class="cad-dim">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠽⠷⢬⣅⣔⠙⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</span>
+<span class="cad-dim">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⢝⠉⢱⡎⠙⢿⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</span>
+<span class="cad-dim">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠵⢤⣜⠇⢤⠝⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</span>
+<span class="cad-dim">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</span></pre>
 <figure class="gate__quote">
 <blockquote><p>Nothing sends, spends, or spins without the one who holds the gate.</p></blockquote>
 <figcaption>the rule every Axiom agent works under<span class="tone-dim">, and the axiom behind Axiōma</span></figcaption>
 </figure>
 </div>
+</section>
+
+<section class="section wrap system" id="system" aria-labelledby="system-title">
+<div class="head">
+<p class="prompt" aria-hidden="true"><span class="prompt__host">deploy@axiom</span><span class="tone-dim">:~$ </span><span class="prompt__cmd">cat chain.md</span></p>
+<h2 id="system-title">One front door. A visible chain.</h2>
+<p>Orders go down. Evidence comes up. Choose a node or a gate to see where the work goes, and where it has to stop.</p>
+</div>
+<div class="system__frame">
+<div class="system__caption"><span>the Axiom system</span><span class="tone-dim">a map, not a live activity feed</span></div>
+<div class="system__board" role="group" aria-label="Owner, operator and workers. Orders down, evidence up. Five plugins on the edges.">
+<div class="system__terminal system__lines" aria-hidden="true"></div>
+<button class="system__node system__owner" type="button" data-system-node="owner" aria-controls="system-owner-info" disabled>OWNER</button>
+<button class="system__node system__operator" type="button" data-system-node="operator" aria-controls="system-operator-info" disabled>OPERATOR</button>
+<button class="system__node system__workers" type="button" data-system-node="workers" aria-controls="system-workers-info" disabled>WORKERS</button>
+<button class="system__node system__next" type="button" data-system-node="next" aria-controls="system-next-info" disabled>NEXT SESSION</button>
+<button class="system__node system__world" type="button" data-system-node="world" aria-controls="system-world-info" disabled>WORLD</button>
+<button class="system__node system__log" type="button" data-system-node="log" aria-controls="system-log-info" disabled>REFUSAL LOG</button>
+<button class="system__chip system__axioma" type="button" data-system-node="axioma" aria-controls="system-axioma-info" disabled>axioma</button>
+<button class="system__chip system__gatekeeper" type="button" data-system-node="gatekeeper" aria-controls="system-gatekeeper-info" disabled>gatekeeper</button>
+<button class="system__chip system__standing" type="button" data-system-node="standing" aria-controls="system-standing-info" disabled>standing</button>
+<button class="system__chip system__tripwire" type="button" data-system-node="tripwire" aria-controls="system-tripwire-info" disabled>tripwire</button>
+<button class="system__chip system__handydandy" type="button" data-system-node="handydandy" aria-controls="system-handydandy-info" disabled>handydandy</button>
+</div>
+<p class="system__alternative">OWNER → OPERATOR → WORKERS: <span>orders</span> down, <span>evidence</span> up. axioma and gatekeeper sit before WORLD; standing checks returning evidence. tripwire records a <span>refused</span> action in REFUSAL LOG. handydandy prepares the <span>handoff</span> to NEXT SESSION.</p>
+<div class="system__details" aria-live="polite" aria-atomic="true">
+<div id="system-intro-info"><h3>Follow the chain.</h3><p>The owner sets the limits. The operator routes work to specialists, and evidence returns along the same chain.</p><p class="system__hint">Hover, tap or use the keyboard. Escape clears the selection.</p></div>
+<div id="system-owner-info"><h3>Owner / the authority</h3><p>The owner sets the limits and decides what may commit the business. A draft is never that approval.</p></div>
+<div id="system-operator-info"><h3>Operator / one front door</h3><p>The operator routes work to specialist workers and brings their evidence back to the owner.</p></div>
+<div id="system-workers-info"><h3>Workers / bounded work</h3><p>Specialists do the assigned work and return evidence up the chain. Saying “done” is not a check.</p></div>
+<div id="system-next-info"><h3>Next session / continuity</h3><p>A written handoff carries the work forward so the next session can pick up where this one stopped.</p></div>
+<div id="system-world-info"><h3>World / outside the session</h3><p>A message to another person leaves the session. The outbound edge is where the advisory card and send checks sit.</p></div>
+<div id="system-log-info"><h3>Refusal log / a visible stop</h3><p>A refused action leaves a record instead of disappearing. Tripwire watches tool refusals, not just outbound sends.</p></div>
+<div id="system-axioma-info"><h3>axioma / a second look</h3><p>Before a consequential call, Axiōma presents an advisory card. It advises; it never blocks or grants permission.</p><p class="system__hint">The spec is CC0 and the code is MIT.</p></div>
+<div id="system-gatekeeper-info"><h3>gatekeeper / before a send</h3><p>Checks supported terminal sends for consent, suppression, quiet hours and repeat messages. A failed check blocks that send.</p></div>
+<div id="system-standing-info"><h3>standing / check the evidence</h3><p>A worker must run a passing proof check before marking its task done. Standing checks the file, page or allowed command, not the claim.</p></div>
+<div id="system-tripwire-info"><h3>tripwire / record a refusal</h3><p>Logs a refused tool action and alerts the owner. It records the stop; it does not grant an exception.</p></div>
+<div id="system-handydandy-info"><h3>handydandy / leave a handoff</h3><p>Notices when a session runs long and prompts a written handoff for the next session.</p></div>
+</div>
+</div>
+<p class="system__source">The chain and its limits: <a href="https://github.com/percyhendrux123-prog/hermes-axiom-agent">hermes-axiom-agent, public source</a>. The plugins act at different points; an advisory card is not an approval.</p>
 </section>
 
 <section class="section wrap story" id="story" aria-labelledby="story-title">
@@ -301,10 +342,15 @@ No secrets included.</pre>
 <p class="foot__gate">The gate stays with you.</p>
 <p>Deploy Axiom · Baton Rouge, Louisiana</p>
 <p class="footer-links"><a href="mailto:percy@deployaxiom.com">percy@deployaxiom.com</a> · <a href="tel:+12256358671">(225) 635-8671</a> · <a href="https://www.instagram.com/deployaxiom/">Instagram</a> · <a href="https://github.com/percyhendrux123-prog">GitHub</a> · <a href="/notes/">Notes</a> · <a href="/baton-rouge/">Baton Rouge</a> · <a href="/archive/two-business-evaluation-2026-09/">Archive</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></p>
-<p class="foot__credit">Axiōma: <a href="https://github.com/percyhendrux123-prog/hermes-axioma/blob/main/spec/AXIOMA-SIGNAL-SPEC-v0.1.md">spec</a> (CC0) and <a href="https://github.com/percyhendrux123-prog/hermes-axioma">code</a> (MIT) · text layout: <a href="https://github.com/chenglou/pretext">Pretext</a> (MIT) · herm of Hermes: Wikimedia Commons (CC0) · type: IBM Plex Mono, Geist and Cormorant Garamond (SIL Open Font License)</p>
+<p class="foot__credit">Axiōma: <a href="https://github.com/percyhendrux123-prog/hermes-axioma/blob/main/spec/AXIOMA-SIGNAL-SPEC-v0.1.md">spec</a> (CC0) and <a href="https://github.com/percyhendrux123-prog/hermes-axioma">code</a> (MIT) · text layout: <a href="https://github.com/chenglou/pretext">Pretext</a> (MIT) · terminal: rot.js (BSD-3-Clause) · chrome: Paper Shaders (Apache-2.0) · loaders: cli-spinners (MIT) · herm of Hermes: Wikimedia Commons (CC0) · type: IBM Plex Mono, Geist and Cormorant Garamond (SIL Open Font License)</p>
 </div></footer>
 <script src="/assets/site.js" defer></script>
 <script src="/assets/video.js" defer></script>
-<script src="/assets/axioma/home.js?v=4" defer></script>
+<script src="/assets/axioma/vendor/rot.min.js" defer></script>
+<script src="/assets/axioma/chain-terminal.js?v=2" defer></script>
+<script src="/assets/axioma/vendor/cli-spinners-dots.js" defer></script>
+<script src="/assets/axioma/home.js?v=7" defer></script>
+<script src="/assets/axioma/vendor/paper-liquid-metal.js" defer></script>
+<script src="/assets/axioma/chrome.js?v=1" defer></script>
 </body>
 </html>
