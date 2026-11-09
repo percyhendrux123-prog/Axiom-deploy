@@ -42,3 +42,5 @@ h1{font-size:clamp(1.7rem,4.4vw,2.8rem);line-height:1.08;letter-spacing:-.02em;m
 .sx-foot{padding:1.4rem clamp(1rem,4vw,3rem);border-top:1px solid var(--line);color:var(--dim);font-size:.78rem}
 @media(max-width:760px){.sx-play{grid-template-columns:1fr}.sx-board{max-width:none}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+#sx-time{color:var(--paper);font-size:1.15rem;font-variant-numeric:tabular-nums;letter-spacing:.04em}.sx-clock{white-space:nowrap}
+.sx-clockbar{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin:0 0 .8rem;font-size:.8rem;color:var(--dim)}.sx-clockbar #sx-time{font-size:1.6rem}.sx-live{font-size:.72rem;letter-spacing:.08em}

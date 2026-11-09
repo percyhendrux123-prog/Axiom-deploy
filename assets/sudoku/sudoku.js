@@ -35,14 +35,15 @@ for(let n=1;n<=9;n++){const s=document.createElement('span');s.textContent=st.no
 const counts=Array(10).fill(0);st.v.forEach(d=>counts[d]++);[...pad.children].forEach((b,j)=>{if(j<9)b.classList.toggle('done',counts[j+1]>=9)});
 const empty=st.v.filter(d=>!d).length;
 if(c)setCard([['STATE','RED · rule broken'],['RULE',c.name+' '+c.idx+' · one '+c.d+' per '+c.name.toLowerCase()],['CLAIM',c.clash.length+' squares claim it'],['FIX','clear one of the red squares']],true);
-else if(!empty&&st.v.join('')===st.s){st.solved=true;stop();setCard([['STATE','LANDED · every rule holds'],['LEVEL',st.level],['TIME',fmt(st.t)],['NEXT','new puzzle, or a level up']])}
+else if(!empty&&st.v.join('')===st.s){tick();st.solved=true;stop();save();setCard([['STATE','LANDED · every rule holds'],['LEVEL',st.level],['TIME',fmt(st.t)],['NEXT','new puzzle, or a level up']])}
 else setCard([['STATE','CLEAR · no rule broken'],['LEVEL',st.level],['OPEN',empty+' squares left']]);
 document.querySelectorAll('.sx-levels button').forEach(b=>b.setAttribute('aria-selected',b.dataset.level===st.level));
 $('sx-need').textContent=NEED[st.level];$('sx-id').textContent=st.level.toUpperCase()+' '+String(st.n+1).padStart(2,'0');
 $('sx-notes').setAttribute('aria-pressed',notesMode);save()}
 function fmt(t){return Math.floor(t/60)+':'+String(t%60).padStart(2,'0')}
 function stop(){if(timer){clearInterval(timer);timer=null}}
-function start(){stop();if(st.solved)return;timer=setInterval(()=>{if(document.hidden)return;st.t++;$('sx-time').textContent=fmt(st.t);if(st.t%10===0)save()},1000);$('sx-time').textContent=fmt(st.t)}
+function tick(){st.t=Math.max(0,Math.floor((Date.now()-st.t0)/1000));$('sx-time').textContent=fmt(st.t)}
+function start(){stop();if(st.solved){$('sx-time').textContent=fmt(st.t);return}if(!st.t0){st.t0=Date.now()-(st.t||0)*1000;save()}tick();timer=setInterval(()=>{tick();if(st.t%10===0)save()},1000)}
 function put(d){if(sel<0||st.p[sel]!=='0'||st.solved)return;wrongShown=false;
 if(notesMode&&d){const n=st.notes[sel];st.v[sel]=0;const j=n.indexOf(d);j<0?n.push(d):n.splice(j,1);n.sort()}
 else{st.v[sel]=d;st.notes[sel]=[];if(d)PEERS[sel].forEach(k=>{const j=st.notes[k].indexOf(d);if(j>=0)st.notes[k].splice(j,1)})}draw()}
@@ -51,7 +52,7 @@ for(let n=1;n<=9;n++){const b=document.createElement('button');b.type='button';b
 const clr=document.createElement('button');clr.type='button';clr.textContent='×';clr.setAttribute('aria-label','Clear square');clr.addEventListener('click',()=>put(0));pad.appendChild(clr);
 document.querySelectorAll('.sx-levels button').forEach(b=>b.addEventListener('click',()=>newGame(b.dataset.level)));
 $('sx-new').addEventListener('click',()=>newGame(st.level,st.n));
-$('sx-reset').addEventListener('click',()=>{st.v=st.p.split('').map(Number);st.notes=st.notes.map(()=>[]);st.solved=false;st.t=0;wrongShown=false;draw();start()});
+$('sx-reset').addEventListener('click',()=>{st.v=st.p.split('').map(Number);st.notes=st.notes.map(()=>[]);st.solved=false;st.t=0;st.t0=Date.now();save();wrongShown=false;draw();start()});
 $('sx-notes').addEventListener('click',()=>{notesMode=!notesMode;draw()});
 $('sx-check').addEventListener('click',()=>{if(conflict()){draw();return}const w=st.v.filter((d,i)=>d&&st.p[i]==='0'&&String(d)!==st.s[i]).length;wrongShown=true;draw();
 if(w)setCard([['STATE','RED · '+w+' square'+(w>1?'s':'')+' marked'],['RULE','no clash yet, but the rules reject '+(w>1?'them':'it')+' later'],['FIX','underlined squares']],true);

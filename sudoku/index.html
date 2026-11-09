@@ -13,7 +13,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="/assets/avatar.svg" type="image/svg+xml">
   <title>Sudoku · Deploy Axiom</title>
-  <link rel="stylesheet" href="/assets/sudoku/sudoku.css?v=3">
+  <link rel="stylesheet" href="/assets/sudoku/sudoku.css?v=4">
 </head>
 <body>
   <header class="sx-top">
@@ -33,6 +33,7 @@
     </div>
     <p class="sx-need" id="sx-need"></p>
 
+    <p class="sx-clockbar"><span class="sx-clock">TIME <span id="sx-time">0:00</span></span> <span class="sx-live">clock runs until it lands · no pause</span></p>
     <div class="sx-play">
       <div class="sx-board" id="sx-board" role="grid" aria-label="Sudoku board"></div>
       <div class="sx-side">
@@ -44,13 +45,13 @@
           <button id="sx-reset">Reset</button>
           <button id="sx-new">New puzzle</button>
         </div>
-        <p class="sx-meta"><span id="sx-id"></span> · <span id="sx-time">0:00</span></p>
+        <p class="sx-meta"><span id="sx-id"></span></p>
       </div>
     </div>
     <p class="sx-help">Tap a square, then a number. Keyboard: 1-9 to place, 0 or Backspace to clear, arrows to move, N for notes. Progress saves on this device.</p>
   </main>
   <footer class="sx-foot"><a href="/">Deploy Axiom</a> · Baton Rouge, Louisiana · <a href="/notes/">Notes</a></footer>
   <script src="/assets/sudoku/puzzles.js?v=1"></script>
-  <script src="/assets/sudoku/sudoku.js?v=2"></script>
+  <script src="/assets/sudoku/sudoku.js?v=3"></script>
 </body>
 </html>
