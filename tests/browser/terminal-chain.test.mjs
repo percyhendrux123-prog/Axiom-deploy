@@ -267,6 +267,7 @@ for (const width of [1440, 390]) test(`Hermes herm is noticeably larger in live 
       assert.ok(box.width >= (width === 390 ? 165 : 320), `medallion ${box.width}px`);
       assert.ok(box.x >= 0 && box.x + box.width <= width);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth), width);
+      await writeFile(join(evidence, `medallion-${width}-${motion}.json`), JSON.stringify({ viewportWidth: width, motion, box }, null, 2));
       await shot(page, '#story', `medallion-${width}-${motion}`);
       assert.deepEqual(errors, []);
     } finally { await context.close(); }
