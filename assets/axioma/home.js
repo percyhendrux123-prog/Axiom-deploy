@@ -19,6 +19,16 @@
   var GAP = 120 // ms of stillness between one accent ending and the next
   var DWELL = 280 // ms a section must hold the reading line before its accent
   var BLINK = 1100 // one blink cycle: on 550 ms, off 550 ms (under 1 flash/s)
+  var texture = doc.querySelector('.page-texture__tile')
+  var textureLast = 0, textureTime = 0
+  function textureTick(t) {
+    if (!textureLast) textureLast = t
+    var delta = t - textureLast
+    if (delta < 250) return 250 - delta
+    textureTime += delta; textureLast = t
+    texture.style.transform = 'translate(' + (6 * Math.sin(textureTime / 11000)) + 'px,' + (4 * Math.sin(textureTime / 17000)) + 'px)'
+    return 250
+  }
 
   // Diagram selection is independent of motion: native buttons still work
   // under reduced motion. Without JS, every short explanation stays visible.
@@ -125,6 +135,7 @@
 
     if (C.enabled) {
       var tn = now()
+      if (texture && C.active) wait = Math.min(wait, textureTick(t))
       var r = C.accent ? C.accent.tick(tn) : null
       if (r === true) endAccent(tn)
       if (!C.accent && C.queue.length && !C.held && tn >= C.holdUntil && tn >= C.nextAt) {
@@ -693,6 +704,7 @@
     if (section === C.active) return
     C.active = section
     settleAll()
+    textureLast = 0
     if (C.enabled && section) planFor(section)
   }
 
@@ -780,6 +792,7 @@
     }
     if (ledger.length) finishLedger()
     if (replay.length) finishReplay()
+    textureLast = 0
     if (C.story) C.story.breathe(false)
     doc.getAnimations().forEach(function (animation) { animation.cancel() })
     // Keep the already-loaded engine available if motion is enabled again.
@@ -813,6 +826,7 @@
   C.current = function () { return C.accent ? C.accent.id : null }
   win.__axConductor = C
 
+      textureLast = 0
   enable()
   if (mq.addEventListener) mq.addEventListener('change', function () { if (mq.matches) disable(); else enable() })
 

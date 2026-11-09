@@ -31,6 +31,9 @@
 /* Overscroll past the footer shows night, never a blank light area. */
 html{background:var(--night);overscroll-behavior-y:none;scroll-behavior:auto;scroll-padding-top:calc(var(--bar) + 16px);-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--night);color:var(--text);font:400 15px/1.65 var(--mono);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body.axioma{isolation:isolate}
+.page-texture{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;contain:strict}
+.page-texture__tile{position:absolute;inset:-32px;background:url('/assets/axioma/braille-tile.svg') repeat;opacity:.065;will-change:transform}
 ::selection{background:var(--select);color:var(--strong)}
 img{display:block;max-width:100%;height:auto}
 a{color:var(--strong);text-decoration:underline;text-decoration-color:var(--dim);text-underline-offset:.22em;text-decoration-thickness:1px;transition:text-decoration-color 160ms var(--ease-out)}
@@ -262,6 +265,7 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 .story__key .ax{transition:none}
 
 /* ---------- small screens ---------- */
+
 @media (max-width:900px){
   .hero{grid-template-columns:minmax(0,1fr);align-items:start}
   .gate__inner{grid-template-columns:minmax(0,1fr);justify-items:center}
@@ -272,6 +276,7 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
   .founder-grid{grid-template-columns:minmax(0,1fr)}
   .founder-photo{max-width:240px}
 }
+@media (max-width:359px){.caduceus{font-size:9px}}
 @media (max-width:640px){
   body{font-size:14px}
   .bar__row{gap:12px}

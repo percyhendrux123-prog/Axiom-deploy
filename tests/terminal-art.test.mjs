@@ -9,6 +9,15 @@ function engine() {
   return context.AxCaduceus.create();
 }
 const text = html => html.replace(/<[^>]*>/g, '');
+test('only one diagram rendering host is shipped and ROT schedules no private loop', () => {
+  const home = read('index.html'), js = read('assets/axioma/chain-terminal.js');
+  assert.equal((home.match(/class="system__terminal /g) || []).length, 1);
+  assert.doesNotMatch(home, /system__lines--wide|system__lines--small/);
+  assert.match(js, /extends ROT\.Display/);
+  assert.match(js, /this\._backend\.schedule = function \(\) \{\}/);
+  assert.doesNotMatch(js, /requestAnimationFrame|setTimeout|setInterval/);
+  assert.match(home, /class="system__alternative"/);
+});
 test('rot.js is vendored locally with its BSD license and explicit build inclusion', () => {
   const vendor = read('assets/axioma/vendor/rot.min.js');
   assert.ok(vendor.includes('Display'));
@@ -22,6 +31,7 @@ test('wide caduceus keeps its height and central staff, with single-dot dither',
   assert.equal(art.width, 44);
   assert.equal(art.height, 18);
   const rows = text(art.frame(0, 0)).split('\n');
+  assert.equal(read('index.html').match(/<pre class="caduceus"[^>]*>([\s\S]*?)<\/pre>/)[1], art.frame(0, 0), 'reduced/no-JS art is the exact final frame');
   assert.ok(rows.every(r => r.length === 44));
   assert.ok(rows.slice(0, 6).some(r => r.slice(0, 4).replaceAll('⠀', '').length));
   assert.ok(rows[16].slice(21, 23).replaceAll('⠀', '').length, 'staff remains centered');
