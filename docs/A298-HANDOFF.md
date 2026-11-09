@@ -1,5 +1,7 @@
 # A298 · terminal chain · review handoff
 
+Historical first-round handoff for d83764e. For the current revision, see `docs/A298-R2-HANDOFF.md`; its final head/evidence/tests supersede this document. The whitespace clarification below includes A299's P3 correction.
+
 ## STATUS: unshipped
 
 Branch: `design/a298-terminal-chain` in `/home/cua/repos/Axiom-deploy`.
@@ -35,7 +37,7 @@ Business/panel copy is unchanged. Necessary additions are the diagram's text alt
 - `npm test`: **58 passed, 0 failed**.
 - `SCREENSHOT_DIR=qa/a298 npm run test:browser -- --test-concurrency=1`: **49 passed, 0 failed**, final built dist. Subsequent measurement-only rerun: both medallion tests passed, recording all four live/static bounds.
 - Exact `netlify.toml` `[build].command`: **PASS**, including vendor/license/NOTICE checks; QA/docs/tests do not ship.
-- `npm run audit`: **0 vulnerabilities**. `git diff --check`: clean.
+- `npm run audit`: **0 vulnerabilities**. The implementation working-tree `git diff --check` passed; this is **not** a base-to-head whitespace guarantee. Vendored `LICENSE-rot-js.txt` intentionally retains upstream trailing whitespace unchanged.
 - `npm run build`: **not verified** — `env: ‘netlify’: No such file or directory` (exit 127). No fabricated Netlify success: host bundling/build is still required.
 - Real runs: **13533ms at 1440**, **13525ms at 390**; owner → operator → workers → all five gates → evidence returns to owner. Cancel/Escape/replay, hover/touch/keyboard, all 11 controls, stable panel dimensions and no horizontal overflow at 390. Existing 360–1440 page-family/tap-target sweep passed. Captured run/resource/console errors: none.
 - Hidden/offscreen progress freezes in place. First partial visibility and queued-then-scroll-away regressions pass. Global RAF callback instrumentation proves no private renderer loop hidden/offscreen; reduced-motion initial visits start zero RAF callbacks.
