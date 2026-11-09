@@ -17,7 +17,7 @@
   <title>The operator layer · Deploy Axiom</title>
   <link rel="stylesheet" href="/assets/firm.css?v=7">
 <link rel="stylesheet" href="/assets/axioma/pages.css?v=1">
-<link rel="stylesheet" href="/assets/operator-layer.css?v=1">
+<link rel="stylesheet" href="/assets/operator-layer.css?v=2">
 </head>
 <body class="page-operator-layer">
   <header class="masthead">
@@ -104,6 +104,36 @@
 <rect class="f-bg s-dim" x="70" y="1010" width="940" height="96" rx="6" fill="#121316" stroke="#96928A" stroke-width="2" stroke-dasharray="2 6"/>
 <text class="f-strong" x="102" y="1068.0" font-size="28" fill="#F2EEE6" text-anchor="start">Record</text>
 <text class="f-dim" x="978" y="1066.0" font-size="19" fill="#96928A" text-anchor="end">decisions and task events, written as they happen</text>
+</svg>
+<svg class="ol-diagram ol-diagram--phone" xmlns="http://www.w3.org/2000/svg" width="330" height="566" viewBox="0 0 330 566" role="img" aria-labelledby="ol-phone-title"><title id="ol-phone-title">Diagram of the operator layer: the owner&#x27;s agent escalates to the operator, the owner gets a holding reply, the operator fixes with backups first and calls specialists only when needed, re-runs the job, adds a rule against a repeat, and sends the owner a plain report. Decisions and task events go to the record.</title><defs><marker id="phone-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="f-brass" d="M0,0 L10,5 L0,10 z" fill="#A58A5E"/></marker><marker id="phone-ahd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="f-dim" d="M0,0 L10,5 L0,10 z" fill="#96928A"/></marker></defs>
+<rect class="f-bg s-rule" x="10" y="2" width="280" height="60" rx="5" fill="#121316" stroke="#3A3834" stroke-width="1.5"/>
+<text class="f-strong" x="150" y="28" font-size="18" fill="#F2EEE6" text-anchor="middle">Owner</text>
+<text class="f-dim" x="150" y="49" font-size="13" fill="#96928A" text-anchor="middle">approves money, prices, promises</text>
+<path class="s-dim" d="M34,64 L34,118" fill="none" stroke="#96928A" stroke-width="1.5" marker-end="url(#phone-ahd)"/>
+<text class="f-dim" x="46" y="96" font-size="13" fill="#96928A" text-anchor="start">directs</text>
+<text class="f-brass" x="308" y="86" font-size="13" fill="#A58A5E" text-anchor="end">2  holding reply, first</text>
+<text class="f-brass" x="308" y="106" font-size="13" fill="#A58A5E" text-anchor="end">6  plain report, last</text>
+<rect class="f-bg s-rule" x="10" y="122" width="280" height="60" rx="5" fill="#121316" stroke="#3A3834" stroke-width="1.5"/>
+<text class="f-strong" x="150" y="148" font-size="18" fill="#F2EEE6" text-anchor="middle">Owner&#x27;s agent</text>
+<text class="f-dim" x="150" y="169" font-size="13" fill="#96928A" text-anchor="middle">runs the day-to-day work</text>
+<path class="s-brass" d="M34,184 L34,258" fill="none" stroke="#A58A5E" stroke-width="1.5" marker-end="url(#phone-ah)"/>
+<path class="s-brass" d="M20,258 L20,186" fill="none" stroke="#A58A5E" stroke-width="1.5" marker-end="url(#phone-ah)"/>
+<text class="f-brass" x="46" y="214" font-size="13" fill="#A58A5E" text-anchor="start">1  escalates in one line</text>
+<text class="f-brass" x="46" y="240" font-size="13" fill="#A58A5E" text-anchor="start">5  adds a rule to catch a repeat</text>
+<rect class="f-bg s-brass" x="10" y="262" width="280" height="60" rx="5" fill="#121316" stroke="#A58A5E" stroke-width="1.5"/>
+<text class="f-strong" x="150" y="288" font-size="18" fill="#F2EEE6" text-anchor="middle">Operator</text>
+<text class="f-dim" x="150" y="309" font-size="13" fill="#96928A" text-anchor="middle">diagnoses, fixes, reports</text>
+<path class="s-brass" d="M290,292 L318,292 L318,32 L294,32" fill="none" stroke="#A58A5E" stroke-width="1.5" marker-end="url(#phone-ah)"/>
+<path class="s-dim" d="M34,324 L34,398" fill="none" stroke="#96928A" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#phone-ahd)"/>
+<text class="f-brass" x="46" y="354" font-size="13" fill="#A58A5E" text-anchor="start">3  fix, backups first</text>
+<text class="f-brass" x="46" y="380" font-size="13" fill="#A58A5E" text-anchor="start">4  operator re-runs the job</text>
+<rect class="f-bg s-dim" x="10" y="402" width="280" height="60" rx="5" fill="#121316" stroke="#96928A" stroke-width="1.5" stroke-dasharray="6 5"/>
+<text class="f-strong" x="150" y="428" font-size="18" fill="#F2EEE6" text-anchor="middle">Specialists</text>
+<text class="f-dim" x="150" y="449" font-size="13" fill="#96928A" text-anchor="middle">called in when a fix needs them</text>
+<rect class="f-bg s-dim" x="10" y="480" width="308" height="82" rx="5" fill="#121316" stroke="#96928A" stroke-width="1.5" stroke-dasharray="2 5"/>
+<text class="f-strong" x="26" y="508" font-size="17" fill="#F2EEE6" text-anchor="start">Record</text>
+<text class="f-dim" x="26" y="530" font-size="13" fill="#96928A" text-anchor="start">decisions and task events,</text>
+<text class="f-dim" x="26" y="548" font-size="13" fill="#96928A" text-anchor="start">written as they happen</text>
 </svg>
         <figcaption>In the normal path the founder hears twice: at the start, and with the fix proven.</figcaption>
       </figure>

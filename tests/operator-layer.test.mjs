@@ -34,8 +34,28 @@ test('operator-layer copy says founder; the diagram keeps Owner (Q7)', () => {
   assert.ok(!/\bowner/i.test(prose), 'no "owner" outside the diagram');
   assert.ok(/stays with the founder\./.test(html), 'meta description says founder');
   for (const label of ['>Owner</text>', '>Owner&#x27;s agent</text>']) {
-    assert.equal(html.split(label).length - 1, 2, `diagram label ${label} on wide and tall`);
+    assert.equal(html.split(label).length - 1, 3, `diagram label ${label} on wide, tall and phone`);
   }
+});
+
+test('phone diagram keeps labels at least 12 CSS px at 390 wide (A312 F3)', () => {
+  const html = read(PAGE);
+  const css = read('assets/operator-layer.css');
+  const svg = html.match(/<svg class="ol-diagram ol-diagram--phone"[\s\S]*?<\/svg>/);
+  assert.ok(svg, 'phone diagram present');
+  const vbWidth = Number(svg[0].match(/viewBox="0 0 (\d+(?:\.\d+)?) /)[1]);
+  // 390 viewport - 40 page gutter - 20 figure padding = 330 px drawn width
+  const scale = 330 / vbWidth;
+  const sizes = [...svg[0].matchAll(/<text[^>]*font-size="(\d+(?:\.\d+)?)"/g)].map(m => Number(m[1]));
+  assert.ok(sizes.length >= 18, 'phone diagram carries every label');
+  for (const s of sizes) assert.ok(s * scale >= 12, `label ${s} renders at ${(s * scale).toFixed(1)} px`);
+  const tallTitle = html.match(/<title id="ol-tall-title">([^<]+)<\/title>/)[1];
+  assert.ok(svg[0].includes(`<title id="ol-phone-title">${tallTitle}</title>`), 'same accessible title');
+  assert.ok(/role="img" aria-labelledby="ol-phone-title"/.test(svg[0]), 'labelled image');
+  assert.ok(/@media \(max-width:599\.98px\)\{\s*\.ol-diagram--tall\{display:none\}\s*\.ol-diagram--phone\{display:block\}/.test(css),
+    'phone variant replaces the tall one below 600 px');
+  assert.ok(/\.ol-diagram--phone\{[^}]*display:none/.test(css), 'phone variant hidden by default');
+  assert.equal((html.match(/<h1[\s>]/g) || []).length, 1, 'one h1');
 });
 
 test('operator-layer page carries no currency amount, price, retired phrase or banned word', () => {

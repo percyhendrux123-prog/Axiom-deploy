@@ -14,10 +14,16 @@
 .ol-diagram{display:block;width:100%;height:auto;font-family:var(--display)}
 .ol-diagram--wide{aspect-ratio:1720 / 660}
 .ol-diagram--tall{aspect-ratio:980 / 860;display:none}
+/* phone variant: drawn near 1:1 so labels stay at least 12 CSS px at 390 wide (A312 F3) */
+.ol-diagram--phone{aspect-ratio:330 / 566;display:none;max-width:420px;margin:0 auto}
 @media (max-width:720px){
   .ol-diagram--wide{display:none}
   .ol-diagram--tall{display:block}
   .article .ol-figure{padding:14px 10px 12px}
+}
+@media (max-width:599.98px){
+  .ol-diagram--tall{display:none}
+  .ol-diagram--phone{display:block}
 }
 .ol-diagram .f-bg{fill:var(--ol-bg)}
 .ol-diagram .f-strong{fill:var(--ol-strong)}
