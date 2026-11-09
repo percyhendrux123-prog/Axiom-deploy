@@ -191,6 +191,31 @@ test('reduced motion shows the complete wide art with no entrance or engine requ
     await shot(page, '.gate', 'caduceus-390-reduced');
   } finally { await context.close(); }
 });
+for (const width of [1440, 390]) test(`braille dots add 8–12 levels to night while text contrast stays AA (${width})`, async () => {
+  const { context, page, errors } = await open(width, 'reduce');
+  try {
+    const png = await page.screenshot({ clip: { x: 0, y: 80, width: width === 390 ? 18 : 96, height: 600 } });
+    const sample = await page.evaluate(async url => {
+      const image = new Image(); image.src = url; await image.decode();
+      const c = document.createElement('canvas'); c.width = image.width; c.height = image.height;
+      const ctx = c.getContext('2d'); ctx.drawImage(image, 0, 0);
+      const data = ctx.getImageData(0, 0, c.width, c.height).data;
+      let brightest = [14,15,17];
+      for (let i = 0; i < data.length; i += 4) if (data[i] > brightest[0]) brightest = [...data.slice(i, i + 3)];
+      const luminance = rgb => rgb.map(v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }).reduce((sum, v, i) => sum + v * [.2126,.7152,.0722][i], 0);
+      const contrast = rgb => (luminance(rgb) + .05) / (luminance(brightest) + .05);
+      const zoom = document.createElement('canvas'); zoom.width = c.width * 2; zoom.height = c.height * 2;
+      const z = zoom.getContext('2d'); z.imageSmoothingEnabled = false; z.drawImage(c, 0, 0, zoom.width, zoom.height);
+      return { brightest, delta: brightest[0] - 14, dimContrast: contrast([138,142,150]), bodyContrast: contrast([217,218,220]), zoom: zoom.toDataURL() };
+    }, 'data:image/png;base64,' + png.toString('base64'));
+    assert.ok(sample.delta >= 8 && sample.delta <= 12, JSON.stringify({ ...sample, zoom: undefined }));
+    assert.ok(sample.dimContrast >= 4.5 && sample.bodyContrast >= 4.5);
+    const { zoom, ...metrics } = sample;
+    await writeFile(join(evidence, `background-${width}-2x.png`), Buffer.from(zoom.split(',')[1], 'base64'));
+    await writeFile(join(evidence, `background-${width}-contrast.json`), JSON.stringify(metrics, null, 2));
+    assert.deepEqual(errors, []);
+  } finally { await context.close(); }
+});
 for (const width of [1440, 390]) test(`braille background drifts cheaply and freezes hidden/offscreen (${width})`, async () => {
   const { context, page, errors } = await open(width);
   try {

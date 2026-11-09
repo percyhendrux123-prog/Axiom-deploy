@@ -33,7 +33,7 @@ html{background:var(--night);overscroll-behavior-y:none;scroll-behavior:auto;scr
 body{margin:0;background:var(--night);color:var(--text);font:400 15px/1.65 var(--mono);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 body.axioma{isolation:isolate}
 .page-texture{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;contain:strict}
-.page-texture__tile{position:absolute;inset:-32px;background:url('/assets/axioma/braille-tile.svg') repeat;opacity:.065;will-change:transform}
+.page-texture__tile{position:absolute;inset:-32px;background:url('/assets/axioma/braille-tile.svg') repeat;opacity:.09;will-change:transform}
 ::selection{background:var(--select);color:var(--strong)}
 img{display:block;max-width:100%;height:auto}
 a{color:var(--strong);text-decoration:underline;text-decoration-color:var(--dim);text-underline-offset:.22em;text-decoration-thickness:1px;transition:text-decoration-color 160ms var(--ease-out)}
