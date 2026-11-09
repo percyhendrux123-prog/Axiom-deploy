@@ -166,13 +166,21 @@ for (const width of [901, 1024, 1440, 390]) test(`display headlines stay on one 
 for (const width of [1440, 390]) test(`caduceus is double-size desktop and scales proportionally into the mobile column (${width})`, async () => {
   const { context, page, errors } = await open(width, 'reduce');
   try {
-    const box = await page.locator('.caduceus').boundingBox();
+    // The PRE now reserves the entire column; measure the actual 44-cell
+    // glyph row, not the surrounding empty slot, to keep the 2x art lock.
+    const slot = await page.locator('.caduceus').boundingBox();
+    const box = await page.locator('.caduceus').evaluate(e => {
+      const art = e.firstElementChild.getBoundingClientRect();
+      const slot = e.getBoundingClientRect();
+      return { x: art.x, y: slot.y, width: art.width, height: slot.height };
+    });
     const column = await page.locator('.gate__inner').evaluate(e => { const r = e.getBoundingClientRect(), s = getComputedStyle(e); return { left: r.left + parseFloat(s.paddingLeft), right: r.right - parseFloat(s.paddingRight) }; });
+    assert.ok(Math.abs(slot.x - column.left) < .02 && Math.abs(slot.x + slot.width - column.right) < .02, 'layout slot reserves the full column');
     if (width === 1440) { assert.ok(Math.abs(box.width / 547.859375 - 2) < .02); assert.equal(box.height, 612); }
     assert.ok(box.x >= column.left && box.x + box.width <= column.right, 'whole art fits its column');
     assert.ok(Math.abs(box.width / box.height - 547.859375 / 306) < .01, 'unchanged aspect ratio');
     assert.ok(Math.abs(box.x + box.width / 2 - width / 2) < 1, 'centered');
-    await writeFile(join(evidence, `caduceus-size-${width}.json`), JSON.stringify({ box, column }, null, 2));
+    await writeFile(join(evidence, `caduceus-size-${width}.json`), JSON.stringify({ box, slot, column }, null, 2));
     assert.deepEqual(errors, []);
   } finally { await context.close(); }
 });

@@ -30,16 +30,28 @@ before(async () => {
   }
 });
 after(async () => { for (const browser of Object.values(browsers)) await browser.close(); if (server) await new Promise(done => server.close(done)); });
-async function open(engine, width) {
+async function open(engine, width, hostMetrics = false) {
   const context = await browsers[engine].newContext({ viewport: { width, height: 1000 } });
   const page = await context.newPage();
+  if (hostMetrics) {
+    const font = await readFile(new URL('./fixtures/a300-host-metrics.woff2', import.meta.url));
+    await page.route('**/__a300-host-metrics.woff2', route => route.fulfill({ contentType: 'font/woff2', body: font }));
+    await page.route('**/axioma.css*', async route => {
+      const response = await route.fetch();
+      await route.fulfill({ response, body: await response.text() + `
+        @font-face{font-family:'A300 Host Metrics';src:url('/__a300-host-metrics.woff2') format('woff2')}
+        .caduceus{font-family:'A300 Host Metrics'}` });
+    });
+  }
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
   page.on('response', r => { if (r.status() >= 400) errors.push(`${r.status()}: ${r.url()}`); });
   await page.addInitScript(() => {
     window.__scrollShifts = [];
     if (PerformanceObserver.supportedEntryTypes.includes('layout-shift')) {
-      new PerformanceObserver(list => window.__scrollShifts.push(...list.getEntries().map(e => ({ t: e.startTime, value: e.value, recentInput: e.hadRecentInput })))).observe({ type: 'layout-shift', buffered: true });
+      new PerformanceObserver(list => window.__scrollShifts.push(...list.getEntries().map(e => ({ t: e.startTime, value: e.value, recentInput: e.hadRecentInput,
+        sources: e.sources.map(s => ({ node: s.node?.tagName + '.' + s.node?.className, previous: s.previousRect.toJSON(), current: s.currentRect.toJSON() }))
+      })))).observe({ type: 'layout-shift', buffered: true });
     }
   });
   return { context, page, errors };
@@ -48,7 +60,7 @@ function measure() {
   const row = { t: performance.now(), scrollY };
   for (const selector of ['.caduceus', '.gate', '#system', '.system__board', '.system__frame', '.system__details', '.system__source']) {
     const r = document.querySelector(selector).getBoundingClientRect();
-    row[selector] = { height: r.height, top: r.top, documentTop: r.top + scrollY };
+    row[selector] = { height: r.height, width: r.width, left: r.left, top: r.top, documentTop: r.top + scrollY };
   }
   return row;
 }
@@ -154,6 +166,67 @@ for (const engine of engines) for (const width of [1440, 390]) {
       assert.equal(shifts.reduce((s, e) => s + e.value, 0), 0, 'all layout shifts, including recent input');
       assert.deepEqual(errors, []);
     } finally { await context.close(); }
+  });
+  test(`host-metric caduceus keeps its inline slot and zero CLS through entrance and scroll (${engine}, ${width})`, async () => {
+    const { context, page, errors } = await open(engine, width, true);
+    let release;
+    const held = new Promise(done => { release = done; });
+    await page.route('**/caduceus.js*', async route => { await held; await route.continue(); });
+    try {
+      await page.goto(base); await page.evaluate(() => document.fonts.ready);
+      const metrics = await page.locator('.caduceus').evaluate(pre => {
+        const probe = document.createElement('span');
+        probe.style.cssText = 'position:absolute;font:34px "A300 Host Metrics"';
+        probe.textContent = '⣿'; pre.append(probe);
+        const braille = probe.getBoundingClientRect().width;
+        probe.textContent = '▌';
+        const cursor = probe.getBoundingClientRect().width;
+        probe.remove();
+        return { loaded: document.fonts.check('34px "A300 Host Metrics"', '⣿▌'), braille, cursor };
+      });
+      assert.equal(metrics.loaded, true, 'the metric fixture must actually be active');
+      // Linux Chromium snaps this fixture's advance to 23px; WebKit keeps
+      // 23.2421875px. Both must retain the host's >10px cursor/cell mismatch.
+      assert.ok(Math.abs(metrics.braille - 34 * 1400 / 2048) < .3, JSON.stringify(metrics));
+      same(metrics.cursor, 34, 'host cursor advance at 34px');
+      assert.ok(metrics.cursor - metrics.braille > 10, 'exercise the Mac cursor/braille mismatch');
+      await arrive(page, '.gate', 90);
+      await page.screenshot({ path: join(evidence, `${label}-${engine}-${width}-host-metrics-before.png`) });
+      await arrive(page, '.gate', 1100); await page.waitForTimeout(100);
+      const first = await page.evaluate(measure), steps = [];
+      await page.evaluate(() => {
+        window.__inlineSamples = []; window.__sampleInline = true;
+        function sample() {
+          const pre = document.querySelector('.caduceus'), r = pre.getBoundingClientRect();
+          window.__inlineSamples.push({ width: r.width, left: r.left, height: r.height, cursor: !!pre.querySelector('.cad-cursor') });
+          if (window.__sampleInline) requestAnimationFrame(sample);
+        }
+        sample();
+      });
+      const start = await page.evaluate(() => performance.now());
+      release();
+      for (let i = 0; i < 55; i++) {
+        const previousY = await page.evaluate(() => scrollY);
+        await page.evaluate(() => scrollBy(0, 50)); await page.waitForTimeout(80);
+        steps.push({ ...await page.evaluate(measure), previousY });
+      }
+      await page.evaluate(() => { window.__sampleInline = false; });
+      const samples = await page.evaluate(() => window.__inlineSamples);
+      const shifts = await page.evaluate(start => window.__scrollShifts.filter(e => e.t >= start), start);
+      await save(`${engine}-${width}-host-metrics`, { metrics, first, steps, samples, shifts, layoutShiftSum: shifts.reduce((s, e) => s + e.value, 0) });
+      await arrive(page, '.gate', 90);
+      await page.screenshot({ path: join(evidence, `${label}-${engine}-${width}-host-metrics-after.png`) });
+      assert.ok(samples.some(s => s.cursor), 'exercise the live draw-in cursor, not only settled art');
+      assert.equal(await page.locator('.caduceus').getAttribute('data-entrance'), 'settled');
+      assert.equal(shifts.reduce((s, e) => s + e.value, 0), 0, 'all layout shifts, horizontal included, with host font advances');
+      for (const row of samples) for (const key of ['width', 'left', 'height']) same(row[key], first['.caduceus'][key], `reserved caduceus ${key}`);
+      for (const row of steps) {
+        same(row.scrollY - row.previousY, 50, 'requested host-metric scroll increment');
+        same(row['#system'].documentTop, first['#system'].documentTop, 'host-metric system document position');
+        for (const s of ['.caduceus', '.gate', '.system__board', '.system__frame']) same(row[s].height, first[s].height, s);
+      }
+      assert.deepEqual(errors, []);
+    } finally { release(); await context.close(); }
   });
   test(`small-step gate to system scroll has no layout or scroll discontinuity (${engine}, ${width})`, async () => {
     const { context, page, errors } = await open(engine, width);
