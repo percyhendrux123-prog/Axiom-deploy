@@ -49,3 +49,9 @@
   letter-spacing:.16em;text-transform:uppercase;text-decoration:none;-webkit-tap-highlight-color:transparent}
 .ol-brief .ol-button:hover{background:transparent;color:var(--strong)}
 .ol-button:focus-visible,.operator-layer a:focus-visible{outline:2px solid var(--strong);outline-offset:3px}
+
+/* A312 F2: the standalone Notes link is 42px wide above 640px (firm.css only
+   widens it on phones). Page-local floor so it meets 44x44 at every width. */
+@media (min-width:641px){
+  .page-operator-layer nav a[href="/notes/"]{min-width:44px;justify-content:center}
+}

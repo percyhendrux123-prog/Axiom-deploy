@@ -23,8 +23,18 @@ test('operator-layer page exists with one h1, six steps and "Where it stops"', (
   assert.ok(steps, 'ordered list of steps');
   assert.equal((steps[1].match(/<li>/g) || []).length, 6, 'six steps');
   assert.ok(html.includes('>Where it stops</h2>'), '"Where it stops" present');
-  for (const heading of ['What stays with the owner', 'What the record holds', 'Why small teams']) {
+  for (const heading of ['What stays with the founder', 'What the record holds', 'Why small teams']) {
     assert.ok(html.includes(`>${heading}</h2>`), heading);
+  }
+});
+
+test('operator-layer copy says founder; the diagram keeps Owner (Q7)', () => {
+  const html = read(PAGE);
+  const prose = html.replace(/<svg[\s\S]*?<\/svg>/g, '');
+  assert.ok(!/\bowner/i.test(prose), 'no "owner" outside the diagram');
+  assert.ok(/stays with the founder\./.test(html), 'meta description says founder');
+  for (const label of ['>Owner</text>', '>Owner&#x27;s agent</text>']) {
+    assert.equal(html.split(label).length - 1, 2, `diagram label ${label} on wide and tall`);
   }
 });
 

@@ -63,6 +63,21 @@ test('all page families fit mobile with 44px standalone targets and naturally in
   assert.deepEqual(failures, []);
 });
 
+test('operator-layer standalone targets are 44x44 on phone, tablet and desktop', async () => {
+  const failures = [];
+  for (const width of [360, 390, 430, 640, 641, 720, 721, 768, 1024, 1440]) {
+    const context = await browser.newContext({ viewport: { width, height: 1000 } });
+    try {
+      const page = await context.newPage();
+      await page.goto(base + '/operator-layer/');
+      await page.evaluate(() => document.fonts.ready);
+      const result = await page.evaluate(measureTargets);
+      if (result.smallTargets.length) failures.push({ width, smallTargets: result.smallTargets });
+    } finally { await context.close(); }
+  }
+  assert.deepEqual(failures, []);
+});
+
 test('privacy policy links wrap within evenly led mobile prose', async () => {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
   try {
