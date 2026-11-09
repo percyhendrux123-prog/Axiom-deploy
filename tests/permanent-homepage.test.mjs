@@ -66,6 +66,14 @@ test('homepage states the headline, engagements, method, limits, notes and conta
   for (const marker of prohibitedRootMarkers) assert.ok(!homepage.includes(marker), `stale root marker: ${marker}`);
 });
 
+test('homepage links the operator layer from the catalog and footer', () => {
+  const catalog = homepage.match(/<section[^>]*id="catalog"[\s\S]*?<\/section>/)?.[0] ?? '';
+  const footer = homepage.match(/<p class="footer-links">[\s\S]*?<\/p>/)?.[0] ?? '';
+  assert.match(catalog, /href="\/operator-layer\/">[^<]+<\/a>/, 'visible in-page link near the plugins');
+  assert.ok(footer.includes('href="/operator-layer/">Operator layer</a>'), 'plain footer label');
+  assert.ok(existsSync(join(root, 'operator-layer/index.html')), 'link target ships');
+});
+
 test('note 01 is published as a static page with its diagram', () => {
   const note = read('notes/one-front-door/index.html');
   for (const marker of ['One Front Door', '/assets/notes/one-front-door.svg', 'rel="canonical"']) assert.ok(note.includes(marker), `missing note marker: ${marker}`);

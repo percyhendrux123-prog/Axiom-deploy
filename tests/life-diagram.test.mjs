@@ -31,5 +31,6 @@ test('A298 updates reference art deliberately while preserving the remaining hom
   const original = home.replace(diagram + '\n\n', '').replace('home.js?v=7', 'home.js?v=4').replace('chain-terminal.js?v=2', 'chain-terminal.js?v=1').replace('<div class="page-texture" aria-hidden="true"><span class="page-texture__tile"></span></div>\n', '');
   const normalized = original.replace(/<link rel="stylesheet"[^>]*>/g, '').replace(/ role="group"/g, '').replace(/\s+/g, ' ').trim();
   assert.equal(createHash('sha256').update(read('assets/axioma/caduceus.js')).digest('hex'), '235810aad7f9594a2e6f1146e17f2e08cd01a5149ad42857de36807985ca36fa');
-  assert.equal(createHash('sha256').update(normalized).digest('hex'), '6e7f6ee1cd91454b480865f90e247487756a345becdc688f5772a4eb0029a63a');
+  // A322 deliberately updates only catalog copy and founder links; art stays locked.
+  assert.equal(createHash('sha256').update(normalized).digest('hex'), '0aef89db0054379e7cd250cb4931bd2d49dc433554e9d68cf6db7ce0bfa455f0');
 });

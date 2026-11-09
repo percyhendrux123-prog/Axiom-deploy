@@ -142,11 +142,13 @@ ul,ol{padding:0;list-style:none}
 .listing__ev{font-size:13px;color:var(--mid)}
 .listing__link a{display:inline-flex;align-items:center;min-height:44px;font-size:14px}
 
-/* catalog: three accepted plugins, one terminal panel, no accent of its own
+/* catalog: six accepted plugins, one terminal panel, no accent of its own
    (the conductor's cursor hand-off reaches its prompt like any section) */
 .catalog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
-.catalog__item{display:grid;gap:8px;align-content:start;padding:24px 20px 20px}
+.catalog__item{display:grid;min-width:0;gap:8px;align-content:start;padding:24px 20px 20px}
 .catalog__item+.catalog__item{border-left:1px solid var(--rule)}
+.catalog__item:nth-child(3n+1){border-left:0}
+.catalog__item:nth-child(n+4){border-top:1px solid var(--rule)}
 .catalog__name{font-family:var(--display);font-weight:580;font-size:1.5rem;letter-spacing:-.03em;line-height:1.15;color:var(--strong);overflow-wrap:anywhere}
 .catalog__ver{font:400 14px/1 var(--mono);letter-spacing:0;color:var(--mid);margin-left:.35em}
 .catalog__merged{font-size:13px;color:var(--mid)}
@@ -328,7 +330,7 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 .replay__row.is-pending{opacity:.18}
 /* catalog lookup */
 .catalog__install{font-size:13px;color:var(--text);overflow-wrap:anywhere}
-.catalog__install code{display:block;color:var(--strong);white-space:nowrap}
+.catalog__install code{display:block;color:var(--strong);white-space:pre-wrap}
 #catalog{grid-template-columns:minmax(0,1fr)}
 .lookup{border-top:1px solid var(--rule);padding:18px 20px 6px}
 .lookup__h{font-size:13px;color:var(--strong);margin:0 0 10px}

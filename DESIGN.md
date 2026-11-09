@@ -58,7 +58,7 @@ The previous contract (stone and brass letterhead, Cinzel, no motion) is in git 
 
 ## Preserved surfaces and acceptance
 
-- `/operator-layer/` (A311): standalone founder page in the night shell (`firm.css`, then `axioma/pages.css`, then `operator-layer.css`). No motion. The inline diagram re-scopes its own dark palette on `.ol-figure` and reserves its aspect ratio (wide SVG above 720px, tall SVG below). `operator-layer.js` only rewrites the brief mailto subject from `utm_source`/`utm_content`; with no JS the plain subject stays. Not linked from home or nav; sitemap only.
+- `/operator-layer/` (A311): standalone founder page in the night shell (`firm.css`, then `axioma/pages.css`, then `operator-layer.css`). No motion. The inline diagram re-scopes its own dark palette on `.ol-figure` and reserves its aspect ratio (wide SVG above 720px, tall SVG below). `operator-layer.js` only rewrites the brief mailto subject from `utm_source`/`utm_content`; with no JS the plain subject stays. Linked from the homepage catalog and footer; sitemap entry retained. The compact main nav stays unchanged.
 - Every route stays: Notes and each note, the field report, Baton Rouge, Privacy, Terms, the closed archive (keeps its own look, `noindex`), success route, Google verification file, robots, sitemap, the signed Meta webhook and the closed (410) legacy function.
 - CSP stays self-only (plus the YouTube nocookie frame); no inline script except the JSON-LD data block, no inline style, no remote fonts.
 - Any new file under `assets/` must be in the netlify `cp` chain (`assets/axioma` is copied whole).
