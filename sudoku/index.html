@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Sudoku from Deploy Axiom. Every number is a permission: once per row, once per column, once per box. Four levels.">
+  <link rel="canonical" href="https://deployaxiom.com/sudoku/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sudoku · Deploy Axiom">
+  <meta property="og:description" content="Every number is a permission. Break one and the board names the rule.">
+  <meta property="og:image" content="https://deployaxiom.com/assets/axiom-og.png">
+  <meta property="og:url" content="https://deployaxiom.com/sudoku/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/assets/avatar.svg" type="image/svg+xml">
+  <title>Sudoku · Deploy Axiom</title>
+  <link rel="stylesheet" href="/assets/sudoku/sudoku.css?v=1">
+</head>
+<body>
+  <header class="sx-top">
+    <a class="sx-brand" href="/" aria-label="Deploy Axiom, home"><img src="/assets/wordmark-stone.svg" alt="AXIOM" width="110" height="32"></a>
+    <a class="sx-back" href="/">deployaxiom.com</a>
+  </header>
+  <main class="sx">
+    <p class="sx-eyebrow">Sequencing rules and permissions</p>
+    <h1>Every square answers to three rules.</h1>
+    <p class="sx-lede">Each number may appear once in its row, once in its column and once in its box. Place a number where another already holds that right and the board refuses it, the same way a system refuses an action two of its parts both claim. It names the rule that broke.</p>
+
+    <div class="sx-levels" role="tablist" aria-label="Level">
+      <button role="tab" data-level="easy">Easy</button>
+      <button role="tab" data-level="medium">Medium</button>
+      <button role="tab" data-level="hard">Hard</button>
+      <button role="tab" data-level="advanced">Advanced</button>
+    </div>
+    <p class="sx-need" id="sx-need"></p>
+
+    <div class="sx-play">
+      <div class="sx-board" id="sx-board" role="grid" aria-label="Sudoku board"></div>
+      <div class="sx-side">
+        <pre class="sx-card" id="sx-card" aria-live="polite"></pre>
+        <div class="sx-pad" id="sx-pad"></div>
+        <div class="sx-tools">
+          <button id="sx-notes" aria-pressed="false">Notes</button>
+          <button id="sx-check">Check</button>
+          <button id="sx-reset">Reset</button>
+          <button id="sx-new">New puzzle</button>
+        </div>
+        <p class="sx-meta"><span id="sx-id"></span> · <span id="sx-time">0:00</span></p>
+      </div>
+    </div>
+    <p class="sx-help">Tap a square, then a number. Keyboard: 1-9 to place, 0 or Backspace to clear, arrows to move, N for notes. Progress saves on this device.</p>
+  </main>
+  <footer class="sx-foot"><a href="/">Deploy Axiom</a> · Baton Rouge, Louisiana · <a href="/notes/">Notes</a></footer>
+  <script src="/assets/sudoku/puzzles.js?v=1"></script>
+  <script src="/assets/sudoku/sudoku.js?v=1"></script>
+</body>
+</html>
