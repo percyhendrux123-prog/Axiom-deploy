@@ -30,13 +30,13 @@ if(sel>=0&&d&&d===st.v[sel])e.classList.add('same');if(i===sel)e.classList.add('
 if(c){if(c.unit(i)===c.ui)e.classList.add('ruled');if(c.clash.includes(i))e.classList.add('bad')}
 if(wrongShown&&d&&given[i]==='0'&&String(d)!==st.s[i])e.classList.add('wrong');
 e.setAttribute('aria-label','Row '+(ROW(i)+1)+' column '+(COL(i)+1)+(d?', '+d:', empty'));
-if(d){e.textContent=d}else if(st.notes[i].length){e.textContent='';const g=document.createElement('span');g.className='sx-notes';
+if(d){e.textContent='';const s=document.createElement('span');s.className='d';s.textContent=d;e.appendChild(s)}else if(st.notes[i].length){e.textContent='';const g=document.createElement('span');g.className='sx-notes';
 for(let n=1;n<=9;n++){const s=document.createElement('span');s.textContent=st.notes[i].includes(n)?n:'';g.appendChild(s)}e.appendChild(g)}else e.textContent=''}
 const counts=Array(10).fill(0);st.v.forEach(d=>counts[d]++);[...pad.children].forEach((b,j)=>{if(j<9)b.classList.toggle('done',counts[j+1]>=9)});
 const empty=st.v.filter(d=>!d).length;
 if(c)setCard([['STATE','RED · rule broken'],['RULE',c.name+' '+c.idx+' · one '+c.d+' per '+c.name.toLowerCase()],['CLAIM',c.clash.length+' squares claim it'],['FIX','clear one of the red squares']],true);
 else if(!empty&&st.v.join('')===st.s){st.solved=true;stop();setCard([['STATE','LANDED · every rule holds'],['LEVEL',st.level],['TIME',fmt(st.t)],['NEXT','new puzzle, or a level up']])}
-else setCard([['STATE','GREEN · no rule broken'],['LEVEL',st.level],['OPEN',empty+' squares left']]);
+else setCard([['STATE','CLEAR · no rule broken'],['LEVEL',st.level],['OPEN',empty+' squares left']]);
 document.querySelectorAll('.sx-levels button').forEach(b=>b.setAttribute('aria-selected',b.dataset.level===st.level));
 $('sx-need').textContent=NEED[st.level];$('sx-id').textContent=st.level.toUpperCase()+' '+String(st.n+1).padStart(2,'0');
 $('sx-notes').setAttribute('aria-pressed',notesMode);save()}
@@ -55,7 +55,7 @@ $('sx-reset').addEventListener('click',()=>{st.v=st.p.split('').map(Number);st.n
 $('sx-notes').addEventListener('click',()=>{notesMode=!notesMode;draw()});
 $('sx-check').addEventListener('click',()=>{if(conflict()){draw();return}const w=st.v.filter((d,i)=>d&&st.p[i]==='0'&&String(d)!==st.s[i]).length;wrongShown=true;draw();
 if(w)setCard([['STATE','RED · '+w+' square'+(w>1?'s':'')+' marked'],['RULE','no clash yet, but the rules reject '+(w>1?'them':'it')+' later'],['FIX','underlined squares']],true);
-else setCard([['STATE','GREEN · nothing wrong so far'],['OPEN',st.v.filter(d=>!d).length+' squares left']])});
+else setCard([['STATE','CLEAR · nothing wrong so far'],['OPEN',st.v.filter(d=>!d).length+' squares left']])});
 document.addEventListener('keydown',e=>{if(e.metaKey||e.ctrlKey||e.altKey)return;
 if(e.key>='1'&&e.key<='9'){put(+e.key);e.preventDefault()}else if(e.key==='0'||e.key==='Backspace'||e.key==='Delete'){put(0);e.preventDefault()}
 else if(e.key==='n'||e.key==='N'){notesMode=!notesMode;draw()}
