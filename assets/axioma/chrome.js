@@ -43,7 +43,7 @@
     Object.entries({ u_pixelRatio:1, u_imageAspectRatio:1, u_originX:.5, u_originY:.5, u_worldWidth:0, u_worldHeight:0, u_fit:1, u_scale:1, u_rotation:0, u_offsetX:0, u_offsetY:0, u_repetition:2, u_softness:.8, u_shiftRed:0, u_shiftBlue:0, u_distortion:.15, u_contour:.2, u_angle:35, u_shape:0, u_time:0 }).forEach(function (pair) { scalar(pair[0], pair[1]) })
     gl.uniform1i(gl.getUniformLocation(program, 'u_isImage'), 0)
     gl.uniform1i(gl.getUniformLocation(program, 'u_image'), 0)
-    gl.uniform4fv(gl.getUniformLocation(program, 'u_colorBack'), [.063,.075,.063,1]) // #101310
+    gl.uniform4fv(gl.getUniformLocation(program, 'u_colorBack'), [16/255,19/255,16/255,1]) // #101310
     gl.uniform4fv(gl.getUniformLocation(program, 'u_colorTint'), [.76,.74,.70,1]) // stone, no rainbow dispersion
     uniforms.u_resolution = gl.getUniformLocation(program, 'u_resolution')
     canvas.addEventListener('webglcontextlost', function (event) { event.preventDefault(); failed = true; canvas.remove(); gl = null; last = 0 })

@@ -62,7 +62,11 @@
     cancelButton.disabled = true
     var example = doc.createElement('span')
     example.textContent = 'An example order, not a live action.'
-    controls.append(runButton, cancelButton, example)
+    var orderSpinner = doc.createElement('span')
+    orderSpinner.className = 'system__spinner'
+    orderSpinner.setAttribute('aria-hidden', 'true')
+    var spinnerSpec = win.AxCliSpinners && win.AxCliSpinners.dots
+    controls.append(runButton, cancelButton, orderSpinner, example)
     system.querySelector('.system__caption').after(controls)
     system.querySelector('.system__details').id = 'system-panels'
     system.dataset.runState = 'idle'
@@ -592,6 +596,7 @@
   function stopOrder(key) {
     if (!system) return
     chainRun = null
+    orderSpinner.textContent = ''
     system.dataset.runState = 'idle'
     system.dataset.runStep = key
     runButton.textContent = 'Run one order'
@@ -629,6 +634,12 @@
   }
   function drawOrder(delta) {
     chainRun.elapsed += delta
+    // Only this example is working: the same active-time clock freezes the
+    // loader during hidden/offscreen pauses, and each gate's resolution hold.
+    if (spinnerSpec) {
+      var glyph = spinnerSpec.frames[Math.floor(chainRun.elapsed / spinnerSpec.interval) % spinnerSpec.frames.length]
+      if (orderSpinner.textContent !== glyph) orderSpinner.textContent = glyph
+    }
     system.dataset.runElapsed = String(Math.round(chainRun.elapsed))
     var remaining = chainRun.elapsed
     for (var i = 0; i < orderKeys.length; i++) {

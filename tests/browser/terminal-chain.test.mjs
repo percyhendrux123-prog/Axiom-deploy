@@ -182,6 +182,81 @@ for (const width of [1440, 390]) test(`braille background drifts cheaply and fre
     assert.deepEqual(errors, []);
   } finally { await context.close(); }
 });
+test('braille loader runs only during a real walkthrough and freezes with its progress', async () => {
+  const { context, page, errors } = await open(390);
+  try {
+    await arrive(page, '#system');
+    const spinner = page.locator('.system__spinner');
+    await spinner.waitFor({ state: 'attached', timeout: 1500 });
+    assert.equal(await spinner.textContent(), '');
+    await page.getByRole('button', { name: 'Run one order', exact: true }).click();
+    await page.waitForFunction(() => document.querySelector('.system__spinner').textContent.length === 1);
+    const first = await spinner.textContent();
+    await page.waitForTimeout(140);
+    assert.notEqual(await spinner.textContent(), first);
+    await hide(page);
+    const frozen = await spinner.textContent();
+    await page.waitForTimeout(350);
+    assert.equal(await spinner.textContent(), frozen);
+    await show(page);
+    await page.waitForFunction(() => document.querySelector('#system').dataset.runStep === 'gatekeeper');
+    await shot(page, '#system', 'spinner-390-gate-check');
+    await page.keyboard.press('Escape');
+    assert.equal(await spinner.textContent(), '');
+    await page.waitForTimeout(200);
+    assert.equal(await spinner.textContent(), '');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.getByRole('button', { name: 'Run one order', exact: true }).click();
+    assert.equal(await spinner.textContent(), '', 'manual waiting is not working');
+    assert.deepEqual(errors, []);
+  } finally { await context.close(); }
+});
+for (const width of [1440, 390]) test(`LiquidMetal stays on one herm ring and pauses with the conductor (${width})`, async () => {
+  const { context, page, errors } = await open(width);
+  try {
+    await arrive(page, '#story');
+    await page.waitForFunction(() => window.__axConductor.chrome?.status().draws > 2);
+    assert.equal(await page.locator('.medallion__chrome').count(), 1);
+    assert.equal(await page.locator('.medallion__ring').count(), 1, 'SVG fallback retained');
+    assert.equal(await page.evaluate(() => window.__axConductor.chrome.status().error), 0);
+    const startDraws = await page.evaluate(() => window.__axConductor.chrome.status().draws);
+    await page.waitForTimeout(900);
+    const visibleDraws = await page.evaluate(() => window.__axConductor.chrome.status().draws) - startDraws;
+    assert.ok(visibleDraws > 2 && visibleDraws <= 12, `bounded shader draws: ${visibleDraws} / 900ms`);
+    await writeFile(join(evidence, `chrome-${width}.json`), JSON.stringify({ width, visibleDraws, sampleMs: 900, glError: 0, canvasCount: 1 }, null, 2));
+    await shot(page, '#story', `chrome-${width}`);
+    await hide(page);
+    const frozen = await page.evaluate(() => window.__axConductor.chrome.status().draws);
+    await page.waitForTimeout(400);
+    assert.equal(await page.evaluate(() => window.__axConductor.chrome.status().draws), frozen);
+    await show(page);
+    await arrive(page, '#work');
+    await page.waitForTimeout(150);
+    const offscreen = await page.evaluate(() => window.__axConductor.chrome.status().draws);
+    await page.waitForTimeout(400);
+    assert.equal(await page.evaluate(() => window.__axConductor.chrome.status().draws), offscreen);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.waitForFunction(() => !window.__axConductor.enabled);
+    assert.equal(await page.locator('.medallion__chrome:visible').count(), 0);
+    assert.deepEqual(errors, []);
+  } finally { await context.close(); }
+});
+test('no WebGL uses the original SVG; reduced motion allocates no chrome canvas', async () => {
+  for (const reduced of [false, true]) {
+    const { context, page, errors } = await open(390, reduced ? 'reduce' : 'no-preference');
+    try {
+      if (!reduced) await page.evaluate(() => {
+        const get = HTMLCanvasElement.prototype.getContext;
+        HTMLCanvasElement.prototype.getContext = function (kind, ...args) { return kind === 'webgl2' ? null : get.call(this, kind, ...args); };
+      });
+      await arrive(page, '#story');
+      await page.waitForTimeout(500);
+      assert.equal(await page.locator('.medallion__chrome').count(), 0);
+      assert.equal(await page.locator('.medallion__ring').count(), 1);
+      assert.deepEqual(errors, []);
+    } finally { await context.close(); }
+  }
+});
 for (const width of [1440, 390]) test(`Hermes herm is noticeably larger in live and static layouts (${width})`, async () => {
   for (const motion of ['no-preference', 'reduce']) {
     const { context, page, errors } = await open(width, motion);

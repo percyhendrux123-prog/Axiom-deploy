@@ -17,6 +17,10 @@ test('Paper LiquidMetal and only used cli-spinners frames ship locally with lice
   assert.equal(spinner.dots.interval, 80);
   assert.equal(spinner.dots.frames.length, 10);
   assert.equal(Object.keys(spinner).length, 1, 'only used dots family');
+  const context = vm.createContext({});
+  vm.runInContext(read('assets/axioma/vendor/cli-spinners-dots.js'), context);
+  assert.equal(JSON.stringify(context.AxCliSpinners), JSON.stringify(spinner), 'CSP-safe wrapper is the verbatim JSON');
+  assert.doesNotMatch(read('assets/axioma/chrome.js'), /requestAnimationFrame|setTimeout|setInterval/);
   assert.match(read('assets/axioma/vendor/LICENSE-cli-spinners.txt'), /MIT License/);
   for (const token of ['Paper Shaders', 'cli-spinners']) assert.ok(read('index.html').includes(token));
   for (const token of ['paper-liquid-metal.js', 'cli-spinners-dots.json']) assert.ok(read('netlify.toml').includes(token));
