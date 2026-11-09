@@ -8,7 +8,7 @@ const fixture = JSON.parse(read('tests/fixtures/polish-content.json'));
 
 test('polish preserves original copy, metadata, images, links and scripts on every route', () => {
   for (const [path, expected] of Object.entries(fixture)) {
-    const content = read(path).replace('home.js?v=7', 'home.js?v=5').replace(/<link rel="stylesheet"[^>]*>/g, '').replace(/ role="group"/g, '').replace(/\s+/g, ' ').trim();
+    const content = read(path).replace('home.js?v=7', 'home.js?v=5').replace('chain-terminal.js?v=2', 'chain-terminal.js?v=1').replace(/<link rel="stylesheet"[^>]*>/g, '').replace(/ role="group"/g, '').replace(/\s+/g, ' ').trim();
     assert.equal(createHash('sha256').update(content).digest('hex'), expected, path);
     if (path !== 'index.html') assert.ok(read(path).includes('/assets/firm.css?v=7'), `${path}: shared letterhead stylesheet`);
   }

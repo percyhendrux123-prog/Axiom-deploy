@@ -358,7 +358,10 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 .system__lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
 .system__terminal canvas{display:block;width:100%;height:100%;pointer-events:none}
 .system__alternative{padding:12px 20px;font-size:13px;color:var(--mid)}
-.has-terminal .system__alternative{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);padding:0}
+/* Commit the enhanced layout with its engine/controls, not the viewport-lazy draw.
+   Waiting for has-terminal removed this paragraph's height during scrolling.
+   No-JS/failed-engine keeps it visible; enhanced mode keeps it available to AT. */
+.system.is-interactive.has-terminal-engine .system__alternative{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);padding:0}
 .has-terminal .system__board button{color:transparent;background:transparent;border-color:transparent;text-decoration:none}
 .has-terminal .system__board button:focus-visible{outline:2px solid var(--strong);outline-offset:3px}
 .system__controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:12px 20px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--dim)}

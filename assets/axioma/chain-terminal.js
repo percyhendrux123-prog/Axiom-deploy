@@ -29,6 +29,9 @@
   var canvas = display.getContainer()
   canvas.setAttribute('aria-hidden', 'true')
   system.querySelector('.system__terminal').appendChild(canvas)
+  // Reserve the enhanced layout before the viewport-lazy first draw. Keep
+  // the visible relationship fallback if ROT or this engine never loads.
+  system.classList.add('has-terminal-engine')
   var visible = false, ready = false, dirty = true, selected = 'intro'
   var cols = 1, rows = 1, small = false, cells = {}, previous = null
   var edges = [
