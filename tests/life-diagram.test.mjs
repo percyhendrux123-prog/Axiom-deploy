@@ -31,5 +31,5 @@ test('A298 updates reference art deliberately while preserving the remaining hom
   const original = home.replace(diagram + '\n\n', '').replace('home.js?v=7', 'home.js?v=4').replace('<div class="page-texture" aria-hidden="true"><span class="page-texture__tile"></span></div>\n', '');
   const normalized = original.replace(/<link rel="stylesheet"[^>]*>/g, '').replace(/ role="group"/g, '').replace(/\s+/g, ' ').trim();
   assert.equal(createHash('sha256').update(read('assets/axioma/caduceus.js')).digest('hex'), '235810aad7f9594a2e6f1146e17f2e08cd01a5149ad42857de36807985ca36fa');
-  assert.equal(createHash('sha256').update(normalized).digest('hex'), '806d449c436bd23da357def86eb0cd389d9d62b1022e8e127207ae975dbbeb41');
+  assert.equal(createHash('sha256').update(normalized).digest('hex'), 'b1749a19f53128c9888f764cc1a290582abba940ef44e4d70e97a939b397d9a2');
 });

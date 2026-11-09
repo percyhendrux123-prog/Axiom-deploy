@@ -256,6 +256,8 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 .medallion__tilt{position:relative;display:block;width:100%;height:100%;border-radius:50%;transform-style:preserve-3d;will-change:transform}
 .medallion__face{position:absolute;z-index:1;inset:10.5%;width:79%;height:79%;border-radius:50%;pointer-events:none}
 .medallion__ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible;will-change:transform}
+.medallion__chrome{position:absolute;inset:0;z-index:2;display:block;width:100%;height:100%;border-radius:50%;opacity:.15;pointer-events:none;mask-image:url('/assets/axioma/ring-mask.svg');mask-size:100% 100%;mask-repeat:no-repeat}
+.medallion__chrome[hidden]{display:none}
 .medallion__disc{fill:var(--panel)}
 .medallion__line{fill:none;stroke:var(--dim);stroke-width:.8}
 .medallion__text{font:500 8.4px var(--mono);fill:var(--mid)}

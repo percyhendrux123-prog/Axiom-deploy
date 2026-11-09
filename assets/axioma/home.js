@@ -136,6 +136,7 @@
 
     if (C.enabled) {
       if (texture && C.active) wait = Math.min(wait, textureTick(t))
+      if (C.chrome) wait = Math.min(wait, C.chrome.tick(t))
       var tn = now()
       var r = C.accent ? C.accent.tick(tn) : null
       if (r === true) endAccent(tn)
@@ -792,6 +793,7 @@
   function disable() {
     if (!C.enabled) return
     C.enabled = false
+    if (C.chrome) C.chrome.disable()
     textureLast = 0
     if (chainRun) stopOrder('intro')
     hidePulse()
@@ -822,6 +824,7 @@
   var pausedAnimations = []
   doc.addEventListener('visibilitychange', function () {
     if (doc.hidden) {
+      if (C.chrome) C.chrome.pause()
       if (C.accent && C.accent.pause) C.accent.pause()
       if (C.raf) win.cancelAnimationFrame(C.raf)
       if (C.timer) win.clearTimeout(C.timer)
@@ -842,6 +845,7 @@
   }
   C.current = function () { return C.accent ? C.accent.id : null }
   win.__axConductor = C
+  C.refresh = wake
 
   enable()
   if (mq.addEventListener) mq.addEventListener('change', function () { if (mq.matches) disable(); else enable() })
