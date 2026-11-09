@@ -223,9 +223,13 @@ test('reduced motion shows the complete wide art with no entrance or engine requ
     await shot(page, '.gate', 'caduceus-390-reduced');
   } finally { await context.close(); }
 });
-for (const width of [1440, 390]) test(`braille dots add 8–12 levels to night while text contrast stays AA (${width})`, async () => {
-  const { context, page, errors } = await open(width, 'reduce');
+for (const [width, motion] of [[1440, 'reduce'], [390, 'reduce'], [1440, 'no-preference'], [390, 'no-preference']]) test(`braille dots add 8–12 levels to night while text contrast stays AA (${width}, ${motion})`, async () => {
+  const { context, page, errors } = await open(width, motion);
   try {
+    if (motion === 'no-preference') {
+      await page.waitForTimeout(2500); // catches fractional drift frozen by a preference change
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+    }
     const png = await page.screenshot({ clip: { x: 0, y: 80, width: width === 390 ? 18 : 96, height: 600 } });
     const sample = await page.evaluate(async url => {
       const image = new Image(); image.src = url; await image.decode();
@@ -243,8 +247,9 @@ for (const width of [1440, 390]) test(`braille dots add 8–12 levels to night w
     assert.ok(sample.delta >= 8 && sample.delta <= 12, JSON.stringify({ ...sample, zoom: undefined }));
     assert.ok(sample.dimContrast >= 4.5 && sample.bodyContrast >= 4.5);
     const { zoom, ...metrics } = sample;
-    await writeFile(join(evidence, `background-${width}-2x.png`), Buffer.from(zoom.split(',')[1], 'base64'));
-    await writeFile(join(evidence, `background-${width}-contrast.json`), JSON.stringify(metrics, null, 2));
+    const suffix = motion === 'no-preference' ? '-after-drift' : '';
+    await writeFile(join(evidence, `background-${width}${suffix}-2x.png`), Buffer.from(zoom.split(',')[1], 'base64'));
+    await writeFile(join(evidence, `background-${width}${suffix}-contrast.json`), JSON.stringify(metrics, null, 2));
     assert.deepEqual(errors, []);
   } finally { await context.close(); }
 });

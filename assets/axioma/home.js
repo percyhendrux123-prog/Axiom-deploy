@@ -26,7 +26,9 @@
     var delta = t - textureLast
     if (delta < 250) return 250 - delta
     textureTime += delta; textureLast = t
-    texture.style.transform = 'translate(' + (6 * Math.sin(textureTime / 11000)) + 'px,' + (4 * Math.sin(textureTime / 17000)) + 'px)'
+    // Whole CSS pixels keep these subpixel dots visible throughout the drift
+    // and when reduced motion freezes the current position.
+    texture.style.transform = 'translate(' + Math.round(6 * Math.sin(textureTime / 11000)) + 'px,' + Math.round(4 * Math.sin(textureTime / 17000)) + 'px)'
     return 250
   }
 
