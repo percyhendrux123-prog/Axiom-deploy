@@ -7,7 +7,7 @@ import { chromium } from 'playwright';
 import { measureTargets } from './target-geometry.mjs';
 
 const dist = resolve(new URL('../..', import.meta.url).pathname, 'dist');
-const routes = ['/', '/notes/', '/notes/one-front-door/', '/notes/one-tempo/', '/notes/the-gap-is-the-user/', '/notes/the-outcome/', '/notes/the-gathering/', '/notes/left-foot-right-foot/', '/field-reports/insurance-client-care/', '/privacy/', '/terms/', '/baton-rouge/', '/success.html'];
+const routes = ['/', '/notes/', '/notes/one-front-door/', '/notes/one-tempo/', '/notes/the-gap-is-the-user/', '/notes/the-outcome/', '/notes/the-gathering/', '/notes/left-foot-right-foot/', '/field-reports/insurance-client-care/', '/privacy/', '/terms/', '/baton-rouge/', '/success.html', '/operator-layer/'];
 let server, browser, base;
 before(async () => {
   const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.ttf': 'font/ttf', '.m4a': 'audio/mp4', '.woff2': 'font/woff2', '.webp': 'image/webp' };

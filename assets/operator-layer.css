@@ -1,0 +1,51 @@
+/* Deploy Axiom: /operator-layer/ founder page (A311).
+   Loaded after firm.css and axioma/pages.css. The diagram figure re-scopes
+   its own palette (the site's figure rule: .article figure is a light plate,
+   so a figure that keeps a different palette must set it on itself). */
+
+.article .ol-figure{
+  --ol-bg:#121316;--ol-strong:#f2eee6;--ol-dim:#96928a;--ol-brass:#a58a5e;--ol-rule:#3a3834;
+  background:var(--ol-bg);color:var(--ol-strong);border:1px solid var(--rule);
+  /* break out of the 680px reading column, never past the viewport */
+  margin:44px calc((min(1040px, 100vw - 40px) - 100%) / -2);
+  padding:24px 24px 18px;
+}
+.article .ol-figure figcaption{color:var(--ol-dim);font-size:15px;margin-top:14px}
+.ol-diagram{display:block;width:100%;height:auto;font-family:var(--display)}
+.ol-diagram--wide{aspect-ratio:1720 / 660}
+.ol-diagram--tall{aspect-ratio:980 / 860;display:none}
+@media (max-width:720px){
+  .ol-diagram--wide{display:none}
+  .ol-diagram--tall{display:block}
+  .article .ol-figure{padding:14px 10px 12px}
+}
+.ol-diagram .f-bg{fill:var(--ol-bg)}
+.ol-diagram .f-strong{fill:var(--ol-strong)}
+.ol-diagram .f-dim{fill:var(--ol-dim)}
+.ol-diagram .f-brass{fill:var(--ol-brass)}
+.ol-diagram .s-rule{stroke:var(--ol-rule)}
+.ol-diagram .s-dim{stroke:var(--ol-dim)}
+.ol-diagram .s-brass{stroke:var(--ol-brass)}
+
+.operator-layer h2{scroll-margin-top:96px}
+.ol-steps li,.ol-limits li{margin-bottom:12px}
+.ol-steps li::marker{color:var(--strong);font-family:var(--serif)}
+
+.ol-columns{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:baseline}
+.ol-columns__label{font:600 12px/1.5 var(--serif);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);flex-basis:100%}
+.ol-columns code{overflow-wrap:anywhere}
+
+.ol-source{display:block;margin-top:6px;font-size:15px;color:var(--dim)}
+.ol-source a,.ol-brief p a{color:var(--strong);overflow-wrap:anywhere}
+
+.ol-brief{margin-top:64px;padding-top:8px;border-top:1px solid var(--rule)}
+.ol-template{margin:24px 0 0}
+.ol-template strong{font:600 12px/1.5 var(--serif);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.article .ol-template pre{margin:10px 0 0;white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.6 var(--serif)}
+.ol-fine{font-size:15px;color:var(--dim);margin-top:12px}
+.ol-actions{margin:24px 0}
+.ol-brief .ol-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;min-width:44px;padding:0 26px;
+  background:var(--strong);color:var(--night);border:1px solid var(--strong);font:600 12px/1 var(--serif);
+  letter-spacing:.16em;text-transform:uppercase;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.ol-brief .ol-button:hover{background:transparent;color:var(--strong)}
+.ol-button:focus-visible,.operator-layer a:focus-visible{outline:2px solid var(--strong);outline-offset:3px}

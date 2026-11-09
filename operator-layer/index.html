@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="What happens when a small team's AI agent hits a failure: six steps, where it stops, and what stays with the owner.">
+  <link rel="canonical" href="https://deployaxiom.com/operator-layer/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The operator layer · Deploy Axiom">
+  <meta property="og:description" content="What happens when a small team's AI agent hits a failure.">
+  <meta property="og:image" content="https://deployaxiom.com/assets/axiom-og.png">
+  <meta property="og:url" content="https://deployaxiom.com/operator-layer/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The operator layer · Deploy Axiom">
+  <meta name="twitter:description" content="What happens when a small team's AI agent hits a failure.">
+  <link rel="icon" href="/assets/avatar.svg" type="image/svg+xml">
+  <title>The operator layer · Deploy Axiom</title>
+  <link rel="stylesheet" href="/assets/firm.css?v=7">
+<link rel="stylesheet" href="/assets/axioma/pages.css?v=1">
+<link rel="stylesheet" href="/assets/operator-layer.css?v=1">
+</head>
+<body>
+  <header class="masthead">
+    <div class="frame masthead-row">
+      <a class="brand" href="/" aria-label="Deploy Axiom, home"><img src="/assets/wordmark-ink.svg" alt="AXIOM" width="140" height="41"></a>
+      <nav aria-label="Main">
+        <a href="/#work">Engagements</a>
+        <a href="/notes/">Notes</a>
+        <a class="nav-cta" href="#brief">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <article class="article operator-layer">
+      <h1>The operator layer</h1>
+      <p class="dek">What happens when a small team's AI agent hits a failure.</p>
+      <div class="entablature" aria-hidden="true"></div>
+
+      <figure class="ol-figure">
+<svg class="ol-diagram ol-diagram--wide" xmlns="http://www.w3.org/2000/svg" width="1720" height="660" viewBox="100 300 1720 660" role="img" aria-labelledby="ol-wide-title"><title id="ol-wide-title">Diagram of the operator layer: the owner&#x27;s agent escalates to the operator, the owner gets a holding reply, the operator fixes with backups first and calls specialists only when needed, re-runs the job, adds a rule against a repeat, and sends the owner a plain report. Decisions and task events go to the record.</title><defs><marker id="wide-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="f-brass" d="M0,0 L10,5 L0,10 z" fill="#A58A5E"/></marker><marker id="wide-ahd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="f-dim" d="M0,0 L10,5 L0,10 z" fill="#96928A"/></marker></defs>
+<rect class="f-bg s-rule" x="560.0" y="326.0" width="400" height="108" rx="6" fill="#121316" stroke="#3A3834" stroke-width="2"/>
+<text class="f-strong" x="760" y="376" font-size="30" fill="#F2EEE6" text-anchor="middle">Owner</text>
+<text class="f-dim" x="760" y="409" font-size="19" fill="#96928A" text-anchor="middle">approves money, prices, promises</text>
+<rect class="f-bg s-rule" x="130.0" y="586.0" width="340" height="108" rx="6" fill="#121316" stroke="#3A3834" stroke-width="2"/>
+<text class="f-strong" x="300" y="636" font-size="30" fill="#F2EEE6" text-anchor="middle">Owner&#x27;s agent</text>
+<text class="f-dim" x="300" y="669" font-size="19" fill="#96928A" text-anchor="middle">runs the day-to-day work</text>
+<rect class="f-bg s-brass" x="830.0" y="586.0" width="340" height="108" rx="6" fill="#121316" stroke="#A58A5E" stroke-width="2"/>
+<text class="f-strong" x="1000" y="636" font-size="30" fill="#F2EEE6" text-anchor="middle">Operator</text>
+<text class="f-dim" x="1000" y="669" font-size="19" fill="#96928A" text-anchor="middle">diagnoses, fixes, reports</text>
+<rect class="f-bg s-dim" x="1390.0" y="586.0" width="340" height="108" rx="6" fill="#121316" stroke="#96928A" stroke-width="2" stroke-dasharray="8 6"/>
+<text class="f-strong" x="1560" y="636" font-size="30" fill="#F2EEE6" text-anchor="middle">Specialists</text>
+<text class="f-dim" x="1560" y="669" font-size="19" fill="#96928A" text-anchor="middle">called in when a fix needs them</text>
+<path class="s-dim" d="M560,380 L300,380 L300,582.0" fill="none" stroke="#96928A" stroke-width="2.4" stroke-dasharray="6 7" marker-end="url(#wide-ahd)"/>
+<text class="f-dim" x="314" y="490" font-size="19" fill="#96928A" text-anchor="start">directs</text>
+<path class="s-brass" d="M474.0,620 L824.0,620" fill="none" stroke="#A58A5E" stroke-width="2.4" marker-end="url(#wide-ah)"/>
+<text class="f-brass" x="650.0" y="604" font-size="19" fill="#A58A5E" text-anchor="middle">1  escalates in one line</text>
+<path class="s-brass" d="M826.0,666 L476.0,666" fill="none" stroke="#A58A5E" stroke-width="2.4" marker-end="url(#wide-ah)"/>
+<text class="f-brass" x="650.0" y="702" font-size="19" fill="#A58A5E" text-anchor="middle">5  adds a rule to catch a repeat</text>
+<path class="s-brass" d="M970,582.0 L970,440.0" fill="none" stroke="#A58A5E" stroke-width="2.4" marker-end="url(#wide-ah)"/>
+<path class="s-brass" d="M1030,582.0 L1030,386 L966,386" fill="none" stroke="#A58A5E" stroke-width="2.4" marker-end="url(#wide-ah)"/>
+<text class="f-brass" x="1050" y="490" font-size="20" fill="#A58A5E" text-anchor="start">2  holding reply, first</text>
+<text class="f-brass" x="1050" y="522" font-size="20" fill="#A58A5E" text-anchor="start">6  plain report, last</text>
+<path class="s-brass" d="M1174.0,620 L1384.0,620" fill="none" stroke="#A58A5E" stroke-width="2.4" marker-end="url(#wide-ah)"/>
+<text class="f-brass" x="1280.0" y="604" font-size="19" fill="#A58A5E" text-anchor="middle">3  fix, backups first</text>
+<path class="s-brass" d="M1386.0,666 L1176.0,666" fill="none" stroke="#A58A5E" stroke-width="2.4" marker-end="url(#wide-ah)"/>
+<text class="f-brass" x="1280.0" y="702" font-size="19" fill="#A58A5E" text-anchor="middle">4  operator re-runs it</text>
+<path class="s-dim" d="M300,698.0 L300,844" fill="none" stroke="#96928A" stroke-width="2.4" stroke-dasharray="6 7" marker-end="url(#wide-ahd)"/>
+<path class="s-dim" d="M1000,698.0 L1000,844" fill="none" stroke="#96928A" stroke-width="2.4" stroke-dasharray="6 7" marker-end="url(#wide-ahd)"/>
+<path class="s-dim" d="M1560,698.0 L1560,844" fill="none" stroke="#96928A" stroke-width="2.4" stroke-dasharray="6 7" marker-end="url(#wide-ahd)"/>
+<rect class="f-bg s-dim" x="110" y="850" width="1700" height="96" rx="6" fill="#121316" stroke="#96928A" stroke-width="2" stroke-dasharray="2 6"/>
+<text class="f-strong" x="142" y="908.0" font-size="28" fill="#F2EEE6" text-anchor="start">Record</text>
+<text class="f-dim" x="1778" y="906.0" font-size="19" fill="#96928A" text-anchor="end">decisions and task events, written as they happen</text>
+</svg>
+<svg class="ol-diagram ol-diagram--tall" xmlns="http://www.w3.org/2000/svg" width="980" height="860" viewBox="50 262 980 860" role="img" aria-labelledby="ol-tall-title"><title id="ol-tall-title">Diagram of the operator layer: the owner&#x27;s agent escalates to the operator, the owner gets a holding reply, the operator fixes with backups first and calls specialists only when needed, re-runs the job, adds a rule against a repeat, and sends the owner a plain report. Decisions and task events go to the record.</title><defs><marker id="tall-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="f-brass" d="M0,0 L10,5 L0,10 z" fill="#A58A5E"/></marker><marker id="tall-ahd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="f-dim" d="M0,0 L10,5 L0,10 z" fill="#96928A"/></marker></defs>
+<rect class="f-bg s-rule" x="270.0" y="278.0" width="380" height="104" rx="6" fill="#121316" stroke="#3A3834" stroke-width="2"/>
+<text class="f-strong" x="460" y="326" font-size="30" fill="#F2EEE6" text-anchor="middle">Owner</text>
+<text class="f-dim" x="460" y="359" font-size="19" fill="#96928A" text-anchor="middle">approves money, prices, promises</text>
+<rect class="f-bg s-rule" x="80.0" y="548.0" width="300" height="104" rx="6" fill="#121316" stroke="#3A3834" stroke-width="2"/>
+<text class="f-strong" x="230" y="596" font-size="30" fill="#F2EEE6" text-anchor="middle">Owner&#x27;s agent</text>
+<text class="f-dim" x="230" y="629" font-size="19" fill="#96928A" text-anchor="middle">runs the day-to-day work</text>
+<rect class="f-bg s-brass" x="660.0" y="548.0" width="300" height="104" rx="6" fill="#121316" stroke="#A58A5E" stroke-width="2"/>
+<text class="f-strong" x="810" y="596" font-size="30" fill="#F2EEE6" text-anchor="middle">Operator</text>
+<text class="f-dim" x="810" y="629" font-size="19" fill="#96928A" text-anchor="middle">diagnoses, fixes, reports</text>
+<rect class="f-bg s-dim" x="660.0" y="818.0" width="300" height="104" rx="6" fill="#121316" stroke="#96928A" stroke-width="2" stroke-dasharray="8 6"/>
+<text class="f-strong" x="810" y="866" font-size="30" fill="#F2EEE6" text-anchor="middle">Specialists</text>
+<text class="f-dim" x="810" y="899" font-size="19" fill="#96928A" text-anchor="middle">called in when a fix needs them</text>
+<path class="s-dim" d="M270,330 L230,330 L230,544.0" fill="none" stroke="#96928A" stroke-width="2.4" stroke-dasharray="6 7" marker-end="url(#tall-ahd)"/>
+<text class="f-dim" x="216" y="450" font-size="19" fill="#96928A" text-anchor="end">directs</text>
+<path class="s-brass" d="M384.0,582 L654.0,582" fill="none" stroke="#A58A5E" stroke-width="2.4" marker-end="url(#tall-ah)"/>
+<text class="f-brass" x="520.0" y="566" font-size="19" fill="#A58A5E" text-anchor="middle">1  escalates in one line</text>
+<path class="s-brass" d="M656.0,626 L386.0,626" fill="none" stroke="#A58A5E" stroke-width="2.4" marker-end="url(#tall-ah)"/>
+<text class="f-brass" x="520.0" y="662" font-size="19" fill="#A58A5E" text-anchor="middle">5  adds a rule to catch a repeat</text>
+<path class="s-brass" d="M780,544.0 L780,350 L656,350" fill="none" stroke="#A58A5E" stroke-width="2.4" marker-end="url(#tall-ah)"/>
+<path class="s-brass" d="M840,544.0 L840,310 L656,310" fill="none" stroke="#A58A5E" stroke-width="2.4" marker-end="url(#tall-ah)"/>
+<text class="f-brass" x="860" y="450" font-size="19" fill="#A58A5E" text-anchor="start">2  holding reply, first</text>
+<text class="f-brass" x="860" y="480" font-size="19" fill="#A58A5E" text-anchor="start">6  plain report, last</text>
+<path class="s-brass" d="M780,656.0 L780,812.0" fill="none" stroke="#A58A5E" stroke-width="2.4" marker-end="url(#tall-ah)"/>
+<text class="f-brass" x="760" y="750" font-size="19" fill="#A58A5E" text-anchor="end">3  fix, backups first</text>
+<path class="s-brass" d="M840,814.0 L840,658.0" fill="none" stroke="#A58A5E" stroke-width="2.4" marker-end="url(#tall-ah)"/>
+<text class="f-brass" x="760" y="782" font-size="19" fill="#A58A5E" text-anchor="end">4  operator re-runs the job</text>
+<path class="s-dim" d="M230,656.0 L230,1004" fill="none" stroke="#96928A" stroke-width="2.4" stroke-dasharray="6 7" marker-end="url(#tall-ahd)"/>
+<path class="s-dim" d="M810,926.0 L810,1004" fill="none" stroke="#96928A" stroke-width="2.4" stroke-dasharray="6 7" marker-end="url(#tall-ahd)"/>
+<path class="s-dim" d="M964.0,600 L985,600 L985,1004" fill="none" stroke="#96928A" stroke-width="2.4" stroke-dasharray="6 7" marker-end="url(#tall-ahd)"/>
+<rect class="f-bg s-dim" x="70" y="1010" width="940" height="96" rx="6" fill="#121316" stroke="#96928A" stroke-width="2" stroke-dasharray="2 6"/>
+<text class="f-strong" x="102" y="1068.0" font-size="28" fill="#F2EEE6" text-anchor="start">Record</text>
+<text class="f-dim" x="978" y="1066.0" font-size="19" fill="#96928A" text-anchor="end">decisions and task events, written as they happen</text>
+</svg>
+        <figcaption>In the normal path the owner hears twice: at the start, and with the fix proven.</figcaption>
+      </figure>
+
+      <section aria-labelledby="ol-steps-title">
+        <h2 id="ol-steps-title">How it works</h2>
+        <ol class="ol-steps">
+          <li>The agent escalates in one line: what failed, and where.</li>
+          <li>The owner gets a holding reply.</li>
+          <li>The operator finds the cause and backs up what it's about to change.</li>
+          <li>The operator runs the job again. A fix is a claim until it passes.</li>
+          <li>A rule goes in so a repeat gets caught.</li>
+          <li>The owner gets a plain report: what broke, what changed, what's next.</li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="ol-stops-title">
+        <h2 id="ol-stops-title">Where it stops</h2>
+        <ul class="ol-limits">
+          <li>The loop starts when a failure is noticed. Failures nobody notices need their own checks; we don't claim the loop catches them.</li>
+          <li>A re-run proves the job completes. It doesn't prove every output is right.</li>
+          <li>One owner-approval question is a third contact; "hears twice" is the normal path, not a promise.</li>
+        </ul>
+        <p>The operator is Axiom: AI agents under one accountable human, working with the access the owner granted, inside the owner's rules. It does not decide money, prices or promises.</p>
+      </section>
+
+      <section aria-labelledby="ol-owner-title">
+        <h2 id="ol-owner-title">What stays with the owner</h2>
+        <p>By rule, the owner decides anything involving money, prices or promises, and the operator asks rather than acts on those.</p>
+      </section>
+
+      <section aria-labelledby="ol-record-title">
+        <h2 id="ol-record-title">What the record holds</h2>
+        <p>Decisions and task events are written down as they happen.</p>
+        <p class="ol-columns"><span class="ol-columns__label">Task event columns</span> <code>task_id</code> <code>run_id</code> <code>kind</code> <code>payload</code> <code>created_at</code></p>
+      </section>
+
+      <section aria-labelledby="ol-why-title">
+        <h2 id="ol-why-title">Why small teams</h2>
+        <p>Funded teams are getting smaller. Carta's State of Startup Compensation, H2 2025, puts the median seed-stage team at four employees, and average Series B headcount fell from 53 in 2023 to 45 in 2025. <span class="ol-source">Source: <a href="https://carta.com/data/startup-compensation-h2-2025/">carta.com/data/startup-compensation-h2-2025</a></span></p>
+        <p>A smaller team leaves fewer people to notice when an agent fails, so the path a failure takes has to be decided ahead of time. The loop above has the same shape as what Google's SRE book calls a postmortem: a written record, the cause, and the follow-up that keeps it from happening again. <span class="ol-source">Source: <a href="https://sre.google/sre-book/postmortem-culture/">sre.google/sre-book/postmortem-culture</a></span></p>
+      </section>
+
+      <section class="ol-brief" id="brief" aria-labelledby="ol-brief-title">
+        <h2 id="ol-brief-title">Start an engagement.</h2>
+        <p>Tell us the work you keep having to remember. We write down what starts it, what counts as done, and where it stops for you.</p>
+        <div class="ol-template"><strong>Brief template</strong>
+<pre id="ol-brief-template">BRIEF
+The recurring work:
+Where continuity breaks:
+What resolution looks like:
+Where did you hear about us?
+
+No secrets included.</pre>
+        </div>
+        <p class="ol-fine"><strong>Local only.</strong> Do not include passwords, API keys, private records, or other secrets.</p>
+        <p class="ol-actions"><a class="ol-button" data-brief-mailto href="mailto:percy@deployaxiom.com?subject=Brief%3A%20operator%20layer&amp;body=BRIEF%0AThe%20recurring%20work%3A%0AWhere%20continuity%20breaks%3A%0AWhat%20resolution%20looks%20like%3A%0AWhere%20did%20you%20hear%20about%20us%3F%0A%0ANo%20secrets%20included.">Email the brief</a></p>
+        <p>Copy this template, then email it to <a data-brief-mailto href="mailto:percy@deployaxiom.com?subject=Brief%3A%20operator%20layer">percy@deployaxiom.com</a>.</p>
+      </section>
+    </article>
+  </main>
+  <footer class="footer">
+    <div class="frame footer-row">
+      <img src="/assets/wordmark-stone.svg" alt="AXIOM" width="120" height="35">
+      <p>Deploy Axiom · Baton Rouge, Louisiana<br>Nothing in your business waits on you to remember it.</p>
+      <p class="footer-links"><a href="mailto:percy@deployaxiom.com">percy@deployaxiom.com</a> · <a href="https://www.instagram.com/deployaxiom/">Instagram</a> · <a href="/">Home</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></p>
+    </div>
+  </footer>
+  <script src="/assets/operator-layer.js?v=1" defer></script>
+</body>
+</html>
