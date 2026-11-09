@@ -280,6 +280,8 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
   .hero__line,.hero__copy>.actions{grid-column:1}
   .hero>.plain{grid-column:2;grid-row:3/span 2}
   .head h2{white-space:nowrap}
+  .gate__quote{width:100%}
+  .gate__quote blockquote p{max-width:none;white-space:nowrap;text-wrap:nowrap;font-size:3.4cqw}
 }
 @media (max-width:900px){
   .hero{grid-template-columns:minmax(0,1fr);align-items:start}

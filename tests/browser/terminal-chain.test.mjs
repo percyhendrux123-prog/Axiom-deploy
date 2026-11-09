@@ -147,7 +147,7 @@ for (const width of [1440, 390]) test(`rot Display uses one canvas, including af
 for (const width of [901, 1024, 1440, 390]) test(`display headlines stay on one desktop line without overflow (${width})`, async () => {
   const { context, page, errors } = await open(width, 'reduce');
   try {
-    const headings = await page.locator('.hero__title, .head h2').evaluateAll(els => els.map(el => {
+    const headings = await page.locator('.hero__title, .head h2, .gate__quote blockquote p').evaluateAll(els => els.map(el => {
       const range = document.createRange(); range.selectNode(el.firstChild);
       const rect = el.getBoundingClientRect();
       return { text: el.textContent, lines: range.getClientRects().length, left: rect.left, right: Math.max(rect.right, ...Array.from(range.getClientRects()).map(r => r.right)), height: rect.height };
