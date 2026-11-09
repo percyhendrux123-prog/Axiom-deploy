@@ -12,6 +12,17 @@
       this._backend.schedule = function () {}
       return this
     }
+    // Keep ROT's character geometry in CSS pixels, but rasterize text at the
+    // full device resolution. Resizing resets context state, so restore it.
+    fit(rect) {
+      var ctx = this._backend._ctx, c = ctx.canvas, options = this.getOptions()
+      var font = ctx.font, align = ctx.textAlign, baseline = ctx.textBaseline
+      var width = options.width * this._backend._spacingX, height = options.height * this._backend._spacingY
+      var dpr = window.devicePixelRatio || 1
+      c.width = Math.round(rect.width * dpr); c.height = Math.round(rect.height * dpr)
+      ctx.setTransform(c.width / width, 0, 0, c.height / height, 0, 0)
+      ctx.font = font; ctx.textAlign = align; ctx.textBaseline = baseline
+    }
     flush() { super._tick() }
   }
   var display = new ConductorDisplay({ width: 1, height: 1, fontFamily: 'IBM Plex Mono, monospace', fontSize: 13, spacing: 1, fg: '#8A8E96', bg: '#141518' })
@@ -76,6 +87,7 @@
     var size = display.computeSize(rect.width, rect.height)
     cols = Math.max(1, size[0]); rows = Math.max(1, size[1])
     display.setOptions({ width: cols, height: rows })
+    display.fit(rect)
     cells = {}; previous = null
     edgeSegments[small ? 1 : 0].forEach(function (path) {
       path.forEach(function (s) {
@@ -134,6 +146,7 @@
     geometry: function () { return { small: small, edges: edgeSegments[small ? 1 : 0], routes: routeSegments[small ? 1 : 0] } }
   }
   new ResizeObserver(render).observe(board)
+  window.addEventListener('resize', render) // includes DPR changes between screens
   new IntersectionObserver(function (entries) { visible = entries[0].isIntersecting; if (visible && dirty) render() }).observe(board)
   document.addEventListener('visibilitychange', function () { if (!document.hidden && dirty) render() })
   document.fonts.ready.then(function () { ready = true; render() })

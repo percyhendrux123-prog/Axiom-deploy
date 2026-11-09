@@ -23,8 +23,8 @@ before(async () => {
   await mkdir(evidence, { recursive: true });
 });
 after(async () => { await browser?.close(); if (server) await new Promise(done => server.close(done)); });
-async function open(width, reducedMotion = 'no-preference') {
-  const context = await browser.newContext({ viewport: { width, height: 1000 }, reducedMotion });
+async function open(width, reducedMotion = 'no-preference', deviceScaleFactor = 1) {
+  const context = await browser.newContext({ viewport: { width, height: 1000 }, reducedMotion, deviceScaleFactor });
   const page = await context.newPage();
   await page.addInitScript(() => {
     window.__qaRafCallbacks = 0;
@@ -82,6 +82,23 @@ test('reduced-motion teardown drops live sizing before a mobile resize', async (
       const box = await page.locator(selector).boundingBox();
       assert.ok(box.x >= 0 && box.x + box.width <= 320, `${selector} fits after teardown/resize`);
     }
+  } finally { await context.close(); }
+});
+for (const [width, dpr] of [[1440, 2], [390, 3]]) test(`terminal backing store matches CSS size at DPR ${dpr} (${width})`, async () => {
+  const { context, page, errors } = await open(width, 'reduce', dpr);
+  try {
+    await arrive(page, '#system');
+    await page.waitForSelector('.has-terminal');
+    const bounds = await page.locator('#system canvas').evaluate(c => {
+      const r = c.getBoundingClientRect();
+      return { backing: [c.width, c.height], css: [r.width, r.height], dpr: devicePixelRatio };
+    });
+    for (let axis = 0; axis < 2; axis++) assert.ok(Math.abs(bounds.backing[axis] - bounds.css[axis] * dpr) <= 1, JSON.stringify(bounds));
+    assert.equal(await page.locator('#system canvas').count(), 1);
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth), width);
+    await writeFile(join(evidence, `terminal-${width}@${dpr}x.json`), JSON.stringify(bounds, null, 2));
+    await shot(page, '#system', `terminal-${width}@${dpr}x`);
+    assert.deepEqual(errors, []);
   } finally { await context.close(); }
 });
 for (const width of [1440, 390]) test(`rot Display uses one canvas, including after breakpoint resize (${width})`, async () => {
