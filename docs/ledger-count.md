@@ -4,6 +4,8 @@ The ledger on the homepage (`#proof`) shows three numbers from our own operating
 
 ## The rule
 
+The ledger must have the columns `date`, `status`, `evidence` and `failure_recovered`; if any is missing the script stops with an error instead of counting. Field values are compared after trimming surrounding spaces; otherwise the match is exact and case-sensitive.
+
 One CSV data row is one outcome. Count only rows whose `date` starts with an ISO date (`YYYY-MM-DD`), up to and including the "as of" date.
 
 | Number | Counts | Page label |

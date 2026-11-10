@@ -5,6 +5,10 @@
 // Usage: node scripts/ledger-count.mjs <path-to-OS-EVENTS.csv> [--through YYYY-MM-DD] [--json]
 import { readFileSync } from 'node:fs';
 
+// Columns the rule depends on. A ledger without any of them is refused, never counted.
+export const REQUIRED_COLUMNS = ['date', 'status', 'evidence', 'failure_recovered'];
+
+// Field values are compared after trimming surrounding whitespace (see docs/ledger-count.md).
 export function parseCsv(text) {
   const rows = [];
   let row = [];
@@ -27,7 +31,10 @@ export function parseCsv(text) {
   }
   row.push(field);
   if (row.some((v) => v !== '')) rows.push(row);
-  const [header, ...body] = rows;
+  const [header = [], ...body] = rows;
+  const names = header.map((name) => name.trim());
+  const missing = REQUIRED_COLUMNS.filter((c) => !names.includes(c));
+  if (missing.length) throw new Error(`ledger CSV is missing column(s): ${missing.join(', ')}`);
   return body.map((values) => Object.fromEntries(header.map((name, i) => [name.trim(), (values[i] ?? '').trim()])));
 }
 
@@ -36,7 +43,7 @@ export function countLedger(rows, through) {
   return {
     through: through ?? null,
     outcomes: inRange.length,
-    verified: inRange.filter((r) => r.status === 'verified' && r.evidence !== '').length,
+    verified: inRange.filter((r) => r.status === 'verified' && typeof r.evidence === 'string' && r.evidence.length > 0).length,
     recovered: inRange.filter((r) => r.failure_recovered === 'yes').length,
     skippedUndated: rows.length - rows.filter((r) => /^\d{4}-\d{2}-\d{2}/.test(r.date)).length,
   };
@@ -48,11 +55,13 @@ if (isMain) {
   const path = args.find((a) => !a.startsWith('--') && !/^\d{4}-\d{2}-\d{2}$/.test(a));
   const t = args.indexOf('--through');
   const through = t >= 0 ? args[t + 1] : undefined;
-  if (!path || (through && !/^\d{4}-\d{2}-\d{2}$/.test(through))) {
+  if (!path || (t >= 0 && !/^\d{4}-\d{2}-\d{2}$/.test(through ?? ''))) {
     console.error('usage: node scripts/ledger-count.mjs <OS-EVENTS.csv> [--through YYYY-MM-DD] [--json]');
     process.exit(2);
   }
-  const result = countLedger(parseCsv(readFileSync(path, 'utf8')), through);
+  let result;
+  try { result = countLedger(parseCsv(readFileSync(path, 'utf8')), through); }
+  catch (err) { console.error(err.message); process.exit(2); }
   if (args.includes('--json')) console.log(JSON.stringify(result));
   else {
     console.log(`through:   ${result.through ?? 'all rows'}`);

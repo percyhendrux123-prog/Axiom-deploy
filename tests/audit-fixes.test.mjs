@@ -3,6 +3,9 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseCsv, countLedger } from '../scripts/ledger-count.mjs';
+import { spawnSync } from 'node:child_process';
+import { writeFileSync, mkdtempSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 
 // A339 (11-09 site audit): sitemap, 404, favicon, share tags, title lengths, ledger rule.
 const root = new URL('..', import.meta.url).pathname;
@@ -70,4 +73,28 @@ test('ledger shows an as-of date, and the counting rule matches its labels', () 
   const csv = 'date,task_id,status,evidence,failure_recovered\r\n2026-11-01,a,verified,file.md,yes\n2026-11-02,b,verified,,no\n2026-11-03,"c, quoted",done,x,"yes: note"\n2026-11-10,d,verified,y,yes\nnot-a-date,e,verified,z,yes\n';
   assert.deepEqual(countLedger(parseCsv(csv), '2026-11-09'), { through: '2026-11-09', outcomes: 3, verified: 1, recovered: 1, skippedUndated: 1 });
   assert.ok(existsSync(join(root, 'docs/ledger-count.md')));
+});
+
+test('ledger counter refuses a CSV missing a rule column, never counts it (A340 P2)', () => {
+  assert.throws(() => parseCsv('date,status,failure_recovered\n2026-11-01,verified,yes\n'), /missing column\(s\): evidence/);
+  assert.throws(() => parseCsv('date,status,evidence\n2026-11-01,verified,x\n'), /failure_recovered/);
+});
+
+test('ledger counter: trimmed exact match, case-sensitive, as documented (A340 P2)', () => {
+  const csv = 'date,status,evidence,failure_recovered\n2026-11-01, verified , f ,yes \n2026-11-02,Verified,f,Yes\n2026-11-03,verified,   ,yes\n';
+  assert.deepEqual(countLedger(parseCsv(csv), '2026-11-09'), { through: '2026-11-09', outcomes: 3, verified: 1, recovered: 2, skippedUndated: 0 });
+  const doc = read('docs/ledger-count.md');
+  assert.match(doc, /trimming surrounding spaces/);
+  assert.match(doc, /missing the script stops/);
+});
+
+test('ledger CLI: --through without a date exits 2 (A340 non-blocking)', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'ledger-'));
+  const f = join(dir, 'l.csv');
+  writeFileSync(f, 'date,status,evidence,failure_recovered\n2026-11-01,verified,x,yes\n');
+  const script = join(root, 'scripts/ledger-count.mjs');
+  assert.equal(spawnSync(process.execPath, [script, f, '--through']).status, 2);
+  assert.equal(spawnSync(process.execPath, [script, f, '--through', '2026-11-09']).status, 0);
+  writeFileSync(f, 'date,status\n2026-11-01,verified\n');
+  assert.equal(spawnSync(process.execPath, [script, f]).status, 2);
 });
