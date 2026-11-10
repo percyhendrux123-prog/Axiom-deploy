@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Diagram: Percy sends one request to AXIOM, which routes cards to specialists, checks their work, and returns one answer.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Diagram: The owner sends one request to AXIOM, which routes cards to specialists, checks their work, and returns one answer.">
       <style>text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}</style><defs>
         <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#121316"/></marker>
         <marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8C7350"/></marker>
       </defs>
 
-      <!-- Percy -->
+      <!-- Owner -->
       <rect x="10" y="150" width="120" height="100" rx="4" fill="#fff" stroke="#121316" stroke-width="1.5"/>
       <text x="70" y="195" text-anchor="middle" font-size="16" font-weight="700" fill="#121316">Owner</text>
       <text x="70" y="216" text-anchor="middle" font-size="11" fill="#5d636b">one person</text>

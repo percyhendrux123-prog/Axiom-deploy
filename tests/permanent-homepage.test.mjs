@@ -115,8 +115,8 @@ test('archive is closed, indexed away, and preserves historical route context wi
 test('metadata and static assets are local, canonical, and shareable', () => {
   for (const marker of [
     '<link rel="canonical" href="https://deployaxiom.com/">',
-    'property="og:title"', 'property="og:description"', 'property="og:image" content="https://deployaxiom.com/assets/field-reports/check-log.png"',
-    'name="twitter:card"', 'name="twitter:image" content="https://deployaxiom.com/assets/field-reports/check-log.png"', 'property="og:image:alt" content="Example record. Client details removed."', 'name="twitter:image:alt" content="Example record. Client details removed."', 'name="theme-color" content="#0E0F11"', 'rel="icon" href="/assets/avatar.svg"',
+    'property="og:title"', 'property="og:description"', 'property="og:image" content="https://deployaxiom.com/assets/axiom-og.png"',
+    'name="twitter:card"', 'name="twitter:image" content="https://deployaxiom.com/assets/axiom-og.png"', 'property="og:image:alt" content="Deploy Axiom: The work runs. The authority stays yours."', 'name="twitter:image:alt" content="Deploy Axiom: The work runs. The authority stays yours."', 'name="theme-color" content="#0E0F11"', 'rel="icon" href="/assets/avatar.svg"',
   ]) assert.ok(homepage.includes(marker), `missing metadata marker: ${marker}`);
   for (const asset of ['assets/avatar.svg', 'assets/axiom-og.png', 'assets/wordmark-ink.svg', 'assets/wordmark-stone.svg']) {
     const fullPath = join(root, asset);

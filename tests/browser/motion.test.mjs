@@ -88,7 +88,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
       await page.evaluate(() => document.fonts.ready);
       assert.ok(await page.evaluate(() => window.__axConductor?.enabled), 'conductor is on');
       // The ledger waits at zero below the fold, but a screen reader hears the real number.
-      assert.deepEqual(await page.locator('#proof .ledger__cell .ax-sr').allTextContents(), ['247', '165', '99']);
+      assert.deepEqual(await page.locator('#proof .ledger__cell .ax-sr').allTextContents(), ['286', '187', '106']);
 
       let maxCursors = 0;
       const running = new Set();
@@ -118,7 +118,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
         assert.ok(e.t1 - e.t0 <= limit, `${e.id} lasted ${Math.round(e.t1 - e.t0)} ms`);
       }
       assert.ok(maxCursors <= 1, `at most one cursor on screen, saw ${maxCursors}`);
-      assert.deepEqual(await page.locator('#proof .ledger__num').allTextContents(), ['247', '165', '99']);
+      assert.deepEqual(await page.locator('#proof .ledger__num').allTextContents(), ['286', '187', '106']);
       assert.equal(await page.locator('.is-pending, #proof .ax-sr').count(), 0, 'ledger settled to its real numbers');
       assert.equal(await page.evaluate(() => document.getAnimations().filter((a) => a.effect?.getTiming().iterations === Infinity).length), 0, 'no endless CSS animation');
       assert.equal(await page.evaluate(() => window.__shiftsAfter), 0, 'no layout shift once motion runs: ' + JSON.stringify(await page.evaluate(() => window.__shiftDetails)));
@@ -139,7 +139,7 @@ test('reduced motion: every accent off, page complete without them', async () =>
     await scrollThrough(page, async () => { maxCursors = Math.max(maxCursors, (await page.evaluate(cursorsShown)).length); });
     assert.equal(await page.evaluate(() => window.__axConductor.enabled), false);
     assert.deepEqual(await page.evaluate(() => window.__axConductor.timeline()), []);
-    assert.deepEqual(await page.locator('#proof .ledger__num').allTextContents(), ['247', '165', '99']);
+    assert.deepEqual(await page.locator('#proof .ledger__num').allTextContents(), ['286', '187', '106']);
     assert.equal(await page.locator('.is-pending, .is-cursor').count(), 0);
     assert.equal(await page.locator('.story__stage--static').count(), 1, 'story stays static');
     assert.equal(await page.evaluate(() => typeof window.__storyState), 'undefined', 'engine never loads');
@@ -161,7 +161,7 @@ test('switching to reduced motion mid-visit ends every accent at its final state
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.waitForFunction(() => !window.__axConductor.enabled);
     assert.equal(await page.evaluate(() => window.__axConductor.current()), null);
-    assert.deepEqual(await page.locator('#proof .ledger__num').allTextContents(), ['247', '165', '99']);
+    assert.deepEqual(await page.locator('#proof .ledger__num').allTextContents(), ['286', '187', '106']);
     assert.equal(await page.locator('.is-pending, .is-cursor, .is-blink-off, .is-away').count(), 0);
     await page.waitForTimeout(400);
     assert.equal(await page.evaluate(() => document.getAnimations().filter((a) => a.playState === 'running').length), 0);

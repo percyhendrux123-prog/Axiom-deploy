@@ -33,7 +33,7 @@ test('reduced motion turns every accent off and leaves the HTML complete', () =>
   assert.ok(!/infinite/.test(css), 'no endless CSS animation');
   assert.ok(!/@keyframes/.test(css), 'no CSS keyframes outside the conductor');
   const page = read('index.html');
-  for (const value of ['>247<', '>165<', '>99<']) assert.ok(page.includes(value), 'ledger numbers are final in the HTML');
+  for (const value of ['>286<', '>187<', '>106<']) assert.ok(page.includes(value), 'ledger numbers are final in the HTML');
   assert.ok(!/is-pending|is-cursor|is-blink-off/.test(page), 'no accent state is baked into the HTML');
 });
 

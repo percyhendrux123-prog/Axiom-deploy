@@ -17,7 +17,7 @@ test('terminal homepage keeps the business order: hero, axiom, story, ledger, wo
   }
   const ledger = home.match(/<section class="section wrap" id="proof"[\s\S]*?<\/section>/)?.[0] ?? '';
   assert.equal((ledger.match(/class="ledger__cell"/g) ?? []).length, 3);
-  for (const value of ['>247<', '>165<', '>99<', 'not client data']) assert.ok(ledger.includes(value), value);
+  for (const value of ['>286<', '>187<', '>106<', 'not client data']) assert.ok(ledger.includes(value), value);
   assert.equal((home.match(/class="listing__item"/g) ?? []).length, 4);
   assert.ok(home.includes('href="/field-reports/insurance-client-care/"'));
   assert.ok(home.includes('href="https://github.com/percyhendrux123-prog/escalation-desk"'));
@@ -50,7 +50,7 @@ test('insurance field report has the approved limits, artifact, metadata, sitema
   assert.ok(existsSync(join(root, path)), 'field report page missing');
   const report = read(path);
   for (const marker of [
-    'Field Report · 02', "An independent insurance agency's client care now runs without her remembering it. Referral asks still wait for her yes.",
+    'Field Report · 02', "An independent insurance agency's client care is now set up to run without her remembering it. Referral asks still wait for her yes.",
     'The gap', 'What runs', 'What waits for her', "What isn't proven yet",
     'Only one enrolled client has received a check-in.', 'A few delivery paths still pass only in testing.',
     'href="/#contact"', 'href="/notes/"', 'Example record. Client details removed.',
