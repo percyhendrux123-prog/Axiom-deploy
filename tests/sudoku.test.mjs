@@ -27,3 +27,9 @@ test('sudoku page is CSP-safe and wired into the build', () => {
   assert.ok(toml.includes('cp -R sudoku dist/sudoku') && toml.includes('cp -R assets/sudoku dist/assets/sudoku'));
   assert.ok(!/fetch\(|XMLHttpRequest/.test(read('assets/sudoku/sudoku.js')), 'connect-src is none');
 });
+
+test('sudoku board rows are fixed equal tracks, so a row with no digits cannot collapse', () => {
+  const css = read('assets/sudoku/sudoku.css');
+  assert.ok(css.includes('grid-template-rows:repeat(9,minmax(0,1fr))'));
+  assert.ok(css.includes('grid-template-columns:repeat(9,minmax(0,1fr))'));
+});
