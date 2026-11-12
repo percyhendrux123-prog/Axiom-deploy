@@ -63,7 +63,9 @@ test('homepage states the headline, engagements, method, limits, notes and conta
     assert.ok(!retiredLead.test(homepage.replace(/<[^>]+>/g, ' ')), `retired lead language: ${retiredLead}`);
   }
   assert.ok(!/<video\b/i.test(homepage), 'homepage must not load autoplay video');
-  for (const marker of prohibitedRootMarkers) assert.ok(!homepage.includes(marker), `stale root marker: ${marker}`);
+  // A384: the brief form is the one Netlify form allowed on the homepage; the closed campaign's markers stay banned everywhere else.
+  const withoutBriefForm = homepage.replace(/<form[^>]*id="brief-form"[\s\S]*?<\/form>/, '');
+  for (const marker of prohibitedRootMarkers) assert.ok(!withoutBriefForm.includes(marker), `stale root marker: ${marker}`);
 });
 
 test('homepage links the operator layer from the catalog and footer', () => {
@@ -88,17 +90,30 @@ test('homepage copy avoids retired internal language', () => {
   }
 });
 
-test('homepage lane mapper is local-only, creates a brief, and has visible no-JS fallback', () => {
+test('homepage brief form posts to Netlify Forms with a honeypot, the agreed fields and no client-side transmission', () => {
+  const form = homepage.match(/<form[^>]*id="brief-form"[\s\S]*?<\/form>/)?.[0] ?? '';
+  assert.ok(form, 'brief form missing');
   for (const marker of [
-    'id="lane-mapper"', 'name="repeated-workflow"', 'name="continuity-break"', 'name="observable-outcome"',
-    'Copy brief', 'Nothing is submitted or stored',
-    'Local only.', 'Do not include passwords, API keys, private records, or other secrets.',
-    '<noscript>', 'Brief template',
-  ]) assert.ok(homepage.includes(marker), `missing mapper marker: ${marker}`);
-  assert.ok(!/<form\b/i.test(homepage), 'local mapper must use a non-submitting container, not a form');
+    'name="axiom-brief"', 'method="POST"', 'action="/brief/received/"', 'data-netlify="true"', 'netlify-honeypot="bot-field"',
+    '<input type="hidden" name="form-name" value="axiom-brief">', 'name="bot-field"',
+    'name="name"', 'name="business"', 'name="team-size"', 'name="reply-to"', 'name="eating-the-week"', 'name="current-help"',
+    'Do not include passwords, API keys, private records, or other secrets.', 'Send the brief',
+  ]) assert.ok(form.includes(marker), `missing brief form marker: ${marker}`);
+  assert.equal((form.match(/\brequired\b/g) || []).length, 6, 'six required answers');
+  assert.ok(!form.includes('mailto:'), 'the brief form never routes to an inbox');
+  const contact = homepage.match(/<section[^>]*id="contact"[\s\S]*?<\/section>/)?.[0] ?? '';
+  assert.ok(!contact.includes('mailto:'), 'contact section has no mailto');
+  const founder = homepage.match(/<section[^>]*id="founder"[\s\S]*?<\/section>/)?.[0] ?? '';
+  assert.ok(founder.includes('href="#contact">send a brief</a>'), 'founder points to the brief');
+  assert.ok(!founder.includes('mailto:'), 'founder line no longer leads with the mailbox');
   for (const marker of ['FormData', "addEventListener('submit'", 'fetch(', 'XMLHttpRequest', 'sendBeacon', 'localStorage', 'sessionStorage', 'document.cookie']) {
-    assert.ok(!script().includes(marker), `lane mapper must not use submission or persistence behavior: ${marker}`);
+    assert.ok(!script().includes(marker), `site script must not transmit or persist: ${marker}`);
   }
+  const received = read('brief/received/index.html');
+  assert.ok(received.includes('noindex'), 'confirmation page stays out of search');
+  assert.ok(received.includes('Your brief is in.'));
+  assert.ok(read('netlify.toml').includes('&& cp -R brief dist/brief'), 'confirmation page ships');
+  assert.ok(!read('sitemap.xml').includes('/brief/'), 'confirmation page stays off the sitemap');
 });
 
 test('archive is closed, indexed away, and preserves historical route context without an enabled application', () => {
@@ -125,16 +140,13 @@ test('metadata and static assets are local, canonical, and shareable', () => {
   }
 });
 
-test('homepage loads local assets, preserves manual copy fallback, and has a compact mobile header', () => {
+test('homepage loads local assets, keeps the brief form, and has a compact mobile header', () => {
   assert.match(homepage, /<link rel="stylesheet" href="\/assets\/axioma\/axioma\.css\?v=\d+">/);
   assert.match(homepage, /<script src="\/assets\/site\.js" defer><\/script>/);
   assert.ok(!/<style[ >]/i.test(homepage), 'homepage must not contain inline style');
   assert.ok(!/<script(?![^>]*\bsrc=)(?![^>]*type="application\/ld\+json")[^>]*>/i.test(homepage), 'homepage must not contain inline script (JSON-LD data is not script)');
   assert.match(homepage, /<nav aria-label="Main">/);
-  assert.ok(homepage.includes('id="manual-brief"'), 'manual fallback is missing');
-  assert.ok(homepage.includes('Brief template'), 'manual template is missing');
-  assert.match(script(), /navigator\.clipboard\.writeText/);
-  assert.match(script(), /manualBrief\.focus\(\)/);
+  assert.ok(homepage.includes('id="brief-form"'), 'brief form is missing');
   assert.ok(homeStylesheet().includes('.bar__nav .nav-hide-sm{display:none}'), 'mobile hides secondary nav links');
   assert.match(homepage, /<li><a href="#notes">/, 'Notes stays visible on phones beside the primary action');
   assert.ok(!/<li class="nav-hide-sm"><a href="#notes">/.test(homepage));

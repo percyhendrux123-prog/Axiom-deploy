@@ -23,7 +23,7 @@
 <link rel="icon" href="/assets/avatar.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/axioma/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/axioma/fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/axioma/axioma.css?v=12">
+<link rel="stylesheet" href="/assets/axioma/axioma.css?v=13">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -295,7 +295,7 @@
 <p class="founder-name">P. K. Stewart, founder, Deploy Axiom · Baton Rouge, Louisiana</p>
 <p>He designs each system, writes its limits, and approves every new permission it gets.</p>
 <p>He runs two companies of his own the same way: a roster of sixteen AI agents (as of Nov 9, 2026) behind one front door, and no job closed without evidence.</p>
-<p>Write to him directly at <a href="mailto:percy@deployaxiom.com">percy@deployaxiom.com</a>.</p>
+<p>To reach him, <a href="#contact">send a brief</a> or call (225) 635-8671.</p>
 <p class="founder-links"><a href="https://www.linkedin.com/in/percy-keith-2380b1403">LinkedIn</a> · <a href="https://github.com/percyhendrux123-prog">GitHub</a></p>
 </div>
 </div>
@@ -322,23 +322,21 @@
 <p>Tell us the work you keep having to remember. We write down what starts it, what counts as done, and where it stops for you.</p>
 </div>
 <div class="contact-actions"><details id="brief-composer"><summary class="button">Start an engagement</summary>
-<div class="mapper"><p>Nothing is submitted or stored. This composes a short brief on your device, which you send to us by email.</p>
-<div id="lane-mapper" role="group" aria-labelledby="contact-title"><div class="mapper-grid">
-<label>The recurring work<textarea name="repeated-workflow" required placeholder="What has to happen every time, and still depends on someone remembering"></textarea></label>
-<label>Where continuity breaks<textarea name="continuity-break" required placeholder="The handoff, inbox or person where it is lost"></textarea></label>
-<label>What resolution looks like<textarea name="observable-outcome" required placeholder="What you would observe if it were handled"></textarea></label>
-</div><p class="fine"><strong>Local only.</strong> Do not include passwords, API keys, private records, or other secrets.</p>
-<div class="actions"><button type="button" class="button" id="copy-brief">Copy brief</button><a class="button ghost" href="mailto:percy@deployaxiom.com?subject=Brief">Email the brief</a><span class="status" id="copy-status" aria-live="polite"></span></div></div>
-<div class="fallback" id="manual-brief" tabindex="-1"><strong>Brief template</strong>
-<pre id="manual-brief-output">BRIEF
-The recurring work:
-Where continuity breaks:
-What resolution looks like:
-
-No secrets included.</pre>
-<p>Copy this template, then email it to <a href="mailto:percy@deployaxiom.com?subject=Brief">percy@deployaxiom.com</a>.</p></div>
-<noscript><p>The template above works without JavaScript; copy it, then email it to percy@deployaxiom.com.</p></noscript>
-</div></details><a class="button ghost contact-call" href="tel:+12256358671">Call (225) 635-8671</a></div>
+<form class="mapper" id="brief-form" name="axiom-brief" method="POST" action="/brief/received/" data-netlify="true" netlify-honeypot="bot-field">
+<input type="hidden" name="form-name" value="axiom-brief">
+<p>Six short answers. AXIOM, our operating agent, reads every brief and replies the way you ask. If the work fits, P. K. Stewart takes the call.</p>
+<div class="mapper-grid brief-grid">
+<label>Your name<input type="text" name="name" autocomplete="name" maxlength="120" required></label>
+<label>Business<input type="text" name="business" autocomplete="organization" maxlength="160" required></label>
+<label>Team size<select name="team-size" required><option value="" selected disabled>Choose one</option><option>Just me</option><option>2 to 5</option><option>6 to 15</option><option>16 to 50</option><option>More than 50</option></select></label>
+<label>How should we reply?<input type="text" name="reply-to" autocomplete="email" maxlength="200" required placeholder="Email or phone"></label>
+<label class="brief-wide">What is eating the week<textarea name="eating-the-week" maxlength="2000" required placeholder="The work that keeps coming back and still depends on someone remembering it"></textarea></label>
+<label class="brief-wide">What you already pay for AI or help<textarea name="current-help" maxlength="1000" required placeholder="Tools, an assistant, a VA, an answering service. Nothing yet is a fine answer."></textarea></label>
+</div>
+<p class="brief-trap" hidden><label>Leave this empty<input type="text" name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+<p class="fine"><strong>No secrets.</strong> Do not include passwords, API keys, private records, or other secrets.</p>
+<div class="actions"><button type="submit" class="button">Send the brief</button></div>
+</form></details><a class="button ghost contact-call" href="tel:+12256358671">Call (225) 635-8671</a></div>
 </section>
 </div>
 </main>

@@ -31,6 +31,7 @@ test('A298 updates reference art deliberately while preserving the remaining hom
   const original = home.replace(diagram + '\n\n', '').replace('home.js?v=7', 'home.js?v=4').replace('chain-terminal.js?v=2', 'chain-terminal.js?v=1').replace('<div class="page-texture" aria-hidden="true"><span class="page-texture__tile"></span></div>\n', '');
   const normalized = original.replace(/<link rel="stylesheet"[^>]*>/g, '').replace(/ role="group"/g, '').replace(/\s+/g, ' ').trim();
   assert.equal(createHash('sha256').update(read('assets/axioma/caduceus.js')).digest('hex'), '235810aad7f9594a2e6f1146e17f2e08cd01a5149ad42857de36807985ca36fa');
+  // A384 deliberately replaces the contact mailto composer with the brief form and points the founder line at it.
   // A339 deliberately updates ledger numbers/labels/date, founder agent count, title and share image; art stays locked.
-  assert.equal(createHash('sha256').update(normalized).digest('hex'), '533884fb39cdab8443d8192b422e041158a8c2df875f302953d16c1e9cd55e41');
+  assert.equal(createHash('sha256').update(normalized).digest('hex'), 'fb34f7751c8f42d17fe9075a8ff7db347b4564f28faba2d8b157ba6639721ec1');
 });

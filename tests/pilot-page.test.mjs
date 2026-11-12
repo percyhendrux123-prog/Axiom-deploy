@@ -28,16 +28,13 @@ test('method is accessible without motion and names the human hold', () => {
   assert.ok(stylesheet.includes('@media (prefers-reduced-motion:reduce)'));
 });
 
-test('local mapper keeps inputs on device and provides a brief fallback', () => {
-  for (const field of ['repeated-workflow', 'continuity-break', 'observable-outcome']) {
-    assert.ok(page.includes(`name="${field}"`), `missing mapper field: ${field}`);
+test('brief form collects the six agreed answers and posts to the site itself', () => {
+  for (const field of ['name', 'business', 'team-size', 'reply-to', 'eating-the-week', 'current-help']) {
+    assert.ok(page.includes(`name="${field}"`), `missing brief field: ${field}`);
   }
-  for (const text of ['Nothing is submitted or stored.', 'Local only.', 'Brief template']) {
-    assert.ok(page.includes(text), `missing mapper safeguard: ${text}`);
-  }
-  assert.ok(script.includes('navigator.clipboard.writeText'), 'clipboard behavior must live in local script');
-  assert.ok(!page.includes('data-netlify'), 'must not contain hosted form collection');
-  assert.ok(!page.includes('name="email"'), 'must not expose or collect email');
+  assert.ok(page.includes('data-netlify="true"'), 'hosted by Netlify Forms (free on the credit plan)');
+  assert.ok(page.includes('action="/brief/received/"'), 'posts to the site itself (CSP form-action self)');
+  assert.ok(!page.includes('name="email"'), 'one reply field, email or phone, not a separate email field');
 });
 
 test('homepage makes permissions and execution separation explicit', () => {

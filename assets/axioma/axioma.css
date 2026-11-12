@@ -197,7 +197,7 @@ ul,ol{padding:0;list-style:none}
 .note-t{color:var(--strong);text-decoration:underline;text-decoration-color:var(--dim);text-underline-offset:.22em}
 .notes-all a{display:inline-flex;align-items:center;min-height:44px}
 
-/* contact and the local brief composer */
+/* contact and the brief form (Netlify Forms; AXIOM is alerted, never an inbox) */
 .contact{background:var(--panel);border-top:1px solid var(--rule)}
 .contact .section{border-top:0}
 .contact-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start}
@@ -209,6 +209,13 @@ ul,ol{padding:0;list-style:none}
 .mapper>p{margin-bottom:24px}
 .mapper-grid{display:grid;gap:20px}
 .mapper label{display:grid;gap:8px;color:var(--strong);font-size:14px}
+.brief-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.brief-wide{grid-column:1/-1}
+.mapper input[type=text],.mapper select{width:100%;min-height:48px;padding:10px 14px;border:1px solid var(--dim);border-radius:0;background:var(--panel);color:var(--strong);font:400 15px/1.4 var(--mono);-webkit-appearance:none;appearance:none}
+.mapper select{background-image:none;cursor:pointer}
+.mapper input::placeholder{color:var(--dim);opacity:1}
+.mapper input:focus-visible,.mapper select:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
+.brief-trap{display:none}
 textarea{width:100%;min-height:104px;padding:12px 14px;border:1px solid var(--dim);border-radius:0;background:var(--panel);color:var(--strong);font:400 15px/1.6 var(--mono);resize:vertical}
 textarea::placeholder{color:var(--dim);opacity:1}
 textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
@@ -313,6 +320,7 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
   .steps li>span:last-child{grid-column:2}
   .notes-list a{grid-template-columns:minmax(0,1fr);gap:2px}
   .mapper{padding:20px 16px}
+  .brief-grid{grid-template-columns:minmax(0,1fr)}
   .button{white-space:normal;text-align:center}
   .explained-mark{width:40px;height:40px;margin:-20px 0 0 -20px;left:82%;top:19%}
   .explained-mark::after{left:15px;top:11px;border-width:9px 0 9px 13px}

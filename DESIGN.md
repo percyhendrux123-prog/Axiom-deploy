@@ -8,7 +8,7 @@ The previous contract (stone and brass letterhead, Cinzel, no motion) is in git 
 
 ## Primary action
 
-`Start an engagement` in the bar, the hero and the contact section, all to `#contact`; the hero pairs it with `Call (225) 635-8671`. The contact section opens the local brief composer (native disclosure). Copying is local; email is an explicit visitor choice. No hosted form, transmission, storage, analytics or automatic send. One label per intent.
+`Start an engagement` in the bar, the hero and the contact section, all to `#contact`; the hero pairs it with `Call (225) 635-8671`. The contact section opens the brief form (native disclosure, A384): name, business, team size, how to reply, what is eating the week, what they already pay for AI or help. It posts to Netlify Forms (free and unlimited on the credit-based plan, checked 2026-11-12) with a honeypot, no JavaScript, no analytics, and lands on `/brief/received/` (noindex). Submissions alert AXIOM through a host-side poll of the Netlify API; no Netlify email notification is configured, so nothing goes to percy@. The founder line points to the brief, not the mailbox. One label per intent.
 
 ## Homepage hierarchy
 
@@ -53,7 +53,7 @@ The previous contract (stone and brass letterhead, Cinzel, no motion) is in git 
 ## Responsive and accessible behavior
 
 - Verify 1440 and 390 (and the browser suite's 360 to 1440 sweep): no horizontal overflow; standalone targets at least 44px; links inside sentences stay inline.
-- Skip link to `#main`, one `h1`, labelled sections, visible focus, live clipboard status, no-JS brief template.
+- Skip link to `#main`, one `h1`, labelled sections, visible focus, native required-field validation, the brief form works with no JavaScript.
 - Overscroll past the footer shows night (`html{background:var(--night);overscroll-behavior-y:none}`).
 
 ## Preserved surfaces and acceptance

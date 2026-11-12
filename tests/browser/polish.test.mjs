@@ -115,14 +115,15 @@ test('keyboard focus stays visible on the dark engagement and the light composer
     await page.keyboard.press('Enter');
     assert.equal(await page.locator('#brief-composer').getAttribute('open'), '');
     await page.keyboard.press('Tab');
-    assert.equal(await page.locator(':focus').getAttribute('name'), 'repeated-workflow');
+    assert.equal(await page.locator(':focus').getAttribute('name'), 'name');
     const focus = await page.locator(':focus').evaluate(e => {
       const s = getComputedStyle(e); return { color: s.outlineColor, style: s.outlineStyle, width: s.outlineWidth };
     });
     assert.deepEqual(focus, { color: 'rgb(240, 240, 238)', style: 'solid', width: '2px' });
     for (const width of [360, 390]) {
       await page.setViewportSize({ width, height: 844 });
-      await page.getByLabel('The recurring work', { exact: true }).fill('X'.repeat(800));
+      await page.getByLabel('What is eating the week', { exact: true }).fill('X'.repeat(800));
+      await page.getByLabel('Business', { exact: true }).fill('X'.repeat(160));
       const metrics = await page.evaluate(measureTargets);
       assert.equal(metrics.scrollWidth, width);
       assert.deepEqual(metrics.smallTargets, []);

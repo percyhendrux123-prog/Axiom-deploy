@@ -105,7 +105,7 @@ test('all new surface links resolve, including fragments, metadata image and sit
   } finally { await context.close(); }
 });
 
-test('engagement brief validates, copies locally, falls back safely and never submits', async () => {
+test('brief form validates six answers and posts once to /brief/received/ with no other transmission', async () => {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
   try {
     const page = await context.newPage();
@@ -113,40 +113,43 @@ test('engagement brief validates, copies locally, falls back safely and never su
     await page.locator('.nav-cta').click();
     assert.equal(new URL(page.url()).hash, '#contact');
     await page.locator('#brief-composer summary').click();
-    await page.locator('#copy-brief').click();
-    assert.equal(await page.locator('textarea:invalid').count(), 3);
-    await page.getByLabel('The recurring work', { exact: true }).fill('Synthetic recurring task');
-    await page.getByLabel('Where continuity breaks', { exact: true }).fill('Synthetic handoff');
-    await page.getByLabel('What resolution looks like', { exact: true }).fill('Synthetic checked outcome');
     const outbound = [];
-    page.on('request', (request) => outbound.push(request.url()));
-    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
-    await page.locator('#copy-brief').click();
-    await page.waitForFunction(() => document.querySelector('#copy-status').textContent.includes('Brief copied.'));
-    assert.ok((await page.evaluate(() => navigator.clipboard.readText())).includes('Synthetic checked outcome'));
-    await page.evaluate(() => { Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => { throw new Error('Synthetic clipboard denial'); } } }); });
-    await page.locator('#copy-brief').click();
-    await page.waitForFunction(() => document.querySelector('#copy-status').textContent.includes('Copy failed.'));
-    assert.equal(await page.evaluate(() => document.activeElement.id), 'manual-brief');
-    assert.ok((await page.locator('#manual-brief-output').textContent()).includes('Synthetic recurring task'));
+    page.on('request', (request) => { if (request.method() !== 'GET') outbound.push({ method: request.method(), url: request.url(), body: request.postData() }); });
+    await page.locator('#brief-form button[type="submit"]').click();
+    assert.equal(await page.locator('#brief-form :invalid').count(), 6);
     assert.deepEqual(outbound, []);
-    assert.equal(await page.locator('form').count(), 0);
-    assert.equal(await page.locator('.mapper a.button').getAttribute('href'), 'mailto:percy@deployaxiom.com?subject=Brief');
+    await page.getByLabel('Your name', { exact: true }).fill('Synthetic Owner');
+    await page.getByLabel('Business', { exact: true }).fill('Synthetic Business');
+    await page.locator('#brief-form select[name="team-size"]').selectOption('6 to 15');
+    await page.getByLabel('How should we reply?', { exact: true }).fill('owner@example.com');
+    await page.getByLabel('What is eating the week', { exact: true }).fill('Synthetic follow-up nobody owns');
+    await page.getByLabel('What you already pay for AI or help', { exact: true }).fill('Nothing yet');
     const dimensions = await overflow(page);
     assert.ok(dimensions.document <= 390, JSON.stringify(dimensions));
     assert.deepEqual(dimensions.outside, []);
     await page.screenshot({ path: join(screenshotDir, 'brief-open-390.png'), fullPage: true });
+    await page.route('**/brief/received/', (route) => route.request().method() === 'POST' ? route.fulfill({ status: 200, contentType: 'text/html', body: '<p>ok</p>' }) : route.continue());
+    await page.locator('#brief-form button[type="submit"]').click();
+    await page.waitForURL('**/brief/received/');
+    assert.equal(outbound.length, 1, JSON.stringify(outbound));
+    assert.equal(outbound[0].method, 'POST');
+    assert.equal(new URL(outbound[0].url).pathname, '/brief/received/');
+    const sent = new URLSearchParams(outbound[0].body);
+    assert.equal(sent.get('form-name'), 'axiom-brief');
+    assert.equal(sent.get('team-size'), '6 to 15');
+    assert.equal(sent.get('bot-field'), '');
   } finally { await context.close(); }
 });
 
-test('no JavaScript still opens the brief and exposes the complete manual template', async () => {
+test('no JavaScript still opens the brief and the native form can be sent', async () => {
   const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
   try {
     const page = await context.newPage();
     await page.goto(base + '/#contact');
     await page.locator('#brief-composer summary').click();
-    assert.ok(await page.locator('#manual-brief-output').isVisible());
-    assert.ok(await page.locator('noscript').isVisible());
-    assert.ok((await page.locator('#manual-brief-output').textContent()).includes('What resolution looks like:'));
+    assert.ok(await page.locator('#brief-form').isVisible());
+    assert.ok(await page.locator('#brief-form button[type="submit"]').isVisible());
+    assert.equal(await page.locator('#brief-form').getAttribute('action'), '/brief/received/');
+    assert.equal(await page.locator('.brief-trap').isVisible(), false);
   } finally { await context.close(); }
 });
