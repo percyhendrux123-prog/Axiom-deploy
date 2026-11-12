@@ -328,8 +328,8 @@
 <div class="mapper-grid brief-grid">
 <label>Your name<input type="text" name="name" autocomplete="name" maxlength="120" required></label>
 <label>Business<input type="text" name="business" autocomplete="organization" maxlength="160" required></label>
-<label>Team size<select name="team-size" required><option value="" selected disabled>Choose one</option><option>Just me</option><option>2 to 5</option><option>6 to 15</option><option>16 to 50</option><option>More than 50</option></select></label>
-<label>How should we reply?<input type="text" name="reply-to" autocomplete="email" maxlength="200" required placeholder="Email or phone"></label>
+<label class="brief-wide">How should we reply?<input type="text" name="reply-to" autocomplete="email" maxlength="200" required placeholder="Email or phone"></label>
+<fieldset class="brief-wide brief-team"><legend>Team size</legend><div class="brief-options"><label><input type="radio" name="team-size" value="Just me" required>Just me</label><label><input type="radio" name="team-size" value="2 to 5">2 to 5</label><label><input type="radio" name="team-size" value="6 to 15">6 to 15</label><label><input type="radio" name="team-size" value="16 to 50">16 to 50</label><label><input type="radio" name="team-size" value="More than 50">More than 50</label></div></fieldset>
 <label class="brief-wide">What is eating the week<textarea name="eating-the-week" maxlength="2000" required placeholder="The work that keeps coming back and still depends on someone remembering it"></textarea></label>
 <label class="brief-wide">What you already pay for AI or help<textarea name="current-help" maxlength="1000" required placeholder="Tools, an assistant, a VA, an answering service. Nothing yet is a fine answer."></textarea></label>
 </div>

@@ -116,11 +116,11 @@ test('brief form validates six answers and posts once to /brief/received/ with n
     const outbound = [];
     page.on('request', (request) => { if (request.method() !== 'GET') outbound.push({ method: request.method(), url: request.url(), body: request.postData() }); });
     await page.locator('#brief-form button[type="submit"]').click();
-    assert.equal(await page.locator('#brief-form :invalid').count(), 6);
+    assert.equal(await page.locator('#brief-form :is(input,textarea):invalid').evaluateAll(els => new Set(els.map(e => e.name)).size), 6);
     assert.deepEqual(outbound, []);
     await page.getByLabel('Your name', { exact: true }).fill('Synthetic Owner');
     await page.getByLabel('Business', { exact: true }).fill('Synthetic Business');
-    await page.locator('#brief-form select[name="team-size"]').selectOption('6 to 15');
+    await page.getByLabel('6 to 15', { exact: true }).check();
     await page.getByLabel('How should we reply?', { exact: true }).fill('owner@example.com');
     await page.getByLabel('What is eating the week', { exact: true }).fill('Synthetic follow-up nobody owns');
     await page.getByLabel('What you already pay for AI or help', { exact: true }).fill('Nothing yet');

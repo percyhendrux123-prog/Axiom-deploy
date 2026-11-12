@@ -211,10 +211,16 @@ ul,ol{padding:0;list-style:none}
 .mapper label{display:grid;gap:8px;color:var(--strong);font-size:14px}
 .brief-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 .brief-wide{grid-column:1/-1}
-.mapper input[type=text],.mapper select{width:100%;min-height:48px;padding:10px 14px;border:1px solid var(--dim);border-radius:0;background:var(--panel);color:var(--strong);font:400 15px/1.4 var(--mono);-webkit-appearance:none;appearance:none}
-.mapper select{background-image:none;cursor:pointer}
+.mapper input[type=text]{width:100%;min-height:48px;padding:10px 14px;border:1px solid var(--dim);border-radius:0;background:var(--panel);color:var(--strong);font:400 15px/1.4 var(--mono)}
+.brief-team{margin:0;padding:0;border:0;min-width:0}
+.brief-team legend{padding:0;margin-bottom:8px;color:var(--strong);font-size:14px}
+.brief-options{display:flex;flex-wrap:wrap;gap:8px}
+.mapper .brief-options label{position:relative;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--dim);background:var(--panel);color:var(--text);font-size:14px;cursor:pointer}
+.brief-options input{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);margin:0;opacity:0;cursor:pointer}
+.mapper .brief-options label:has(input:checked){border-color:var(--strong);background:var(--strong);color:var(--night)}
+.mapper .brief-options label:has(input:focus-visible){outline:2px solid var(--strong);outline-offset:2px}
 .mapper input::placeholder{color:var(--dim);opacity:1}
-.mapper input:focus-visible,.mapper select:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
+.mapper input:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 .brief-trap{display:none}
 textarea{width:100%;min-height:104px;padding:12px 14px;border:1px solid var(--dim);border-radius:0;background:var(--panel);color:var(--strong);font:400 15px/1.6 var(--mono);resize:vertical}
 textarea::placeholder{color:var(--dim);opacity:1}
