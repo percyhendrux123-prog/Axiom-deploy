@@ -44,11 +44,19 @@
       panels.forEach(function (panel) { panel.hidden = panel.id !== 'system-' + key + '-info' })
       if (win.AxChain) win.AxChain.select(key)
     }
+    // A413: on a phone the explanation sits below the board; after a tap,
+    // bring it into view if it starts below the screen (a user-started scroll).
+    var revealPanel = function () {
+      var d = system.querySelector('.system__details')
+      if (!d) return
+      var r = d.getBoundingClientRect()
+      if (r.top > win.innerHeight - 140) d.scrollIntoView({ block: 'nearest', behavior: mq && mq.matches ? 'auto' : 'smooth' })
+    }
     system.classList.add('is-interactive')
     selectNode('intro')
     nodes.forEach(function (button) {
       button.disabled = false
-      button.addEventListener('click', function () { stopOrder(button.dataset.systemNode) })
+      button.addEventListener('click', function () { stopOrder(button.dataset.systemNode); revealPanel() })
       button.addEventListener('focus', function () { if (!chainRun) selectNode(button.dataset.systemNode) })
       button.addEventListener('pointerenter', function (event) { if (!chainRun && event.pointerType === 'mouse') selectNode(button.dataset.systemNode) })
     })
@@ -300,9 +308,10 @@
   }
 
   // ---------------------------------------------------------------- ledger
-  // The three numbers count up once, the first time the reader reaches the
-  // ledger. Until then they wait dimmed at zero; a screen reader hears the
-  // real number the whole time.
+  // The three numbers brighten once, the first time the reader reaches the
+  // ledger. They are always the real, final numbers (A413: no count-up, so a
+  // quick scroll or a screenshot never catches a figure that is not true);
+  // until then they wait slightly dimmed in place.
   var ledger = []
   function armLedger() {
     var proof = doc.getElementById('proof')
@@ -316,27 +325,16 @@
     }
     for (var i = 0; i < nums.length; i++) {
       var el = nums[i]
-      var value = parseInt(el.textContent, 10)
-      if (!isFinite(value)) continue
-      var sr = doc.createElement('span')
-      sr.className = 'ax-sr'
-      sr.textContent = el.textContent
-      el.setAttribute('aria-hidden', 'true')
-      el.after(sr)
-      el.textContent = '0'
       el.classList.add('is-pending')
-      ledger.push({ el: el, sr: sr, value: value })
+      ledger.push({ el: el })
     }
   }
 
   function finishLedger() {
     for (var i = 0; i < ledger.length; i++) {
       var n = ledger[i]
-      n.el.textContent = String(n.value)
       n.el.classList.remove('is-pending')
       n.el.style.opacity = ''
-      n.el.removeAttribute('aria-hidden')
-      n.sr.remove()
     }
     ledger = []
     C.played.ledger = true
@@ -357,9 +355,7 @@
           var n = ledger[i]
           var p = clamp01((t - t0 - i * STAGGER) / DUR)
           var e = easeOut(p)
-          var txt = String(Math.round(n.value * e))
-          if (n.el.textContent !== txt) n.el.textContent = txt
-          n.el.style.opacity = String(0.35 + 0.65 * e)
+          n.el.style.opacity = String(0.6 + 0.4 * e)
           if (p < 1) all = false
         }
         if (all) finishLedger()
@@ -423,7 +419,7 @@
         for (var i = 0; i < replay.length; i++) {
           var p = clamp01((t - t0 - starts[i]) / FADE)
           var e = easeOut(p)
-          replay[i].style.opacity = String(0.18 + 0.82 * e)
+          replay[i].style.opacity = String(0.6 + 0.4 * e)
           if (p < 1) all = false
         }
         if (all) finishReplay()

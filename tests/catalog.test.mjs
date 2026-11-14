@@ -5,7 +5,9 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const home = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-const section = home.match(/<section class="section wrap" id="catalog"[\s\S]*?<\/section>/)?.[0] ?? '';
+// A413 deliberately moves the full catalog from the homepage to its own page, /plugins/; the facts are unchanged.
+const plugins = readFileSync(new URL('../plugins/index.html', import.meta.url), 'utf8');
+const section = plugins.match(/<section class="section wrap" id="catalog"[\s\S]*?<\/section>/)?.[0] ?? '';
 
 const expected = [
   { name: 'tripwire', version: '0.1.3', date: '2026-10-29', label: 'Oct 29, 2026', pr: 145692, update: [151041, '2026-11-09', 'Nov 9, 2026'], repo: 'hermes-tripwire' },
@@ -40,9 +42,19 @@ test('catalog lists all six accepted plugins with current versions, dates, insta
   });
 });
 
+test('the homepage points to the plugin page instead of listing the catalog (A413)', () => {
+  assert.ok(!home.includes('id="catalog"'), 'no catalog section on the homepage');
+  assert.ok(home.includes('<a href="/plugins/">see the six plugins</a>'), 'Work links the plugin page');
+  assert.match(plugins, /<link rel="canonical" href="https:\/\/deployaxiom\.com\/plugins\/">/);
+  assert.equal((plugins.match(/<h1\b/g) || []).length, 1, 'one h1 on the plugin page');
+  assert.ok(readFileSync(new URL('../sitemap.xml', import.meta.url), 'utf8').includes('<loc>https://deployaxiom.com/plugins/</loc>'));
+  assert.ok(readFileSync(new URL('../netlify.toml', import.meta.url), 'utf8').includes('cp -R plugins dist/plugins'));
+});
+
 test('catalog count and lookup reflect the November 9 snapshot without unaccepted plugins', () => {
   assert.ok(section.includes('6 accepted, Oct 29 to Nov 9, 2026'));
-  assert.ok(section.includes('hermes plugins search axioma'));
+  // A413: section labels are plain words; the shell prompt retired with the homepage's.
+  assert.ok(section.includes('<h1 id="catalog-title">In the Hermes Agent plugin catalog</h1>'));
   assert.ok(section.includes('accepted into the Hermes Agent plugin catalog'));
   assert.ok(section.includes('<span class="lookup__v">0.3.1</span>'));
   assert.ok(section.includes('442374c11b3f03598ea6ff9fb6263e13af505795'));

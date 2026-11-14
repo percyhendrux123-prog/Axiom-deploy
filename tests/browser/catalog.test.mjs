@@ -39,7 +39,8 @@ for (const width of [360, 390, 901, 1280]) {
         const errors = [];
         page.on('pageerror', error => errors.push(error.message));
         page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
-        const response = await page.goto(base + '/');
+        // A413 deliberately moves the catalog to its own page, /plugins/, with the homepage's header and footer.
+        const response = await page.goto(base + '/plugins/');
         assert.ok(response.headers()['content-security-policy'], 'real production CSP is applied');
         await page.evaluate(() => document.fonts.ready);
         assert.deepEqual(await page.locator('.catalog__item').evaluateAll(items => items.map(e => e.dataset.plugin)), plugins);
@@ -70,8 +71,8 @@ for (const width of [360, 390, 901, 1280]) {
           }
           await writeFile(join(process.env.SCREENSHOT_DIR, `geometry-${width}.json`), JSON.stringify(geometry, null, 2) + '\n');
         }
-        for (const selector of ['#catalog a[href="/operator-layer/"]', '.footer-links a[href="/operator-layer/"]']) {
-          await page.goto(base + '/');
+        for (const [from, selector] of [['/plugins/', '#catalog a[href="/operator-layer/"]'], ['/', '#work a[href="/operator-layer/"]'], ['/', '.footer-links a[href="/operator-layer/"]']]) {
+          await page.goto(base + from);
           await page.locator(selector).focus();
           await page.keyboard.press('Enter');
           await page.waitForURL(base + '/operator-layer/');

@@ -82,7 +82,7 @@ test('five finite accents play on the shared scheduler; offscreen and hidden dra
     };
     await arrive('system', 'diagram-arrival');
     await arrive('work', 'head-arrival');
-    await arrive('catalog', 'braille-shimmer');
+    // A413: the catalog moved to /plugins/; Findings keeps the braille shimmer.
     await arrive('method', 'rule-breath');
     await page.locator('#notes').evaluate(el => scrollTo(0, el.getBoundingClientRect().top + scrollY - 90));
     await page.waitForFunction(() => window.__axConductor.active?.id === 'notes');

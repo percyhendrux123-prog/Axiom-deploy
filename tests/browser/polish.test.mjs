@@ -95,9 +95,15 @@ test('privacy policy links wrap within evenly led mobile prose', async () => {
         range.selectNodeContents(walker.currentNode);
         for (const rect of range.getClientRects()) if (rect.width) tops.add(rect.top);
       }
-      return { tops: [...tops].sort((a, b) => a - b), leading: parseFloat(getComputedStyle(paragraph).lineHeight), fragments: element.getClientRects().length };
+      const own = [...element.getClientRects()].map(r => r.top);
+      const outside = new Set();
+      const w2 = document.createTreeWalker(paragraph, NodeFilter.SHOW_TEXT);
+      while (w2.nextNode()) { if (element.contains(w2.currentNode)) continue; const rg = document.createRange(); rg.selectNodeContents(w2.currentNode); for (const r of rg.getClientRects()) if (r.width) outside.add(Math.round(r.top)); }
+      return { tops: [...tops].sort((a, b) => a - b), leading: parseFloat(getComputedStyle(paragraph).lineHeight), fragments: element.getClientRects().length, sharesLine: own.some(top => outside.has(Math.round(top))) };
     });
-    assert.ok(lines.fragments > 1, 'the policy name shares surrounding lines instead of moving as one box');
+    // A413: with Geist reading text the policy name may now fit on one line; what matters is that it stays
+    // inline and shares a line with the sentence around it instead of moving as one box.
+    assert.ok(lines.fragments >= 1 && lines.sharesLine, 'the policy name shares surrounding lines instead of moving as one box');
     assert.ok(lines.tops.slice(1).every((top, index) => Math.abs(top - lines.tops[index] - lines.leading) < 1), JSON.stringify(lines));
   } finally { await context.close(); }
 });
@@ -119,7 +125,8 @@ test('keyboard focus stays visible on the dark engagement and the light composer
     const focus = await page.locator(':focus').evaluate(e => {
       const s = getComputedStyle(e); return { color: s.outlineColor, style: s.outlineStyle, width: s.outlineWidth };
     });
-    assert.deepEqual(focus, { color: 'rgb(240, 240, 238)', style: 'solid', width: '2px' });
+    // A413 deliberately moves the palette to brand ink #121316 and stone #F1EDE4.
+    assert.deepEqual(focus, { color: 'rgb(241, 237, 228)', style: 'solid', width: '2px' });
     for (const width of [360, 390]) {
       await page.setViewportSize({ width, height: 844 });
       await page.getByLabel('What is eating the week', { exact: true }).fill('X'.repeat(800));
@@ -140,9 +147,9 @@ test('report engagement label remains readable on hover and press', async () => 
     const button = page.locator('.next .button');
     await button.hover();
     const colors = () => button.evaluate(e => { const s = getComputedStyle(e); return { text: s.color, background: s.backgroundColor }; });
-    assert.deepEqual(await colors(), { text: 'rgb(240, 240, 238)', background: 'rgb(14, 15, 17)' });
+    assert.deepEqual(await colors(), { text: 'rgb(241, 237, 228)', background: 'rgb(18, 19, 22)' });
     await page.mouse.down();
-    try { assert.deepEqual(await colors(), { text: 'rgb(14, 15, 17)', background: 'rgb(240, 240, 238)' }); }
+    try { assert.deepEqual(await colors(), { text: 'rgb(18, 19, 22)', background: 'rgb(241, 237, 228)' }); }
     finally { await page.mouse.move(0, 0); await page.mouse.up(); }
   } finally { await context.close(); }
 });

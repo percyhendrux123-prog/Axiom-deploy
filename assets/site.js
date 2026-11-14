@@ -42,7 +42,9 @@
       if (composer.open && !form.contains(document.activeElement)) form.focus({ preventScroll: true });
     });
   }
-  if (wants(location.hash)) open();
+  // A413: the form ships open, so with JavaScript off a link to #contact lands
+  // on the form itself. With JavaScript it starts folded unless asked for.
+  if (wants(location.hash)) open(); else composer.open = false;
   addEventListener('hashchange', () => { if (wants(location.hash)) open(); });
   document.addEventListener('click', (event) => {
     const link = event.target instanceof Element ? event.target.closest('a[href]') : null;

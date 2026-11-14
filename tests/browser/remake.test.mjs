@@ -118,14 +118,14 @@ test('brief form validates six answers and posts once to /brief/received/ with n
     const outbound = [];
     page.on('request', (request) => { if (request.method() !== 'GET') outbound.push({ method: request.method(), url: request.url(), body: request.postData() }); });
     await page.locator('#brief-form button[type="submit"]').click();
-    assert.equal(await page.locator('#brief-form :is(input,textarea):invalid').evaluateAll(els => new Set(els.map(e => e.name)).size), 6);
+    assert.equal(await page.locator('#brief-form :is(input,textarea):invalid').evaluateAll(els => new Set(els.map(e => e.name)).size), 5); // A413: "what helps today" is optional
     assert.deepEqual(outbound, []);
     await page.getByLabel('Your name', { exact: true }).fill('Synthetic Owner');
     await page.getByLabel('Business', { exact: true }).fill('Synthetic Business');
     await page.getByLabel('6 to 15', { exact: true }).check();
     await page.getByLabel('How should we reply?', { exact: true }).fill('owner@example.com');
     await page.getByLabel('What is eating the week', { exact: true }).fill('Synthetic follow-up nobody owns');
-    await page.getByLabel('What you already pay for AI or help', { exact: true }).fill('Nothing yet');
+    await page.getByLabel('What helps with it today (optional)', { exact: true }).fill('Nothing yet');
     const dimensions = await overflow(page);
     assert.ok(dimensions.document <= 390, JSON.stringify(dimensions));
     assert.deepEqual(dimensions.outside, []);
@@ -148,7 +148,8 @@ test('no JavaScript still opens the brief and the native form can be sent', asyn
   try {
     const page = await context.newPage();
     await page.goto(base + '/#contact');
-    await page.locator('#brief-composer summary').click();
+    // A413: the form ships open, so a no-JS #contact link lands on the form with no extra tap.
+    assert.equal(await page.locator('#brief-composer').getAttribute('open'), '');
     assert.ok(await page.locator('#brief-form').isVisible());
     assert.ok(await page.locator('#brief-form button[type="submit"]').isVisible());
     assert.equal(await page.locator('#brief-form').getAttribute('action'), '/brief/received/');

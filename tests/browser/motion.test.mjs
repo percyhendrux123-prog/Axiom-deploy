@@ -87,8 +87,9 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
       await page.goto(base + '/');
       await page.evaluate(() => document.fonts.ready);
       assert.ok(await page.evaluate(() => window.__axConductor?.enabled), 'conductor is on');
-      // The ledger waits at zero below the fold, but a screen reader hears the real number.
-      assert.deepEqual(await page.locator('#proof .ledger__cell .ax-sr').allTextContents(), ['286', '187', '106']);
+      // A413: no count-up. The ledger shows its real numbers at every moment (dimmed in place below the fold).
+      assert.deepEqual(await page.locator('#proof .ledger__num').allTextContents(), ['286', '187', '106']);
+      assert.equal(await page.locator('#proof .ax-sr').count(), 0, 'no hidden duplicate numbers');
 
       let maxCursors = 0;
       const running = new Set();

@@ -68,10 +68,11 @@ test('homepage states the headline, engagements, method, limits, notes and conta
   for (const marker of prohibitedRootMarkers) assert.ok(!withoutBriefForm.includes(marker), `stale root marker: ${marker}`);
 });
 
-test('homepage links the operator layer from the catalog and footer', () => {
-  const catalog = homepage.match(/<section[^>]*id="catalog"[\s\S]*?<\/section>/)?.[0] ?? '';
-  const footer = homepage.match(/<p class="footer-links">[\s\S]*?<\/p>/)?.[0] ?? '';
-  assert.match(catalog, /href="\/operator-layer\/">[^<]+<\/a>/, 'visible in-page link near the plugins');
+test('homepage links the operator layer from the work section and footer', () => {
+  // A413 deliberately moves the catalog to /plugins/; the operator-layer link now sits in Work, beside the plugin link.
+  const work = homepage.match(/<section[^>]*id="work"[\s\S]*?<\/section>/)?.[0] ?? '';
+  const footer = homepage.match(/<ul class="footer-links">[\s\S]*?<\/ul>/)?.[0] ?? '';
+  assert.match(work, /href="\/operator-layer\/">[^<]+<\/a>/, 'visible in-page link near the plugins');
   assert.ok(footer.includes('href="/operator-layer/">Operator layer</a>'), 'plain footer label');
   assert.ok(existsSync(join(root, 'operator-layer/index.html')), 'link target ships');
 });
@@ -99,7 +100,9 @@ test('homepage brief form posts to Netlify Forms with a honeypot, the agreed fie
     'name="name"', 'name="business"', 'name="team-size"', 'name="reply-to"', 'name="eating-the-week"', 'name="current-help"',
     'Do not include passwords, API keys, private records, or other secrets.', 'Send the brief',
   ]) assert.ok(form.includes(marker), `missing brief form marker: ${marker}`);
-  assert.equal((form.match(/\brequired\b/g) || []).length, 6, 'six required answers');
+  // A413 deliberately makes "what helps with it today" optional (it asked about AI spend before fit); five answers stay required.
+  assert.equal((form.match(/\brequired\b/g) || []).length, 5, 'five required answers');
+  assert.match(homepage, /<details id="brief-composer" open>/, 'ships open so a no-JS #contact link lands on the form (A413)');
   assert.ok(!form.includes('mailto:'), 'the brief form never routes to an inbox');
   const contact = homepage.match(/<section[^>]*id="contact"[\s\S]*?<\/section>/)?.[0] ?? '';
   assert.ok(!contact.includes('mailto:'), 'contact section has no mailto');
@@ -131,7 +134,7 @@ test('metadata and static assets are local, canonical, and shareable', () => {
   for (const marker of [
     '<link rel="canonical" href="https://deployaxiom.com/">',
     'property="og:title"', 'property="og:description"', 'property="og:image" content="https://deployaxiom.com/assets/axiom-og.png"',
-    'name="twitter:card"', 'name="twitter:image" content="https://deployaxiom.com/assets/axiom-og.png"', 'property="og:image:alt" content="Deploy Axiom: The work runs. The authority stays yours."', 'name="twitter:image:alt" content="Deploy Axiom: The work runs. The authority stays yours."', 'name="theme-color" content="#0E0F11"', 'rel="icon" href="/assets/avatar.svg"',
+    'name="twitter:card"', 'name="twitter:image" content="https://deployaxiom.com/assets/axiom-og.png"', 'property="og:image:alt" content="Deploy Axiom: Nothing in your business waits on you to remember it. The Axiom mark, three cut circles, beside the line."', 'name="twitter:image:alt" content="Deploy Axiom: Nothing in your business waits on you to remember it. The Axiom mark, three cut circles, beside the line."', 'name="theme-color" content="#121316"', 'rel="icon" href="/assets/avatar.svg"',
   ]) assert.ok(homepage.includes(marker), `missing metadata marker: ${marker}`);
   for (const asset of ['assets/avatar.svg', 'assets/axiom-og.png', 'assets/wordmark-ink.svg', 'assets/wordmark-stone.svg']) {
     const fullPath = join(root, asset);
@@ -149,7 +152,8 @@ test('homepage loads local assets, keeps the brief form, and has a compact mobil
   assert.ok(homepage.includes('id="brief-form"'), 'brief form is missing');
   assert.ok(homeStylesheet().includes('.bar__nav .nav-hide-sm{display:none}'), 'mobile hides secondary nav links');
   // A409 deliberately gives the phone header to the company name and the booking button; /work and /notes hide on phones.
-  assert.ok(homepage.includes('<a class="bar__home" href="/" aria-label="Deploy Axiom, home">Deploy Axiom</a>'), 'company name in the header');
+  // A413 deliberately sets the unseen-triangle mark beside the name, the same header as every inner page.
+  assert.match(homepage, /<a class="bar__home" href="\/" aria-label="Deploy Axiom, home"><svg class="bar__mark"[^>]*aria-hidden="true"[^>]*>(?:<path [^>]*\/>){3}<\/svg>Deploy Axiom<\/a>/, 'company name in the header');
   assert.ok(!/\.bar__home\{display:none\}/.test(homeStylesheet()), 'company name must not hide on phones');
   assert.ok(homepage.includes('<li class="nav-hide-sm"><a href="#notes">'));
   assert.ok(homepage.includes('<li><a class="nav-cta" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a></li>'), 'header CTA books the call');
@@ -158,14 +162,21 @@ test('homepage loads local assets, keeps the brief form, and has a compact mobil
 test('homepage keeps the hero direct: headline, plain-English line, two actions, no media', () => {
   const hero = homepage.match(/<section class="hero[\s\S]*?<\/section>/)?.[0] ?? '';
   assert.ok(hero.includes('Nothing in your business waits on you to remember it.<span class="cursor" aria-hidden="true"></span></h1>'));
-  assert.ok(hero.includes('in plain English'));
+  assert.ok(hero.includes('In plain English'));
   // A409: who it's for, founder and place, booking first, brief second, insurance field report linked from the hero.
-  assert.ok(hero.includes('<p class="hero__for">Built for independent insurance agencies and sales professionals: regulated work where every text has to clear consent, opt-out and quiet-hour rules before it goes.</p>'));
+  // A413 keeps the words and stops "opt-out" and "quiet-hour" breaking at the hyphen.
+  assert.ok(hero.includes('<p class="hero__for">Built for independent insurance agencies and sales professionals: regulated work where every text has to clear consent, <span class="nowrap">opt-out</span> and <span class="nowrap">quiet-hour</span> rules before it goes.</p>'));
   assert.ok(hero.includes('<a class="button" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a>'));
   assert.ok(hero.includes('<a class="button ghost" href="#contact">Write a short brief</a>'));
   assert.ok(hero.includes('</h1>\n<p class="hero__by">P. K. Stewart, founder · Baton Rouge</p>'), 'founder and place directly under the headline');
   assert.ok(hero.includes('href="/field-reports/insurance-client-care/">Read the insurance field report</a>'));
-  assert.ok(!/HIPAA|TCPA|compliant|certified/i.test(homepage), 'no regulation or compliance claims without evidence');
+  // A413 (Percy, 11-14): HIPAA may appear only in the one sentence that says compliance stays with the client.
+  const HIPAA_LINE = "We work in fields where HIPAA applies. Your compliance stays with you and your systems; if you need help there, we'll point you to people who specialize in it.";
+  for (const path of ['index.html', 'terms/index.html']) assert.equal(read(path).split(HIPAA_LINE).length - 1, 1, `${path}: the HIPAA line, once`);
+  for (const path of ['index.html', 'terms/index.html', 'privacy/index.html', 'baton-rouge/index.html', 'field-reports/insurance-client-care/index.html', 'operator-layer/index.html', 'plugins/index.html']) {
+    const rest = read(path).split(HIPAA_LINE).join('');
+    assert.ok(!/HIPAA|TCPA|compliant|certified/i.test(rest), `${path}: no other regulation or compliance claim`);
+  }
   assert.ok(!/<video|<img/i.test(hero), 'no media in the hero');
   assert.match(homeStylesheet(), /@media \(prefers-reduced-motion:reduce\)/);
 });

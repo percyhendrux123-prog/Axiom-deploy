@@ -7,8 +7,9 @@ const root = new URL('..', import.meta.url).pathname;
 const read = (p) => readFileSync(join(root, p), 'utf8');
 const home = read('index.html');
 
-test('terminal homepage keeps the business order: hero, axiom, story, ledger, work, limits, method, video, founder, findings, contact', () => {
-  const order = ['Nothing in your business waits on you to remember it.<span class="cursor"', 'class="hero__line lede"', 'in plain English', 'class="gate"', 'id="story"', 'id="proof"', 'id="work"', 'id="limits"', 'id="method"', 'id="explained"', 'id="founder"', 'id="notes"', 'id="contact"'];
+test('homepage keeps the business order: hero, example, work, axiom, story, ledger, limits, method, video, founder, findings, contact', () => {
+  // A413 deliberately moves Work (insurance client care first) up to just after the example job, so proof comes before the symbols.
+  const order = ['Nothing in your business waits on you to remember it.<span class="cursor"', 'class="hero__line lede"', 'In plain English', 'id="replay"', 'id="work"', 'id="elements"', 'class="gate"', 'id="story"', 'id="proof"', 'id="limits"', 'id="method"', 'id="explained"', 'id="founder"', 'id="notes"', 'id="contact"'];
   let previous = -1;
   for (const marker of order) {
     const position = home.indexOf(marker);
@@ -24,7 +25,9 @@ test('terminal homepage keeps the business order: hero, axiom, story, ledger, wo
   // A409: the header books the call; the summary label differs from the section heading so one tap reads as progress.
   assert.ok(home.includes('<a class="nav-cta" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a>'));
   assert.ok(home.includes('<summary class="button">Write a short brief</summary>'));
-  assert.ok(home.includes('<h3 class="listing__path">insurance-client-care/</h3>'));
+  // A413: Work entries carry plain titles, not paths; the insurance entry leads.
+  assert.ok(home.includes('<li class="listing__item"><h3 class="listing__path">Insurance agency client care</h3>'));
+  assert.ok(home.indexOf('Insurance agency client care') < home.indexOf('Escalation desk'));
   // A409: the field report's header books the call too; its closing button still opens the brief in one tap.
   assert.ok(read('field-reports/insurance-client-care/index.html').includes('<a class="nav-cta" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a></nav>'));
   assert.ok(home.includes('id="brief-composer"'));
@@ -42,7 +45,7 @@ test('medallion story ships as readable HTML with every signal carrying a second
   assert.ok(story.includes('role="img"') && story.includes('aria-label="The Hermes medallion'), 'static medallion is described');
   assert.ok(story.includes('Axiōma is given away: the spec is CC0 and the code is MIT.'), 'ownership language');
   for (const p of story.match(/<div class="story__flow">([\s\S]*?)<\/div>/)[1].match(/<p>[\s\S]*?<\/p>/g)) assert.ok(!/\n|  /.test(p), 'each story paragraph stays on one line with single spaces (engine offsets)');
-  assert.ok(home.includes('<script src="/assets/axioma/home.js?v=8" defer></script>'));
+  assert.ok(home.includes('<script src="/assets/axioma/home.js?v=9" defer></script>'));
   const loader = read('assets/axioma/home.js');
   assert.ok(loader.includes('prefers-reduced-motion: reduce'), 'engine never loads for reduced motion');
   assert.ok(existsSync(join(root, 'assets/axioma/story.js')) && existsSync(join(root, 'src/axioma/story.js')), 'bundle and its source are both tracked');

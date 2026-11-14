@@ -244,13 +244,13 @@ for (const [width, motion] of [[1440, 'reduce'], [390, 'reduce'], [1440, 'no-pre
       const c = document.createElement('canvas'); c.width = image.width; c.height = image.height;
       const ctx = c.getContext('2d'); ctx.drawImage(image, 0, 0);
       const data = ctx.getImageData(0, 0, c.width, c.height).data;
-      let brightest = [14,15,17];
+      let brightest = [18,19,22]; // A413: night is brand ink #121316
       for (let i = 0; i < data.length; i += 4) if (data[i] > brightest[0]) brightest = [...data.slice(i, i + 3)];
       const luminance = rgb => rgb.map(v => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }).reduce((sum, v, i) => sum + v * [.2126,.7152,.0722][i], 0);
       const contrast = rgb => (luminance(rgb) + .05) / (luminance(brightest) + .05);
       const zoom = document.createElement('canvas'); zoom.width = c.width * 2; zoom.height = c.height * 2;
       const z = zoom.getContext('2d'); z.imageSmoothingEnabled = false; z.drawImage(c, 0, 0, zoom.width, zoom.height);
-      return { brightest, delta: brightest[0] - 14, dimContrast: contrast([138,142,150]), bodyContrast: contrast([217,218,220]), zoom: zoom.toDataURL() };
+      return { brightest, delta: brightest[0] - 18, dimContrast: contrast([150,146,138]), bodyContrast: contrast([222,218,209]), zoom: zoom.toDataURL() };
     }, 'data:image/png;base64,' + png.toString('base64'));
     assert.ok(sample.delta >= 8 && sample.delta <= 12, JSON.stringify({ ...sample, zoom: undefined }));
     assert.ok(sample.dimContrast >= 4.5 && sample.bodyContrast >= 4.5);

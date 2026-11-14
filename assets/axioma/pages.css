@@ -11,23 +11,24 @@
 @font-face{font-family:'Geist Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url('/assets/axioma/fonts/geist-latin-ext-wght-normal.woff2') format('woff2-variations');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
 
 :root{
-  /* firm.css tokens remapped onto the night palette */
-  --ink:#f0f0ee;--stone:#0e0f11;--stone-2:#141518;--navy:#c9cacd;--brass:#c9cacd;
-  --muted:#a3a7ae;--rule:#2a2c31;
+  /* firm.css tokens remapped onto the night palette (A413: brand ink #121316,
+     stone #F1EDE4, muted #96928A; one palette with the homepage) */
+  --ink:#f1ede4;--stone:#121316;--stone-2:#17181b;--navy:#cdc8bd;--brass:#cdc8bd;
+  --muted:#a9a59c;--rule:#2c2d31;
   --serif:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
   --display:'Geist Variable','Helvetica Neue',Arial,sans-serif;
-  --night:#0e0f11;--panel:#141518;--text:#d9dadc;--strong:#f0f0ee;--dim:#8a8e96;--mid:#c9cacd;
+  --night:#121316;--panel:#17181b;--text:#dedad1;--strong:#f1ede4;--dim:#96928a;--mid:#cdc8bd;
   color-scheme:dark;
 }
 html{background:var(--night);overscroll-behavior-y:none}
 body{color:var(--text);font-size:16px;line-height:1.7}
-::selection{background:#3a3d44;color:var(--strong)}
+::selection{background:#3b3a37;color:var(--strong)}
 :focus-visible{outline-color:var(--strong)!important}
 a{text-decoration-color:var(--dim);text-underline-offset:.22em}
 a:hover{text-decoration-color:var(--strong)}
 
 /* masthead: the ink wordmark turns to light ink on night */
-.masthead{background:rgb(14 15 17 / .92);border-bottom-color:var(--rule)}
+.masthead{background:var(--night);border-bottom-color:var(--rule)}
 .brand img{filter:invert(1) brightness(1.05)}
 nav{font:400 14px/1 var(--serif);letter-spacing:0;text-transform:none}
 nav a{color:var(--text)}
@@ -75,3 +76,45 @@ input::placeholder,textarea::placeholder{color:var(--dim)}
 .dark .numeral,.dark .step-n,.br-steps .step-n{color:var(--mid)}
 .numeral{border-bottom-color:var(--dim)}
 .closing-number{border-color:var(--dim);outline-color:var(--dim)}
+
+/* ---------- A413: one header and one footer on every page ----------
+   The inner pages wear the homepage bar: the unseen-triangle mark and
+   "Deploy Axiom", Work / Limits / Method / Notes, and the filled
+   "Book a 15-minute call" button; one footer line and one link list. */
+body{font-family:var(--display)}
+.masthead{position:sticky;top:0;z-index:10;border-bottom:1px solid var(--rule)}
+.masthead-row,.remake .masthead-row{height:56px;gap:24px}
+.masthead-row::after{display:none}
+.brand,.remake .brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:var(--strong);text-decoration:none;font:600 15px/1 var(--display);letter-spacing:-.01em;white-space:nowrap}
+.brand svg{display:block;width:22px;height:auto;flex:none;fill:var(--strong)}
+nav,.remake nav{display:flex;align-items:center;gap:clamp(12px,2.4vw,28px);font:400 15px/1 var(--display);letter-spacing:0;text-transform:none}
+nav a{display:inline-flex;align-items:center;min-height:44px;min-width:44px;text-decoration:none}
+nav a[aria-current="page"]{color:var(--strong);text-decoration:underline;text-underline-offset:.3em}
+nav .nav-cta,.remake nav .nav-cta{display:inline-flex;align-items:center;min-height:46px;padding:0 16px;border:1px solid var(--strong);background:var(--strong);color:var(--night);font:500 15px/1.2 var(--display);letter-spacing:0;text-transform:none;white-space:nowrap}
+nav .nav-cta:hover,.remake nav .nav-cta:hover{background:var(--mid);border-color:var(--mid);color:var(--night)}
+.footer,.remake .footer{padding:40px 0 56px;border-top:1px solid var(--rule)}
+.footer-row,.remake .footer-row{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;font-size:14px;line-height:1.6;color:var(--text)}
+.footer-line{color:var(--strong);font-size:15px}
+.footer-links{display:flex;flex-wrap:wrap;gap:0 24px;list-style:none;margin:0;padding:0;line-height:1.6}
+.footer-links li{margin:0}
+.footer-links a{display:inline-flex;align-items:center;min-height:44px;min-width:44px;color:var(--text)}
+/* note lists: the kind sits above the title on narrow screens */
+.notes-list a,.notes-list li.pending,.remake .notes-list a{grid-template-columns:120px minmax(0,.95fr) minmax(0,1.55fr)}
+.note-n{font:500 12px/1.6 var(--serif);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+@media (max-width:900px){
+  .notes-list a,.notes-list li.pending,.remake .notes-list a{grid-template-columns:minmax(0,1fr);gap:6px}
+  .notes-list .note-d{grid-column:auto}
+}
+/* smallest type on any page is 12px */
+.kicker,.article .kicker,.remake .hero .kicker,.numeral{font-size:12px}
+.record-tag,.article th{font-size:12px}
+@media (max-width:640px){
+  .masthead-row,.remake .masthead-row{height:56px;gap:12px}
+  nav a:not(.nav-cta){display:none}
+  nav .nav-cta,.remake nav .nav-cta{padding:0 12px;font-size:14px}
+}
+@media (max-width:359px){
+  .masthead-row,.remake .masthead-row{gap:8px}
+  .brand,.remake .brand{font-size:14px;gap:8px}
+  nav .nav-cta,.remake nav .nav-cta{padding:0 10px;font-size:13px}
+}

@@ -19,7 +19,9 @@ test('the hero carries the mark as outlined paths: three cut circles, no drawn t
   assert.equal((svg.match(/<path /g) || []).length, 6, 'three discs and three cut overlays');
   assert.match(css, /\.kz__discs path\{fill:#f1ede4\}/);
   assert.match(css, /\.kz__cuts path\{fill:#f1ede4;opacity:0\}/, 'cuts are open (opacity 0) without JS');
-  assert.match(css, /\.kz\{display:block;width:clamp\(120px,/, 'never below the ~90px the illusion needs');
+  // A413 deliberately sets the hero mark above the headline at 96-120px (still above the ~90px the illusion needs).
+  assert.match(css, /\.kz\{display:block;width:clamp\(96px,/, 'never below the ~90px the illusion needs');
+  assert.ok(hero.indexOf('class="hero__mark"') < hero.indexOf('<h1'), 'mark sits above the headline in the source order');
 });
 
 test('Euclid I.1 sits before the unchanged gate with the agreed meaning, and the axiom stays word for word', () => {
@@ -33,11 +35,9 @@ test('Euclid I.1 sits before the unchanged gate with the agreed meaning, and the
   assert.doesNotMatch(elements, /data-show|is-constructing|is-step/, 'no construct state is baked into the HTML');
 });
 
-test('construction lines: every section rule carries the I.1 glyph, from a local file in the build', () => {
-  assert.match(css, /\.section\+\.section::before\{[^}]*position:absolute[^}]*mask-image:url\('\/assets\/axioma\/vesica\.svg'\)/);
-  const glyph = read('assets/axioma/vesica.svg');
-  assert.equal((glyph.match(/<circle /g) || []).length, 5, 'two circles and three marked points');
-  assert.match(read('netlify.toml'), /cp -R assets\/axioma dist\/assets\/axioma/);
+test('A413 retires the construction-line dividers: one symbol per idea, plain hairline rules', () => {
+  assert.doesNotMatch(css, /vesica/, 'no divider glyph in the stylesheet');
+  assert.match(css, /\.section\+\.section\{border-top:1px solid var\(--rule\)\}/, 'sections still divide with a hairline');
 });
 
 test('mark breath and Construct run on the conductor, opacity only, and end', () => {
