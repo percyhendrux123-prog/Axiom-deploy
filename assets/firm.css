@@ -638,9 +638,14 @@ html{background:var(--ink);overscroll-behavior-y:none}
 .explained figcaption{margin-top:14px;padding-top:12px;border-top:1px solid var(--rule);color:var(--muted);font-size:15px}
 .explained figcaption span{color:var(--ink);font-family:var(--display);letter-spacing:.06em}
 @media (max-width:640px){.explained-mark{width:52px;height:52px;margin:-26px 0 0 -26px}.explained-mark::after{left:20px;top:16px;border-width:10px 0 10px 15px}}
-/* A409: the booking label is two characters longer; keep the inner header inside 320px phones. */
-@media (max-width:359px){
+/* A409: the booking label is longer; keep the inner header inside the content column on phones, label at 12px (11px under 360). */
+@media (max-width:400px){
   .masthead-row,.remake .masthead-row{gap:8px}
-  .brand img,.remake .brand img{width:76px}
-  nav .nav-cta,.remake nav .nav-cta{letter-spacing:.02em;padding:13px 8px}
+  .brand img,.remake .brand img{width:72px}
+  nav .nav-cta,.remake nav .nav-cta{font-size:12px;letter-spacing:0;padding:13px 8px}
+}
+@media (max-width:359px){
+  .masthead-row,.remake .masthead-row{gap:6px}
+  .brand img,.remake .brand img{width:60px}
+  nav .nav-cta,.remake nav .nav-cta{font-size:11px;padding:13px 6px}
 }
