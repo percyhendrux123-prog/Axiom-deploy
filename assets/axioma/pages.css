@@ -90,16 +90,16 @@ body{font-family:var(--display)}
 .brand,.remake .brand{display:inline-flex;align-items:center;gap:10px;min-height:44px;color:var(--strong);text-decoration:none;font:600 15px/1 var(--display);letter-spacing:-.01em;white-space:nowrap}
 .brand svg{display:block;width:22px;height:auto;flex:none;fill:var(--strong)}
 nav,.remake nav{display:flex;align-items:center;gap:clamp(12px,2.4vw,28px);font:400 15px/1 var(--display);letter-spacing:0;text-transform:none}
-nav a{display:inline-flex;align-items:center;min-height:44px;min-width:44px;text-decoration:none}
+nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding-inline:6px;text-decoration:none}
 nav a[aria-current="page"]{color:var(--strong);text-decoration:underline;text-underline-offset:.3em}
 nav .nav-cta,.remake nav .nav-cta{display:inline-flex;align-items:center;min-height:46px;padding:0 16px;border:1px solid var(--strong);background:var(--strong);color:var(--night);font:500 15px/1.2 var(--display);letter-spacing:0;text-transform:none;white-space:nowrap}
 nav .nav-cta:hover,.remake nav .nav-cta:hover{background:var(--mid);border-color:var(--mid);color:var(--night)}
 .footer,.remake .footer{padding:40px 0 56px;border-top:1px solid var(--rule)}
 .footer-row,.remake .footer-row{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;font-size:14px;line-height:1.6;color:var(--text)}
 .footer-line{color:var(--strong);font-size:15px}
-.footer-links{display:flex;flex-wrap:wrap;gap:0 24px;list-style:none;margin:0;padding:0;line-height:1.6}
+.footer-links{display:flex;flex-wrap:wrap;gap:0 12px;list-style:none;margin:0;padding:0;line-height:1.6}
 .footer-links li{margin:0}
-.footer-links a{display:inline-flex;align-items:center;min-height:44px;min-width:44px;color:var(--text)}
+.footer-links a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding-inline:6px;color:var(--text)}
 /* note lists: the kind sits above the title on narrow screens */
 .notes-list a,.notes-list li.pending,.remake .notes-list a{grid-template-columns:120px minmax(0,.95fr) minmax(0,1.55fr)}
 .note-n{font:500 12px/1.6 var(--serif);letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
@@ -183,3 +183,14 @@ body>main{flex:1 0 auto}
 .plate{outline:0;box-shadow:none;border:1px solid var(--rule)}
 .plate::before,.plate::after{content:none;display:none}
 .br-steps .step-n,.steps .step-n{font-family:var(--serif)}
+/* A413 r5: one container for the field report like every other page; exits clear the lede; no-JS note readable on the light plate */
+.remake{--w:1180px}
+.remake .frame{padding-inline:var(--gutter)}
+.section .heading p.exits,.heading p.exits{margin-top:28px}
+.report .next .actions{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0 12px}
+.report .next .actions .button{margin:0}
+@media (max-width:640px){.report .next .actions{gap:10px}.report .next .actions .button{flex:1 1 100%}}
+.article figure.neuron noscript p{color:#121316}
+.raw-note>summary{display:flex;align-items:center;min-height:44px;cursor:pointer;color:var(--strong);text-decoration:underline;text-decoration-color:var(--dim);text-underline-offset:.22em}
+.nowrap{white-space:nowrap}
+.article figcaption a{padding-block:14px}

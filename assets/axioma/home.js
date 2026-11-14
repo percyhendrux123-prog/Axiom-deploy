@@ -47,19 +47,26 @@
       panels.forEach(function (panel) { panel.hidden = panel.id !== 'system-' + key + '-info' })
       if (win.AxChain) win.AxChain.select(key)
     }
-    // A413: on a phone the explanation sits below the board; after a tap,
-    // bring it into view if it starts below the screen (a user-started scroll).
-    var revealPanel = function () {
+    // A413: on a phone the explanation sits below the board. After a tap, if
+    // the explanation starts below the screen, scroll just enough to show its
+    // first lines, and never so far that the tapped node leaves the screen
+    // (it stays below the sticky bar). A user-started, bounded scroll.
+    var revealPanel = function (button) {
       var d = system.querySelector('.system__details')
-      if (!d) return
-      var r = d.getBoundingClientRect()
-      if (r.top > win.innerHeight - 140) d.scrollIntoView({ block: 'nearest', behavior: mq && mq.matches ? 'auto' : 'smooth' })
+      if (!d || !button) return
+      var bar = doc.querySelector('.bar')
+      var top = (bar ? bar.getBoundingClientRect().bottom : 0) + 12
+      var want = d.getBoundingClientRect().top - (win.innerHeight - 180)
+      if (want <= 0) return
+      var room = button.getBoundingClientRect().top - top
+      var by = Math.min(want, room)
+      if (by > 8) win.scrollBy({ top: by, behavior: mq && mq.matches ? 'auto' : 'smooth' })
     }
     system.classList.add('is-interactive')
     selectNode('intro')
     nodes.forEach(function (button) {
       button.disabled = false
-      button.addEventListener('click', function () { stopOrder(button.dataset.systemNode); revealPanel() })
+      button.addEventListener('click', function () { stopOrder(button.dataset.systemNode); revealPanel(button) })
       button.addEventListener('focus', function () { if (!chainRun) selectNode(button.dataset.systemNode) })
       button.addEventListener('pointerenter', function (event) { if (!chainRun && event.pointerType === 'mouse') selectNode(button.dataset.systemNode) })
     })

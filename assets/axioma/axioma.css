@@ -56,7 +56,7 @@ ul,ol{padding:0;list-style:none}
 .bar__home{color:var(--strong);text-decoration:none;font-weight:600;letter-spacing:-.01em;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center;gap:10px}
 .bar__mark{display:block;width:22px;height:auto;flex:none;fill:var(--strong)}
 .bar__nav{display:flex;align-items:center;gap:clamp(12px,2.4vw,28px)}
-.bar__nav a{display:inline-flex;align-items:center;min-height:44px;min-width:44px;color:var(--text);text-decoration:none;transition:color 160ms var(--ease-out)}
+.bar__nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding-inline:6px;color:var(--text);text-decoration:none;transition:color 160ms var(--ease-out)}
 .bar__nav a:hover{color:var(--strong)}
 .bar__nav .nav-cta{min-height:46px;padding:0 16px;border:1px solid var(--strong);background:var(--strong);color:var(--night);font-weight:500;white-space:nowrap;transition:border-color 160ms var(--ease-out),background-color 160ms var(--ease-out)}
 .bar__nav .nav-cta:hover{border-color:var(--mid);background:var(--mid);color:var(--night)}
@@ -64,7 +64,9 @@ ul,ol{padding:0;list-style:none}
 /* ---------- section label (plain words; the shell prompts retired in A413) ---------- */
 .label{font:500 12px/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
 .nowrap{white-space:nowrap}
-.hero__by a{padding-block:12px;color:var(--strong)}
+.hero__by a{padding-block:12px;color:var(--strong);white-space:nowrap}
+html:not(.js) .js-only,html.js .no-js{display:none}
+html:not(.js) .system__board,html:not(.js) .system__caption{display:none}
 code,pre,kbd,samp{font-family:var(--mono)}
 /* phones: the header keeps only the brand and the booking button, so the sections get one quiet row under the hero */
 .jump{display:none}
@@ -110,7 +112,7 @@ html:not(.js) .hero__title .cursor{visibility:hidden}
 .hero__by{font:400 15px/1.4 var(--display);color:var(--text)}
 .hero__meta{display:flex;flex-wrap:wrap;align-items:center;gap:0 20px;font-size:14px;line-height:1.4;color:var(--text)}
 .hero__meta a{display:inline-flex;align-items:center;min-height:44px;color:var(--strong);text-decoration:underline;text-underline-offset:3px}
-.hero__line{text-wrap:pretty;max-width:46ch;font-size:16px;line-height:1.7;color:var(--text)}
+.hero__line{text-wrap:pretty;max-width:46ch;font-size:17px;line-height:1.55;color:var(--text)}
 .plain{border:1px solid var(--rule);background:var(--panel)}
 .plain__h{padding:12px 20px;border-bottom:1px solid var(--rule);font:500 12px/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--mid)}
 .plain__list{display:grid}
@@ -182,6 +184,7 @@ html:not(.js) .hero__title .cursor{visibility:hidden}
 .catalog__merged{font-size:14px;color:var(--mid)}
 .catalog__what{font:400 16px/1.6 var(--display);color:var(--text)}
 .catalog__links{display:flex;flex-wrap:wrap;column-gap:14px}
+.catalog__links a:first-child{flex-basis:100%}
 .catalog__links a{display:inline-flex;align-items:center;min-height:44px;font-size:13px;white-space:nowrap}
 
 /* limits of authority: the gate, as a permission table */
@@ -266,8 +269,8 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 .foot{border-top:1px solid var(--rule)}
 .foot__row{display:grid;gap:10px;padding-block:40px 56px;font-size:14px;color:var(--text)}
 .foot__gate{color:var(--strong);font-size:15px}
-.footer-links,.founder-links{display:flex;flex-wrap:wrap;gap:0 24px;list-style:none;margin:0;padding:0}
-.footer-links a,.founder-links a{display:inline-flex;align-items:center;min-height:44px;min-width:44px}
+.footer-links,.founder-links{display:flex;flex-wrap:wrap;gap:0 12px;list-style:none;margin:0;padding:0}
+.footer-links a,.founder-links a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding-inline:6px}
 .footer-links a{color:var(--text)}
 .foot__credit{font-size:13px;line-height:1.7;color:var(--dim)}
 .foot__credit a{padding:14px 0;color:var(--text)}
@@ -356,7 +359,6 @@ html{overflow-anchor:none}
   .hero__title{font-size:min(clamp(2.3rem,10.5vw,3rem),12.5vw)}
   .hero{padding-top:20px}
   .hero__copy{gap:14px}
-  .hero__line{line-height:1.6}
   .hero__copy>.actions{gap:10px}
   .hero__copy>.actions .button{flex:1 1 100%}
   .contact-actions>.button,.contact-actions>#brief-composer{flex:1 1 100%}
