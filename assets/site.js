@@ -32,7 +32,16 @@
   const composer = document.getElementById('brief-composer');
   if (!composer) return;
   const wants = (hash) => hash === '#contact' || hash === '#brief-form';
+  const form = document.getElementById('brief-form');
   const open = () => { composer.open = true; };
+  // Once open, the summary hides; move focus into the form so keyboard and
+  // screen-reader users continue at the first field instead of the page top.
+  if (form) {
+    form.setAttribute('tabindex', '-1');
+    composer.addEventListener('toggle', () => {
+      if (composer.open && !form.contains(document.activeElement)) form.focus({ preventScroll: true });
+    });
+  }
   if (wants(location.hash)) open();
   addEventListener('hashchange', () => { if (wants(location.hash)) open(); });
   document.addEventListener('click', (event) => {

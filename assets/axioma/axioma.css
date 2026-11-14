@@ -438,6 +438,7 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 }
 
 #brief-composer[open]>summary{display:none}
+#brief-form:focus{outline:none}
 @media (max-width:359px){
   .bar__row{gap:8px}
   .bar__home{font-size:13px}

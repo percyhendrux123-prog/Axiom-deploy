@@ -25,6 +25,8 @@ test('terminal homepage keeps the business order: hero, axiom, story, ledger, wo
   assert.ok(home.includes('<a class="nav-cta" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a>'));
   assert.ok(home.includes('<summary class="button">Write a short brief</summary>'));
   assert.ok(home.includes('<h3 class="listing__path">insurance-client-care/</h3>'));
+  // A409: the field report's header books the call too; its closing button still opens the brief in one tap.
+  assert.ok(read('field-reports/insurance-client-care/index.html').includes('<a class="nav-cta" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a></nav>'));
   assert.ok(home.includes('id="brief-composer"'));
   for (const line of ['When rules and regulations begin to move, it\'s no longer solely governance. It\'s operations.', 'A draft is never an approval.', 'Axiom Explained.', 'data-yt="tMeHJg1U108"']) assert.ok(home.includes(line), `missing: ${line}`);
   assert.ok(!home.includes('An AI assistant takes the call'));
