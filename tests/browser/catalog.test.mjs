@@ -54,7 +54,7 @@ for (const width of [360, 390, 901, 1280]) {
         assert.deepEqual(geometry.overflow, [], 'catalog content stays inside its boxes');
         assert.ok(Math.max(...geometry.nav.map(e => e.top)) < Math.min(...geometry.nav.map(e => e.bottom)), 'visible nav remains on one row');
         assert.ok(geometry.nav.every(e => e.right <= width), 'nav stays in viewport');
-        assert.ok(geometry.nav.some(e => e.text === 'Start an engagement' && e.height >= 44), 'engagement action remains visible and tappable');
+        assert.ok(geometry.nav.some(e => e.text === 'Book a 15-minute call' && e.height >= 44), 'booking action remains visible and tappable');
         if (width >= 901) {
           const row = await page.locator('.catalog__item').nth(3).evaluate(e => {
             const s = getComputedStyle(e); return { top: s.borderTopWidth, left: s.borderLeftWidth };

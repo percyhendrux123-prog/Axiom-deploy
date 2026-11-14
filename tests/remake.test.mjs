@@ -21,8 +21,10 @@ test('terminal homepage keeps the business order: hero, axiom, story, ledger, wo
   assert.equal((home.match(/class="listing__item"/g) ?? []).length, 4);
   assert.ok(home.includes('href="/field-reports/insurance-client-care/"'));
   assert.ok(home.includes('href="https://github.com/percyhendrux123-prog/escalation-desk"'));
-  assert.ok(home.includes('<a class="nav-cta" href="#contact">Start an engagement</a>'));
-  assert.ok(home.includes('<summary class="button">Start an engagement</summary>'));
+  // A409: the header books the call; the summary label differs from the section heading so one tap reads as progress.
+  assert.ok(home.includes('<a class="nav-cta" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a>'));
+  assert.ok(home.includes('<summary class="button">Write a short brief</summary>'));
+  assert.ok(home.includes('<h3 class="listing__path">insurance-client-care/</h3>'));
   assert.ok(home.includes('id="brief-composer"'));
   for (const line of ['When rules and regulations begin to move, it\'s no longer solely governance. It\'s operations.', 'A draft is never an approval.', 'Axiom Explained.', 'data-yt="tMeHJg1U108"']) assert.ok(home.includes(line), `missing: ${line}`);
   assert.ok(!home.includes('An AI assistant takes the call'));

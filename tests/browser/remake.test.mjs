@@ -110,9 +110,11 @@ test('brief form validates six answers and posts once to /brief/received/ with n
   try {
     const page = await context.newPage();
     await page.goto(base + '/');
-    await page.locator('.nav-cta').click();
+    // A409: the hero brief link opens the form in one tap; the header CTA books the call.
+    assert.equal(await page.locator('.nav-cta').getAttribute('href'), 'https://calendar.app.google/rD42RF3YVLaRV52J6');
+    await page.locator('.hero .button.ghost[href="#contact"]').click();
     assert.equal(new URL(page.url()).hash, '#contact');
-    await page.locator('#brief-composer summary').click();
+    assert.equal(await page.locator('#brief-composer').getAttribute('open'), '', 'one tap opens the brief');
     const outbound = [];
     page.on('request', (request) => { if (request.method() !== 'GET') outbound.push({ method: request.method(), url: request.url(), body: request.postData() }); });
     await page.locator('#brief-form button[type="submit"]').click();

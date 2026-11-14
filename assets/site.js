@@ -25,3 +25,18 @@
     }
   });
 })();
+
+// A409: any link to the contact section opens the brief form on arrival, so
+// "Start an engagement" (inner pages) and "Send a short brief" take one tap.
+(() => {
+  const composer = document.getElementById('brief-composer');
+  if (!composer) return;
+  const wants = (hash) => hash === '#contact' || hash === '#brief-form';
+  const open = () => { composer.open = true; };
+  if (wants(location.hash)) open();
+  addEventListener('hashchange', () => { if (wants(location.hash)) open(); });
+  document.addEventListener('click', (event) => {
+    const link = event.target instanceof Element ? event.target.closest('a[href]') : null;
+    if (link && wants(link.hash) && link.pathname === location.pathname) open();
+  });
+})();

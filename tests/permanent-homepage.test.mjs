@@ -148,16 +148,24 @@ test('homepage loads local assets, keeps the brief form, and has a compact mobil
   assert.match(homepage, /<nav aria-label="Main">/);
   assert.ok(homepage.includes('id="brief-form"'), 'brief form is missing');
   assert.ok(homeStylesheet().includes('.bar__nav .nav-hide-sm{display:none}'), 'mobile hides secondary nav links');
-  assert.match(homepage, /<li><a href="#notes">/, 'Notes stays visible on phones beside the primary action');
-  assert.ok(!/<li class="nav-hide-sm"><a href="#notes">/.test(homepage));
+  // A409 deliberately gives the phone header to the company name and the booking button; /work and /notes hide on phones.
+  assert.ok(homepage.includes('<a class="bar__home" href="/" aria-label="Deploy Axiom, home">Deploy Axiom</a>'), 'company name in the header');
+  assert.ok(!/\.bar__home\{display:none\}/.test(homeStylesheet()), 'company name must not hide on phones');
+  assert.ok(homepage.includes('<li class="nav-hide-sm"><a href="#notes">'));
+  assert.ok(homepage.includes('<li><a class="nav-cta" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a></li>'), 'header CTA books the call');
 });
 
 test('homepage keeps the hero direct: headline, plain-English line, two actions, no media', () => {
   const hero = homepage.match(/<section class="hero[\s\S]*?<\/section>/)?.[0] ?? '';
   assert.ok(hero.includes('Nothing in your business waits on you to remember it.<span class="cursor" aria-hidden="true"></span></h1>'));
   assert.ok(hero.includes('in plain English'));
-  assert.ok(hero.includes('href="#contact">Start an engagement</a>'));
-  assert.ok(hero.includes('href="https://calendar.app.google/rD42RF3YVLaRV52J6"'));
+  // A409: who it's for, founder and place, booking first, brief second, insurance field report linked from the hero.
+  assert.ok(hero.includes('<p class="hero__for">Built for independent insurance agencies and sales professionals: regulated work where every text has to clear consent, opt-out and quiet-hour rules before it goes.</p>'));
+  assert.ok(hero.includes('<a class="button" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a>'));
+  assert.ok(hero.includes('<a class="button ghost" href="#contact">Send a short brief</a>'));
+  assert.ok(hero.includes('P. K. Stewart, founder · Baton Rouge'));
+  assert.ok(hero.includes('href="/field-reports/insurance-client-care/">See it run in an insurance agency</a>'));
+  assert.ok(!/HIPAA|TCPA|compliant|certified/i.test(homepage), 'no regulation or compliance claims without evidence');
   assert.ok(!/<video|<img/i.test(hero), 'no media in the hero');
   assert.match(homeStylesheet(), /@media \(prefers-reduced-motion:reduce\)/);
 });

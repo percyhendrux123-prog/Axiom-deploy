@@ -23,7 +23,7 @@
 <link rel="icon" href="/assets/avatar.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/axioma/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/axioma/fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/axioma/axioma.css?v=13">
+<link rel="stylesheet" href="/assets/axioma/axioma.css?v=14">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -45,13 +45,13 @@
 <div class="page-texture" aria-hidden="true"><span class="page-texture__tile"></span></div>
 <a class="skip" href="#main">Skip to content</a>
 <header class="bar"><div class="wrap bar__row">
-<a class="bar__home" href="/" aria-label="Deploy Axiom, home">deploy<span class="tone-dim">@</span>axiom</a>
+<a class="bar__home" href="/" aria-label="Deploy Axiom, home">Deploy Axiom</a>
 <nav aria-label="Main"><ul class="bar__nav">
-<li><a href="#work"><span class="tone-dim">/</span>work</a></li>
+<li class="nav-hide-sm"><a href="#work"><span class="tone-dim">/</span>work</a></li>
 <li class="nav-hide-sm"><a href="#limits"><span class="tone-dim">/</span>limits</a></li>
 <li class="nav-hide-sm"><a href="#method"><span class="tone-dim">/</span>method</a></li>
-<li><a href="#notes"><span class="tone-dim">/</span>notes</a></li>
-<li><a class="nav-cta" href="#contact">Start an engagement</a></li>
+<li class="nav-hide-sm"><a href="#notes"><span class="tone-dim">/</span>notes</a></li>
+<li><a class="nav-cta" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a></li>
 </ul></nav>
 </div></header>
 <main id="main">
@@ -59,8 +59,10 @@
 <div class="hero__copy">
 <p class="prompt" aria-hidden="true"><span class="prompt__host">deploy@axiom</span><span class="tone-dim">:~$ </span><span class="prompt__cmd">whoami</span></p>
 <h1 class="hero__title" id="hero-title">Nothing in your business waits on you to remember it.<span class="cursor" aria-hidden="true"></span></h1>
+<p class="hero__for">Built for independent insurance agencies and sales professionals: regulated work where every text has to clear consent, opt-out and quiet-hour rules before it goes.</p>
 <p class="hero__line lede">We build and run the AI agents that handle it, on your own computer and accounts, and anything that commits the business waits for you.</p>
-<div class="actions"><a class="button" href="#contact">Start an engagement</a><a class="button ghost" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a call</a></div>
+<div class="actions"><a class="button" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a><a class="button ghost" href="#contact">Send a short brief</a></div>
+<div class="hero__meta"><span>P. K. Stewart, founder · Baton Rouge</span><a href="/field-reports/insurance-client-care/">See it run in an insurance agency</a></div>
 </div>
 <aside class="plain" aria-labelledby="plain-title">
 <h2 class="plain__h" id="plain-title"><span class="tone-dim"># </span>in plain English</h2>
@@ -217,7 +219,7 @@
 </div>
 <ol class="listing">
 <li class="listing__item"><h3 class="listing__path">escalation-desk/</h3><p class="listing__what">When an agent gets stuck, a loop answers: one holding line, one ticket, every action checked against a gate that fails closed, and one reply telling the owner what to do.</p><p class="listing__ev"><span class="tone-dim">evidence: </span>public code, 9 passing tests</p><p class="listing__link"><a href="https://github.com/percyhendrux123-prog/escalation-desk">See the public code</a></p></li>
-<li class="listing__item"><h3 class="listing__path">client-care/</h3><p class="listing__what">Texts and email at set points after a sale, with quiet hours, opt-outs and no repeats. Anything risky waits for the owner's yes.</p><p class="listing__ev"><span class="tone-dim">evidence: </span>the full sequence ran on a test phone before any client got a message</p><p class="listing__link"><a href="/field-reports/insurance-client-care/">Read the field report</a></p></li>
+<li class="listing__item"><h3 class="listing__path">insurance-client-care/</h3><p class="listing__what">Texts and email at set points after a sale, with quiet hours, opt-outs and no repeats. Anything risky waits for the owner's yes.</p><p class="listing__ev"><span class="tone-dim">evidence: </span>the full sequence ran on a test phone before any client got a message</p><p class="listing__link"><a href="/field-reports/insurance-client-care/">Read the field report</a></p></li>
 <li class="listing__item"><h3 class="listing__path">hermes-tripwire/</h3><p class="listing__what">An open-source plugin that logs every action an agent was refused and alerts the owner.</p><p class="listing__ev"><span class="tone-dim">evidence: </span>public, with tests</p><p class="listing__link"><a href="https://github.com/percyhendrux123-prog/hermes-tripwire">See the public code</a></p></li>
 <li class="listing__item"><h3 class="listing__path">handydandy/</h3><p class="listing__what">When a session runs long, the agent finishes the job and writes a handoff, so the next session picks up clean.</p><p class="listing__ev"><span class="tone-dim">evidence: </span>merged into the Hermes plugin catalog</p></li>
 </ol>
@@ -320,7 +322,7 @@
 <h2 id="contact-title">Start an engagement.</h2>
 <p>Tell us the work you keep having to remember. We write down what starts it, what counts as done, and where it stops for you.</p>
 </div>
-<div class="contact-actions"><details id="brief-composer"><summary class="button">Start an engagement</summary>
+<div class="contact-actions"><details id="brief-composer"><summary class="button">Write a short brief</summary>
 <form class="mapper" id="brief-form" name="axiom-brief" method="POST" action="/brief/received/" data-netlify="true" netlify-honeypot="bot-field">
 <input type="hidden" name="form-name" value="axiom-brief">
 <p>Six short answers. AXIOM, our operating agent, reads every brief and replies the way you ask. If the work fits, P. K. Stewart takes the call.</p>
