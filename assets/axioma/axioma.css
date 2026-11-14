@@ -164,10 +164,10 @@ html:not(.js) .hero__title .cursor{visibility:hidden}
 .listing--code{grid-template-columns:repeat(3,minmax(0,1fr))}
 .listing__group{display:grid;gap:8px;max-width:72ch;padding-top:12px}
 .listing__group p:not(.label){color:var(--text)}
-.listing__item:first-child .listing__path{font-size:clamp(1.8rem,3.6vw,2.6rem)}
+.listing__item:first-child .listing__path{font-size:clamp(1.5rem,2.6vw,2rem)}
 .listing__path{font-family:var(--display);font-weight:600;font-size:1.5rem;letter-spacing:-.025em;line-height:1.15;color:var(--strong)}
 .listing__what{max-width:62ch;color:var(--text)}
-.listing__ev{font:400 13px/1.6 var(--mono);color:var(--mid)}
+.listing__ev{font:400 14px/1.6 var(--mono);color:var(--mid)}
 .listing__link a{display:inline-flex;align-items:center;min-height:44px;font-size:14px}
 
 /* catalog: six accepted plugins, one terminal panel, no accent of its own
@@ -179,7 +179,7 @@ html:not(.js) .hero__title .cursor{visibility:hidden}
 .catalog__item:nth-child(n+4){border-top:1px solid var(--rule)}
 .catalog__name{font-family:var(--display);font-weight:580;font-size:1.5rem;letter-spacing:-.03em;line-height:1.15;color:var(--strong);overflow-wrap:anywhere}
 .catalog__ver{font:400 14px/1 var(--mono);letter-spacing:0;color:var(--mid);margin-left:.35em}
-.catalog__merged{font-size:13px;color:var(--mid)}
+.catalog__merged{font-size:14px;color:var(--mid)}
 .catalog__what{font:400 16px/1.6 var(--display);color:var(--text)}
 .catalog__links{display:flex;flex-wrap:wrap;column-gap:14px}
 .catalog__links a{display:inline-flex;align-items:center;min-height:44px;font-size:13px;white-space:nowrap}
@@ -208,7 +208,7 @@ html:not(.js) .hero__title .cursor{visibility:hidden}
 .explained-mark::after{content:'';position:absolute;left:25px;top:20px;border-style:solid;border-width:12px 0 12px 19px;border-color:transparent transparent transparent var(--strong)}
 .explained-play:hover .explained-mark{background:var(--panel)}
 .explained-frame{display:block;width:100%;aspect-ratio:16/9;border:1px solid var(--rule);background:var(--night)}
-.explained figcaption{font-size:14px;color:var(--text)}
+.explained figcaption{font-size:15px;color:var(--text)}
 .explained figcaption span{color:var(--strong)}
 
 /* founder */
@@ -254,7 +254,7 @@ textarea{width:100%;min-height:104px;padding:12px 14px;border:1px solid var(--di
 textarea::placeholder{color:var(--dim);opacity:1}
 textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 .fine{margin-top:16px;font-size:14px;color:var(--text)}
-.brief-note{margin-top:-12px;font-size:13px;line-height:1.5;color:var(--mid)}
+.brief-note{margin-top:-12px;font-size:15px;line-height:1.5;color:var(--text)}
 .fine strong{color:var(--strong);font-weight:500}
 .mapper .actions{margin-top:22px}
 .status{flex-basis:100%;color:var(--strong)}
@@ -269,7 +269,7 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 .footer-links,.founder-links{display:flex;flex-wrap:wrap;gap:0 24px;list-style:none;margin:0;padding:0}
 .footer-links a,.founder-links a{display:inline-flex;align-items:center;min-height:44px;min-width:44px}
 .footer-links a{color:var(--text)}
-.foot__credit{font-size:12px;line-height:1.7;color:var(--dim)}
+.foot__credit{font-size:13px;line-height:1.7;color:var(--dim)}
 .foot__credit a{padding:14px 0;color:var(--text)}
 
 /* ---------- story: the medallion and the words that make room ---------- */
@@ -388,24 +388,24 @@ html{overflow-anchor:none}
 .replay .ax-go{color:var(--ok);text-decoration-color:currentColor}
 .replay__row.is-pending{opacity:.6}
 /* catalog lookup */
-.catalog__install{font-size:13px;color:var(--text);overflow-wrap:anywhere}
+.catalog__install{font-size:14px;color:var(--text);overflow-wrap:anywhere}
 .catalog__install code{display:block;color:var(--strong);white-space:pre-wrap}
 #catalog{grid-template-columns:minmax(0,1fr)}
 .lookup{border-top:1px solid var(--rule);padding:18px 20px 6px}
 .lookup__h{font-size:13px;color:var(--strong);margin:0 0 10px}
-.lookup__out{margin:0;padding:14px 16px;border:1px solid var(--rule);background:var(--night);font:400 13px/1.7 var(--mono);color:var(--text);white-space:pre-wrap;overflow-wrap:anywhere}
+.lookup__out{margin:0;padding:14px 16px;border:1px solid var(--rule);background:var(--night);font:400 14px/1.7 var(--mono);color:var(--text);white-space:pre-wrap;overflow-wrap:anywhere}
 .lookup__strong{color:var(--strong)}
 .lookup__out code{display:block}
 .lookup__line{display:block}
 .lookup__row{display:grid;grid-template-columns:13ch minmax(0,1fr)}
 .lookup__v{overflow-wrap:anywhere;white-space:pre-wrap}
-.lookup__note{font-size:13px;color:var(--dim);margin:10px 0 12px}
+.lookup__note{font-size:14px;color:var(--dim);margin:10px 0 12px}
 .lookup__note code{color:var(--text)}
 @media (max-width:640px){
   .replay__row{grid-template-columns:5.5ch minmax(0,1fr);gap:2px 14px;padding:10px 16px}
   .replay__what{grid-column:2}
   .lookup{padding:16px 16px 4px}
-  .lookup__out{font-size:12px}
+  .lookup__out{font-size:13px}
   .lookup__row{grid-template-columns:12ch minmax(0,1fr)}
 }
 
@@ -429,9 +429,9 @@ html{overflow-anchor:none}
 .system.is-interactive.has-terminal-engine .system__alternative{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);padding:0}
 .has-terminal .system__board button{color:transparent;background:transparent;border-color:transparent;text-decoration:none}
 .has-terminal .system__board button:focus-visible{outline:2px solid var(--strong);outline-offset:3px}
-.system__controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:12px 20px;border-bottom:1px solid var(--rule);font-size:12px;color:var(--dim)}
+.system__controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:12px 20px;border-bottom:1px solid var(--rule);font-size:14px;color:var(--dim)}
 .system__spinner{display:inline-block;width:1ch;min-height:1em;font:400 14px/1 var(--braille);color:var(--mid)}
-.system__controls button{min-height:44px;padding:8px 12px;border:1px solid var(--mid);background:var(--night);color:var(--strong);font:500 12px/1.5 var(--mono);cursor:pointer}
+.system__controls button{min-height:44px;padding:8px 12px;border:1px solid var(--mid);background:var(--night);color:var(--strong);font:500 14px/1.5 var(--mono);cursor:pointer}
 .system__controls button:disabled,.system__controls button[aria-disabled="true"]{color:var(--dim);border-color:var(--rule);cursor:default}
 
 .system__node,.system__chip{position:absolute;display:flex;align-items:center;justify-content:center;min-height:44px;padding:6px;border-radius:0;font:500 13px/1.3 var(--mono);color:var(--strong);background:var(--panel);cursor:pointer}
@@ -452,7 +452,8 @@ html{overflow-anchor:none}
 .system__details{display:grid;border-top:1px solid var(--rule);padding:24px 20px;gap:24px}
 .system__details h3{font:500 14px/1.5 var(--mono);color:var(--strong);margin-bottom:8px}
 .system__details p{max-width:76ch;font-size:14px}
-.system__details .system__hint{font-size:12px;color:var(--dim);margin-top:12px}
+.system__details .system__hint{font-size:14px;color:var(--dim);margin-top:12px}
+.system:not(.is-interactive) .system__hint{display:none}
 .system.is-interactive .system__details{min-height:180px;align-content:start}
 .system__details [hidden]{display:none}
 .system__source{font-size:13px;max-width:90ch;color:var(--mid)}
@@ -511,8 +512,8 @@ html{overflow-anchor:none}
 .euclid__fig[data-show="2"] [data-part="1"],.euclid__fig[data-show="2"] [data-part="2"],
 .euclid__fig[data-show="3"] [data-part="1"],.euclid__fig[data-show="3"] [data-part="2"],.euclid__fig[data-show="3"] [data-part="3"],
 .euclid__fig[data-show="4"] [data-part]{opacity:1}
-.euclid__controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;min-height:69px;padding:12px 20px;border-top:1px solid var(--rule);font-size:12px;color:var(--dim)}
-.euclid__controls button{min-height:44px;padding:8px 14px;border:1px solid var(--mid);border-radius:0;background:var(--night);color:var(--strong);font:500 12px/1.5 var(--mono);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.euclid__controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;min-height:69px;padding:12px 20px;border-top:1px solid var(--rule);font-size:14px;color:var(--dim)}
+.euclid__controls button{min-height:44px;padding:8px 14px;border:1px solid var(--mid);border-radius:0;background:var(--night);color:var(--strong);font:500 14px/1.5 var(--mono);cursor:pointer;-webkit-tap-highlight-color:transparent}
 .euclid__run[hidden]{display:inline-flex;visibility:hidden}
 .euclid__controls button{min-width:calc(15ch + 30px)}
 .euclid__controls button[aria-disabled="true"]{color:var(--dim);border-color:var(--rule);cursor:default}
@@ -526,6 +527,11 @@ html{overflow-anchor:none}
   .euclid{grid-template-columns:minmax(0,1fr)}
 }
 
+.transcript{max-width:72ch;margin-top:16px;border-top:1px solid var(--rule)}
+.transcript summary{display:flex;align-items:center;min-height:44px;cursor:pointer;color:var(--strong);font-size:15px;text-decoration:underline;text-decoration-color:var(--dim);text-underline-offset:.22em}
+.transcript__body{display:grid;gap:10px;padding:8px 0 16px;font-size:15px;line-height:1.6;color:var(--text)}
+.transcript__body p{margin:0}
+.transcript__note{color:var(--dim);font-size:14px}
 /* A413: the plugin catalog has its own page (/plugins/). On wide screens each
    card shares five row tracks with its neighbours (subgrid), so names, dates,
    lines, installs and links line up across a row. */

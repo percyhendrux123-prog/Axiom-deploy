@@ -61,3 +61,7 @@
 @media (min-width:641px){
   .page-operator-layer nav a[href="/notes/"]{min-width:44px;justify-content:center}
 }
+
+/* A413 r4: source links are 44px tall targets; the short rule clears the sub-line */
+.ol-source a{padding-block:13px}
+.operator-layer .dek{margin-bottom:28px}

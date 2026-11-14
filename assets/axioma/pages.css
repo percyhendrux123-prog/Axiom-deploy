@@ -159,3 +159,27 @@ figcaption .figure-open,.document-plate figcaption a.figure-open{display:inline;
 .note-voice{font-size:14px;color:var(--dim)}
 .exits{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
 @media (max-width:640px){.toc ol{columns:1}}
+.transcript{max-width:72ch;margin-top:16px;border-top:1px solid var(--rule)}
+.transcript summary{display:flex;align-items:center;min-height:44px;cursor:pointer;color:var(--strong);font-size:15px;text-decoration:underline;text-decoration-color:var(--dim);text-underline-offset:.22em}
+.transcript__body{display:grid;gap:10px;padding:8px 0 16px;font-size:15px;line-height:1.6;color:var(--text)}
+.transcript__body p{margin:0}
+.transcript__note{color:var(--dim);font-size:14px}
+/* A413 r4: the footer sits at the bottom of short pages; exits get room; captions read at 14px */
+body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}
+body>main{flex:1 0 auto}
+.heading .exits,.notice .exits{margin-top:28px}
+.article figure figcaption,.document-plate figcaption,.remake .document-plate figcaption{font-size:14px}
+.ol-dek,.operator-layer .dek{margin-bottom:28px}
+/* A413 r4: three-column result tables become labelled cards on phones */
+@media (max-width:600px){
+  .article table.stack,.article table.stack tbody,.article table.stack tr,.article table.stack td{display:block;width:auto}
+  .article table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .article table.stack tr{padding:14px 0;border-bottom:1px solid var(--rule)}
+  .article table.stack td{padding:2px 0;border:0}
+  .article table.stack td[data-label]::before{content:attr(data-label);display:block;font:500 12px/1.6 var(--serif);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  .article table.stack td[data-label="Source"]{color:var(--strong);font-weight:600}
+  .article table.stack td[data-label="Source"]::before{display:none}
+}
+.plate{outline:0;box-shadow:none;border:1px solid var(--rule)}
+.plate::before,.plate::after{content:none;display:none}
+.br-steps .step-n,.steps .step-n{font-family:var(--serif)}

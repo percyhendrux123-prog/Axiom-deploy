@@ -134,7 +134,7 @@ test('metadata and static assets are local, canonical, and shareable', () => {
   for (const marker of [
     '<link rel="canonical" href="https://deployaxiom.com/">',
     'property="og:title"', 'property="og:description"', 'property="og:image" content="https://deployaxiom.com/assets/axiom-og.png"',
-    'name="twitter:card"', 'name="twitter:image" content="https://deployaxiom.com/assets/axiom-og.png"', 'property="og:image:alt" content="Deploy Axiom: Nothing in your business waits on you to remember it. The Axiom mark, three cut circles, beside the line."', 'name="twitter:image:alt" content="Deploy Axiom: Nothing in your business waits on you to remember it. The Axiom mark, three cut circles, beside the line."', 'name="theme-color" content="#121316"', 'rel="icon" href="/assets/avatar.svg"',
+    'name="twitter:card"', 'name="twitter:image" content="https://deployaxiom.com/assets/axiom-og.png"', 'property="og:image:alt" content="Deploy Axiom: Nothing in your business waits on you to remember it. For independent insurance agencies and sales professionals. P. K. Stewart, Baton Rouge."', 'name="twitter:image:alt" content="Deploy Axiom: Nothing in your business waits on you to remember it. For independent insurance agencies and sales professionals. P. K. Stewart, Baton Rouge."', 'name="theme-color" content="#121316"', 'rel="icon" href="/assets/avatar.svg"',
   ]) assert.ok(homepage.includes(marker), `missing metadata marker: ${marker}`);
   for (const asset of ['assets/avatar.svg', 'assets/axiom-og.png', 'assets/wordmark-ink.svg', 'assets/wordmark-stone.svg']) {
     const fullPath = join(root, asset);

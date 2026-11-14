@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121316">
   <meta name="description" content="Field Report 01 from Deploy Axiom: a zero-cost data layer for agents, an independent review that found four safety defects, and why one orchestrator holds the tempo.">
   <link rel="canonical" href="https://deployaxiom.com/notes/one-tempo/">
   <meta property="og:type" content="article">
@@ -123,7 +124,7 @@ reading_rule: &gt;
 <h3>Harness control (observed)</h3>
 <p>The harness work was a separate, bounded change. All auxiliary model slots were moved to one model family. Automatic decomposition was turned off. A set of 21 control checks was written to confirm the configuration holds; all 21 passed. A test card left in the waiting state was not split over a five-minute observation and was then archived. Residual routes remain and are listed in Section 6.</p>
 <h2 id="4-results">4. Results</h2>
-<table>
+<table class="stack">
 <thead>
 <tr>
 <th>Source</th>
@@ -133,49 +134,49 @@ reading_rule: &gt;
 </thead>
 <tbody>
 <tr>
-<td>SEC EDGAR (listed-company search and filings)</td>
-<td>PASS. Apple Inc. resolved by name; five recent filings returned</td>
-<td>B, V (live run)</td>
+<td data-label="Source">SEC EDGAR (listed-company search and filings)</td>
+<td data-label="Status">PASS. Apple Inc. resolved by name; five recent filings returned</td>
+<td data-label="Evidence type">B, V (live run)</td>
 </tr>
 <tr>
-<td>Local Crawl4AI (page to markdown)</td>
-<td>PASS. Own website converted to 69 lines of markdown, headline matched the live site</td>
-<td>B, V (live run)</td>
+<td data-label="Source">Local Crawl4AI (page to markdown)</td>
+<td data-label="Status">PASS. Own website converted to 69 lines of markdown, headline matched the live site</td>
+<td data-label="Evidence type">B, V (live run)</td>
 </tr>
 <tr>
-<td>arXiv (papers)</td>
-<td>PASS. Results returned on independent re-run</td>
-<td>B, V (live run)</td>
+<td data-label="Source">arXiv (papers)</td>
+<td data-label="Status">PASS. Results returned on independent re-run</td>
+<td data-label="Evidence type">B, V (live run)</td>
 </tr>
 <tr>
-<td>OpenAlex (papers)</td>
-<td>PASS-DEGRADED. Builder run succeeded; verifier run hit a keyless rate limit (HTTP 429), and the tool reported <code>partial</code> with a warning rather than failing</td>
-<td>B, V (live run)</td>
+<td data-label="Source">OpenAlex (papers)</td>
+<td data-label="Status">PASS-DEGRADED. Builder run succeeded; verifier run hit a keyless rate limit (HTTP 429), and the tool reported <code>partial</code> with a warning rather than failing</td>
+<td data-label="Evidence type">B, V (live run)</td>
 </tr>
 <tr>
-<td>GitHub (repository search)</td>
-<td>PASS. Three repositories returned; repositories only, not code files</td>
-<td>B, V (live run)</td>
+<td data-label="Source">GitHub (repository search)</td>
+<td data-label="Status">PASS. Three repositories returned; repositories only, not code files</td>
+<td data-label="Evidence type">B, V (live run)</td>
 </tr>
 <tr>
-<td>US Census</td>
-<td>PASS-DEGRADED. Keyless current data no longer exists; the tool falls back to 2010 Gazetteer data and labels it HISTORICAL. Same evening, with a free key: 2024 ACS 5-year returned for ZIP 70808</td>
-<td>B, V (live run)</td>
+<td data-label="Source">US Census</td>
+<td data-label="Status">PASS-DEGRADED. Keyless current data no longer exists; the tool falls back to 2010 Gazetteer data and labels it HISTORICAL. Same evening, with a free key: 2024 ACS 5-year returned for ZIP 70808</td>
+<td data-label="Evidence type">B, V (live run)</td>
 </tr>
 <tr>
-<td>Firecrawl Alexandria (discovery)</td>
-<td>PASS for tools-only discovery with zero credits used. Not exercised in the final re-verification (no key loaded)</td>
-<td>B (earlier live run); operator check, 0 credits</td>
+<td data-label="Source">Firecrawl Alexandria (discovery)</td>
+<td data-label="Status">PASS for tools-only discovery with zero credits used. Not exercised in the final re-verification (no key loaded)</td>
+<td data-label="Evidence type">B (earlier live run); operator check, 0 credits</td>
 </tr>
 <tr>
-<td>Jina Reader (fallback)</td>
-<td>Expected failure. Refuses keyless requests (HTTP 401); recorded as an honest upstream failure</td>
-<td>B, V (live test)</td>
+<td data-label="Source">Jina Reader (fallback)</td>
+<td data-label="Status">Expected failure. Refuses keyless requests (HTTP 401); recorded as an honest upstream failure</td>
+<td data-label="Evidence type">B, V (live test)</td>
 </tr>
 <tr>
-<td>Structured output (<code>--json</code> on every command)</td>
-<td>PASS. One object with command, status, data, sources, warnings</td>
-<td>B, V</td>
+<td data-label="Source">Structured output (<code>--json</code> on every command)</td>
+<td data-label="Status">PASS. One object with command, status, data, sources, warnings</td>
+<td data-label="Evidence type">B, V</td>
 </tr>
 </tbody>
 </table>
