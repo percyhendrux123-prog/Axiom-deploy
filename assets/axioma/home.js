@@ -316,6 +316,11 @@
   function armLedger() {
     var proof = doc.getElementById('proof')
     if (!proof || C.played.ledger) return
+    // A413: the numbers are never dimmed. A reader who jumps straight to the
+    // ledger (End key, find-in-page, a fast fling) must see them at full
+    // strength, so the ledger has no pending state; ledgerCount stays a no-op.
+    C.played.ledger = true
+    return
     var nums = proof.querySelectorAll('.ledger__num')
     // Only when the ledger is out of sight at load: a number the reader has
     // already seen is never taken back to zero.
@@ -374,6 +379,11 @@
   function armReplay() {
     var sec = doc.getElementById('replay')
     if (!sec || C.played.replay) return
+    // A413: the example log is never dimmed. A reader who jumps to it (End key,
+    // find-in-page, a fast fling) must see every row at full strength, so the
+    // replay has no pending state; replayRun stays a no-op.
+    C.played.replay = true
+    return
     var rows = sec.querySelectorAll('.replay__row')
     if (!rows.length || rows[0].getBoundingClientRect().top < win.innerHeight) {
       C.played.replay = true

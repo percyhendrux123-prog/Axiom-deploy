@@ -24,7 +24,9 @@ test('homepage keeps the business order: hero, example, work, axiom, story, ledg
   assert.ok(home.includes('href="https://github.com/percyhendrux123-prog/escalation-desk"'));
   // A409: the header books the call; the summary label differs from the section heading so one tap reads as progress.
   assert.ok(home.includes('<a class="nav-cta" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a>'));
-  assert.ok(home.includes('<summary class="button">Write a short brief</summary>'));
+  // A413: booking is the primary everywhere; in the contact section the brief is the outlined second action.
+  assert.ok(home.includes('<summary class="button ghost">Write a short brief</summary>'));
+  assert.ok(home.includes('<a class="button contact-call" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a>'));
   // A413: Work entries carry plain titles, not paths; the insurance entry leads.
   assert.ok(home.includes('<li class="listing__item"><h3 class="listing__path">Insurance agency client care</h3>'));
   assert.ok(home.indexOf('Insurance agency client care') < home.indexOf('Escalation desk'));
@@ -57,7 +59,7 @@ test('insurance field report has the approved limits, artifact, metadata, sitema
   assert.ok(existsSync(join(root, path)), 'field report page missing');
   const report = read(path);
   for (const marker of [
-    'Field Report · 02', "An independent insurance agency's client care is now set up to run without her remembering it. Referral asks still wait for her yes.",
+    'Field report · 02', // A413: one kind-and-number kicker scheme across notes "An independent insurance agency's client care is now set up to run without her remembering it. Referral asks still wait for her yes.",
     'The gap', 'What runs', 'What waits for her', "What isn't proven yet",
     'Only one enrolled client has received a check-in.', 'A few delivery paths still pass only in testing.',
     'href="/#contact"', 'href="/notes/"', 'Example record. Client details removed.',

@@ -108,7 +108,9 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
         assert.ok(next.t0 >= prev.t1, `${next.id} (${next.section}) started before ${prev.id} (${prev.section}) ended`);
       }
       const ids = new Set(timeline.map((e) => e.id));
-      for (const id of ['cursor-handoff', 'cursor-blink', 'ledger-count', 'signal-sweep']) assert.ok(ids.has(id), `played: ${id}`);
+      // A413 deliberately retires the ledger count-up and the replay's dimmed wait: both show their final state at every moment.
+      for (const id of ['cursor-handoff', 'cursor-blink', 'signal-sweep']) assert.ok(ids.has(id), `played: ${id}`);
+      for (const id of ['ledger-count', 'replay-run']) assert.ok(!ids.has(id), `retired: ${id}`);
       // Accents are short and every one ends: the cursor blinks at most three
       // 1.1 s cycles, everything else but the breathing ring is done in 2.5 s.
       for (const e of timeline) {
@@ -158,7 +160,8 @@ test('switching to reduced motion mid-visit ends every accent at its final state
     const page = await context.newPage();
     await page.goto(base + '/');
     await page.waitForFunction(() => document.querySelector('.hero__title .cursor.is-blink-off') || window.__axConductor.current() === 'cursor-blink');
-    assert.equal(await page.locator('.ledger__num.is-pending').count(), 3, 'ledger was waiting to count');
+    // A413: nothing waits dimmed any more; the ledger and replay are final from the first paint.
+    assert.equal(await page.locator('.ledger__num.is-pending, .replay__row.is-pending').count(), 0, 'nothing waits dimmed');
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.waitForFunction(() => !window.__axConductor.enabled);
     assert.equal(await page.evaluate(() => window.__axConductor.current()), null);

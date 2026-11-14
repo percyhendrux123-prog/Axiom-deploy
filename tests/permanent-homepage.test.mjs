@@ -168,7 +168,7 @@ test('homepage keeps the hero direct: headline, plain-English line, two actions,
   assert.ok(hero.includes('<p class="hero__for">Built for independent insurance agencies and sales professionals: regulated work where every text has to clear consent, <span class="nowrap">opt-out</span> and <span class="nowrap">quiet-hour</span> rules before it goes.</p>'));
   assert.ok(hero.includes('<a class="button" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a>'));
   assert.ok(hero.includes('<a class="button ghost" href="#contact">Write a short brief</a>'));
-  assert.ok(hero.includes('</h1>\n<p class="hero__by">P. K. Stewart, founder · Baton Rouge</p>'), 'founder and place directly under the headline');
+  assert.ok(hero.includes('</h1>\n<p class="hero__by">P. K. Stewart, founder · <span class="nowrap">Baton Rouge</span></p>'), 'founder and place directly under the headline (A413: the place never splits at 320px)');
   assert.ok(hero.includes('href="/field-reports/insurance-client-care/">Read the insurance field report</a>'));
   // A413 (Percy, 11-14): HIPAA may appear only in the one sentence that says compliance stays with the client.
   const HIPAA_LINE = "We work in fields where HIPAA applies. Your compliance stays with you and your systems; if you need help there, we'll point you to people who specialize in it.";

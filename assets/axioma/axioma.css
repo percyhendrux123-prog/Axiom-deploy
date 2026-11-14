@@ -67,6 +67,8 @@ ul,ol{padding:0;list-style:none}
 .skip-inline{position:absolute;left:var(--gutter);z-index:3;padding:10px 14px;background:var(--strong);color:var(--night);transform:translateY(-200%);opacity:0}
 .skip-inline:focus{transform:none;opacity:1}
 .work__more{max-width:72ch;color:var(--text)}
+/* Links inside sentences keep their line but get a 44px-tall hit area (padding on an inline box does not move the line). */
+.term__foot a,.founder-copy p a,.work__more a,.system__source a,.head p a,.lookup__note a{padding-block:9px}
 /* ---------- prompt ---------- */
 .prompt{font:400 15px/1.5 var(--mono);color:var(--text);overflow-wrap:anywhere}
 .prompt__host{color:var(--strong);font-weight:500}
@@ -94,7 +96,7 @@ ul,ol{padding:0;list-style:none}
 .section .prompt.is-cursor .prompt__cmd::after{opacity:1}
 .section .prompt.is-cursor.is-blink-off .prompt__cmd::after{opacity:0}
 .hero__for{text-wrap:pretty;max-width:46ch;font-size:17px;line-height:1.55;color:var(--strong)}
-.hero__by{font:400 14px/1.4 var(--mono);color:var(--text);letter-spacing:.01em}
+.hero__by{font:400 15px/1.4 var(--display);color:var(--text)}
 .hero__meta{display:flex;flex-wrap:wrap;align-items:center;gap:0 20px;font-size:14px;line-height:1.4;color:var(--text)}
 .hero__meta a{display:inline-flex;align-items:center;min-height:44px;color:var(--strong);text-decoration:underline;text-underline-offset:3px}
 .hero__line{text-wrap:pretty;max-width:46ch;font-size:16px;line-height:1.7;color:var(--text)}
@@ -162,9 +164,9 @@ ul,ol{padding:0;list-style:none}
 .catalog__name{font-family:var(--display);font-weight:580;font-size:1.5rem;letter-spacing:-.03em;line-height:1.15;color:var(--strong);overflow-wrap:anywhere}
 .catalog__ver{font:400 14px/1 var(--mono);letter-spacing:0;color:var(--mid);margin-left:.35em}
 .catalog__merged{font-size:13px;color:var(--mid)}
-.catalog__what{color:var(--text)}
-.catalog__links{display:flex;flex-wrap:wrap;column-gap:20px}
-.catalog__links a{display:inline-flex;align-items:center;min-height:44px;font-size:14px}
+.catalog__what{font:400 16px/1.6 var(--display);color:var(--text)}
+.catalog__links{display:flex;flex-wrap:wrap;column-gap:14px}
+.catalog__links a{display:inline-flex;align-items:center;min-height:44px;font-size:13px;white-space:nowrap}
 
 /* limits of authority: the gate, as a permission table */
 .limits{display:grid;border:1px solid var(--rule);background:var(--panel)}
@@ -236,6 +238,7 @@ textarea{width:100%;min-height:104px;padding:12px 14px;border:1px solid var(--di
 textarea::placeholder{color:var(--dim);opacity:1}
 textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 .fine{margin-top:16px;font-size:14px;color:var(--text)}
+.brief-note{margin-top:-12px;font-size:13px;line-height:1.5;color:var(--mid)}
 .fine strong{color:var(--strong);font-weight:500}
 .mapper .actions{margin-top:22px}
 .status{flex-basis:100%;color:var(--strong)}
@@ -257,7 +260,9 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 .story__head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:8px 24px}
 .story__hint{font:400 13px/1.5 var(--mono);color:var(--mid)}
 .story__hint[hidden]{display:none}
-.story__stage{position:relative;max-width:780px}
+/* The story stays in IBM Plex Mono at 15px: its live layer lays out one span per word and
+   lights STOP at weight 600, which only keeps the same advance width in a monospace face. */
+.story__stage{position:relative;max-width:780px;font:400 15px/1.65 var(--mono)}
 .story__flow p+p{margin-top:.7lh}
 .story__flow--sr,.ax-sr{position:absolute;left:0;top:0;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%)}
 .ax-sr{white-space:nowrap}
@@ -329,8 +334,12 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
   .bar__nav .nav-hide-sm{display:none}
   .bar__nav .nav-cta{padding:0 12px}
   .hero__title{font-size:clamp(2.3rem,10.5vw,3rem)}
-  .hero{padding-top:28px}
-  .hero__copy{gap:18px}
+  .hero{padding-top:20px}
+  .hero__copy{gap:14px}
+  .hero__line{line-height:1.6}
+  .hero__copy>.actions{gap:10px}
+  .hero__copy>.actions .button{flex:1 1 100%}
+  .hero__meta a{min-height:44px}
   .hero__copy>.prompt{display:none}
   .hero__by{margin-top:-6px}
   .ledger{grid-template-columns:minmax(0,1fr)}

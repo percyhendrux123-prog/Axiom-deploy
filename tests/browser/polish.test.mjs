@@ -144,7 +144,7 @@ test('report engagement label remains readable on hover and press', async () => 
   try {
     const page = await context.newPage();
     await page.goto(base + '/field-reports/insurance-client-care/');
-    const button = page.locator('.next .button');
+    const button = page.locator('.next .button').first(); // A413: the report closes with booking (primary) and the brief (outlined)
     await button.hover();
     const colors = () => button.evaluate(e => { const s = getComputedStyle(e); return { text: s.color, background: s.backgroundColor }; });
     assert.deepEqual(await colors(), { text: 'rgb(241, 237, 228)', background: 'rgb(18, 19, 22)' });

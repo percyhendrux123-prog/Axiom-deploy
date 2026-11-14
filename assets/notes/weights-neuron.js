@@ -10,8 +10,13 @@ function loss(){V.L=(V.o-TARGET)**2;}
 function backward(){G.L=1;G.o=2*(V.o-TARGET);G.n=G.o*(1-V.o**2);G.s=G.n;G.b=G.n;G.m1=G.s;G.m2=G.s;
   G.x1=G.m1*P.w1;G.w1=G.m1*P.x1;G.x2=G.m2*P.w2;G.w2=G.m2*P.x2;}
 function nudge(){for(const k of ['w1','w2','b']) P[k]-=LR*G[k]; history.push(V.L); forward(); loss(); G={};}
-const N={x1:[10,10,'input x1'],w1:[10,72,'weight w1'],x2:[10,160,'input x2'],w2:[10,222,'weight w2'],b:[10,300,'bias b'],
+const NW={x1:[10,10,'input x1'],w1:[10,72,'weight w1'],x2:[10,160,'input x2'],w2:[10,222,'weight w2'],b:[10,300,'bias b'],
  m1:[175,41,'x1 × w1'],m2:[175,191,'x2 × w2'],s:[330,116,'sum'],n:[480,200,'sum + b'],o:[630,120,'output'],L:[630,262,'miss (loss)']};
+// A413: phones get a top-to-bottom layout in a narrow viewBox, so no label renders under 12px.
+const NV={x1:[5,0,'input x1'],x2:[165,0,'input x2'],w1:[5,90,'weight w1'],w2:[165,90,'weight w2'],
+ m1:[5,180,'x1 × w1'],m2:[165,180,'x2 × w2'],s:[5,270,'sum'],b:[165,270,'bias b'],n:[85,360,'sum + b'],o:[5,450,'output'],L:[165,450,'miss (loss)']};
+const narrow=window.matchMedia('(max-width:640px)');
+let N=narrow.matches?NV:NW;
 const E=[['x1','m1'],['w1','m1'],['x2','m2'],['w2','m2'],['m1','s'],['m2','s'],['s','n'],['b','n'],['n','o'],['o','L']];
 const PARAM=['x1','w1','x2','w2','b'];
 function el(tag,attrs,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!==undefined)e.textContent=text;return e;}
@@ -23,7 +28,12 @@ const T={
  4:()=>[`Nudge: each weight moves a little against its pull (step size ${LR}). New output ${f(V.o)}, new miss ${f(V.L)}. Backward, then Nudge, again and again. That loop is the learning.`,'Adjust in proportion to what each lever actually did, then run another week.']};
 function render(){
   const g=$('nn-g'); while(g.firstChild) g.removeChild(g.firstChild);
+  const vert=N===NV; g.setAttribute('viewBox',vert?'0 0 300 556':'0 0 780 364');
   for(const [a,b] of E){const [ax,ay]=N[a],[bx,by]=N[b];const cls='edge'+(phase>=3?' back':'');
+    if(vert){
+      if(a==='o'){g.appendChild(el('path',{class:cls,d:`M${ax+W},${ay+31} L${bx},${by+31}`}));continue;}
+      const x1=ax+W/2,y1=ay+H+14,x2=bx+W/2,y2=by,my=(y1+y2)/2;
+      g.appendChild(el('path',{class:cls,d:`M${x1},${y1} C${x1},${my} ${x2},${my} ${x2},${y2}`}));continue;}
     if(a==='o'){g.appendChild(el('path',{class:cls,d:`M${ax+W/2},${ay+H+14} L${bx+W/2},${by}`}));continue;}
     const x1=ax+W,y1=ay+H/2,x2=bx,y2=by+H/2,mx=(x1+x2)/2;
     g.appendChild(el('path',{class:cls,d:`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`}));}
@@ -33,7 +43,7 @@ function render(){
     g.appendChild(el('text',{class:'lbl',x:x+9,y:y+15},l));
     g.appendChild(el('text',{class:'val',x:x+9,y:y+35},show&&val!==undefined?f(val):'·'));
     if(phase>=3&&G[k]!==undefined) g.appendChild(el('text',{class:'grd',x:x+9,y:y+54},'pull '+f(G[k])));}
-  g.appendChild(el('text',{class:'lbl',x:630,y:352},'target = 1'));
+  g.appendChild(el('text',{class:'lbl',x:vert?165:630,y:vert?548:352},'target = 1'));
   const t=typeof T[phase]==='function'?T[phase]():T[phase];
   $('nn-say').textContent=t[0]; $('nn-coach').textContent='In prep: '+t[1];
   $('nn-hist').textContent=history.length?`Miss by round: ${[...history,V.L].map(f).join(' → ')}`:'';
@@ -42,5 +52,6 @@ function render(){
 $('bF').onclick=()=>{forward();phase=1;render()};$('bL').onclick=()=>{loss();phase=2;render()};
 $('bB').onclick=()=>{backward();phase=3;render()};$('bN').onclick=()=>{nudge();phase=4;render()};
 $('bA').onclick=()=>{for(let i=0;i<20;i++){backward();nudge();}phase=4;render()};$('bR').onclick=reset;
+narrow.addEventListener('change',()=>{N=narrow.matches?NV:NW;render();});
 root.querySelector('.nn-js').hidden=false; reset();
 })();

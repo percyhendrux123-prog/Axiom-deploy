@@ -4,7 +4,7 @@
    so a figure that keeps a different palette must set it on itself). */
 
 .article .ol-figure{
-  --ol-bg:#121316;--ol-strong:#f2eee6;--ol-dim:#96928a;--ol-brass:#a58a5e;--ol-rule:#3a3834;
+  --ol-bg:#121316;--ol-strong:#f1ede4;--ol-dim:#96928a;--ol-brass:#f1ede4;--ol-rule:#3a3834;
   background:var(--ol-bg);color:var(--ol-strong);border:1px solid var(--rule);
   /* break out of the 680px reading column, never past the viewport */
   margin:44px calc((min(1040px, 100vw - 40px) - 100%) / -2);
@@ -51,8 +51,8 @@
 .ol-fine{font-size:15px;color:var(--dim);margin-top:12px}
 .ol-actions{margin:24px 0}
 .ol-brief .ol-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;min-width:44px;padding:0 26px;
-  background:var(--strong);color:var(--night);border:1px solid var(--strong);font:600 12px/1 var(--serif);
-  letter-spacing:.16em;text-transform:uppercase;text-decoration:none;-webkit-tap-highlight-color:transparent}
+  background:var(--strong);color:var(--night);border:1px solid var(--strong);font:500 16px/1.2 var(--display);
+  letter-spacing:0;text-transform:none;text-decoration:none;-webkit-tap-highlight-color:transparent}
 .ol-brief .ol-button:hover{background:transparent;color:var(--strong)}
 .ol-button:focus-visible,.operator-layer a:focus-visible{outline:2px solid var(--strong);outline-offset:3px}
 

@@ -18,7 +18,7 @@ const expected = [
   { name: 'hermes-axiom-agent', version: '0.1.0', date: '2026-11-09', label: 'Nov 9, 2026', pr: 151218, repo: 'hermes-axiom-agent' },
 ];
 
-const items = [...section.matchAll(/<li class="catalog__item" data-plugin="([^"]+)" data-version="([^"]+)">([\s\S]*?)<\/li>/g)];
+const items = [...section.matchAll(/<li class="catalog__item" data-plugin="([^"]+)" data-version="([^"]+)"(?: id="[^"]+")?>([\s\S]*?)<\/li>/g)];
 const bodyOf = name => items.find(m => m[1] === name)?.[3] ?? '';
 
 test('catalog lists all six accepted plugins with current versions, dates, installs and sources', () => {
@@ -28,7 +28,8 @@ test('catalog lists all six accepted plugins with current versions, dates, insta
   items.forEach((m, i) => {
     const p = expected[i];
     const body = m[3];
-    assert.ok(body.includes(`<h3 class="catalog__name">${p.name} <span class="catalog__ver">${p.version}</span></h3>`), `${p.name}: visible name and version`);
+    // A413: on /plugins/ each plugin name is an h2 under the page h1 (no skipped heading level).
+    assert.ok(body.includes(`<h2 class="catalog__name">${p.name} <span class="catalog__ver">${p.version}</span></h2>`), `${p.name}: visible name and version`);
     assert.ok(body.includes(`<time datetime="${p.date}">${p.label}</time>`), `${p.name}: initial merge date`);
     assert.ok(body.includes(`href="https://github.com/NousResearch/hermes-agent/pull/${p.pr}">PR #${p.pr}</a>`), `${p.name}: admission PR`);
     if (p.update) {

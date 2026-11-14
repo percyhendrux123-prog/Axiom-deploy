@@ -14,10 +14,12 @@
   /* firm.css tokens remapped onto the night palette (A413: brand ink #121316,
      stone #F1EDE4, muted #96928A; one palette with the homepage) */
   --ink:#f1ede4;--stone:#121316;--stone-2:#17181b;--navy:#cdc8bd;--brass:#cdc8bd;
-  --muted:#a9a59c;--rule:#2c2d31;
+  --muted:#96928a;--rule:#2c2d31;
   --serif:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
   --display:'Geist Variable','Helvetica Neue',Arial,sans-serif;
   --night:#121316;--panel:#17181b;--text:#dedad1;--strong:#f1ede4;--dim:#96928a;--mid:#cdc8bd;
+  /* A413: the homepage's container, so the header and headings sit on one edge site-wide */
+  --w:1180px;--gutter:clamp(20px,5vw,56px);
   color-scheme:dark;
 }
 html{background:var(--night);overscroll-behavior-y:none}
@@ -66,7 +68,7 @@ input,textarea{background:var(--panel);color:var(--strong);border-color:var(--di
 input::placeholder,textarea::placeholder{color:var(--dim)}
 
 /* figures keep a light plate so diagrams and records stay legible */
-.article figure,.document-plate{background:#f2eee6;color:#121316;border-color:var(--rule)}
+.article figure,.document-plate{background:#f1ede4;color:#121316;border-color:var(--rule)}
 .article figure figcaption,.document-plate figcaption{color:#3d4047}
 .document-plate a{color:#121316}
 
@@ -118,3 +120,17 @@ nav .nav-cta:hover,.remake nav .nav-cta:hover{background:var(--mid);border-color
   .brand,.remake .brand{font-size:14px;gap:8px}
   nav .nav-cta,.remake nav .nav-cta{padding:0 10px;font-size:13px}
 }
+
+/* ---------- A413: one type and button system with the homepage ---------- */
+.article,.remake .article,.remake .report{max-width:var(--w);padding-inline:var(--gutter)}
+.article>*,.remake .article>*{max-width:760px}
+.article>.proof-grid,.article>.document-plate,.article>figure,.remake .report .document-plate{max-width:880px}
+.remake .report-copy{margin-left:0}
+h1,.article h1,.remake .report h1,.heading h1,.remake .hero h1,.br h1{font:640 clamp(2rem,3.6vw,2.75rem)/1.1 var(--display);letter-spacing:-.035em;text-transform:none;text-align:left;margin-left:0;max-width:26ch;text-wrap:balance}
+.button,.remake .button,.ol-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;font:500 16px/1.2 var(--display);letter-spacing:0;text-transform:none}
+.steps strong,.sub-h,.ledger .who{text-transform:none;letter-spacing:-.01em}
+@media (max-width:640px){
+  .article,.remake .article{padding-inline:var(--gutter)}
+  h1,.article h1,.remake .report h1,.heading h1{font-size:2rem;line-height:1.12}
+}
+.heading p a,.next a,.closing-alt a,.article .byline a{padding-block:12px}
