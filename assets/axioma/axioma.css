@@ -429,6 +429,52 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
   .system.is-interactive .system__details{min-height:244px}
 }
 
+/* The unseen triangle (2026-11-14 global mark). Stone on the night ground,
+   outlined paths only; the triangle's edges are never drawn. The cut overlays
+   sit at opacity 0; only the conductor's mark-breath raises them, slightly. */
+.hero__mark{line-height:0}
+.kz{display:block;width:clamp(120px,13vw,176px);height:auto;overflow:visible}
+.kz__discs path{fill:#f1ede4}
+.kz__cuts path{fill:#f1ede4;opacity:0}
+@media (min-width:901px){
+  .hero__mark{grid-column:2;grid-row:1;justify-self:end;align-self:end}
+  .hero__copy>.prompt{grid-column:1;grid-row:1;align-self:end}
+  .hero__title{grid-row:2}
+}
+
+/* Construction lines: each section rule carries Proposition I.1 in miniature
+   (two circles through each other's centers, the intersection marked). */
+.section+.section::before{content:'';position:absolute;top:-12px;left:var(--gutter);width:48px;height:24px;background:var(--dim);opacity:.7;mask-image:url('/assets/axioma/vesica.svg');mask-size:100% 100%;mask-repeat:no-repeat;-webkit-mask-image:url('/assets/axioma/vesica.svg');-webkit-mask-size:100% 100%;-webkit-mask-repeat:no-repeat;pointer-events:none}
+
+/* Built on an axiom: Euclid I.1, complete without JS. */
+.euclid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:start}
+.euclid__plate{margin:0;border:1px solid var(--rule);background:var(--panel)}
+.euclid__fig{display:block;width:100%;height:auto;aspect-ratio:512/352;padding:clamp(12px,3vw,28px);box-sizing:border-box}
+.euclid__fig circle,.euclid__fig line,.euclid__fig path{vector-effect:non-scaling-stroke}
+.euclid__circle circle,.euclid__circle path{fill:none;stroke:var(--dim);stroke-width:1}
+.euclid__given line,.euclid__side line{stroke:var(--strong);stroke-width:1.5;stroke-linecap:round}
+.euclid__fig .euclid__pt{fill:var(--strong);stroke:none}
+.euclid__fig text{font:400 19px/1 var(--mono);fill:var(--mid)}
+.euclid__fig[data-show] [data-part]{opacity:0}
+.euclid__fig[data-show="1"] [data-part="1"],
+.euclid__fig[data-show="2"] [data-part="1"],.euclid__fig[data-show="2"] [data-part="2"],
+.euclid__fig[data-show="3"] [data-part="1"],.euclid__fig[data-show="3"] [data-part="2"],.euclid__fig[data-show="3"] [data-part="3"],
+.euclid__fig[data-show="4"] [data-part]{opacity:1}
+.euclid__controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;min-height:69px;padding:12px 20px;border-top:1px solid var(--rule);font-size:12px;color:var(--dim)}
+.euclid__controls button{min-height:44px;padding:8px 14px;border:1px solid var(--mid);border-radius:0;background:var(--night);color:var(--strong);font:500 12px/1.5 var(--mono);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.euclid__run[hidden]{display:inline-flex;visibility:hidden}
+.euclid__controls button{min-width:calc(15ch + 30px)}
+.euclid__controls button[aria-disabled="true"]{color:var(--dim);border-color:var(--rule);cursor:default}
+.euclid__text{display:grid;gap:16px;max-width:62ch}
+.euclid__given-line{color:var(--strong)}
+.euclid__steps{display:grid;border-top:1px solid var(--rule)}
+.euclid__steps li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.euclid.is-constructing [data-step]{color:var(--dim)}
+.euclid.is-constructing [data-step].is-step,.euclid.is-constructing .is-step .step-n{color:var(--strong)}
+@media (max-width:900px){
+  .euclid{grid-template-columns:minmax(0,1fr)}
+}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important;animation:none!important}
   .button:active{transform:none}

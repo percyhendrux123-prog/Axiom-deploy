@@ -77,6 +77,51 @@
     system.addEventListener('keydown', function (event) { if (event.key === 'Escape') { stopOrder('intro'); event.preventDefault() } })
   }
 
+
+  // Euclid I.1 (#elements). Without JS the figure and its four steps are
+  // complete. The Construct control steps it by hand under reduced motion;
+  // with motion it draws on the conductor (construct-run below).
+  var euclid = doc.querySelector('#elements .euclid')
+  var euclidFig = euclid && euclid.querySelector('.euclid__fig')
+  var euclidSteps = euclid ? [].slice.call(euclid.querySelectorAll('[data-step]')) : []
+  var buildButton = euclid && euclid.querySelector('.euclid__run')
+  var buildRun = null, buildManual = -1, buildTrace = null
+  if (euclidFig && buildButton) {
+    buildButton.hidden = false
+    buildButton.addEventListener('click', construct)
+  }
+  function markStep(n) {
+    euclidSteps.forEach(function (el) { el.classList.toggle('is-step', Number(el.dataset.step) === n) })
+  }
+  function endManual() {
+    buildManual = -1
+    delete euclidFig.dataset.show
+    euclid.classList.remove('is-constructing')
+    markStep(-1)
+    buildButton.textContent = 'Construct'
+  }
+  function construct() {
+    if (mq.matches || !C.enabled) {
+      // Reduced motion: one explicit step per press, nothing animates.
+      buildManual = buildManual >= 4 ? 0 : buildManual + 1
+      euclid.classList.add('is-constructing')
+      euclidFig.dataset.show = String(buildManual)
+      markStep(buildManual)
+      buildButton.textContent = buildManual === 4 ? 'Construct again' : 'Next step'
+      return
+    }
+    if (buildRun) return
+    buildRun = { elapsed: 0 }
+    buildButton.setAttribute('aria-disabled', 'true')
+    buildButton.textContent = 'Constructing'
+    euclid.classList.add('is-constructing')
+    prepareTrace()
+    drawBuild(0)
+    var section = euclid.closest('section')
+    if (C.active !== section) setActive(section)
+    else { settleAll(); play(constructRun(section)); play(dividerBreath(section)) }
+  }
+
   // ---------------------------------------------------------------- conductor
   var C = {
     enabled: false,
@@ -691,9 +736,131 @@
     }
   }
 
+
+  // ---------------------------------------------------------------- the mark
+  // The hero's unseen triangle. Its edges are never drawn; while the hero is
+  // read, each circle's cut breathes very slightly (0 to 6% opacity, stone
+  // over night) on its own unrelated clock, so the eye keeps completing it.
+  var kzCuts = [].slice.call(doc.querySelectorAll('.hero .kz__cuts path'))
+  var KZ = [[9100, 0], [11300, 2.1], [13700, 4.2]]
+  function resetMark() { kzCuts.forEach(function (cut) { cut.style.opacity = '' }) }
+  function markBreath(section) {
+    var last = 0, elapsed = 0, amt = 0, stop = false, stopAt = 0, from = 0
+    var IN = 1600, OUT = 300, STEP = 1000 / 12
+    return {
+      id: 'mark-breath', section: section, ambient: true,
+      begin: function (t) { last = t },
+      tick: function (t) {
+        if (!last) last = t
+        var delta = t - last
+        if (!stop && delta < STEP) return STEP - delta
+        last = t
+        if (stop) amt = from * (1 - easeOut(clamp01((t - stopAt) / OUT)))
+        else { elapsed += delta; amt = easeOut(clamp01(elapsed / IN)) }
+        kzCuts.forEach(function (cut, i) {
+          var wave = .5 - .5 * Math.cos(2 * Math.PI * elapsed / KZ[i][0] + KZ[i][1])
+          cut.style.opacity = String(Math.round(1000 * .06 * amt * wave) / 1000)
+        })
+        if (stop && t - stopAt >= OUT) { resetMark(); return true }
+        return STEP
+      },
+      pause: function () { last = 0 },
+      settle: function (t) { if (!stop) { stop = true; stopAt = t; from = amt } },
+    }
+  }
+
+  // ---------------------------------------------------------------- Euclid I.1
+  // Construct: the given line AB, then the circle about A traced from B, the
+  // circle about B traced from A, the point C where they cut, and CA and CB
+  // drawn from C. Pieces only change opacity. 7.4 s of active time; it
+  // freezes in place when the reader leaves and resumes on return.
+  var BUILD = { c1: [600, 1600], c2: [2500, 1600], pt: [4400, 600], sides: [5300, 1200], end: 7400 }
+  function svgEl(name, attrs) {
+    var el = doc.createElementNS('http://www.w3.org/2000/svg', name)
+    for (var k in attrs) el.setAttribute(k, attrs[k])
+    return el
+  }
+  function prepareTrace() {
+    if (buildTrace) return
+    var part = function (n) { return euclidFig.querySelector('[data-part="' + n + '"]') }
+    var arc = function (group, cx, cy, r, a0, dir, n) {
+      var pieces = []
+      for (var k = 0; k < n; k++) {
+        var s0 = (a0 + dir * 360 * k / n) * Math.PI / 180, s1 = (a0 + dir * 360 * (k + 1) / n) * Math.PI / 180
+        var d = 'M' + (cx + r * Math.cos(s0)).toFixed(2) + ' ' + (cy + r * Math.sin(s0)).toFixed(2) + 'A' + r + ' ' + r + ' 0 0 ' + (dir > 0 ? 1 : 0) + ' ' + (cx + r * Math.cos(s1)).toFixed(2) + ' ' + (cy + r * Math.sin(s1)).toFixed(2)
+        pieces.push(group.appendChild(svgEl('path', { d: d, 'class': 'euclid__trace' })))
+      }
+      return pieces
+    }
+    var line = function (group, x0, y0, x1, y1, n) {
+      var pieces = []
+      for (var k = 0; k < n; k++) pieces.push(group.appendChild(svgEl('line', { x1: (x0 + (x1 - x0) * k / n).toFixed(2), y1: (y0 + (y1 - y0) * k / n).toFixed(2), x2: (x0 + (x1 - x0) * (k + 1) / n).toFixed(2), y2: (y0 + (y1 - y0) * (k + 1) / n).toFixed(2), 'class': 'euclid__trace' })))
+      return pieces
+    }
+    var g1 = part(1), g2 = part(2), g3 = part(3), g4 = part(4)
+    var cy = 190, cTop = 190 - 160 * Math.sqrt(3) / 2
+    buildTrace = {
+      statics: [].slice.call(g1.children).concat([].slice.call(g2.children), [].slice.call(g4.children)),
+      point: g3,
+      c1: arc(g1, 240, cy, 160, 0, -1, 72),
+      c2: arc(g2, 400, cy, 160, 180, 1, 72),
+      sides: line(g4, 320, cTop, 240, cy, 24).concat(line(g4, 320, cTop, 400, cy, 24)),
+    }
+    buildTrace.statics.forEach(function (el) { el.style.opacity = '0' })
+  }
+  function reveal(pieces, p, n) {
+    var lead = clamp01(p) * n
+    for (var k = 0; k < pieces.length; k++) {
+      var o = String(clamp01(lead - (k % n)))
+      if (pieces[k].style.opacity !== o) pieces[k].style.opacity = o
+    }
+  }
+  function drawBuild(ms) {
+    var at = function (span) { return (ms - span[0]) / span[1] }
+    markStep(ms < BUILD.c1[0] ? 0 : ms < BUILD.c2[0] ? 1 : ms < BUILD.pt[0] ? 2 : ms < BUILD.sides[0] ? 3 : 4)
+    reveal(buildTrace.c1, at(BUILD.c1), 72)
+    reveal(buildTrace.c2, at(BUILD.c2), 72)
+    buildTrace.point.style.opacity = String(clamp01(at(BUILD.pt)))
+    reveal(buildTrace.sides, at(BUILD.sides), 24)
+  }
+  function finishBuild() {
+    if (buildTrace) {
+      ;[buildTrace.c1, buildTrace.c2, buildTrace.sides].forEach(function (pieces) { pieces.forEach(function (el) { el.remove() }) })
+      buildTrace.statics.forEach(function (el) { el.style.opacity = '' })
+      buildTrace.point.style.opacity = ''
+      buildTrace = null
+    }
+    buildRun = null
+    euclid.classList.remove('is-constructing')
+    markStep(-1)
+    buildButton.textContent = 'Construct again'
+    buildButton.setAttribute('aria-disabled', 'false')
+  }
+  function constructRun(section) {
+    var last = 0, stop = false
+    return {
+      id: 'construct-run', section: section,
+      begin: function (t) { last = t },
+      tick: function (t) {
+        if (stop || !buildRun) return true
+        if (!last) last = t
+        var delta = t - last
+        if (delta < 1000 / 30) return 1000 / 30 - delta
+        last = t
+        buildRun.elapsed += Math.min(delta, 250)
+        drawBuild(buildRun.elapsed)
+        if (buildRun.elapsed >= BUILD.end) { finishBuild(); return true }
+        return 1000 / 30
+      },
+      pause: function () { last = 0 },
+      settle: function () { stop = true },
+    }
+  }
+
   // ---------------------------------------------------------------- sections
   function planFor(section) {
     if (section.id === 'system' && chainRun) { placeCursor(section); play(chainLife(section)); return }
+    if (section.id === 'elements' && buildRun) { placeCursor(section); play(constructRun(section)); play(dividerBreath(section)); return }
     if (section.classList.contains('gate') && C.cad) { placeCursor(section); if (C.cad.inView) play(caduceusLife(section)); return }
     var t = now()
     play(cursorHandoff(section))
@@ -711,6 +878,7 @@
     }
     if (section.id === 'system') play(chainLife(section))
     else if (section.querySelector('.life-divider')) play(dividerBreath(section))
+    else if (section.classList.contains('hero') && kzCuts.length) play(markBreath(section))
     if (isStory && C.story) play(ringBreath(section))
 
   }
@@ -796,6 +964,7 @@
   function enable() {
     if (C.enabled || mq.matches || !('IntersectionObserver' in win)) return
     if (chainRun) stopOrder('intro')
+    if (buildManual >= 0) endManual()
     C.enabled = true
     armLedger()
     armReplay()
@@ -828,6 +997,8 @@
     doc.getAnimations().forEach(function (animation) { animation.cancel() })
     // Keep the already-loaded engine available if motion is enabled again.
     if (C.cad) { C.cad.entrance = 1100; C.cad.restore() }
+    if (buildRun) finishBuild()
+    resetMark()
     doc.querySelectorAll('.life-rule, .life-texture, .life-divider').forEach(function (el) { el.remove() })
     clearCursors()
   }

@@ -23,7 +23,7 @@
 <link rel="icon" href="/assets/avatar.svg" type="image/svg+xml">
 <link rel="preload" href="/assets/axioma/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/axioma/fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/axioma/axioma.css?v=13">
+<link rel="stylesheet" href="/assets/axioma/axioma.css?v=14">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -57,6 +57,7 @@
 <main id="main">
 <section class="hero wrap" id="top" aria-labelledby="hero-title">
 <div class="hero__copy">
+<div class="hero__mark"><svg class="kz" viewBox="130 136 740 681" width="740" height="681" role="img" aria-labelledby="kz-title" focusable="false"><title id="kz-title">The Axiom mark: three cut circles, and a triangle nobody drew</title><g class="kz__discs"><path d="M500 285L427.5 410.6A145 145 0 1 1 572.5 410.6Z"/><path d="M720.8 667.5L648.3 541.9A145 145 0 1 1 575.8 667.5Z"/><path d="M279.2 667.5L424.2 667.5A145 145 0 1 1 351.7 541.9Z"/></g><g class="kz__cuts" aria-hidden="true"><path d="M500 285L572.5 410.6A145 145 0 0 1 427.5 410.6Z"/><path d="M720.8 667.5L575.8 667.5A145 145 0 0 1 648.3 541.9Z"/><path d="M279.2 667.5L351.7 541.9A145 145 0 0 1 424.2 667.5Z"/></g></svg></div>
 <p class="prompt" aria-hidden="true"><span class="prompt__host">deploy@axiom</span><span class="tone-dim">:~$ </span><span class="prompt__cmd">whoami</span></p>
 <h1 class="hero__title" id="hero-title">Nothing in your business waits on you to remember it.<span class="cursor" aria-hidden="true"></span></h1>
 <p class="hero__line lede">We build and run the AI agents that handle it, on your own computer and accounts, and anything that commits the business waits for you.</p>
@@ -90,6 +91,32 @@
 <li class="replay__row"><span class="replay__t">09:41</span><span class="replay__step">done</span><span class="replay__what">Reply sent, booking moved, and the job written to the record.</span></li>
 </ol>
 <p class="term__foot"><span class="tone-dim"># </span>a simulated example of the pattern. Real jobs keep client names private.</p>
+</div>
+</section>
+
+<section class="section wrap elements" id="elements" aria-labelledby="elements-title">
+<div class="head">
+<p class="prompt" aria-hidden="true"><span class="prompt__host">deploy@axiom</span><span class="tone-dim">:~$ </span><span class="prompt__cmd">cat elements.md</span></p>
+<h2 id="elements-title">Built on an axiom</h2>
+<p>An axiom is a first truth. It is not proved; everything else is built on it.</p>
+</div>
+<div class="euclid">
+<figure class="euclid__plate">
+<svg class="euclid__fig" viewBox="64 14 512 352" width="512" height="352" role="img" aria-labelledby="euclid-fig-title" focusable="false"><title id="euclid-fig-title">Euclid, Book I, Proposition 1: on the line AB, a circle with center A through B and a circle with center B through A cut at C; joining CA and CB gives an equilateral triangle.</title><g class="euclid__circle" data-part="1"><circle cx="240" cy="190" r="160"/></g><g class="euclid__circle" data-part="2"><circle cx="400" cy="190" r="160"/></g><g class="euclid__side" data-part="4"><line x1="320" y1="51.44" x2="240" y2="190"/><line x1="320" y1="51.44" x2="400" y2="190"/></g><g class="euclid__given"><line x1="240" y1="190" x2="400" y2="190"/><circle class="euclid__pt" cx="240" cy="190" r="3.5"/><circle class="euclid__pt" cx="400" cy="190" r="3.5"/><text x="230" y="214" text-anchor="end">A</text><text x="410" y="214">B</text></g><g class="euclid__point" data-part="3"><circle class="euclid__pt" cx="320" cy="51.44" r="3.5"/><text x="320" y="37.44" text-anchor="middle">C</text></g></svg>
+<figcaption class="euclid__controls"><span>Euclid, <cite>Elements</cite>, Book I, Proposition 1</span><button class="euclid__run" type="button" hidden>Construct</button></figcaption>
+</figure>
+<div class="euclid__text">
+<p>Euclid’s <cite>Elements</cite> opens with axioms: five postulates and five common notions. Its first proposition builds an equilateral triangle from two circles.</p>
+<p class="euclid__given-line" data-step="0">Given a straight line AB:</p>
+<ol class="euclid__steps">
+<li data-step="1"><span class="step-n">1</span>With center A, draw the circle through B.</li>
+<li data-step="2"><span class="step-n">2</span>With center B, draw the circle through A.</li>
+<li data-step="3"><span class="step-n">3</span>Where the circles cut, mark C.</li>
+<li data-step="4"><span class="step-n">4</span>Join CA and CB. Each is a radius equal to AB, so all three sides are equal.</li>
+</ol>
+<p>Our mark is that triangle, left undrawn: three cut circles, and the eye completes a shape nobody drew. Gaetano Kanizsa described the effect in 1955.</p>
+<p>Axiom is built the same way. One rule comes first, and every agent we deploy works from it.</p>
+</div>
 </div>
 </section>
 
@@ -350,7 +377,7 @@
 <script src="/assets/axioma/vendor/rot.min.js" defer></script>
 <script src="/assets/axioma/chain-terminal.js?v=2" defer></script>
 <script src="/assets/axioma/vendor/cli-spinners-dots.js" defer></script>
-<script src="/assets/axioma/home.js?v=7" defer></script>
+<script src="/assets/axioma/home.js?v=8" defer></script>
 <script src="/assets/axioma/vendor/paper-liquid-metal.js" defer></script>
 <script src="/assets/axioma/chrome.js?v=1" defer></script>
 </body>

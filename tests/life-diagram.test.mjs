@@ -28,11 +28,12 @@ test('new life accents use the same conductor and stop on visibility changes', (
 });
 
 test('A298 updates reference art deliberately while preserving the remaining homepage', () => {
-  const original = home.replace(diagram + '\n\n', '').replace('home.js?v=7', 'home.js?v=4').replace('chain-terminal.js?v=2', 'chain-terminal.js?v=1').replace('<div class="page-texture" aria-hidden="true"><span class="page-texture__tile"></span></div>\n', '');
+  const original = home.replace(diagram + '\n\n', '').replace('home.js?v=8', 'home.js?v=4').replace('chain-terminal.js?v=2', 'chain-terminal.js?v=1').replace('<div class="page-texture" aria-hidden="true"><span class="page-texture__tile"></span></div>\n', '');
   const normalized = original.replace(/<link rel="stylesheet"[^>]*>/g, '').replace(/ role="group"/g, '').replace(/\s+/g, ' ').trim();
   assert.equal(createHash('sha256').update(read('assets/axioma/caduceus.js')).digest('hex'), '235810aad7f9594a2e6f1146e17f2e08cd01a5149ad42857de36807985ca36fa');
+  // A405 deliberately adds the unseen-triangle mark to the hero and the Euclid I.1 section (#elements) before the unchanged gate.
   // A384 deliberately replaces the contact mailto composer with the brief form and points the founder line at it.
   // 2026-11-14 deliberately retires the sales line number; call CTAs point to the free booking page.
   // A339 deliberately updates ledger numbers/labels/date, founder agent count, title and share image; art stays locked.
-  assert.equal(createHash('sha256').update(normalized).digest('hex'), '92de1f0932e45d35e687a491d768b360545e6dc1ee86b775f01446cb5a0d8326');
+  assert.equal(createHash('sha256').update(normalized).digest('hex'), '9cb3dff3546ec2a4ed25aaa100fadc99e231f93aaa955657a4d516616d46c4b4');
 });
