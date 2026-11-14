@@ -13,7 +13,8 @@ test('Baton Rouge page leads with the locked line, then the proof', () => {
   const proof = visible.indexOf('We start with your leads and missed calls');
   assert.ok(line > -1 && proof > line, 'line must come first, proof second');
   assert.ok(page.includes('<link rel="canonical" href="https://deployaxiom.com/baton-rouge/">'));
-  assert.ok(page.includes('tel:+12256358671'));
+  assert.ok(page.includes('https://calendar.app.google/rD42RF3YVLaRV52J6'), 'books calls through the free booking page');
+  assert.ok(!/tel:|635-?8671/.test(page), 'sales line number is retired (2026-11-14)');
   assert.ok(page.includes('mailto:percy@deployaxiom.com'));
   assert.ok(!page.includes('ig.me/'), 'Instagram DM contact is retired');
   assert.ok(page.includes('/assets/firm.css'), 'uses the firm design');

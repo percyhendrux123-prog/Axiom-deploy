@@ -30,8 +30,8 @@ test('firm typography uses the self-hosted Cinzel brand face and keeps the live 
   assert.ok(!css.includes('fonts.googleapis.com'));
   assert.ok(!/gradient|#2f6b4f|ui-rounded/i.test(css), 'no gradients, retired green, or rounded fonts');
   assert.ok(read('netlify.toml').includes('cp -R assets/fonts assets/notes dist/assets/'));
-  assert.match(homepage, /href="tel:\+12256358671"/, 'live sales-line link must remain valid');
-  assert.ok(homepage.includes('(225) 635-8671'), 'live sales-line text must remain unchanged');
+  assert.ok(!/tel:|635-?8671/.test(homepage), 'sales line number is retired (2026-11-14)');
+  assert.ok(homepage.includes('https://calendar.app.google/rD42RF3YVLaRV52J6'), 'booking page link must be present');
   assert.ok(!/style="/.test(homepage), 'CSP forbids inline styles');
 });
 
@@ -157,7 +157,7 @@ test('homepage keeps the hero direct: headline, plain-English line, two actions,
   assert.ok(hero.includes('Nothing in your business waits on you to remember it.<span class="cursor" aria-hidden="true"></span></h1>'));
   assert.ok(hero.includes('in plain English'));
   assert.ok(hero.includes('href="#contact">Start an engagement</a>'));
-  assert.ok(hero.includes('href="tel:+12256358671"'));
+  assert.ok(hero.includes('href="https://calendar.app.google/rD42RF3YVLaRV52J6"'));
   assert.ok(!/<video|<img/i.test(hero), 'no media in the hero');
   assert.match(homeStylesheet(), /@media \(prefers-reduced-motion:reduce\)/);
 });
