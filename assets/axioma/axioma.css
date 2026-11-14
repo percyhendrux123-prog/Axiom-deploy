@@ -64,6 +64,14 @@ ul,ol{padding:0;list-style:none}
 /* ---------- section label (plain words; the shell prompts retired in A413) ---------- */
 .label{font:500 12px/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
 .nowrap{white-space:nowrap}
+.hero__by a{padding-block:12px;color:var(--strong)}
+code,pre,kbd,samp{font-family:var(--mono)}
+/* phones: the header keeps only the brand and the booking button, so the sections get one quiet row under the hero */
+.jump{display:none}
+@media (max-width:640px){
+  .jump{display:flex;flex-wrap:wrap;gap:0 22px;padding-block:0 8px;font-size:15px}
+  .jump a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;color:var(--text)}
+}
 .skip-inline{position:absolute;left:var(--gutter);z-index:3;padding:10px 14px;background:var(--strong);color:var(--night);transform:translateY(-200%);opacity:0}
 .skip-inline:focus{transform:none;opacity:1}
 .work__more{max-width:72ch;color:var(--text)}
@@ -105,7 +113,7 @@ ul,ol{padding:0;list-style:none}
 .plain__list{display:grid}
 .plain__list div{display:grid;gap:4px;padding:16px 20px}
 .plain__list div+div{border-top:1px solid var(--rule)}
-.plain__list dt{color:var(--dim);font-size:13px}
+.plain__list dt{color:var(--dim);font-size:14px}
 .plain__list dd{color:var(--strong);font-size:15px;line-height:1.6}
 
 /* ---------- the gate ---------- */
@@ -132,7 +140,7 @@ ul,ol{padding:0;list-style:none}
 
 /* ledger: the one bordered terminal of numbers */
 .term{border:1px solid var(--rule);background:var(--panel);font-family:var(--mono);font-size:15px}
-.term__head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:12px 20px;border-bottom:1px solid var(--rule);font-size:13px;color:var(--strong)}
+.term__head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:12px 20px;border-bottom:1px solid var(--rule);font-size:14px;color:var(--strong)}
 .ledger{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
 .ledger__cell{display:grid;gap:6px;align-content:start;padding:28px 20px 26px}
 .ledger__cell+.ledger__cell{border-left:1px solid var(--rule)}
@@ -263,6 +271,10 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 /* The story stays in IBM Plex Mono at 15px: its live layer lays out one span per word and
    lights STOP at weight 600, which only keeps the same advance width in a monospace face. */
 .story__stage{position:relative;max-width:780px;font:400 15px/1.65 var(--mono)}
+/* A413: scroll anchoring is off on the homepage. When the story engine swaps its flow for the word layer,
+   Chromium re-anchored an in-flight jump to Limits one story-height too far (638px). Safari has no
+   anchoring at all, so every animated piece already reserves its final size; Chromium now behaves the same. */
+html{overflow-anchor:none}
 .story__flow p+p{margin-top:.7lh}
 .story__flow--sr,.ax-sr{position:absolute;left:0;top:0;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%)}
 .ax-sr{white-space:nowrap}
@@ -330,7 +342,7 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
   body{font-size:16px}
   .bar__row{gap:12px}
   .bar__home{font-size:14px}
-  .bar__nav{gap:6px;font-size:13px}
+  .bar__nav{gap:6px;font-size:14px}
   .bar__nav .nav-hide-sm{display:none}
   .bar__nav .nav-cta{padding:0 12px}
   .hero__title{font-size:clamp(2.3rem,10.5vw,3rem)}
@@ -457,7 +469,7 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
 @media (max-width:359px){
   .bar__row{gap:8px}
   .bar__home{font-size:13px}
-  .bar__nav .nav-cta{padding:0 8px;font-size:12px}
+  .bar__nav .nav-cta{padding:0 8px;font-size:13px}
 }
 
 /* The unseen triangle (2026-11-14 global mark). Stone on the night ground,
@@ -511,7 +523,7 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
   .catalog{grid-auto-rows:auto;row-gap:0}
   .catalog__item{grid-row:span 5;grid-template-rows:subgrid;row-gap:8px}
 }
-.plugins-page .head h1{font-family:var(--display);font-weight:640;font-size:clamp(2.2rem,4.6vw,3.4rem);line-height:1.04;letter-spacing:-.04em;color:var(--strong);text-wrap:balance}
+.plugins-page .head h1{font-family:var(--display);font-weight:640;font-size:clamp(2rem,3.6vw,2.75rem);line-height:1.1;letter-spacing:-.035em;color:var(--strong);text-wrap:balance}
 /* A413: on touch, a vertical swipe that starts on the medallion scrolls the page */
 @media (pointer:coarse){.medallion__hit{touch-action:pan-y}}
 

@@ -24,7 +24,7 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" href="/assets/axioma/fonts/geist-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/axioma/fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/axioma/axioma.css?v=15">
+<link rel="stylesheet" href="/assets/axioma/axioma.css?v=16">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -60,7 +60,7 @@
 <div class="hero__copy">
 <div class="hero__mark"><svg class="kz" viewBox="130 136 740 681" width="740" height="681" role="img" aria-labelledby="kz-title" focusable="false"><title id="kz-title">The Axiom mark: three cut circles, and a triangle nobody drew</title><g class="kz__discs"><path d="M500 285L427.5 410.6A145 145 0 1 1 572.5 410.6Z"/><path d="M720.8 667.5L648.3 541.9A145 145 0 1 1 575.8 667.5Z"/><path d="M279.2 667.5L424.2 667.5A145 145 0 1 1 351.7 541.9Z"/></g><g class="kz__cuts" aria-hidden="true"><path d="M500 285L572.5 410.6A145 145 0 0 1 427.5 410.6Z"/><path d="M720.8 667.5L575.8 667.5A145 145 0 0 1 648.3 541.9Z"/><path d="M279.2 667.5L351.7 541.9A145 145 0 0 1 424.2 667.5Z"/></g></svg></div>
 <h1 class="hero__title" id="hero-title">Nothing in your business waits on you to remember it.<span class="cursor" aria-hidden="true"></span></h1>
-<p class="hero__by">P. K. Stewart, founder · <span class="nowrap">Baton Rouge</span></p>
+<p class="hero__by"><a href="#founder">P. K. Stewart</a>, founder · <span class="nowrap">Baton Rouge</span></p>
 <p class="hero__for">Built for independent insurance agencies and sales professionals: regulated work where every text has to clear consent, <span class="nowrap">opt-out</span> and <span class="nowrap">quiet-hour</span> rules before it goes.</p>
 <p class="hero__line lede">We build and run the AI agents that do the remembering, on your own computer and accounts, and anything that commits the business waits for you.</p>
 <div class="actions"><a class="button" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a><a class="button ghost" href="#contact">Write a short brief</a></div>
@@ -71,10 +71,11 @@
 <dl class="plain__list">
 <div><dt>What it handles</dt><dd>Client care, follow-up and records, run by AI agents we build for your business.</dd></div>
 <div><dt>What waits for you</dt><dd>Anything that sends, spends, or commits the business. It is prepared in full, then held for your yes.</dd></div>
-<div><dt>Where it runs</dt><dd>On your own computer and accounts, not ours.</dd></div>
+<div><dt>Where it runs</dt><dd>On your own computer and accounts, not ours. The AI models the agents call process each task under the model providers' terms.</dd></div>
 </dl>
 </aside>
 </section>
+<nav class="jump wrap" aria-label="On this page"><a href="#work">Work</a><a href="#limits">Limits</a><a href="#method">Method</a><a href="#notes">Notes</a></nav>
 
 <section class="section wrap" id="replay" aria-labelledby="replay-title">
 <div class="head">
@@ -251,7 +252,7 @@
 <div class="ledger__cell"><span class="ledger__num">187</span><span class="ledger__label">verified against recorded evidence</span></div>
 <div class="ledger__cell"><span class="ledger__num">106</span><span class="ledger__label">with a failure caught and recovered, not hidden</span></div>
 </div>
-<p class="term__foot">Counts from our own company's records, not client data. <a href="#work">See the work</a>.</p>
+<p class="term__foot">An outcome without a recorded readback counts as an outcome, never as verified. Counts from our own company's records, not client data. <a href="#work">See the work</a>.</p>
 </div>
 </section>
 
@@ -310,8 +311,7 @@
 <section class="section wrap" id="notes" aria-labelledby="notes-title">
 <div class="head">
 <p class="label" aria-hidden="true">Notes</p>
-<h2 id="notes-title">What we found</h2>
-<p>What we found running our own operation.</p>
+<h2 id="notes-title">What we found running our own operation</h2>
 </div>
 <ol class="notes-list">
 <li><a href="/notes/one-tempo/"><span class="note-n">Field report</span><span class="note-t">One Tempo</span><span class="note-d">An independent reviewer found four safety defects that our own tests had passed.</span></a></li>
@@ -327,7 +327,7 @@
 <h2 id="contact-title">Book a call, or send a brief.</h2>
 <p>Tell us the work you keep having to remember. We write down what starts it, what counts as done, and where it stops for you.</p>
 </div>
-<div class="contact-actions"><details id="brief-composer" open><summary class="button ghost">Write a short brief</summary>
+<div class="contact-actions"><a class="button contact-call" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a><details id="brief-composer" open><summary class="button ghost">Write a short brief</summary>
 <form class="mapper" id="brief-form" name="axiom-brief" method="POST" action="/brief/received/" data-netlify="true" netlify-honeypot="bot-field">
 <input type="hidden" name="form-name" value="axiom-brief">
 <p>Six short answers. Our AI agent, AXIOM, reads every brief first and replies the way you ask. If the work fits, P. K. Stewart takes the call.</p>
@@ -343,7 +343,7 @@
 <p class="brief-trap" hidden><label>Leave this empty<input type="text" name="bot-field" tabindex="-1" autocomplete="off"></label></p>
 <p class="fine"><strong>No secrets.</strong> Do not include passwords, API keys, private records, or other secrets.</p>
 <div class="actions"><button type="submit" class="button">Send the brief</button></div>
-</form></details><a class="button contact-call" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a></div>
+</form></details></div>
 </section>
 </div>
 </main>

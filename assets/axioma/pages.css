@@ -134,3 +134,13 @@ h1,.article h1,.remake .report h1,.heading h1,.remake .hero h1,.br h1{font:640 c
   h1,.article h1,.remake .report h1,.heading h1{font-size:2rem;line-height:1.12}
 }
 .heading p a,.next a,.closing-alt a,.article .byline a{padding-block:12px}
+/* A413: one eyebrow style with the homepage labels; one quiet rule under titles */
+.kicker,.article .kicker,.remake .hero .kicker,.numeral,.closing .kicker{font:500 12px/1.5 var(--serif);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.entablature,.article .entablature,.remake .hero .entablature,.br-hero-copy .entablature{width:56px;height:0;border-top:1px solid var(--dim);border-bottom:0}
+.remake .report .proof-grid{border-top:1px solid var(--rule)}
+.skip{position:absolute;left:12px;top:-60px;z-index:30;display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;background:var(--strong);color:var(--night)}
+.skip:focus{top:12px}
+figcaption .figure-open,.document-plate figcaption a.figure-open{display:inline;padding-block:12px}
+.numeral{border-bottom:0;padding-bottom:0}
+.notes-list{border-top:1px solid var(--rule)}
+@media (max-width:640px){.brand,.remake .brand{font-size:14px}}
