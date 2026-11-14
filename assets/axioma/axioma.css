@@ -87,6 +87,7 @@ ul,ol{padding:0;list-style:none}
 .section .prompt.is-cursor .prompt__cmd::after{opacity:1}
 .section .prompt.is-cursor.is-blink-off .prompt__cmd::after{opacity:0}
 .hero__for{text-wrap:pretty;max-width:46ch;font-size:17px;line-height:1.55;color:var(--strong)}
+.hero__by{font-size:14px;line-height:1.4;color:var(--text);letter-spacing:.01em}
 .hero__meta{display:flex;flex-wrap:wrap;align-items:center;gap:0 20px;font-size:14px;line-height:1.4;color:var(--text)}
 .hero__meta a{display:inline-flex;align-items:center;min-height:44px;color:var(--strong);text-decoration:underline;text-underline-offset:3px}
 .hero__line{text-wrap:pretty;max-width:46ch;font-size:16px;line-height:1.7;color:var(--text)}
@@ -299,8 +300,8 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
   .hero__copy{display:contents}
   .hero__copy>.prompt,.hero__title{grid-column:1/-1}
   .hero__title{font-size:4cqw;max-width:none;white-space:nowrap;text-wrap:nowrap;margin-left:0}
-  .hero__for,.hero__line,.hero__copy>.actions,.hero__meta{grid-column:1}
-  .hero>.plain{grid-column:2;grid-row:3/span 4}
+  .hero__by,.hero__for,.hero__line,.hero__copy>.actions,.hero__meta{grid-column:1}
+  .hero>.plain{grid-column:2;grid-row:4/span 4}
   .head h2{white-space:nowrap}
   .gate__quote{width:100%}
   .gate__quote blockquote p{max-width:none;white-space:nowrap;text-wrap:nowrap;font-size:3.4cqw}
@@ -322,8 +323,10 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
   .bar__nav .nav-hide-sm{display:none}
   .bar__nav .nav-cta{padding:0 12px}
   .hero__title{font-size:clamp(2.3rem,10.5vw,3rem)}
-  .hero{padding-top:32px}
-  .hero__copy{gap:20px}
+  .hero{padding-top:28px}
+  .hero__copy{gap:18px}
+  .hero__copy>.prompt{display:none}
+  .hero__by{margin-top:-6px}
   .ledger{grid-template-columns:minmax(0,1fr)}
   .ledger__cell+.ledger__cell{border-left:0;border-top:1px solid var(--rule)}
   .limit{grid-template-columns:minmax(0,1fr);gap:6px}
@@ -434,6 +437,12 @@ textarea:focus-visible{outline:2px solid var(--strong);outline-offset:2px}
   .system.is-interactive .system__details{min-height:244px}
 }
 
+#brief-composer[open]>summary{display:none}
+@media (max-width:359px){
+  .bar__row{gap:8px}
+  .bar__home{font-size:13px}
+  .bar__nav .nav-cta{padding:0 8px;font-size:12px}
+}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important;animation:none!important}
   .button:active{transform:none}

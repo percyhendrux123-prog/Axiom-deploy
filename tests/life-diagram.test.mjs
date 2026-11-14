@@ -35,5 +35,5 @@ test('A298 updates reference art deliberately while preserving the remaining hom
   // A384 deliberately replaces the contact mailto composer with the brief form and points the founder line at it.
   // 2026-11-14 deliberately retires the sales line number; call CTAs point to the free booking page.
   // A339 deliberately updates ledger numbers/labels/date, founder agent count, title and share image; art stays locked.
-  assert.equal(createHash('sha256').update(normalized).digest('hex'), '0e86011557187be31229279a608df4767f2c57c8ecbfa352a8c49b39f16f6b92');
+  assert.equal(createHash('sha256').update(normalized).digest('hex'), 'f84be0c04435b12dec089715afc4f5cf57b7ad0a5e69881481a99597e33450c3');
 });

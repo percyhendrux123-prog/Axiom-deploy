@@ -162,9 +162,9 @@ test('homepage keeps the hero direct: headline, plain-English line, two actions,
   // A409: who it's for, founder and place, booking first, brief second, insurance field report linked from the hero.
   assert.ok(hero.includes('<p class="hero__for">Built for independent insurance agencies and sales professionals: regulated work where every text has to clear consent, opt-out and quiet-hour rules before it goes.</p>'));
   assert.ok(hero.includes('<a class="button" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a>'));
-  assert.ok(hero.includes('<a class="button ghost" href="#contact">Send a short brief</a>'));
-  assert.ok(hero.includes('P. K. Stewart, founder · Baton Rouge'));
-  assert.ok(hero.includes('href="/field-reports/insurance-client-care/">See it run in an insurance agency</a>'));
+  assert.ok(hero.includes('<a class="button ghost" href="#contact">Write a short brief</a>'));
+  assert.ok(hero.includes('</h1>\n<p class="hero__by">P. K. Stewart, founder · Baton Rouge</p>'), 'founder and place directly under the headline');
+  assert.ok(hero.includes('href="/field-reports/insurance-client-care/">Read the insurance field report</a>'));
   assert.ok(!/HIPAA|TCPA|compliant|certified/i.test(homepage), 'no regulation or compliance claims without evidence');
   assert.ok(!/<video|<img/i.test(hero), 'no media in the hero');
   assert.match(homeStylesheet(), /@media \(prefers-reduced-motion:reduce\)/);
