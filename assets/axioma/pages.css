@@ -144,3 +144,10 @@ figcaption .figure-open,.document-plate figcaption a.figure-open{display:inline;
 .numeral{border-bottom:0;padding-bottom:0}
 .notes-list{border-top:1px solid var(--rule)}
 @media (max-width:640px){.brand,.remake .brand{font-size:14px}}
+/* A413: on the field report the record plate is the image itself on the night page; its caption, its link and
+   the outlined brief button read in stone, never ink on ink */
+.remake .report .document-plate{background:transparent}
+.remake .report .document-plate figcaption{color:var(--mid)}
+.remake .report .document-plate figcaption a,.remake .report .document-plate figcaption a.figure-open{color:var(--strong)}
+.button.ghost,.remake .button.ghost,.remake .report .next .button.ghost{background:transparent;color:var(--strong);border-color:var(--dim)}
+.button.ghost:hover,.button.ghost:active,.remake .report .next .button.ghost:hover{background:var(--panel);color:var(--strong);border-color:var(--strong)}
