@@ -140,7 +140,7 @@ h1,.article h1,.remake .report h1,.heading h1,.remake .hero h1,.br h1{font:640 c
 .remake .report .proof-grid{border-top:1px solid var(--rule)}
 .skip{position:absolute;left:12px;top:-60px;z-index:30;display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;background:var(--strong);color:var(--night)}
 .skip:focus{top:12px}
-figcaption .figure-open,.document-plate figcaption a.figure-open{display:inline;padding-block:12px}
+figcaption .figure-open,.document-plate figcaption a.figure-open{display:inline;padding-block:14px}
 .numeral{border-bottom:0;padding-bottom:0}
 .notes-list{border-top:1px solid var(--rule)}
 @media (max-width:640px){.brand,.remake .brand{font-size:14px}}
@@ -151,3 +151,11 @@ figcaption .figure-open,.document-plate figcaption a.figure-open{display:inline;
 .remake .report .document-plate figcaption a,.remake .report .document-plate figcaption a.figure-open{color:var(--strong)}
 .button.ghost,.remake .button.ghost,.remake .report .next .button.ghost{background:transparent;color:var(--strong);border-color:var(--dim)}
 .button.ghost:hover,.button.ghost:active,.remake .report .next .button.ghost:hover{background:var(--panel);color:var(--strong);border-color:var(--strong)}
+.toc{margin:28px 0 8px;padding:16px 20px;border:1px solid var(--rule)}
+.toc__h{margin:0 0 6px;font:500 12px/1.5 var(--serif);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.toc ol{margin:0;padding:0;list-style:none;columns:2;column-gap:32px}
+.toc li{margin:0;break-inside:avoid}
+.toc a{display:inline-flex;align-items:center;min-height:44px}
+.note-voice{font-size:14px;color:var(--dim)}
+.exits{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+@media (max-width:640px){.toc ol{columns:1}}

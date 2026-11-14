@@ -9,6 +9,9 @@
 // non-animated order walkthrough; neither story engine is loaded.
 (function () {
   'use strict'
+  // A413: the hero's block cursor shows only once this script runs (never as a
+  // static block with JavaScript off).
+  document.documentElement.classList.add('js')
   var win = window
   var doc = document
   var mq = win.matchMedia('(prefers-reduced-motion: reduce)')

@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-label="Diagram: The owner sends one request to AXIOM, which routes cards to specialists, checks their work, and returns one answer.">
       <style>text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}</style><defs>
         <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#121316"/></marker>
-        <marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8C7350"/></marker>
+        <marker id="ahg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#121316"/></marker>
       </defs>
 
       <!-- Owner -->
@@ -12,8 +12,8 @@
       <!-- request / answer arrows -->
       <line x1="132" y1="178" x2="218" y2="178" stroke="#121316" stroke-width="1.5" marker-end="url(#ah)"/>
       <text x="175" y="168" text-anchor="middle" font-size="10.5" fill="#5d636b">one request</text>
-      <line x1="218" y1="222" x2="132" y2="222" stroke="#8C7350" stroke-width="2" marker-end="url(#ahg)"/>
-      <text x="175" y="241" text-anchor="middle" font-size="10.5" fill="#8C7350" font-weight="600">one answer</text>
+      <line x1="218" y1="222" x2="132" y2="222" stroke="#121316" stroke-width="2" marker-end="url(#ahg)"/>
+      <text x="175" y="241" text-anchor="middle" font-size="10.5" fill="#121316" font-weight="600">one answer</text>
 
       <!-- AXIOM -->
       <rect x="220" y="80" width="170" height="240" rx="4" fill="#121316"/>
@@ -36,8 +36,8 @@
         <text x="444" y="83" font-weight="700">A</text><text x="462" y="83" fill="#121316">Axiom</text>
         <rect x="430" y="114" width="160" height="44" rx="3" fill="#fff" stroke="#121316"/>
         <text x="444" y="141" font-weight="700">P</text><text x="462" y="141" fill="#121316">PKFIT coaching</text>
-        <rect x="430" y="172" width="160" height="44" rx="3" fill="#fff" stroke="#8C7350" stroke-width="2"/>
-        <text x="444" y="199" font-weight="700" fill="#8C7350">C1</text><text x="470" y="199" fill="#8C7350">Fix reel end card</text>
+        <rect x="430" y="172" width="160" height="44" rx="3" fill="#fff" stroke="#121316" stroke-width="2"/>
+        <text x="444" y="199" font-weight="700" fill="#121316">C1</text><text x="470" y="199" fill="#121316">Fix reel end card</text>
         <rect x="430" y="230" width="160" height="44" rx="3" fill="#fff" stroke="#121316"/>
         <text x="444" y="257" font-weight="700">H</text><text x="462" y="257" fill="#121316">Operations</text>
       </g>
@@ -46,7 +46,7 @@
 
       <!-- route / report back -->
       <path d="M392 150 C 410 150, 410 120, 428 120" fill="none" stroke="#121316" stroke-width="1.5" marker-end="url(#ah)"/>
-            <path d="M428 210 C 410 210, 410 245, 392 245" fill="none" stroke="#8C7350" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#ahg)"/>
+            <path d="M428 210 C 410 210, 410 245, 392 245" fill="none" stroke="#121316" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#ahg)"/>
 
       <!-- log -->
       <rect x="220" y="345" width="370" height="38" rx="3" fill="none" stroke="#9aa0a6" stroke-dasharray="3 3"/>

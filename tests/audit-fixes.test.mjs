@@ -24,7 +24,8 @@ test('sitemap: every URL has a lastmod and a page on disk; operator-layer listed
 
 test('branded 404 and favicon ship with the build', () => {
   const page = read('404.html');
-  assert.ok(page.includes('<a href="/">Back to Deploy Axiom</a>'), 'links home');
+  // A413: the exits are buttons with space above them, not a trailing sentence.
+  assert.ok(page.includes('<a class="button" href="/">Back to Deploy Axiom</a>'), 'links home');
   assert.ok(page.includes('noindex'));
   assert.ok(page.includes('/assets/firm.css') && !/<style[ >]|style="/i.test(page), 'local stylesheet, no inline style (CSP)');
   assert.ok(!/<script/i.test(page));

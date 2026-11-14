@@ -98,6 +98,20 @@
 </div>
 </section>
 
+<section class="section wrap" id="limits" aria-labelledby="limits-title">
+<div class="head">
+<p class="label" aria-hidden="true">Authority</p>
+<h2 id="limits-title">Limits of authority</h2>
+<p>A draft is never an approval.</p>
+</div>
+<div class="limits">
+<div class="limit"><h3>Delegated</h3><p>Reading, sorting, drafting, editing, and checking the result.</p></div>
+<div class="limit"><h3>Held for approval</h3><p>Anything that sends, publishes, spends, or alters a customer record. Prepared completely, then held.</p></div>
+<div class="limit"><h3>Reserved to the owner</h3><p>Moving money, setting prices, and making commitments in the owner's name.</p></div>
+<div class="limit"><h3>Regulated work</h3><p>We work in fields where HIPAA applies. Your compliance stays with you and your systems; if you need help there, we'll point you to people who specialize in it.</p></div>
+</div>
+</section>
+
 <section class="section wrap" id="work" aria-labelledby="work-title">
 <div class="head">
 <p class="label" aria-hidden="true">Proof</p>
@@ -106,6 +120,12 @@
 </div>
 <ol class="listing">
 <li class="listing__item"><h3 class="listing__path">Insurance agency client care</h3><p class="listing__what">Texts and email at set points after a sale, with quiet hours, opt-outs and no repeats. Anything risky waits for the owner's yes.</p><p class="listing__ev"><span class="tone-dim">evidence: </span>the full sequence ran on a test phone before any client got a message</p><p class="listing__link"><a href="/field-reports/insurance-client-care/">Read the field report</a></p></li>
+</ol>
+<div class="listing__group">
+<p class="label">Public code, for technical reviewers</p>
+<p>Our agents run on Hermes Agent, an open-source agent platform made by Nous Research. These are pieces we built for it and publish; a plugin is an add-on any Hermes install can load.</p>
+</div>
+<ol class="listing listing--code">
 <li class="listing__item"><h3 class="listing__path">Escalation desk</h3><p class="listing__what">When an agent gets stuck, a loop answers: one holding line, one ticket, every action checked against a gate that fails closed, and one reply telling the owner what to do.</p><p class="listing__ev"><span class="tone-dim">evidence: </span>public code, 9 passing tests</p><p class="listing__link"><a href="https://github.com/percyhendrux123-prog/escalation-desk">See the public code</a></p></li>
 <li class="listing__item"><h3 class="listing__path">Tripwire</h3><p class="listing__what">An open-source plugin that logs every action an agent was refused and alerts the owner.</p><p class="listing__ev"><span class="tone-dim">evidence: </span>public, with tests</p><p class="listing__link"><a href="https://github.com/percyhendrux123-prog/hermes-tripwire">See the public code</a></p></li>
 <li class="listing__item"><h3 class="listing__path">Handydandy</h3><p class="listing__what">When a session runs long, the agent finishes the job and writes a handoff, so the next session picks up clean.</p><p class="listing__ev"><span class="tone-dim">evidence: </span>merged into the Hermes plugin catalog</p><p class="listing__link"><a href="/plugins/#handydandy">See it in the catalog</a></p></li>
@@ -256,20 +276,6 @@
 </div>
 </section>
 
-<section class="section wrap" id="limits" aria-labelledby="limits-title">
-<div class="head">
-<p class="label" aria-hidden="true">Authority</p>
-<h2 id="limits-title">Limits of authority</h2>
-<p>A draft is never an approval.</p>
-</div>
-<div class="limits">
-<div class="limit"><h3>Delegated</h3><p>Reading, sorting, drafting, editing, and checking the result.</p></div>
-<div class="limit"><h3>Held for approval</h3><p>Anything that sends, publishes, spends, or alters a customer record. Prepared completely, then held.</p></div>
-<div class="limit"><h3>Reserved to the owner</h3><p>Moving money, setting prices, and making commitments in the owner's name.</p></div>
-<div class="limit"><h3>Regulated work</h3><p>We work in fields where HIPAA applies. Your compliance stays with you and your systems; if you need help there, we'll point you to people who specialize in it.</p></div>
-</div>
-</section>
-
 <section class="section wrap" id="method" aria-labelledby="method-title">
 <div class="head">
 <p class="label" aria-hidden="true">Process</p>
@@ -314,7 +320,7 @@
 <h2 id="notes-title">What we found running our own operation</h2>
 </div>
 <ol class="notes-list">
-<li><a href="/notes/one-tempo/"><span class="note-n">Field report</span><span class="note-t">One Tempo</span><span class="note-d">An independent reviewer found four safety defects that our own tests had passed.</span></a></li>
+<li><a href="/field-reports/insurance-client-care/"><span class="note-n">Field report</span><span class="note-t">Client Care for an Independent Insurance Agency</span><span class="note-d">Client care is now set up to run without the owner remembering it. Referral asks still wait for her yes.</span></a></li>
 <li><a href="/notes/weights/"><span class="note-n">Essay</span><span class="note-t">Weights</span><span class="note-d">A model learns the way an athlete preps: run the week, measure the miss, trace it to its cause, adjust a little, repeat. Try the neuron yourself.</span></a></li>
 <li><a href="/notes/one-front-door/"><span class="note-n">Note</span><span class="note-t">One Front Door</span><span class="note-d">When an agent says "done", nothing closes. A job closes only after it is checked against the file, the page or the message record.</span></a></li>
 </ol><p class="notes-all"><a href="/notes/">All notes</a></p>
@@ -330,7 +336,7 @@
 <div class="contact-actions"><a class="button contact-call" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a><details id="brief-composer" open><summary class="button ghost">Write a short brief</summary>
 <form class="mapper" id="brief-form" name="axiom-brief" method="POST" action="/brief/received/" data-netlify="true" netlify-honeypot="bot-field">
 <input type="hidden" name="form-name" value="axiom-brief">
-<p>Six short answers. Our AI agent, AXIOM, reads every brief first and replies the way you ask. If the work fits, P. K. Stewart takes the call.</p>
+<p>Six short answers. Our AI agent reads every brief first and replies the way you ask. If the work fits, P. K. Stewart takes the call.</p>
 <div class="mapper-grid brief-grid">
 <label>Your name<input type="text" name="name" autocomplete="name" maxlength="120" required></label>
 <label>Business<input type="text" name="business" autocomplete="organization" maxlength="160" required></label>

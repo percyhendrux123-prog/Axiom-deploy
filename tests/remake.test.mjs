@@ -7,9 +7,9 @@ const root = new URL('..', import.meta.url).pathname;
 const read = (p) => readFileSync(join(root, p), 'utf8');
 const home = read('index.html');
 
-test('homepage keeps the business order: hero, example, work, axiom, story, ledger, limits, method, video, founder, findings, contact', () => {
-  // A413 deliberately moves Work (insurance client care first) up to just after the example job, so proof comes before the symbols.
-  const order = ['Nothing in your business waits on you to remember it.<span class="cursor"', 'class="hero__line lede"', 'In plain English', 'id="replay"', 'id="work"', 'id="elements"', 'class="gate"', 'id="story"', 'id="proof"', 'id="limits"', 'id="method"', 'id="explained"', 'id="founder"', 'id="notes"', 'id="contact"'];
+test('homepage keeps the business order: hero, example, limits, work, axiom, story, ledger, method, video, founder, findings, contact', () => {
+  // A413 deliberately puts the buyer's questions first: what the agent may do alone (Limits), then Work (insurance client care first), before the symbols.
+  const order = ['Nothing in your business waits on you to remember it.<span class="cursor"', 'class="hero__line lede"', 'In plain English', 'id="replay"', 'id="limits"', 'id="work"', 'id="elements"', 'class="gate"', 'id="story"', 'id="proof"', 'id="method"', 'id="explained"', 'id="founder"', 'id="notes"', 'id="contact"'];
   let previous = -1;
   for (const marker of order) {
     const position = home.indexOf(marker);
@@ -59,7 +59,8 @@ test('insurance field report has the approved limits, artifact, metadata, sitema
   assert.ok(existsSync(join(root, path)), 'field report page missing');
   const report = read(path);
   for (const marker of [
-    'Field report · 02', // A413: one kind-and-number kicker scheme across notes "An independent insurance agency's client care is now set up to run without her remembering it. Referral asks still wait for her yes.",
+    // A413: one kicker scheme across notes and reports (the kind, no number).
+    '<p class="kicker">Field report</p>', "An independent insurance agency's client care is now set up to run without her remembering it. Referral asks still wait for her yes.",
     'The gap', 'What runs', 'What waits for her', "What isn't proven yet",
     'Only one enrolled client has received a check-in.', 'A few delivery paths still pass only in testing.',
     'href="/#contact"', 'href="/notes/"', 'Example record. Client details removed.',

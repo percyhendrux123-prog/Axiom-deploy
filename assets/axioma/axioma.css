@@ -100,6 +100,9 @@ code,pre,kbd,samp{font-family:var(--mono)}
    holds. The prompt cursor's box is reserved from the first paint, so moving
    it never shifts a line; without the conductor only the hero's shows. */
 .cursor.is-away,.cursor.is-blink-off{opacity:0}
+/* A413: no static block beside the headline with JavaScript off or under reduced motion (space kept, so nothing shifts) */
+html:not(.js) .hero__title .cursor{visibility:hidden}
+@media (prefers-reduced-motion:reduce){.hero__title .cursor{visibility:hidden}}
 .section .prompt__cmd::after{content:'';display:inline-block;width:.5em;height:.95em;margin-left:.3em;vertical-align:-.14em;background:var(--strong);opacity:0}
 .section .prompt.is-cursor .prompt__cmd::after{opacity:1}
 .section .prompt.is-cursor.is-blink-off .prompt__cmd::after{opacity:0}
@@ -156,6 +159,11 @@ code,pre,kbd,samp{font-family:var(--mono)}
 .listing{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(32px,6vw,80px);row-gap:44px}
 .listing__item{display:grid;gap:10px;align-content:start}
 .listing__item:first-child{grid-column:1/-1;padding-bottom:36px;border-bottom:1px solid var(--rule)}
+.listing--code .listing__item:first-child{grid-column:auto;padding-bottom:0;border-bottom:0}
+.listing--code .listing__item:first-child .listing__path{font-size:1.5rem}
+.listing--code{grid-template-columns:repeat(3,minmax(0,1fr))}
+.listing__group{display:grid;gap:8px;max-width:72ch;padding-top:12px}
+.listing__group p:not(.label){color:var(--text)}
 .listing__item:first-child .listing__path{font-size:clamp(1.8rem,3.6vw,2.6rem)}
 .listing__path{font-family:var(--display);font-weight:600;font-size:1.5rem;letter-spacing:-.025em;line-height:1.15;color:var(--strong)}
 .listing__what{max-width:62ch;color:var(--text)}
@@ -187,13 +195,13 @@ code,pre,kbd,samp{font-family:var(--mono)}
 /* method */
 .method-thesis{font-family:var(--display);font-weight:500;font-size:clamp(1.4rem,2.6vw,2rem);line-height:1.25;letter-spacing:-.02em;color:var(--strong);max-width:24ch;text-wrap:balance;padding-bottom:.08em}
 .method-lead{max-width:62ch}
-.steps{display:grid;border-top:1px solid var(--rule);max-width:900px}
+.steps{display:grid;border-top:1px solid var(--rule)}
 .steps li{display:grid;grid-template-columns:56px minmax(120px,170px) minmax(0,1fr);gap:16px;padding:16px 0;border-bottom:1px solid var(--rule)}
 .step-n{font-family:var(--mono);color:var(--dim);font-variant-numeric:tabular-nums}
 .steps strong{color:var(--strong);font-weight:500}
 
 /* explained video: click-to-load facade, nothing loads from YouTube until play */
-.explained{display:grid;gap:14px;max-width:960px}
+.explained{display:grid;gap:14px}
 .explained-play{position:relative;display:block;aspect-ratio:16/9;border:1px solid var(--rule);background:var(--panel);overflow:hidden}
 .explained-play img{width:100%;height:100%;object-fit:cover}
 .explained-mark{position:absolute;left:84%;top:28%;width:64px;height:64px;margin:-32px 0 0 -32px;background:var(--night);border:1px solid var(--strong);transition:background-color 160ms var(--ease-out)}
@@ -210,7 +218,7 @@ code,pre,kbd,samp{font-family:var(--mono)}
 .founder-name{color:var(--strong)}
 
 /* findings */
-.notes-list{display:grid;border-top:1px solid var(--rule);max-width:980px}
+.notes-list{display:grid;border-top:1px solid var(--rule)}
 .notes-list a{display:grid;grid-template-columns:120px minmax(160px,240px) minmax(0,1fr);gap:16px;padding:18px 0;border-bottom:1px solid var(--rule);text-decoration:none;color:var(--text);transition:background-color 160ms var(--ease-out)}
 .notes-list a:hover{background:var(--panel)}
 .note-n{font:500 12px/1.9 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
@@ -345,12 +353,14 @@ html{overflow-anchor:none}
   .bar__nav{gap:6px;font-size:14px}
   .bar__nav .nav-hide-sm{display:none}
   .bar__nav .nav-cta{padding:0 12px}
-  .hero__title{font-size:clamp(2.3rem,10.5vw,3rem)}
+  .hero__title{font-size:min(clamp(2.3rem,10.5vw,3rem),12.5vw)}
   .hero{padding-top:20px}
   .hero__copy{gap:14px}
   .hero__line{line-height:1.6}
   .hero__copy>.actions{gap:10px}
   .hero__copy>.actions .button{flex:1 1 100%}
+  .contact-actions>.button,.contact-actions>#brief-composer{flex:1 1 100%}
+  #brief-composer summary{width:100%}
   .hero__meta a{min-height:44px}
   .hero__copy>.prompt{display:none}
   .hero__by{margin-top:-6px}
