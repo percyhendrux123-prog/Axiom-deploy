@@ -27,18 +27,89 @@
 <link rel="stylesheet" href="/assets/axioma/axioma.css?v=18">
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "Deploy Axiom",
-  "url": "https://deployaxiom.com/",
-  "logo": "https://deployaxiom.com/assets/avatar.svg",
-  "image": "https://deployaxiom.com/assets/field-reports/check-log.png",
-  "description": "Deploy Axiom builds and runs AI agents on the owner's own computer and accounts: client care, follow-up and records. Anything that commits the business waits for the owner.",
-  "email": "percy@deployaxiom.com",
-  "address": {"@type": "PostalAddress", "addressLocality": "Baton Rouge", "addressRegion": "LA", "addressCountry": "US"},
-  "areaServed": {"@type": "City", "name": "Baton Rouge", "containedInPlace": {"@type": "State", "name": "Louisiana"}},
-  "founder": {"@type": "Person", "name": "P. K. Stewart", "sameAs": ["https://www.linkedin.com/in/percy-keith-2380b1403", "https://github.com/percyhendrux123-prog"]},
-  "sameAs": ["https://www.instagram.com/deployaxiom/", "https://github.com/percyhendrux123-prog"]
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://deployaxiom.com/#org",
+   "name": "Deploy Axiom",
+   "legalName": "Deploy Axiom LLC",
+   "url": "https://deployaxiom.com/",
+   "logo": "https://deployaxiom.com/assets/apple-touch-icon.png",
+   "email": "percy@deployaxiom.com",
+   "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Baton Rouge",
+    "addressRegion": "LA",
+    "addressCountry": "US"
+   },
+   "founder": {
+    "@id": "https://deployaxiom.com/#founder"
+   },
+   "sameAs": [
+    "https://www.linkedin.com/company/deployaxiom",
+    "https://www.instagram.com/deployaxiom/"
+   ]
+  },
+  {
+   "@type": "ProfessionalService",
+   "@id": "https://deployaxiom.com/#business",
+   "name": "Deploy Axiom",
+   "url": "https://deployaxiom.com/",
+   "image": "https://deployaxiom.com/assets/og.png",
+   "description": "Deploy Axiom builds and runs AI agents for independent insurance agencies and small businesses in Baton Rouge, Louisiana: client care, follow-up and records, on the owner's own computer and accounts. Anything that commits the business waits for the owner.",
+   "email": "percy@deployaxiom.com",
+   "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Baton Rouge",
+    "addressRegion": "LA",
+    "addressCountry": "US"
+   },
+   "areaServed": {
+    "@type": "City",
+    "name": "Baton Rouge",
+    "containedInPlace": {
+     "@type": "State",
+     "name": "Louisiana"
+    }
+   },
+   "parentOrganization": {
+    "@id": "https://deployaxiom.com/#org"
+   },
+   "founder": {
+    "@id": "https://deployaxiom.com/#founder"
+   },
+   "sameAs": [
+    "https://www.linkedin.com/company/deployaxiom",
+    "https://www.instagram.com/deployaxiom/"
+   ]
+  },
+  {
+   "@type": "Person",
+   "@id": "https://deployaxiom.com/#founder",
+   "name": "P. K. Stewart",
+   "jobTitle": "Founder",
+   "worksFor": {
+    "@id": "https://deployaxiom.com/#org"
+   },
+   "url": "https://deployaxiom.com/#founder",
+   "sameAs": [
+    "https://www.linkedin.com/in/percy-keith-2380b1403",
+    "https://www.youtube.com/channel/UCots8lkRMWPoUCU4LYwDaRQ",
+    "https://github.com/percyhendrux123-prog",
+    "https://x.com/OfficialPercyK"
+   ]
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://deployaxiom.com/#website",
+   "url": "https://deployaxiom.com/",
+   "name": "Deploy Axiom",
+   "publisher": {
+    "@id": "https://deployaxiom.com/#org"
+   }
+  }
+ ]
 }
 </script>
 </head>
@@ -60,7 +131,7 @@
 <div class="hero__copy">
 <div class="hero__mark"><svg class="kz" viewBox="130 136 740 681" width="740" height="681" role="img" aria-labelledby="kz-title" focusable="false"><title id="kz-title">The Axiom mark: three cut circles, and a triangle nobody drew</title><g class="kz__discs"><path d="M500 285L427.5 410.6A145 145 0 1 1 572.5 410.6Z"/><path d="M720.8 667.5L648.3 541.9A145 145 0 1 1 575.8 667.5Z"/><path d="M279.2 667.5L424.2 667.5A145 145 0 1 1 351.7 541.9Z"/></g><g class="kz__cuts" aria-hidden="true"><path d="M500 285L572.5 410.6A145 145 0 0 1 427.5 410.6Z"/><path d="M720.8 667.5L575.8 667.5A145 145 0 0 1 648.3 541.9Z"/><path d="M279.2 667.5L351.7 541.9A145 145 0 0 1 424.2 667.5Z"/></g></svg><sup class="tm">™</sup></div>
 <h1 class="hero__title" id="hero-title">Nothing in your business waits on you to remember it.<span class="cursor" aria-hidden="true"></span></h1>
-<p class="hero__by"><a href="#founder">P. K. Stewart</a>, founder · <span class="nowrap">Baton Rouge</span></p>
+<p class="hero__by">Deploy Axiom builds AI agents. <a href="#founder">P. K. Stewart</a>, founder · <span class="nowrap">Baton Rouge, Louisiana</span></p>
 <p class="hero__for">Built for independent insurance agencies and sales professionals: regulated work where every text has to clear consent, <span class="nowrap">opt-out</span> and <span class="nowrap">quiet-hour</span> rules before it goes.</p>
 <p class="hero__line lede">We build and run the AI agents that do the remembering, on your own computer and accounts, and anything that commits the business waits for you.</p>
 <div class="actions"><a class="button" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a><a class="button ghost" href="#contact">Write a short brief</a></div>
@@ -357,7 +428,7 @@
 <footer class="foot"><div class="wrap foot__row">
 <p class="foot__gate">Nothing in your business waits on you to remember it.</p>
 <p>Deploy Axiom · Baton Rouge, Louisiana</p>
-<ul class="footer-links"><li><a href="mailto:percy@deployaxiom.com">Email</a></li><li><a href="https://www.instagram.com/deployaxiom/">Instagram</a></li><li><a href="https://github.com/percyhendrux123-prog">GitHub</a></li><li><a href="/notes/">Notes</a></li><li><a href="/plugins/">Plugins</a></li><li><a href="/operator-layer/">Operator layer</a></li><li><a href="/baton-rouge/">Baton Rouge</a></li><li><a href="/privacy/">Privacy</a></li><li><a href="/terms/">Terms</a></li></ul>
+<ul class="footer-links"><li><a href="mailto:percy@deployaxiom.com">Email</a></li><li><a href="https://www.instagram.com/deployaxiom/">Instagram</a></li><li><a href="https://github.com/percyhendrux123-prog">GitHub</a></li><li><a href="/notes/">Notes</a></li><li><a href="/plugins/">Plugins</a></li><li><a href="/operator-layer/">Operator layer</a></li><li><a href="/baton-rouge/">Baton Rouge</a></li><li><a href="/facts/">Facts</a></li><li><a href="/privacy/">Privacy</a></li><li><a href="/terms/">Terms</a></li></ul>
 <p class="foot__credit">Axiōma: <a href="https://github.com/percyhendrux123-prog/hermes-axioma/blob/main/spec/AXIOMA-SIGNAL-SPEC-v0.1.md">signal spec</a> (CC0) and <a href="https://github.com/percyhendrux123-prog/hermes-axioma">source code</a> (MIT) · text layout: <a href="https://github.com/chenglou/pretext">Pretext</a> (MIT) · terminal: rot.js (BSD-3-Clause) · chrome: Paper Shaders (Apache-2.0) · loaders: cli-spinners (MIT) · herm of Hermes: Wikimedia Commons (CC0) · type: IBM Plex Mono, Geist and Cormorant Garamond (SIL Open Font License)</p>
 <p class="foot__tm">© 2026 Deploy Axiom LLC. Deploy Axiom™, Axiom™ and the triangle mark are trademarks of Deploy Axiom LLC.</p>
 </div></footer>
