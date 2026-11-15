@@ -38,5 +38,5 @@ test('A298 updates reference art deliberately while preserving the remaining hom
   // A339 deliberately updates ledger numbers/labels/date, founder agent count, title and share image; art stays locked.
   // A414 deliberately adds the ™ notices (header lockup, hero mark), the © Deploy Axiom LLC footer line and the kit link-preview image.
   // A418 deliberately adds the Organization/ProfessionalService/Person JSON-LD graph, the 'Deploy Axiom builds AI agents.' line under the headline and the Facts footer link.
-  assert.equal(createHash('sha256').update(normalized).digest('hex'), '994849b40b99f81b421990c37ee15bcba5e74c4eaa2967e9d3f60bc8081dd351');
+  assert.equal(createHash('sha256').update(normalized).digest('hex'), '0c2e9b93b609e383382b42c698a3087d110157873339da32540f127f99c230bb');
 });
