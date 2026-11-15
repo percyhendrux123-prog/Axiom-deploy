@@ -165,7 +165,15 @@ test('homepage keeps the hero direct: headline, plain-English line, two actions,
   assert.ok(hero.includes('In plain English'));
   // A409: who it's for, founder and place, booking first, brief second, insurance field report linked from the hero.
   // A413 keeps the words and stops "opt-out" and "quiet-hour" breaking at the hyphen.
-  assert.ok(hero.includes('<p class="hero__for">Built for independent insurance agencies and sales professionals: regulated work where every text has to clear consent, <span class="nowrap">opt-out</span> and <span class="nowrap">quiet-hour</span> rules before it goes.</p>'));
+  // A423 (Percy, 11-14: "no exclusions") deliberately replaces the insurance-and-sales line with examples across fields; the regulated-work clause stays.
+  assert.ok(hero.includes('<p class="hero__for">Built for owner-led firms where everything waits on you: insurance agencies, law offices, financial advisors and CPAs, real estate teams, medical and dental practices, coaches and founders\u2019 offices. In regulated work, every text clears consent, <span class="nowrap">opt-out</span> and <span class="nowrap">quiet-hour</span> rules before it goes.</p>'));
+  // A423: one "Who it's for" card per field, before Limits; only the insurance card links to proof.
+  const fields = homepage.match(/<section[^>]*id="fields"[\s\S]*?<\/section>/)?.[0] ?? '';
+  assert.ok(homepage.indexOf('id="replay"') < homepage.indexOf('id="fields"') && homepage.indexOf('id="fields"') < homepage.indexOf('id="limits"'));
+  assert.equal((fields.match(/class="limit"/g) ?? []).length, 7, 'seven field cards');
+  assert.equal((fields.match(/<a /g) ?? []).length, 1, 'one proof link');
+  assert.ok(fields.includes('href="/field-reports/insurance-client-care/"'));
+  assert.doesNotMatch(fields, /HIPAA|leads?\b|missed call|operational agent|deployment|\$\d/i);
   assert.ok(hero.includes('<a class="button" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a>'));
   assert.ok(hero.includes('<a class="button ghost" href="#contact">Write a short brief</a>'));
   assert.ok(hero.includes('</h1>\n<p class="hero__by">Deploy Axiom builds AI agents. <a href="#founder">P. K. Stewart</a>, founder · <span class="nowrap">Baton Rouge, Louisiana</span></p>'), 'what the page is, founder and place directly under the headline (A418: AI-search snippets read the H1 and the text right after it; A413: the name links to the founder section; the place never splits at 320px)');
