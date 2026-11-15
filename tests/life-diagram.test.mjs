@@ -36,5 +36,6 @@ test('A298 updates reference art deliberately while preserving the remaining hom
   // A384 deliberately replaces the contact mailto composer with the brief form and points the founder line at it.
   // 2026-11-14 deliberately retires the sales line number; call CTAs point to the free booking page.
   // A339 deliberately updates ledger numbers/labels/date, founder agent count, title and share image; art stays locked.
-  assert.equal(createHash('sha256').update(normalized).digest('hex'), '3de5e49b6a5b2891f1453df64be1e9ea7c78f9b3f686cec8b6a6e07fdf3ff558');
+  // A414 deliberately adds the ™ notices (header lockup, hero mark), the © Deploy Axiom LLC footer line and the kit link-preview image.
+  assert.equal(createHash('sha256').update(normalized).digest('hex'), 'c56e42efecc632847817e061cf1b7e403b2f0b1af41edda1ddc44f10611f3eb7');
 });

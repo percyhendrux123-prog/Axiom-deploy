@@ -41,7 +41,7 @@ test('share tags are complete on pages the audit flagged', () => {
       assert.ok(attr(html, sel), `${path} missing ${sel}`);
     }
   }
-  assert.equal(attr(read('index.html'), 'property="og:image"'), 'https://deployaxiom.com/assets/axiom-og.png');
+  assert.equal(attr(read('index.html'), 'property="og:image"'), 'https://deployaxiom.com/assets/og.png');
 });
 
 test('homepage and Baton Rouge titles and descriptions fit search results', () => {

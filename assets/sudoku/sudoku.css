@@ -44,3 +44,7 @@ h1{font-size:clamp(1.7rem,4.4vw,2.8rem);line-height:1.08;letter-spacing:-.02em;m
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 #sx-time{color:var(--paper);font-size:1.15rem;font-variant-numeric:tabular-nums;letter-spacing:.04em}.sx-clock{white-space:nowrap}
 .sx-clockbar{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin:0 0 .8rem;font-size:.8rem;color:var(--dim)}.sx-clockbar #sx-time{font-size:1.6rem}.sx-live{font-size:.72rem;letter-spacing:.08em}
+
+/* A414: trademark notices */
+.sx-brand{display:inline-flex;align-items:flex-start;text-decoration:none}.sx-brand .tm{font-size:.6rem;line-height:1;color:var(--dim);margin-left:2px;text-decoration:none}
+.sx-tm{display:inline-block;margin-top:.3rem}

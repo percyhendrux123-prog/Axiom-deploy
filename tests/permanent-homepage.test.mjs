@@ -133,10 +133,10 @@ test('archive is closed, indexed away, and preserves historical route context wi
 test('metadata and static assets are local, canonical, and shareable', () => {
   for (const marker of [
     '<link rel="canonical" href="https://deployaxiom.com/">',
-    'property="og:title"', 'property="og:description"', 'property="og:image" content="https://deployaxiom.com/assets/axiom-og.png"',
-    'name="twitter:card"', 'name="twitter:image" content="https://deployaxiom.com/assets/axiom-og.png"', 'property="og:image:alt" content="Deploy Axiom: Nothing in your business waits on you to remember it. For independent insurance agencies and sales professionals. P. K. Stewart, Baton Rouge."', 'name="twitter:image:alt" content="Deploy Axiom: Nothing in your business waits on you to remember it. For independent insurance agencies and sales professionals. P. K. Stewart, Baton Rouge."', 'name="theme-color" content="#121316"', 'rel="icon" href="/assets/avatar.svg"',
+    'property="og:title"', 'property="og:description"', 'property="og:image" content="https://deployaxiom.com/assets/og.png"',
+    'name="twitter:card"', 'name="twitter:image" content="https://deployaxiom.com/assets/og.png"', 'property="og:image:alt" content="Deploy Axiom: the triangle mark above the command $ python deploy.py axiom"', 'name="twitter:image:alt" content="Deploy Axiom: the triangle mark above the command $ python deploy.py axiom"', 'name="theme-color" content="#121316"', 'rel="icon" href="/assets/avatar.svg"',
   ]) assert.ok(homepage.includes(marker), `missing metadata marker: ${marker}`);
-  for (const asset of ['assets/avatar.svg', 'assets/axiom-og.png', 'assets/wordmark-ink.svg', 'assets/wordmark-stone.svg']) {
+  for (const asset of ['assets/avatar.svg', 'assets/og.png', 'assets/axiom-og.png', 'assets/wordmark-ink.svg', 'assets/wordmark-stone.svg']) {
     const fullPath = join(root, asset);
     assert.ok(existsSync(fullPath), `missing asset: ${asset}`);
     assert.ok(statSync(fullPath).size > 0, `empty asset: ${asset}`);
@@ -153,7 +153,7 @@ test('homepage loads local assets, keeps the brief form, and has a compact mobil
   assert.ok(homeStylesheet().includes('.bar__nav .nav-hide-sm{display:none}'), 'mobile hides secondary nav links');
   // A409 deliberately gives the phone header to the company name and the booking button; /work and /notes hide on phones.
   // A413 deliberately sets the unseen-triangle mark beside the name, the same header as every inner page.
-  assert.match(homepage, /<a class="bar__home" href="\/" aria-label="Deploy Axiom, home"><svg class="bar__mark"[^>]*aria-hidden="true"[^>]*>(?:<path [^>]*\/>){3}<\/svg>Deploy Axiom<\/a>/, 'company name in the header');
+  assert.match(homepage, /<a class="bar__home" href="\/" aria-label="Deploy Axiom, home"><svg class="bar__mark"[^>]*aria-hidden="true"[^>]*>(?:<path [^>]*\/>){3}<\/svg>Deploy Axiom<sup class="tm">™<\/sup><\/a>/, 'company name in the header');
   assert.ok(!/\.bar__home\{display:none\}/.test(homeStylesheet()), 'company name must not hide on phones');
   assert.ok(homepage.includes('<li class="nav-hide-sm"><a href="#notes">'));
   assert.ok(homepage.includes('<li><a class="nav-cta" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a></li>'), 'header CTA books the call');
