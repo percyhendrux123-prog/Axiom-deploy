@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121316">
+  <meta name="description" content="Dated results from work Deploy Axiom has running: client care for an independent insurance agency, an escalation desk with public code, a content system, and our own agent-run company. Client identities withheld.">
+  <link rel="canonical" href="https://deployaxiom.com/results/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://deployaxiom.com/results/">
+  <meta property="og:title" content="Results · Deploy Axiom">
+  <meta property="og:description" content="Dated results from work Deploy Axiom has running: client care for an independent insurance agency, an escalation desk with public code, a content system, and our own agent-run company. Client identities withheld.">
+  <meta property="og:image" content="https://deployaxiom.com/assets/og.png">
+  <meta property="og:image:alt" content="Deploy Axiom: the triangle mark above the command $ python deploy.py axiom">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Results · Deploy Axiom">
+  <meta name="twitter:description" content="Dated results from work Deploy Axiom has running: client care for an independent insurance agency, an escalation desk with public code, a content system, and our own agent-run company. Client identities withheld.">
+  <meta name="twitter:image" content="https://deployaxiom.com/assets/og.png">
+  <meta name="twitter:image:alt" content="Deploy Axiom: the triangle mark above the command $ python deploy.py axiom">
+  <link rel="icon" href="/assets/avatar.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <title>Results · Deploy Axiom</title>
+  <link rel="stylesheet" href="/assets/firm.css?v=7">
+<link rel="stylesheet" href="/assets/axioma/pages.css?v=5">
+<link rel="stylesheet" href="/assets/results.css?v=1">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="frame masthead-row">
+      <a class="brand" href="/" aria-label="Deploy Axiom, home"><svg viewBox="130 136 740 681" width="22" height="20" aria-hidden="true" focusable="false"><path d="M500 285L427.5 410.6A145 145 0 1 1 572.5 410.6Z"/><path d="M720.8 667.5L648.3 541.9A145 145 0 1 1 575.8 667.5Z"/><path d="M279.2 667.5L424.2 667.5A145 145 0 1 1 351.7 541.9Z"/></svg><span>Deploy Axiom</span><sup class="tm">™</sup></a>
+      <nav aria-label="Main"><a href="/#work">Work</a><a href="/#limits">Limits</a><a href="/#method">Method</a><a href="/notes/">Notes</a><a class="nav-cta" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a></nav>
+    </div>
+  </header>
+    <main id="main">
+    <article class="article results">
+      <p class="kicker">Results</p>
+      <h1>What is running, with dates</h1>
+      <p class="byline">Percy Keith Stewart, founder · Deploy Axiom · Figures as of November 18, 2026. Client identities are withheld. Every number here is read from a log or a ledger and carries its date. Where a number is not known yet, it is left blank.</p>
+      <div class="entablature" aria-hidden="true"></div>
+      <p class="results-index"><a href="#insurance">Insurance agency client care</a><a href="#escalation">Escalation desk</a><a href="#content">Content system</a><a href="#company">Our own company</a><a href="#contractor">Contractor, in progress</a></p>
+
+      <section id="insurance" aria-labelledby="insurance-h">
+        <p class="status"><span class="status__tag">Live</span> since October 29, 2026</p>
+        <h2 id="insurance-h">An independent insurance agency: from no contact after the sale to live client care in 7 days</h2>
+        <p>The owner sold policies, then had no contact with clients for the next year. The agency's agents had the same gap, and no one on staff could do the follow-up. We built a system that runs the contact after the sale under the owner's approval rules, then hands any reply to a person.</p>
+        <ul class="tiles">
+          <li><strong>7 days</strong><span>first design to live with real clients, October 22 to October 29</span></li>
+          <li><strong>54 of 61</strong><span>client entries from the agency's agents with first contact sent. It started with 3 clients.</span></li>
+          <li><strong>2 to 4 min</strong><span>reply time on 3 of 5 failed-payment texts</span></li>
+          <li><strong>9 of 9</strong><span>texts delivered in the latest daily check</span></li>
+        </ul>
+        <p class="source">Counts: daily send-health check, November 18, 9:15 AM Central, and the client decision log.</p>
+        <h3>What went live</h3>
+        <table>
+          <tbody>
+            <tr><th scope="row">Oct 22</th><td>First workflow design for contact after the sale</td></tr>
+            <tr><th scope="row">Oct 27</th><td>Year-one message set reviewed for consent, opt-out, quiet hours and no repeats. The owner approved the wording.</td></tr>
+            <tr><th scope="row">Oct 29</th><td>Client care live with 3 real clients</td></tr>
+            <tr><th scope="row">Oct 31</th><td>Day-one policy summary by email and text</td></tr>
+            <tr><th scope="row">Nov 1</th><td>Owner view: every agent's clients in one place</td></tr>
+            <tr><th scope="row">Nov 2</th><td>Failed-payment recovery turned on for the agents</td></tr>
+            <tr><th scope="row">Nov 10</th><td>Agents edit their own client entries</td></tr>
+            <tr><th scope="row">Nov 14</th><td>Client replies copied to the servicing agent, with private details left out</td></tr>
+            <tr><th scope="row">Nov 16</th><td>Agents can remove a client from care. Same-day policy starts and two people sharing one phone are handled.</td></tr>
+          </tbody>
+        </table>
+        <h3>First results: failed-payment recovery</h3>
+        <table>
+          <thead><tr><th scope="col">Case</th><th scope="col">Delivered</th><th scope="col">Reply</th><th scope="col">On record</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td>Nov 10</td><td>4 min</td><td>New payment date agreed with the owner 9 minutes after the text</td></tr>
+            <tr><td>B</td><td>Nov 10</td><td>2 min</td><td>"I sent payment by mail"</td></tr>
+            <tr><td>C</td><td>Nov 11</td><td>2 min</td><td>Declined. Texts stopped automatically.</td></tr>
+            <tr><td>D, E</td><td>Nov 11</td><td>none yet</td><td>Open</td></tr>
+          </tbody>
+        </table>
+        <p class="source">The owner also reported that one policyholder paid after the alert. The insurer's side is not visible to us, so that is owner-reported, not verified.</p>
+        <h3>How it is governed</h3>
+        <ul>
+          <li>Every send passes a check first: consent on file, opt-out, quiet hours, holidays, licensed state, no repeats.</li>
+          <li>A send that fails a check is held with a written reason and reported, not sent.</li>
+          <li>Automatic texts stop the moment a client replies. The owner or the agent takes over.</li>
+          <li>A read-only check runs every morning and flags anything that should have sent but did not.</li>
+        </ul>
+        <h3>What broke, and how it recovered</h3>
+        <p>On November 17 the owner's computer lost name lookups for about three and a half hours. The daily check flagged 8 texts as unconfirmed. Once the network came back, the same check read 9 of 9 delivered. The alarms were the check failing to look up status, not failed texts.</p>
+        <p>Today, 7 of the 61 entries have no first contact yet. Six are held with a reason on record: an agent not yet switched on, a state license not confirmed, a missing time zone. One is inside its normal sending window. Two removal requests are still marked pending and are being checked. Nothing is sent around a hold.</p>
+        <h3>Not claimed yet</h3>
+        <p>Retention against the baseline from before launch gets its first fair read on December 11, 2026, then at 60 and 90 days. Time saved and dollar value are the owner's numbers to give. They stay blank until the owner gives them.</p>
+        <p>The first write-up, from launch week: <a href="/field-reports/insurance-client-care/">the insurance field report</a>.</p>
+      </section>
+
+      <section id="escalation" aria-labelledby="escalation-h">
+        <p class="status"><span class="status__tag">Public code</span> 9 tests pass on a fresh copy, November 18, 2026</p>
+        <h2 id="escalation-h">The escalation desk: when an agent gets stuck, someone answers</h2>
+        <p>Each client has an agent on the client's own computer. When that agent meets something it cannot handle, it has to reach someone, even at night with no chat window open.</p>
+        <p>The loop catches the escalation, sends the client one holding line, opens one ticket and hands it to a worker. Every action the fix wants to take is checked against a permission gate. Money, deletes, new prices, strangers and production changes wait for a person, and so does anything the gate does not recognize. Every send is reserved first, so a retry cannot text the client twice.</p>
+        <p>One real evening, October 29, 2026: a client's agent held a launch post because it could not see a chat window while the client was on a video call. The ticket opened at 6:35 PM and closed at 6:39 PM. Nothing was broken; the window was closed. The worker did not reopen it, because it could have appeared on a shared screen. One reply told the client what to click after the call.</p>
+        <p>The code, the tests and a replay of that evening: <a href="https://github.com/percyhendrux123-prog/escalation-desk">github.com/percyhendrux123-prog/escalation-desk</a>.</p>
+      </section>
+
+      <section id="content" aria-labelledby="content-h">
+        <p class="status"><span class="status__tag">Live</span> $1,500 a month retainer</p>
+        <h2 id="content-h">A wellness business: one person's content team</h2>
+        <p>The founder had hours of customer testimonial footage and no time to turn it into posts.</p>
+        <p>The system finds the clean cut points in the footage and drafts the captions. A second model reviews each caption against the founder's list of words to avoid. Every choice is logged with its reason, so the founder can read why a line was written the way it was.</p>
+        <p>The retainer is the only revenue stated on this page, and the only figure here we can show a payment record for. Hours saved and post counts are the founder's numbers to give. They are blank until then.</p>
+      </section>
+
+      <section id="company" aria-labelledby="company-h">
+        <p class="status"><span class="status__tag">Live</span> ledger since September 2026</p>
+        <h2 id="company-h">Our own company, run by agents</h2>
+        <p>Deploy Axiom runs on a team of specialist agents behind one front door. Work moves on a board, every finished job needs evidence, and a written permission gate says what agents may do alone and what waits for the founder: money, new prices and first contact with strangers.</p>
+        <ul class="tiles tiles--three">
+          <li><strong>345</strong><span>outcomes on record</span></li>
+          <li><strong>212</strong><span>independently verified</span></li>
+          <li><strong>123</strong><span>failures caught and recovered</span></li>
+        </ul>
+        <p class="source">Counts from our own company's ledger, November 18, 2026. Not client data. An outcome without a recorded readback counts as an outcome, never as verified.</p>
+        <p>The plugins we run on our own agents are public: <a href="/plugins/">see the plugins</a>.</p>
+      </section>
+
+      <section id="contractor" aria-labelledby="contractor-h">
+        <p class="status"><span class="status__tag status__tag--open">In progress</span> no result yet</p>
+        <h2 id="contractor-h">Forward-deployed: a small contractor's first large-project work</h2>
+        <p>A small Louisiana contractor (lawn, painting, concrete, fencing, demolition, remodeling) wants steady work from the large projects coming to the state, through bids and vendor registrations, not ads.</p>
+        <p>We went into the business first. We read the state filing, the contractor-board record, the vendor registrations and the insurance certificate, and found what stands between the contractor and a bid: a lapsed license class, missing commercial auto coverage and no bonding. Then we scanned public bid boards. On November 18, 2026 there were 12 live listings in the contractor's trades, 7 of them the contractor can pursue: 3 as direct bids and 4 as a subcontractor.</p>
+        <table>
+          <tbody>
+            <tr><th scope="row">First target</th><td>A university contract to soft-wash 23 buildings. Bids are due December 10, 2026.</td></tr>
+            <tr><th scope="row">Nov 20</th><td>Walk-through of the buildings before the bid</td></tr>
+            <tr><th scope="row">License</th><td>The license path was chosen so it can be in hand before the bid. If it is not, the contractor does not bid.</td></tr>
+            <tr><th scope="row">In parallel</th><td>Small private property jobs are being walked, since those can pay sooner than a public bid.</td></tr>
+          </tbody>
+        </table>
+        <p>Result: pending. This entry is updated at each step: walk-through attended, license filed, bid submitted, award.</p>
+      </section>
+
+      <p class="results-close">If there is work in your business that depends on you remembering it, that is where we start. <a href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a> or <a href="/#contact">write a short brief</a>.</p>
+    </article>
+  </main>
+  <footer class="footer">
+    <div class="frame footer-row">
+      <p class="footer-line">Nothing in your business waits on you to remember it.</p>
+      <p>Deploy Axiom · Baton Rouge, Louisiana</p>
+      <ul class="footer-links"><li><a href="mailto:percy@deployaxiom.com">Email</a></li><li><a href="https://www.instagram.com/deployaxiom/">Instagram</a></li><li><a href="https://github.com/percyhendrux123-prog">GitHub</a></li><li><a href="/notes/">Notes</a></li><li><a href="/plugins/">Plugins</a></li><li><a href="/operator-layer/">Operator layer</a></li><li><a href="/baton-rouge/">Baton Rouge</a></li><li><a href="/results/">Results</a></li><li><a href="/facts/">Facts</a></li><li><a href="/privacy/">Privacy</a></li><li><a href="/terms/">Terms</a></li></ul>
+      <p class="footer-tm">© 2026 Deploy Axiom LLC. Deploy Axiom™, Axiom™ and the triangle mark are trademarks of Deploy Axiom LLC.</p>
+    </div>
+  </footer>
+</body>
+</html>

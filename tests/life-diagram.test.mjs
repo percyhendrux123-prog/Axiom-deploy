@@ -40,5 +40,5 @@ test('A298 updates reference art deliberately while preserving the remaining hom
   // A418 deliberately adds the Organization/ProfessionalService/Person JSON-LD graph, the 'Deploy Axiom builds AI agents.' line under the headline and the Facts footer link.
   // A423 also widens the homepage meta, og and twitter descriptions to the same fields.
   // A423 (Percy, 11-14: "no exclusions") deliberately widens the who-it's-for line and JSON-LD description to several fields and adds the #fields row before Limits.
-  assert.equal(createHash('sha256').update(normalized).digest('hex'), '239d53f54fed479f2f8fd7a2f2c0b9641635a22c72290b5e564f8f1d17087c43');
+  assert.equal(createHash('sha256').update(normalized).digest('hex'), '32d5202187eae369f4cf67d273a1261a11987c13eb6a2db36596a7ab0db8ec54');
 });

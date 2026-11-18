@@ -1,0 +1,25 @@
+/* Results page: stat tiles, status tags and section spacing. Night palette from pages.css. */
+.results section{border-top:1px solid var(--rule);margin-top:56px;padding-top:40px}
+.results section h2{margin-top:10px}
+.results h3{margin-top:36px}
+.results .status{font:400 13px/1.6 var(--serif);color:var(--dim);margin:0}
+.results .status__tag{display:inline-block;border:1px solid var(--dim);color:var(--strong);padding:2px 9px;margin-right:10px;font:500 12px/1.6 var(--serif);letter-spacing:.04em}
+.results .status__tag--open{border-style:dashed}
+.results .tiles{list-style:none;padding:0;margin:28px 0 12px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.results .tiles--three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.results .tiles li{background:var(--panel);border:1px solid var(--rule);padding:16px 16px 14px;margin:0}
+.results .tiles strong{display:block;font:640 26px/1.1 var(--display);letter-spacing:-.02em;color:var(--strong)}
+.results .tiles span{display:block;margin-top:10px;font-size:13px;line-height:1.55;color:var(--mid)}
+.results .source{font-size:13px;line-height:1.6;color:var(--dim)}
+.results table th[scope=row]{white-space:nowrap;width:1%;padding-right:20px;text-transform:none;letter-spacing:.02em;font:500 14px/1.65 var(--serif);color:var(--mid)}
+.results-index{display:flex;flex-wrap:wrap;gap:8px 22px;margin:0 0 8px;font-size:14px}
+.results-index a{color:var(--mid)}
+.results-close{border-top:1px solid var(--rule);margin-top:56px;padding-top:32px}
+@media (max-width:760px){.results .tiles,.results .tiles--three{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){
+  .results section{margin-top:40px;padding-top:30px}
+  .results .tiles strong{font-size:22px}
+  .results table th[scope=row]{white-space:normal;width:30%}
+  .results-index{flex-direction:column;gap:6px}
+}
+@media (max-width:380px){.results .tiles--three{grid-template-columns:1fr}}
