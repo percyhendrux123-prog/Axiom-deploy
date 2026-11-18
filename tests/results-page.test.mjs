@@ -14,7 +14,7 @@ test('results page is built, linked from the homepage footer and in the sitemap'
 });
 
 test('results page names no client and keeps retired phrases out', () => {
-  for (const r of [/operational agents?/i, /operating lanes?/i, /\bdeployments?\b/i, /sell automation/i, /\bOPERATE\b/, /guarantee/i, /\bDBE\b/, /Donaldsonville/i, /\bLSU\b/]) {
+  for (const r of [/operational agents?/i, /operating lanes?/i, /\bdeployments?\b/i, /sell automation/i, /\bOPERATE\b/, /guarantee/i, /\bDBE\b/, /Donaldsonville/i, /\bLSU\b/, /23 buildings/i, /soft-?wash/i, /universit/i, /lapsed/i, /bonding/i, /commercial auto/i, /December 10/i, /Nov(ember)? 20\b/i, /Louisiana contractor/i]) {
     assert.ok(!r.test(visible), `not allowed on the results page: ${r}`);
   }
   assert.ok(!/\b(she|her|hers|he|him|his)\b/i.test(visible), 'client gender stays out');
