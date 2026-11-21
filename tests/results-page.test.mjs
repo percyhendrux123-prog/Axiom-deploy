@@ -22,7 +22,7 @@ test('results page names no client and keeps retired phrases out', () => {
 });
 
 test('results page carries dated figures, the public repo and the in-progress case', () => {
-  for (const v of ['Percy Keith Stewart', 'November 18, 2026', '54 of 61', '9 of 9', '>345<', '>212<', '>123<', 'https://github.com/percyhendrux123-prog/escalation-desk', 'In progress', 'Result: pending', 'December 11, 2026']) {
+  for (const v of ['P. K. Stewart, founder', 'November 18, 2026', '54 of 61', '9 of 9', '>345<', '>212<', '>123<', 'https://github.com/percyhendrux123-prog/escalation-desk', 'In progress', 'Result: pending', 'December 11, 2026']) {
     assert.ok(page.includes(v), v);
   }
   assert.equal((visible.match(/\$\s?\d/g) || []).length, 1, 'one stated revenue figure only');
