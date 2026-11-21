@@ -74,8 +74,8 @@ test('operator-layer page carries no currency amount, price, retired phrase or b
 test('operator-layer page is CSP-safe, cites its sources and is wired into the build', () => {
   const html = read(PAGE);
   assert.ok(!/<style|\sstyle="|<script(?![^>]*\ssrc=)/i.test(html), 'no inline style or script');
-  const scripts = [...html.matchAll(/<script[^>]*\ssrc="([^"]+)"/g)].map(m => m[1]);
-  assert.deepEqual(scripts, ['/assets/operator-layer.js?v=1'], 'one local script, no third party');
+  const scripts = [...html.matchAll(/<script[^>]*\ssrc="([^"]+)"/g)].map(m => m[1]).filter(s => s !== 'https://static.cloudflareinsights.com/beacon.min.js');
+  assert.deepEqual(scripts, ['/assets/operator-layer.js?v=1'], 'one local script; the only third party is the cookieless visit counter');
   assert.ok(html.indexOf('/assets/firm.css') < html.indexOf('/assets/axioma/pages.css'), 'night shell after firm.css');
   assert.ok(html.includes('<link rel="canonical" href="https://deployaxiom.com/operator-layer/">'));
   assert.ok(html.includes('href="https://carta.com/data/startup-compensation-h2-2025/"'), 'Carta source link');

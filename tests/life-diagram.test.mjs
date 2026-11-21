@@ -28,7 +28,7 @@ test('new life accents use the same conductor and stop on visibility changes', (
 });
 
 test('A298 updates reference art deliberately while preserving the remaining homepage', () => {
-  const original = home.replace(diagram + '\n\n', '').replace('home.js?v=10', 'home.js?v=4').replace('chain-terminal.js?v=2', 'chain-terminal.js?v=1').replace('<div class="page-texture" aria-hidden="true"><span class="page-texture__tile"></span></div>\n', '');
+  const original = home.replace(/<script defer src=\"https:\/\/static\.cloudflareinsights\.com\/beacon\.min\.js\"[^>]*><\/script>\n?/g, '').replace(diagram + '\n\n', '').replace('home.js?v=10', 'home.js?v=4').replace('chain-terminal.js?v=2', 'chain-terminal.js?v=1').replace('<div class="page-texture" aria-hidden="true"><span class="page-texture__tile"></span></div>\n', '');
   const normalized = original.replace(/<link rel="stylesheet"[^>]*>/g, '').replace(/ role="group"/g, '').replace(/\s+/g, ' ').trim();
   assert.equal(createHash('sha256').update(read('assets/axioma/caduceus.js')).digest('hex'), '235810aad7f9594a2e6f1146e17f2e08cd01a5149ad42857de36807985ca36fa');
   // A405 deliberately adds the unseen-triangle mark to the hero and the Euclid I.1 section (#elements) before the unchanged gate.
