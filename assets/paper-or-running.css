@@ -1,0 +1,34 @@
+/* Paper or running? diagnostic. Night palette from pages.css. */
+.por-form{margin-top:32px}
+.por-q{border:0;border-top:1px solid var(--rule);margin:0;padding:28px 0 20px}
+.por-q legend{padding:0;margin-bottom:16px;display:block;width:100%}
+.por-q legend span{display:block;font:600 21px/1.35 var(--display);color:var(--strong);letter-spacing:-.01em}
+.por-n{margin:0 0 8px;font:500 12px/1.6 var(--serif);color:var(--dim);letter-spacing:.04em}
+.por-opt{display:flex;gap:12px;align-items:flex-start;min-height:44px;padding:10px 14px;margin:0 0 8px;border:1px solid var(--rule);background:var(--panel);cursor:pointer;color:var(--text);font-size:15px;line-height:1.5;box-sizing:border-box}
+.por-opt:hover{border-color:var(--dim)}
+.por-opt input{margin-top:4px;accent-color:var(--strong)}
+.por-opt:has(input:checked){border-color:var(--strong);color:var(--strong)}
+.por-text{display:block}
+.por-text textarea{width:100%;box-sizing:border-box;background:var(--panel);border:1px solid var(--rule);color:var(--strong);font:400 15px/1.5 var(--serif);padding:12px 14px;resize:vertical}
+.por-text textarea:focus,.por-opt:focus-within{outline:1px solid var(--strong);outline-offset:2px}
+.por-go,.por-again{min-height:48px;padding:12px 22px;margin-top:20px;background:var(--strong);color:var(--night);border:0;font:600 15px/1 var(--display);cursor:pointer}
+.por-again{background:transparent;color:var(--mid);border:1px solid var(--rule)}
+.por-missing{color:var(--strong);font-size:14px;margin:16px 0 0}
+.por-result{border-top:1px solid var(--rule);margin-top:40px;padding-top:32px}
+.por-result:focus{outline:none}
+.por-bars{list-style:none;padding:0;margin:24px 0}
+.por-bars li{margin:0 0 16px}
+.por-bars .por-label{display:flex;justify-content:space-between;font:500 14px/1.6 var(--serif);color:var(--mid)}
+.por-bars .por-track{display:block;height:10px;background:var(--panel);border:1px solid var(--rule);margin-top:6px}
+.por-bars .por-fill{display:block;height:100%;background:var(--strong)}
+.por-note{font-size:13px;color:var(--dim)}
+.por-close{border-top:1px solid var(--rule);padding-top:20px;margin-top:28px}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:640px){.por-q legend span{font-size:19px}}
+/* Reset the site-wide form label/input styles for this page. */
+.por .por-opt{display:flex;font:400 15px/1.5 var(--display);letter-spacing:0;text-transform:none}
+.por .por-opt input{width:18px;height:18px;min-height:0;padding:0;flex:0 0 18px;margin:3px 0 0}
+.por .por-text{display:block;font:inherit;letter-spacing:0;text-transform:none}
+.por .por-text textarea{min-height:0}
+.por .por-bars{padding-left:0}
+.por .por-bars li{padding-left:0;margin-bottom:16px}
