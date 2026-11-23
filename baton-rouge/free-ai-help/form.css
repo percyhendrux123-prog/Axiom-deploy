@@ -1,0 +1,18 @@
+/* Free AI help form: same look as the home brief form (axioma.css), scoped to this page */
+#fh-form{margin-top:32px;padding:28px;border:1px solid rgba(241,237,228,.18);max-width:880px}
+#fh-form>p{margin:0 0 24px}
+#fh-form .brief-grid{display:grid;gap:20px;grid-template-columns:repeat(2,minmax(0,1fr))}
+#fh-form .brief-wide{grid-column:1/-1}
+#fh-form label{display:grid;gap:8px;font-size:14px}
+#fh-form .brief-team{margin:0;padding:0;border:0;min-width:0}
+#fh-form .brief-team legend{padding:0;margin-bottom:8px;font-size:14px}
+#fh-form .brief-options{display:flex;flex-wrap:wrap;gap:8px}
+#fh-form .brief-options label{position:relative;display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border:1px solid rgba(241,237,228,.35);cursor:pointer}
+#fh-form .brief-options input{position:absolute;inset:-1px;width:calc(100% + 2px);height:calc(100% + 2px);margin:0;opacity:0;cursor:pointer;appearance:none}
+#fh-form .brief-options label:has(input:checked){background:#F1EDE4;color:#121316;border-color:#F1EDE4}
+#fh-form .brief-options label:has(input:focus-visible){outline:2px solid #F1EDE4;outline-offset:2px}
+#fh-form input[type=text],#fh-form input[type=email],#fh-form textarea{width:100%;min-height:48px;padding:10px 14px;border:1px solid rgba(241,237,228,.35);border-radius:0;background:transparent;color:inherit;font:inherit;font-size:16px}
+#fh-form textarea{min-height:112px}
+#fh-form .brief-trap{display:none}
+#fh-form .actions{margin-top:22px}
+@media (max-width:640px){#fh-form{padding:20px 16px}#fh-form .brief-grid{grid-template-columns:minmax(0,1fr)}}
