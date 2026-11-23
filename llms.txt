@@ -1,0 +1,33 @@
+# Deploy Axiom
+
+> Deploy Axiom builds and runs AI agents for owner-led firms, so nothing in the business waits on the owner to remember it. Based in Baton Rouge, Louisiana. Founder: P. K. Stewart. Company: Deploy Axiom LLC.
+
+## Who it is for
+
+Owner-led firms where everything waits on the owner: insurance agencies, law offices, financial advisors and CPAs, real estate teams, medical and dental practices, coaches and fitness studios, and founders' offices.
+
+## What it does
+
+- The agents handle a business's client care, follow-up and records.
+- They read, sort, draft, edit and check the result.
+- Anything that sends, publishes, spends or alters a customer record is prepared in full, then held for the owner's yes.
+- Moving money, setting prices and making commitments in the owner's name stay with the owner. An agent never completes a payment.
+- The agents run on the owner's own computer and accounts, not Deploy Axiom's.
+
+## How to start
+
+- Book a 15-minute call: https://calendar.app.google/rD42RF3YVLaRV52J6
+- Write a short brief on the homepage: https://deployaxiom.com/#contact
+- Email: percy@deployaxiom.com
+- Pricing: the scope, price, schedule and deliverables of each engagement are set in a written proposal, invoice or agreement. See https://deployaxiom.com/terms/
+
+## Key pages
+
+- [Facts](https://deployaxiom.com/facts/): the plain facts about Deploy Axiom, in question-and-answer form.
+- [Home](https://deployaxiom.com/): what the agents handle, what waits for the owner, and who it is for.
+- [Baton Rouge](https://deployaxiom.com/baton-rouge/): an AI receptionist for Baton Rouge businesses that starts with leads and missed calls.
+- [Free AI help, Baton Rouge](https://deployaxiom.com/baton-rouge/free-ai-help/): free, in-person AI help for three independently owned Baton Rouge small businesses, through December 31. One task, one 90-minute session, one 30-minute check-in.
+- [Insurance field report](https://deployaxiom.com/field-reports/insurance-client-care/): client care for an independent insurance agency, including what is not proven yet.
+- [Plugins](https://deployaxiom.com/plugins/): six plugins Deploy Axiom runs on its own agents, accepted into the Hermes Agent plugin catalog. Public code for technical reviewers.
+- [Operator layer](https://deployaxiom.com/operator-layer/): how the whole system works for a founder.
+- [Terms](https://deployaxiom.com/terms/) and [Privacy](https://deployaxiom.com/privacy/)

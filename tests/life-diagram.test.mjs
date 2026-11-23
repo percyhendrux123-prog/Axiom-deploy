@@ -41,5 +41,6 @@ test('A298 updates reference art deliberately while preserving the remaining hom
   // A423 also widens the homepage meta, og and twitter descriptions to the same fields.
   // A423 (Percy, 11-14: "no exclusions") deliberately widens the who-it's-for line and JSON-LD description to several fields and adds the #fields row before Limits.
   // 2026-11-22 (Percy: "put the link up") deliberately adds the Paper or running? footer link.
-  assert.equal(createHash('sha256').update(normalized).digest('hex'), 'b1403f336ae9c832eb3f09ad43a905dca8543253c45490fd07a70bbceab768f5');
+  // A603 (Percy yes 11-23) deliberately rewrites the JSON-LD descriptions, adds slogans and the founder's @officialpercyk sameAs; visible copy unchanged.
+  assert.equal(createHash('sha256').update(normalized).digest('hex'), '989440d2a3cdb7792f4440dc1c154039981ac51d6cda1cfe5697bb34c899d013');
 });
