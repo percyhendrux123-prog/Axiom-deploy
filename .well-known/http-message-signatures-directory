@@ -1,0 +1,18 @@
+{
+ "keys": [
+  {
+   "kty": "OKP",
+   "crv": "Ed25519",
+   "x": "7Bcb_DtqbeFZXq56ZVrb4tvSWYK6wSLwmSHFkeGPp98",
+   "kid": "KTM1LYy9u857Dgc65zU7hSZxpCD9ivQDTGQHEdIArTc",
+   "use": "sig"
+  }
+ ],
+ "agent_card": {
+  "client_name": "Axiom outbound agents",
+  "client_uri": "https://deployaxiom.com",
+  "contacts": [
+   "mailto:percy@deployaxiom.com"
+  ]
+ }
+}
