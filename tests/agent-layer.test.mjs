@@ -38,3 +38,11 @@ test('every sameAs profile is linked on a visible page', () => {
     }
   }
 });
+
+test('A615: llms.txt and the visible facts page carry the same agent front door line', () => {
+  const line = 'For AI agents: a read-only MCP server at https://axiom-front-door.percyhendrux123.workers.dev/mcp answers from https://deployaxiom.com/facts/, word for word.';
+  const visible = read('facts/index.html').replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ');
+  assert.ok(read('llms.txt').includes(line), 'llms.txt line');
+  assert.ok(visible.includes(line), 'visible on /facts');
+  assert.ok(!JSON.stringify(ld(read('facts/index.html'))).includes('workers.dev'), 'no machine-only door claim');
+});

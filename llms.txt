@@ -2,6 +2,10 @@
 
 > Deploy Axiom builds and runs AI agents for owner-led firms, so nothing in the business waits on the owner to remember it. Based in Baton Rouge, Louisiana. Founder: P. K. Stewart. Company: Deploy Axiom LLC.
 
+## For AI agents
+
+For AI agents: a read-only MCP server at https://axiom-front-door.percyhendrux123.workers.dev/mcp answers from https://deployaxiom.com/facts/, word for word.
+
 ## Who it is for
 
 Owner-led firms where everything waits on the owner: insurance agencies, law offices, financial advisors and CPAs, real estate teams, medical and dental practices, coaches and fitness studios, and founders' offices.
