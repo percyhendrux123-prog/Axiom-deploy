@@ -44,5 +44,19 @@ test('A615: llms.txt and the visible facts page carry the same agent front door 
   const visible = read('facts/index.html').replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ');
   assert.ok(read('llms.txt').includes(line), 'llms.txt line');
   assert.ok(visible.includes(line), 'visible on /facts');
-  assert.ok(!JSON.stringify(ld(read('facts/index.html'))).includes('workers.dev'), 'no machine-only door claim');
+  // A616: the JSON-LD door node says exactly the visible line, nothing more.
+  const graph = ld(read('facts/index.html'))[0]['@graph'];
+  const doors = graph.filter(n => JSON.stringify(n).includes('workers.dev'));
+  assert.equal(doors.length, 1, 'one door node');
+  const door = doors[0];
+  assert.equal(door['@type'], 'WebAPI');
+  assert.equal(door.description, line, 'description = visible line');
+  assert.equal(door.url, 'https://axiom-front-door.percyhendrux123.workers.dev/mcp');
+  assert.equal(door.documentation, 'https://deployaxiom.com/facts/');
+  assert.deepEqual(door.provider, { '@id': 'https://deployaxiom.com/#org' });
+  assert.deepEqual(Object.keys(door).sort(), ['@id', '@type', 'description', 'documentation', 'provider', 'url'], 'no extra claims');
+  for (const u of [door.url, door.documentation]) assert.ok(visible.includes(u), `visible: ${u}`);
+  for (const p of ['index.html', 'baton-rouge/free-ai-help/index.html']) {
+    assert.ok(!JSON.stringify(ld(read(p))).includes('workers.dev'), `${p}: no door claim where the line is not visible`);
+  }
 });
