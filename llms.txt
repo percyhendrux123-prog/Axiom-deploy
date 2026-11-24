@@ -4,7 +4,7 @@
 
 ## For AI agents
 
-For AI agents: a read-only MCP server at https://axiom-front-door.percyhendrux123.workers.dev/mcp answers from https://deployaxiom.com/facts/, word for word.
+For AI agents: an MCP server at https://axiom-front-door.percyhendrux123.workers.dev/mcp answers from https://deployaxiom.com/facts/, word for word. It can also pass a call request or a question to P. K. Stewart, who answers each one yes or no.
 
 ## Who it is for
 
