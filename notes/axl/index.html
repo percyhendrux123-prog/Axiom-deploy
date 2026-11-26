@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121316">
+  <meta name="description" content="AXL is a five-line status card for AI agents and a script that checks it: fixed words, real proof, no model in the loop. A note from Deploy Axiom.">
+  <link rel="canonical" href="https://deployaxiom.com/notes/axl/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AXL · Notes · Deploy Axiom">
+  <meta property="og:description" content="A five-line card our agents use to say where a job stands, and a checker that turns it red when the proof isn't there.">
+  <meta property="og:image" content="https://deployaxiom.com/assets/og.png">
+  <meta property="og:url" content="https://deployaxiom.com/notes/axl/">
+  <meta property="og:image:alt" content="Deploy Axiom: the triangle mark above the command $ python deploy.py axiom">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AXL · Notes · Deploy Axiom">
+  <meta name="twitter:description" content="A five-line card our agents use to say where a job stands, and a checker that turns it red when the proof isn't there.">
+  <meta name="twitter:image" content="https://deployaxiom.com/assets/og.png">
+  <meta name="twitter:image:alt" content="Deploy Axiom: the triangle mark above the command $ python deploy.py axiom">
+  <link rel="icon" href="/assets/avatar.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <title>AXL · Notes · Deploy Axiom</title>
+  <link rel="stylesheet" href="/assets/firm.css?v=7">
+<link rel="stylesheet" href="/assets/axioma/pages.css?v=5">
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "83920bc1720741bcb45a74ce350f7b43"}'></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="frame masthead-row">
+      <a class="brand" href="/" aria-label="Deploy Axiom, home"><svg viewBox="130 136 740 681" width="22" height="20" aria-hidden="true" focusable="false"><path d="M500 285L427.5 410.6A145 145 0 1 1 572.5 410.6Z"/><path d="M720.8 667.5L648.3 541.9A145 145 0 1 1 575.8 667.5Z"/><path d="M279.2 667.5L424.2 667.5A145 145 0 1 1 351.7 541.9Z"/></svg><span>Deploy Axiom</span><sup class="tm">™</sup></a>
+      <nav aria-label="Main"><a href="/#work">Work</a><a href="/#limits">Limits</a><a href="/#method">Method</a><a href="/notes/">Notes</a><a class="nav-cta" href="https://calendar.app.google/rD42RF3YVLaRV52J6">Book a 15-minute call</a></nav>
+    </div>
+  </header>
+  <main id="main">
+    <article class="article">
+      <p class="kicker">Note</p>
+      <h1>AXL</h1>
+      <p class="dek">A five-line card our agents use to say where a job stands, and a checker that turns it red when the proof isn't there.</p>
+      <p class="byline">P. K. Stewart · Deploy Axiom · Published Nov 25, 2026</p>
+      <div class="entablature" aria-hidden="true"></div>
+      <p>An agent's status note reads the same whether it is true or not. "Done, tests pass, it's live" looks exactly like a note where none of that happened.</p>
+  <p>AXL is how we make a status note checkable. It is a five-line card with a fixed set of words, and a short script that reads the card and checks every piece of proof it names. No model is involved in the check.</p>
+
+  <h2>The card</h2>
+  <pre><code>AXL/1  A296 · REVIEW · NEED owner:approve
+ASK    Review the local fixture, not production.
+EV     file:fixtures/proof.txt
+RISK   low · REVERSIBLE yes · TOUCHES none
+NOTE   No live data was used.</code></pre>
+  <p>That is an example card, not a live job. The checker reads it back in plain English:</p>
+  <pre><code>Card A296 is in review.
+Needs owner to approve.
+Ask: "Review the local fixture, not production."
+Evidence (file): "fixtures/proof.txt"
+Risk is low; reversible: yes; touches: none.
+Note: "No live data was used."</code></pre>
+
+  <h2>Line by line</h2>
+  <ul>
+    <li><code>AXL/1</code>: the job's code, where it stands, and who it needs for what. State is one of READY, RUNNING, BLOCKED, REVIEW, DONE or PARKED. Who is the owner, the front-door agent, a named agent, or none. For what is decide, approve, input, look, or none.</li>
+    <li><code>ASK</code>: the one thing being asked, in plain English, on one line.</li>
+    <li><code>EV</code>: the proof, at least one piece. A commit, a file, a screenshot, a saved test log, a link, or a job card.</li>
+    <li><code>RISK</code>: how bad it is if this is wrong (low, med or high), whether it can be undone, and whether it touches a client, money, something public, or data.</li>
+    <li><code>NOTE</code>: optional context, on one line.</li>
+  </ul>
+  <p>Anything outside those words is an error, and the error names the word.</p>
+
+  <h2>What the checker returns</h2>
+  <ul>
+    <li><strong>GREEN.</strong> Every word is valid, and every piece of proof exists: the file is on disk, the commit is in the repository, the card is on the board, the link answers.</li>
+    <li><strong>RED.</strong> A word is wrong, the card's meaning changed after it was written, or the proof it names isn't there. A red note is fixed, never posted as done.</li>
+    <li><strong>LEGACY.</strong> Plain prose. Shown as written, checked for nothing.</li>
+  </ul>
+  <p>GREEN means the proof exists. It does not mean the work is good, and it never means the work is approved.</p>
+  <p>The checker only reads. It opens the job board read-only, fetches a link only when it is told it may, and never runs anything written in a card. A test log counts as proof that a test run was saved, not as proof that it passed.</p>
+
+  <h2>How the owner answers</h2>
+  <table>
+    <thead><tr><th>Reply</th><th>Means</th></tr></thead>
+    <tbody>
+      <tr><td><code>A296 go</code></td><td>Yes, proceed.</td></tr>
+      <tr><td><code>A296 no</code></td><td>Don't.</td></tr>
+      <tr><td><code>A296 hold</code></td><td>Pause it.</td></tr>
+      <tr><td><code>A296 why</code></td><td>Explain it.</td></tr>
+      <tr><td><code>A296 show</code></td><td>Show me the proof.</td></tr>
+      <tr><td><code>A296 change: use the shorter example</code></td><td>Do it this way instead.</td></tr>
+    </tbody>
+  </table>
+  <p>Case doesn't matter, so a reply typed fast on a phone still reads. A bare "go" works only when exactly one open card is waiting on the owner. Anything else comes back unparsed, and the agent asks instead of guessing.</p>
+  <p>A parsed reply changes nothing by itself. The front-door agent still checks it against the limits of authority before anything moves.</p>
+
+  <h2>Why fixed words</h2>
+  <p>A template can be filled with anything. A fixed vocabulary can be refused. Because every card turns into fixed English and back again without loss, a card whose meaning was edited after the fact no longer matches its saved English, and it turns red.</p>
+  <p>The same short words work for both sides. Agents write them without a learning curve, and the owner can read a card in the time it takes to glance at a phone.</p>
+
+  <h2>Where it stands</h2>
+  <p>We built AXL on November 8, 2026. Its 45 tests passed again on November 25.</p>
+  <p>The rule is written: our agents' status notes, review notes and handoff lists are meant to be AXL cards. The habit has slipped. Most handoffs this month went back to plain prose, which is the exact gap AXL exists to close.</p>
+  <p>The checker is not public yet.</p>
+      <div class="next">Related: <a href="/notes/one-front-door/"><strong>One Front Door.</strong></a> Why every request goes through one agent, and why its "done" is checked before it counts.</div>
+    </article>
+  </main>
+  <footer class="footer">
+    <div class="frame footer-row">
+      <p class="footer-line">Nothing in your business waits on you to remember it.</p>
+      <p>Deploy Axiom · Baton Rouge, Louisiana</p>
+      <ul class="footer-links"><li><a href="mailto:percy@deployaxiom.com">Email</a></li><li><a href="https://www.instagram.com/deployaxiom/">Instagram</a></li><li><a href="https://github.com/percyhendrux123-prog">GitHub</a></li><li><a href="/notes/">Notes</a></li><li><a href="/plugins/">Plugins</a></li><li><a href="/operator-layer/">Operator layer</a></li><li><a href="/baton-rouge/">Baton Rouge</a></li><li><a href="/facts/">Facts</a></li><li><a href="/paper-or-running/">Paper or running?</a></li><li><a href="/privacy/">Privacy</a></li><li><a href="/terms/">Terms</a></li></ul>
+      <p class="footer-tm">© 2026 Deploy Axiom LLC. Deploy Axiom™, Axiom™ and the triangle mark are trademarks of Deploy Axiom LLC.</p>
+    </div>
+  </footer>
+</body>
+</html>
